@@ -226,3 +226,5 @@ C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
+C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.seed.resources
+C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache

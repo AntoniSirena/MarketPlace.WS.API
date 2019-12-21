@@ -12,7 +12,7 @@ namespace JS.Base.WS.API.Models.PersonProfile
     {
         [Key]
         public int Id { get; set; }
-        public int PersonId { get; set; }
+        public long PersonId { get; set; }
         public int LocatorTypeId { get; set; }
         public string Description { get; set; }
         public bool IsMain { get; set; }

@@ -26,10 +26,11 @@ namespace JS.Base.WS.API.Migrations
               new LocatorType { Code = "05", Description = "Persona" }
               );
 
-            //System person
-            context.People.AddOrUpdate(
-              p => p.FirstName,
-              new Person { FirstName = "System", SecondName = "System", Surname = "System", secondSurname = "System", BirthDate = "2019-11-16", CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false}
+            //System user
+            context.Users.AddOrUpdate(
+              p => p.UserName,
+              new User { UserName = "system", Password = "system*123", Name = "System", Surname = "System", EmailAddress = "system@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false },
+              new User { UserName = "admin", Password = "admin*123", Name = "Admin", Surname = "Admin", EmailAddress = "admin@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false }
             );
 
             context.UserStatus.AddOrUpdate(

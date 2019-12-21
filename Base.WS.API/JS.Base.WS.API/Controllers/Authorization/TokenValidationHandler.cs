@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.Global;
+using JS.Base.WS.API.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string[] userValue = userName.Split(',');
 
                 this.currentUserId = Convert.ToInt64(userValue[1]);
-                    
+
+                //Cache estorage by 5 minutes
+                CacheStorage.Add("currentUserId", currentUserId, DateTimeOffset.UtcNow.AddMinutes(5));
+
                 return base.SendAsync(request, cancellationToken);
             }
             catch (SecurityTokenValidationException)
