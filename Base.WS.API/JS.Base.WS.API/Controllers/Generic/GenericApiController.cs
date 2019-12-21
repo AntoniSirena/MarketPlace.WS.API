@@ -66,10 +66,12 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(T entity)
+        public IHttpActionResult Create(dynamic entity)
         {
             if (ModelState.IsValid)
             {
+                entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+
                 repository.Create(entity);
                 repository.Save();
             }
@@ -78,10 +80,12 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(T entity)
+        public IHttpActionResult Update(dynamic entity)
         {
             if (ModelState.IsValid)
             {
+                entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+
                 repository.Update(entity);
                 repository.Save();
             }

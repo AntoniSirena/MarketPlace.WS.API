@@ -214,7 +214,7 @@
     <Compile Include="Controllers\Authorization\LoginController.cs" />
     <Compile Include="Controllers\Authorization\TokenGenerator.cs" />
     <Compile Include="Controllers\Authorization\TokenValidationHandler.cs" />
-    <Compile Include="Controllers\Authorization\UsersController.cs" />
+    <Compile Include="Controllers\Authorization\UserController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -223,8 +223,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Global\Constants.cs" />
+    <Compile Include="Global\CurrentUser.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
+    <Compile Include="Models\Authorization\UserStatus.cs" />
     <Compile Include="Models\PersonProfile\Locator.cs" />
     <Compile Include="Models\PersonProfile\LocatorType.cs" />
     <Compile Include="Models\PersonProfile\Person.cs" />

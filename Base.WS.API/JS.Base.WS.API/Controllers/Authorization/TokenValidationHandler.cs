@@ -1,18 +1,24 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.Global;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace JS.Base.WS.API.Controllers.Authorization
 {
-    internal class TokenValidationHandler : DelegatingHandler
+    public class TokenValidationHandler : DelegatingHandler
     {
+
+        public long currentUserId = 0;
 
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
@@ -62,6 +68,12 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
                 HttpContext.Current.User = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
 
+                
+                string userName = Thread.CurrentPrincipal.Identity.Name;
+                string[] userValue = userName.Split(',');
+
+                this.currentUserId = Convert.ToInt64(userValue[1]);
+                    
                 return base.SendAsync(request, cancellationToken);
             }
             catch (SecurityTokenValidationException)

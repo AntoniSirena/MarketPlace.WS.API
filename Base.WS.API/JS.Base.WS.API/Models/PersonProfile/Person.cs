@@ -25,7 +25,7 @@ namespace JS.Base.WS.API.Models.PersonProfile
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string BirthDate { get; set; }
 
-        public string FullName { get { return string.Format("{0} {1} {2} {3}", FirstName, SecondName, Surname, secondSurname); } }
+        public string FullName { get; set; }
 
 
         public virtual ICollection<Locator> Locators { get; set; }

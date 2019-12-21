@@ -1,11 +1,11 @@
-﻿using JS.Base.WS.API.DBContext;
+﻿using JS.Base.WS.API.Controllers.Authorization;
+using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.Global;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Web;
 
 namespace JS.Base.WS.API.Base
 {
@@ -13,8 +13,7 @@ namespace JS.Base.WS.API.Base
     {
         private MyDBcontext _context = null;
         private IDbSet<T> table = null;
-
-
+        
         public GenericRepository()
         {
            _context = new MyDBcontext();
@@ -37,7 +36,11 @@ namespace JS.Base.WS.API.Base
             obj.CreatorUserId = 1;
             obj.IsActive = true;
 
-            table.Add(obj);
+            //Convirtiendo el objeto dinamico a la entidad acutal
+            T entity = JsonConvert.DeserializeObject<T>(obj.ToString());
+
+            table.Attach(entity);
+            table.Add(entity);
         }
 
         public virtual void Update(dynamic obj)
@@ -47,8 +50,11 @@ namespace JS.Base.WS.API.Base
             obj.IsActive = true;
             obj.IsDeleted = false;
 
-            table.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
+            //Convirtiendo el objeto dinamico a la entidad acutal
+            T entity = JsonConvert.DeserializeObject<T>(obj.ToString());
+
+            table.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(object id)

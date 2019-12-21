@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Models.PersonProfile;
+﻿using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Models.PersonProfile;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -25,5 +26,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<LocatorType> LocatorTypes { get; set; }
         public virtual DbSet<Locator> Locators { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserStatus> UserStatus { get; set; }
     }
 }

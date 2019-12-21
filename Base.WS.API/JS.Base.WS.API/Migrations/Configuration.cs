@@ -1,5 +1,6 @@
 namespace JS.Base.WS.API.Migrations
 {
+    using JS.Base.WS.API.Models.Authorization;
     using JS.Base.WS.API.Models.PersonProfile;
     using System;
     using System.Data.Entity;
@@ -30,6 +31,12 @@ namespace JS.Base.WS.API.Migrations
               p => p.FirstName,
               new Person { FirstName = "System", SecondName = "System", Surname = "System", secondSurname = "System", BirthDate = "2019-11-16", CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false}
             );
+
+            context.UserStatus.AddOrUpdate(
+                x => x.ShortName,
+                new UserStatus { Description = "Active", ShortName = "Active", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now},
+                new UserStatus { Description = "Inactive", ShortName = "Inactive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now}
+                );
 
         }
     }
