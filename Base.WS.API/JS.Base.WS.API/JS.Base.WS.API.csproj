@@ -225,9 +225,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Global\Constants.cs" />
-    <Compile Include="Global\CurrentUser.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
-    <Compile Include="Helpers\CurrentUserId.cs" />
+    <Compile Include="Helpers\CurrentUser.cs" />
     <Compile Include="Migrations\201912211437282_seed.cs" />
     <Compile Include="Migrations\201912211437282_seed.Designer.cs">
       <DependentUpon>201912211437282_seed.cs</DependentUpon>

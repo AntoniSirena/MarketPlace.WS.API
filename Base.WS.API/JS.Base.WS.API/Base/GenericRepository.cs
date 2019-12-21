@@ -14,7 +14,6 @@ namespace JS.Base.WS.API.Base
     {
         private MyDBcontext _context = null;
         private IDbSet<T> table = null;
-
         
         public GenericRepository()
         {
@@ -35,7 +34,7 @@ namespace JS.Base.WS.API.Base
         public virtual void Create(dynamic obj)
         {
             obj.CreationTime = DateTime.Now;
-            obj.CreatorUserId = 1;
+            obj.CreatorUserId = CurrentUser.GetId();
             obj.IsActive = true;
 
             //Convirtiendo el objeto dinamico a la entidad acutal
@@ -48,7 +47,7 @@ namespace JS.Base.WS.API.Base
         public virtual void Update(dynamic obj)
         {
             obj.LastModificationTime = DateTime.Now;
-            obj.LastModifierUserId = 1;
+            obj.LastModifierUserId = CurrentUser.GetId();
             obj.IsActive = true;
             obj.IsDeleted = false;
 
@@ -57,6 +56,9 @@ namespace JS.Base.WS.API.Base
 
             table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+
+            //Delete currentUserId in Cache 
+            CurrentUser.DeleteId();
         }
 
         public virtual void Delete(object id)
@@ -64,12 +66,15 @@ namespace JS.Base.WS.API.Base
             dynamic entity = table.Find(id);
 
             entity.DeletionTime = DateTime.Now;
-            entity.DeleterUserId = 1;
+            entity.DeleterUserId = CurrentUser.GetId();
             entity.IsActive = false;
             entity.IsDeleted = true;
 
             table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+
+            //Delete currentUserId in Cache 
+            CurrentUser.DeleteId();
         }
 
         public virtual void Save()

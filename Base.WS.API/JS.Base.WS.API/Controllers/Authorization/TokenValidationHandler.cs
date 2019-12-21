@@ -20,6 +20,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
     {
 
         public long currentUserId = 0;
+        public string currentUserName = string.Empty;
 
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
@@ -73,9 +74,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string userName = Thread.CurrentPrincipal.Identity.Name;
                 string[] userValue = userName.Split(',');
 
+                this.currentUserName = userValue[0];
                 this.currentUserId = Convert.ToInt64(userValue[1]);
 
                 //Cache estorage by 5 minutes
+                CacheStorage.Add("currentUserName", currentUserName, DateTimeOffset.UtcNow.AddMinutes(5));
                 CacheStorage.Add("currentUserId", currentUserId, DateTimeOffset.UtcNow.AddMinutes(5));
 
                 return base.SendAsync(request, cancellationToken);

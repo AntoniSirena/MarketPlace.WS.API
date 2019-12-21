@@ -1,5 +1,6 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace JS.Base.WS.API.Controllers.Generic
         [HttpGet]
         [Route("GetAll")]
         public virtual IHttpActionResult GetAll()
-        {
+        {          
             dynamic Entities = repository.GetAll();
 
             List<object> result = new List<object>();
