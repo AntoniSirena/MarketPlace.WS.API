@@ -42,6 +42,9 @@ namespace JS.Base.WS.API.Base
 
             table.Attach(entity);
             table.Add(entity);
+
+            //Delete currentUserId in Cache 
+            CurrentUser.DeleteId();
         }
 
         public virtual void Update(dynamic obj)
@@ -72,9 +75,6 @@ namespace JS.Base.WS.API.Base
 
             table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
-
-            //Delete currentUserId in Cache 
-            CurrentUser.DeleteId();
         }
 
         public virtual void Save()

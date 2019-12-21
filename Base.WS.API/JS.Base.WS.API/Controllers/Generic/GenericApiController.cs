@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Web.Http;
 
 namespace JS.Base.WS.API.Controllers.Generic
@@ -71,7 +72,14 @@ namespace JS.Base.WS.API.Controllers.Generic
         {
             if (ModelState.IsValid)
             {
-                entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+                var entityName = typeof(T).GetTypeInfo();
+
+                if (entityName.Name.Equals("Person"))
+                {
+                   entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+                }
+
+
 
                 repository.Create(entity);
                 repository.Save();
@@ -85,7 +93,12 @@ namespace JS.Base.WS.API.Controllers.Generic
         {
             if (ModelState.IsValid)
             {
-                entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+                var entityName = typeof(T).GetTypeInfo();
+
+                if (entityName.Name.Equals("Person"))
+                {
+                    entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
+                }
 
                 repository.Update(entity);
                 repository.Save();
