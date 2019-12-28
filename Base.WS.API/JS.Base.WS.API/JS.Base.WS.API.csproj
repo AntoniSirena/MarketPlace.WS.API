@@ -222,6 +222,7 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
+    <Compile Include="DTO\Profile.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,6 +236,10 @@
     <Compile Include="Migrations\201912221505255_user.cs" />
     <Compile Include="Migrations\201912221505255_user.Designer.cs">
       <DependentUpon>201912221505255_user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912281549453_add property in user.cs" />
+    <Compile Include="Migrations\201912281549453_add property in user.Designer.cs">
+      <DependentUpon>201912281549453_add property in user.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -300,7 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DTO\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -337,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221505255_user.resx">
       <DependentUpon>201912221505255_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912281549453_add property in user.resx">
+      <DependentUpon>201912281549453_add property in user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

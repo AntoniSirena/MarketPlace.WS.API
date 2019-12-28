@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Models.Authorization;
 using System;
@@ -48,6 +49,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
                               && (x.UserName == user.UserName || x.EmailAddress == user.EmailAddress) 
                               && x.Password == user.Password).FirstOrDefault();
 
+            List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
+                                                                                                                           {
+                                                                                                                                Description = x.Description,
+                                                                                                                                IsMain = x.IsMain,
+                                                                                                                                Type = x.LocatorType.Description,
+                                                                                                                            }).ToList();
+
             if (currentUser == null)
             {
                 throw new ArgumentException("Usuario invalido");
@@ -58,11 +66,39 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 throw new ArgumentException("Este usuarion esta inactivo");
             }
 
-            if (currentUser?.Password == user.Password)
+            if (currentUser != null)
             {
                 string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(userParam);
-                return Ok(token);
+
+
+                Profile profile = new Profile
+                {
+                    user = new DTO.User
+                    {
+                        Id = currentUser.Id,
+                        UserName = currentUser.UserName,
+                        Name = currentUser.Name,
+                        Surname = currentUser.Surname,
+                        EmailAddress = currentUser.EmailAddress,
+                        Image = currentUser.Image,
+                        Token = token,
+                    },
+                    person = new Person
+                    {
+                        FirstName = currentUser.Person.FirstName,
+                        SecondName = currentUser.Person.SecondName,
+                        Surname = currentUser.Person.Surname,
+                        secondSurname = currentUser.Person.secondSurname,
+                        BirthDate = currentUser.Person.BirthDate,
+                        FullName = currentUser.Person.FullName,
+                        Locators = userLocators,
+                    }                    
+                    
+                };              
+               
+
+                return Ok(profile);
             }
             else
             {

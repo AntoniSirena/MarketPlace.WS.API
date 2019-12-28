@@ -20,6 +20,7 @@ namespace JS.Base.WS.API.Models.Authorization
         public string EmailAddress { get; set; }
         public int StatusId { get; set; }
         public long? PersonId { get; set; }
+        public string Image { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual UserStatus UserStatus { get; set; }
