@@ -33,13 +33,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
             return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("authenticate")]
-        public IHttpActionResult Authenticate(UserRequest user)
+        public IHttpActionResult Authenticate([FromUri] UserRequest user)
         {
 
             if (user == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                throw new ArgumentException("La solictud no puede estar vacia");
 
             var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
             var statusInactive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Inactive).FirstOrDefault();
@@ -48,10 +48,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
                               && (x.UserName == user.UserName || x.EmailAddress == user.EmailAddress) 
                               && x.Password == user.Password).FirstOrDefault();
 
+            if (currentUser == null)
+            {
+                throw new ArgumentException("Usuario invalido");
+            }
+
             if (currentUser?.StatusId == statusInactive.Id)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-                //throw new ArgumentException("Este usuarion esta inactivo", "0001");
+                throw new ArgumentException("Este usuarion esta inactivo");
             }
 
             if (currentUser?.Password == user.Password)

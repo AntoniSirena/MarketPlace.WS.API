@@ -212,6 +212,7 @@
     <Compile Include="Base\IGenericRepository.cs" />
     <Compile Include="Base\Audit.cs" />
     <Compile Include="Base\IAudit.cs" />
+    <Compile Include="Base\JSCustomException.cs" />
     <Compile Include="Controllers\Authorization\LoginController.cs" />
     <Compile Include="Controllers\Authorization\TokenGenerator.cs" />
     <Compile Include="Controllers\Authorization\TokenValidationHandler.cs" />
@@ -230,6 +231,10 @@
     <Compile Include="Migrations\201912211437282_seed.cs" />
     <Compile Include="Migrations\201912211437282_seed.Designer.cs">
       <DependentUpon>201912211437282_seed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912221505255_user.cs" />
+    <Compile Include="Migrations\201912221505255_user.Designer.cs">
+      <DependentUpon>201912221505255_user.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -329,6 +334,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912211437282_seed.resx">
       <DependentUpon>201912211437282_seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221505255_user.resx">
+      <DependentUpon>201912221505255_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

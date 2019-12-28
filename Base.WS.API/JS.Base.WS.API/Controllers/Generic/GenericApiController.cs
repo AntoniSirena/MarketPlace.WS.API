@@ -68,19 +68,10 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(dynamic entity)
+        public virtual IHttpActionResult Create(dynamic entity)
         {
             if (ModelState.IsValid)
             {
-                var entityName = typeof(T).GetTypeInfo();
-
-                if (entityName.Name.Equals("Person"))
-                {
-                   entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
-                }
-
-
-
                 repository.Create(entity);
                 repository.Save();
             }
@@ -89,17 +80,10 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(dynamic entity)
+        public virtual IHttpActionResult Update(dynamic entity)
         {
             if (ModelState.IsValid)
-            {
-                var entityName = typeof(T).GetTypeInfo();
-
-                if (entityName.Name.Equals("Person"))
-                {
-                    entity.FullName = entity.FirstName + " " + entity.SecondName + " " + entity.Surname + " " + entity.secondSurname;
-                }
-
+            {                
                 repository.Update(entity);
                 repository.Save();
             }
@@ -109,7 +93,7 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         [HttpDelete]
         [Route("Delete/{id}")]
-        public IHttpActionResult Delete(int id)
+        public virtual IHttpActionResult Delete(int id)
         {
             var entity = repository.GetById(id);
 

@@ -66,6 +66,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     IssuerSigningKey = securityKey
                 };
 
+                //Delete currentUserId and UserName in Cache 
+                CurrentUser.DeleteId();
+                CurrentUser.DeleteUserName();
+
                 // Extract and assign Current Principal and user
                 Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
                 HttpContext.Current.User = tokenHandler.ValidateToken(token, validationParameters, out securityToken);

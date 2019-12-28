@@ -27,7 +27,7 @@ namespace JS.Base.WS.API.Helpers
             CacheStorage.Delete("currentUserId");
         }
 
-        private static void DeleteUserName()
+        public static void DeleteUserName()
         {
             CacheStorage.Delete("currentUserName");
         }
