@@ -217,6 +217,7 @@
     <Compile Include="Controllers\Authorization\TokenGenerator.cs" />
     <Compile Include="Controllers\Authorization\TokenValidationHandler.cs" />
     <Compile Include="Controllers\Authorization\UserController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
