@@ -20,6 +20,7 @@ namespace JS.Base.WS.API.DTO
         public string EmailAddress { get; set; }
         public string Image { get; set; }
         public string Token { get; set; }
+        public string WelcomeMessage { get; set; }
     }
 
     public class Person

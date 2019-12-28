@@ -83,8 +83,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         EmailAddress = currentUser.EmailAddress,
                         Image = currentUser.Image,
                         Token = token,
+                        WelcomeMessage = currentUser.Name + " " + currentUser.Surname +", "+ "sea bienvenido al sistema",
                     },
-                    person = new Person
+                    person = currentUser.Person == null? new Person() : new Person
                     {
                         FirstName = currentUser.Person.FirstName,
                         SecondName = currentUser.Person.SecondName,
