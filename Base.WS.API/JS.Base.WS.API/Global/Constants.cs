@@ -13,5 +13,11 @@ namespace JS.Base.WS.API.Global
             public const string Inactive = "Inactive";
         }
 
+        public static class Genders
+        {
+            public const string Male = "Male";
+            public const string Female = "Female";
+        }
+
     }
 }

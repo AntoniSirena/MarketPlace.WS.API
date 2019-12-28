@@ -30,6 +30,7 @@ namespace JS.Base.WS.API.DTO
         public string secondSurname { get; set; }
         public string BirthDate { get; set; }
         public string FullName { get; set; }
+        public string Gender { get; set; }
         public List<Locators> Locators { get; set; }
     }
 

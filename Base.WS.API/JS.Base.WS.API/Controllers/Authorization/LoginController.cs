@@ -49,13 +49,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
                               && (x.UserName == user.UserName || x.EmailAddress == user.EmailAddress) 
                               && x.Password == user.Password).FirstOrDefault();
 
-            List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
-                                                                                                                           {
-                                                                                                                                Description = x.Description,
-                                                                                                                                IsMain = x.IsMain,
-                                                                                                                                Type = x.LocatorType.Description,
-                                                                                                                            }).ToList();
-
             if (currentUser == null)
             {
                 throw new ArgumentException("Usuario invalido");
@@ -70,6 +63,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(userParam);
+
+                List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
+                {
+                    Description = x.Description,
+                    IsMain = x.IsMain,
+                    Type = x.LocatorType.Description,
+                }).ToList();
 
 
                 Profile profile = new Profile
@@ -92,7 +92,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         secondSurname = currentUser.Person.secondSurname,
                         BirthDate = currentUser.Person.BirthDate,
                         FullName = currentUser.Person.FullName,
-                        Locators = userLocators,
+                        Gender = currentUser.Person.Gender.Description,
+                        Locators = userLocators.Count == 0 ? new List<Locators>() : userLocators,
                     }                    
                     
                 };              

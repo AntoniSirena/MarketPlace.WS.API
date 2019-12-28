@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,10 @@ namespace JS.Base.WS.API.Models.PersonProfile
         public string BirthDate { get; set; }
 
         public string FullName { get; set; }
+        public int GenderId { get; set; }
+
+        [ForeignKey("GenderId")]
+        public virtual Gender Gender { get; set; }
 
 
         public virtual ICollection<Locator> Locators { get; set; }

@@ -229,21 +229,10 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\201912211437282_seed.cs" />
-    <Compile Include="Migrations\201912211437282_seed.Designer.cs">
-      <DependentUpon>201912211437282_seed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912221505255_user.cs" />
-    <Compile Include="Migrations\201912221505255_user.Designer.cs">
-      <DependentUpon>201912221505255_user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912281549453_add property in user.cs" />
-    <Compile Include="Migrations\201912281549453_add property in user.Designer.cs">
-      <DependentUpon>201912281549453_add property in user.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
+    <Compile Include="Models\PersonProfile\Gender.cs" />
     <Compile Include="Models\PersonProfile\Locator.cs" />
     <Compile Include="Models\PersonProfile\LocatorType.cs" />
     <Compile Include="Models\PersonProfile\Person.cs" />
@@ -288,13 +277,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
@@ -302,6 +284,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,17 +323,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201912211437282_seed.resx">
-      <DependentUpon>201912211437282_seed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912221505255_user.resx">
-      <DependentUpon>201912221505255_user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912281549453_add property in user.resx">
-      <DependentUpon>201912281549453_add property in user.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

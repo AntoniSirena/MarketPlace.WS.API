@@ -39,6 +39,12 @@ namespace JS.Base.WS.API.Migrations
                 new UserStatus { Description = "Inactive", ShortName = "Inactive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now}
                 );
 
+            context.Genders.AddOrUpdate(
+                x => x.Description,
+                new Gender { Description = "Male", ShortName = "M", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new Gender { Description = "Female", ShortName = "F", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                );
+
         }
     }
 }
