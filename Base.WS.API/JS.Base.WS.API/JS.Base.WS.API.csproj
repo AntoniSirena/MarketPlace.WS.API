@@ -231,9 +231,18 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\201912282318088_add role.cs" />
+    <Compile Include="Migrations\201912282318088_add role.Designer.cs">
+      <DependentUpon>201912282318088_add role.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
+    <Compile Include="Models\Permission\Entity.cs" />
+    <Compile Include="Models\Permission\EntityAction.cs" />
+    <Compile Include="Models\Permission\Role.cs" />
+    <Compile Include="Models\Permission\RolePermission.cs" />
+    <Compile Include="Models\Permission\UserRol.cs" />
     <Compile Include="Models\PersonProfile\Gender.cs" />
     <Compile Include="Models\PersonProfile\Locator.cs" />
     <Compile Include="Models\PersonProfile\LocatorType.cs" />
@@ -325,6 +334,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912282318088_add role.resx">
+      <DependentUpon>201912282318088_add role.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
