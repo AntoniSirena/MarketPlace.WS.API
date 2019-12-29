@@ -224,16 +224,18 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
+    <Compile Include="DTO\Permission.cs" />
     <Compile Include="DTO\Profile.cs" />
+    <Compile Include="DTO\UserResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\201912282318088_add role.cs" />
-    <Compile Include="Migrations\201912282318088_add role.Designer.cs">
-      <DependentUpon>201912282318088_add role.cs</DependentUpon>
+    <Compile Include="Migrations\201912282345482_R.cs" />
+    <Compile Include="Migrations\201912282345482_R.Designer.cs">
+      <DependentUpon>201912282345482_R.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -336,8 +338,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201912282318088_add role.resx">
-      <DependentUpon>201912282318088_add role.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912282345482_R.resx">
+      <DependentUpon>201912282345482_R.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

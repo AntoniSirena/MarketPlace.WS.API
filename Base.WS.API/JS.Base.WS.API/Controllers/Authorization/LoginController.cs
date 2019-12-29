@@ -71,6 +71,22 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     Type = x.LocatorType.Description,
                 }).ToList();
 
+                int userRoleId  = db.UserRols.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault().RoleId;
+
+                var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
+                {
+                    Description = x.Description,
+                    ShortName = x.ShortName,
+                    EntityActions = (from perm in db.RolePermissions
+                                     join entAct in db.EntityActions on perm.EntityActionId equals entAct.Id
+                                     where perm.RoleId == userRoleId && x.Id == entAct.EntityId
+                                     select new EntityActions
+                                     {
+                                         ActionName = entAct.Action,
+                                         HasPermissio = perm.HasPermission
+                                     }).ToList(),                                                                                                              
+                }).ToList();
+
 
                 Profile profile = new Profile
                 {
@@ -83,9 +99,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         EmailAddress = currentUser.EmailAddress,
                         Image = currentUser.Image,
                         Token = token,
-                        WelcomeMessage = currentUser.Name + " " + currentUser.Surname +", "+ "sea bienvenido al sistema",
+                        WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
                     },
-                    person = currentUser.Person == null? new Person() : new Person
+                    person = currentUser.Person == null ? new Person() : new Person
                     {
                         FirstName = currentUser.Person.FirstName,
                         SecondName = currentUser.Person.SecondName,
@@ -96,11 +112,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Gender = currentUser.Person.Gender.Description,
                         Locators = userLocators.Count == 0 ? new List<Locators>() : userLocators,
                     }                    
-                    
-                };              
-               
+                };
 
-                return Ok(profile);
+                UserResponse response = new UserResponse();
+
+                response.profile = profile;
+                response.permissions = permissions;
+
+                return Ok(response);
             }
             else
             {

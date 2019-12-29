@@ -27,11 +27,11 @@ namespace JS.Base.WS.API.Migrations
               );
 
             //System user
-            context.Users.AddOrUpdate(
-              p => p.UserName,
-              new User { UserName = "system", Password = "system*123", Name = "System", Surname = "System", EmailAddress = "system@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false },
-              new User { UserName = "admin", Password = "admin*123", Name = "Admin", Surname = "Admin", EmailAddress = "admin@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false }
-            );
+            //context.Users.AddOrUpdate(
+            //  p => p.UserName,
+            //  new User { UserName = "system", Password = "system*123", Name = "System", Surname = "System", PersonId = 6, EmailAddress = "system@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false },
+            //  new User { UserName = "admin", Password = "admin*123", Name = "Admin", Surname = "Admin", PersonId = 6, EmailAddress = "admin@hotmail.com", StatusId = 1, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false }
+            //);
 
             context.UserStatus.AddOrUpdate(
                 x => x.ShortName,

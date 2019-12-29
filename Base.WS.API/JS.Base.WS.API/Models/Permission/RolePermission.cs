@@ -14,6 +14,7 @@ namespace JS.Base.WS.API.Models.Permission
         public int Id { get; set; }
         public int RoleId { get; set; }
         public int EntityActionId { get; set; }
+        public bool HasPermission { get; set; }
 
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
