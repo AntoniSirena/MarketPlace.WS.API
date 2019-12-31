@@ -64,13 +64,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(userParam);
 
-                List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
-                {
-                    Description = x.Description,
-                    IsMain = x.IsMain,
-                    Type = x.LocatorType.Description,
-                }).ToList();
-
                 int userRoleId  = db.UserRols.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault().RoleId;
 
                 var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
@@ -87,6 +80,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
                                      }).ToList(),                                                                                                              
                 }).ToList();
 
+
+                List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
+                {
+                    Description = x.Description,
+                    IsMain = x.IsMain,
+                    Type = x.LocatorType.Description,
+                }).ToList();
 
                 Profile profile = new Profile
                 {
