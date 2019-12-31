@@ -221,6 +221,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Permission\UserRoleController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -238,6 +239,10 @@
     <Compile Include="Migrations\201912282345482_R.Designer.cs">
       <DependentUpon>201912282345482_R.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912310454507_rename userRole.cs" />
+    <Compile Include="Migrations\201912310454507_rename userRole.Designer.cs">
+      <DependentUpon>201912310454507_rename userRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
@@ -245,7 +250,7 @@
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />
     <Compile Include="Models\Permission\RolePermission.cs" />
-    <Compile Include="Models\Permission\UserRol.cs" />
+    <Compile Include="Models\Permission\UserRole.cs" />
     <Compile Include="Models\PersonProfile\Gender.cs" />
     <Compile Include="Models\PersonProfile\Locator.cs" />
     <Compile Include="Models\PersonProfile\LocatorType.cs" />
@@ -341,6 +346,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912282345482_R.resx">
       <DependentUpon>201912282345482_R.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912310454507_rename userRole.resx">
+      <DependentUpon>201912310454507_rename userRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

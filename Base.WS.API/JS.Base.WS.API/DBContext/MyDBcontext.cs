@@ -30,8 +30,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserStatus> UserStatus { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
-        public virtual DbSet<Role> Rols { get; set; }
-        public virtual DbSet<UserRol> UserRols { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Entity> Entities { get; set; }
         public virtual DbSet<EntityAction> EntityActions { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }

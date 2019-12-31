@@ -9,7 +9,7 @@ using System.Web;
 
 namespace JS.Base.WS.API.Models.Permission
 {
-    public class UserRol: Audit
+    public class UserRole: Audit
     {
         [Key]
         public int Id { get; set; }

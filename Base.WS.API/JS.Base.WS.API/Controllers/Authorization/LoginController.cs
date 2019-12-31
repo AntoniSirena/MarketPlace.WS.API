@@ -67,7 +67,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(userParam);
 
-                var userRole  = db.UserRols.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
+                var userRole  = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
                 if (userRole != null)
                 {
