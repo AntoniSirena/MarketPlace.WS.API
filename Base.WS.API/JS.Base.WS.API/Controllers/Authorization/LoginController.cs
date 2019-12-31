@@ -38,6 +38,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("authenticate")]
         public IHttpActionResult Authenticate([FromUri] UserRequest user)
         {
+            //User response
+            UserResponse response = new UserResponse();
+
 
             if (user == null)
                 throw new ArgumentException("La solictud no puede estar vacia");
@@ -56,7 +59,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser?.StatusId == statusInactive.Id)
             {
-                throw new ArgumentException("Este usuarion esta inactivo");
+                throw new ArgumentException("Este usuario esta inactivo");
             }
 
             if (currentUser != null)
@@ -64,21 +67,30 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(userParam);
 
-                int userRoleId  = db.UserRols.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault().RoleId;
+                var userRole  = db.UserRols.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
-                var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
+                if (userRole != null)
                 {
-                    Description = x.Description,
-                    ShortName = x.ShortName,
-                    EntityActions = (from perm in db.RolePermissions
-                                     join entAct in db.EntityActions on perm.EntityActionId equals entAct.Id
-                                     where perm.RoleId == userRoleId && x.Id == entAct.EntityId
-                                     select new EntityActions
-                                     {
-                                         ActionName = entAct.Action,
-                                         HasPermissio = perm.HasPermission
-                                     }).ToList(),                                                                                                              
-                }).ToList();
+                   var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
+                      {
+                        Description = x.Description,
+                        ShortName = x.ShortName,
+                        EntityActions = (from perm in db.RolePermissions
+                                         join entAct in db.EntityActions on perm.EntityActionId equals entAct.Id
+                                         where perm.RoleId == userRole.Id && x.Id == entAct.EntityId
+                                         select new EntityActions
+                                         {
+                                             ActionName = entAct.Action,
+                                             HasPermissio = perm.HasPermission
+                                         }).ToList(),
+                      }).ToList();
+
+                    response.permissions = permissions;
+                }
+                else
+                {
+                    throw new ArgumentException("Este usuarion no tiene un rol asignado");
+                }
 
 
                 List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
@@ -114,10 +126,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     }                    
                 };
 
-                UserResponse response = new UserResponse();
-
                 response.profile = profile;
-                response.permissions = permissions;
+
 
                 return Ok(response);
             }
