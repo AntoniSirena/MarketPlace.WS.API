@@ -226,6 +226,3 @@ C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll.config
-C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.R.resources
-C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
-C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.renameuserRole.resources
