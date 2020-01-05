@@ -68,7 +68,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 //Delete currentUserId and UserName in Cache 
                 CurrentUser.DeleteId();
-                CurrentUser.DeleteUserName();
+                CurrentUser.DeleteName();
 
                 // Extract and assign Current Principal and user
                 Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);

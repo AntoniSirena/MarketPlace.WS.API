@@ -15,7 +15,7 @@ namespace JS.Base.WS.API.Helpers
             return response;
         }
 
-        public static string GetUserName()
+        public static string GetName()
         {
             var response = CacheStorage.GetValue("currentUserName");
 
@@ -27,7 +27,7 @@ namespace JS.Base.WS.API.Helpers
             CacheStorage.Delete("currentUserId");
         }
 
-        public static void DeleteUserName()
+        public static void DeleteName()
         {
             CacheStorage.Delete("currentUserName");
         }

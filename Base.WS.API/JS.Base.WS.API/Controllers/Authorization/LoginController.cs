@@ -1,6 +1,6 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO;
-using JS.Base.WS.API.DTO.User;
+using JS.Base.WS.API.DTO.Response.User;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Models.Authorization;
 using System;
@@ -48,6 +48,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
             var statusInactive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Inactive).FirstOrDefault();
+            var PendigToActive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToActive).FirstOrDefault();
 
             var currentUser = db.Users.Where(x => x.IsActive == true
                               && (x.UserName == user.UserName || x.EmailAddress == user.EmailAddress) 
@@ -55,12 +56,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser == null)
             {
-                throw new ArgumentException("Usuario invalido");
+                throw new ArgumentException("Credenciales invalido");
             }
 
             if (currentUser?.StatusId == statusInactive.Id)
             {
-                throw new ArgumentException("Este usuario esta inactivo");
+                throw new ArgumentException("Usuario inactivo");
+            }
+
+            if (currentUser?.StatusId == PendigToActive.Id)
+            {
+                throw new ArgumentException("Usuario pendiente de activar");
             }
 
             if (currentUser != null)
@@ -90,7 +96,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 }
                 else
                 {
-                    throw new ArgumentException("Este usuarion no tiene un rol asignado");
+                    throw new ArgumentException("Este usuario no tiene un rol asignado");
                 }
 
 
@@ -103,7 +109,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 Profile profile = new Profile
                 {
-                    user = new DTO.User.User
+                    user = new DTO.Response.User.User
                     {
                         Id = currentUser.Id,
                         UserName = currentUser.UserName,

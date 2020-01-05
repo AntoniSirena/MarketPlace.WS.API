@@ -213,12 +213,15 @@
     <Compile Include="Base\Audit.cs" />
     <Compile Include="Base\IAudit.cs" />
     <Compile Include="Base\JSCustomException.cs" />
+    <Compile Include="Base\Response.cs" />
+    <Compile Include="Base\ResponseData.cs" />
     <Compile Include="Controllers\Authorization\LoginController.cs" />
     <Compile Include="Controllers\Authorization\TokenGenerator.cs" />
     <Compile Include="Controllers\Authorization\TokenValidationHandler.cs" />
     <Compile Include="Controllers\Authorization\UserController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Permission\UserRoleController.cs" />
@@ -227,10 +230,11 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
     <Compile Include="DTO\Common\GenderDto.cs" />
+    <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\SP_Parameter\ValidateUserName.cs" />
-    <Compile Include="DTO\User\Permission.cs" />
-    <Compile Include="DTO\User\Profile.cs" />
-    <Compile Include="DTO\User\UserResponse.cs" />
+    <Compile Include="DTO\Response\User\Permission.cs" />
+    <Compile Include="DTO\Response\User\Profile.cs" />
+    <Compile Include="DTO\Response\User\UserResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -307,6 +311,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Plantilla\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

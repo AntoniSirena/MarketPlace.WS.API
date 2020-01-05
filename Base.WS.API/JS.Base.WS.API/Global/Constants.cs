@@ -11,6 +11,7 @@ namespace JS.Base.WS.API.Global
         {
             public const string Active = "Active";
             public const string Inactive = "Inactive";
+            public const string PendingToActive = "PendingToActive";
         }
 
         public static class Genders
