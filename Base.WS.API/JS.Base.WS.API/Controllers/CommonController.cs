@@ -1,5 +1,5 @@
 ﻿using JS.Base.WS.API.DBContext;
-using JS.Base.WS.API.Models.PersonProfile;
+using JS.Base.WS.API.DTO.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -13,9 +13,9 @@ namespace JS.Base.WS.API.Controllers
 
         [HttpGet]
         [Route("getGenders")]
-        public List<GenderResponse> getGenders()
+        public List<GenderDto> getGenders()
         {
-            List<GenderResponse> genders = db.Genders.Where(x => x.IsActive == true).Select(y => new GenderResponse
+            List<GenderDto> genders = db.Genders.Where(x => x.IsActive == true).Select(y => new GenderDto
             {
                 Id = y.Id,
                 Description = y.Description,
@@ -26,12 +26,5 @@ namespace JS.Base.WS.API.Controllers
         }
 
 
-
-        public class GenderResponse
-        {
-            public int Id { get; set; }
-            public string Description { get; set; }
-            public string ShortName { get; set; }
-        }
     }
 }

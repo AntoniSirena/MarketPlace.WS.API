@@ -226,9 +226,11 @@
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
-    <Compile Include="DTO\Permission.cs" />
-    <Compile Include="DTO\Profile.cs" />
-    <Compile Include="DTO\UserResponse.cs" />
+    <Compile Include="DTO\Common\GenderDto.cs" />
+    <Compile Include="DTO\SP_Parameter\ValidateUserName.cs" />
+    <Compile Include="DTO\User\Permission.cs" />
+    <Compile Include="DTO\User\Profile.cs" />
+    <Compile Include="DTO\User\UserResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

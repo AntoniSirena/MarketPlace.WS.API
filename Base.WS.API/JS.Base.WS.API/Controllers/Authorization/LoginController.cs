@@ -1,5 +1,6 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO;
+using JS.Base.WS.API.DTO.User;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Models.Authorization;
 using System;
@@ -102,7 +103,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 Profile profile = new Profile
                 {
-                    user = new DTO.User
+                    user = new DTO.User.User
                     {
                         Id = currentUser.Id,
                         UserName = currentUser.UserName,
