@@ -1,8 +1,10 @@
 ﻿using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -35,6 +37,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Entity> Entities { get; set; }
         public virtual DbSet<EntityAction> EntityActions { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<SystemConfiguration> SystemConfigurations { get; set; }
 
     }
 }

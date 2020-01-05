@@ -3,6 +3,8 @@ using JS.Base.WS.API.DTO;
 using JS.Base.WS.API.DTO.Response.User;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Templates;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +78,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 var userRole  = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
+                //Permissions
                 if (userRole != null)
                 {
                    var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
@@ -98,8 +101,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 {
                     throw new ArgumentException("Este usuario no tiene un rol asignado");
                 }
+                //End Permissions
 
 
+                //Profile
                 List<Locators> userLocators = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new Locators
                 {
                     Description = x.Description,
@@ -134,7 +139,15 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 };
 
                 response.profile = profile;
+                //End Profile
 
+
+                //System configuration
+                var configuration = db.SystemConfigurations.ToList().FirstOrDefault();
+                var resulConfiguration = JsonConvert.DeserializeObject<Configuration>(configuration.Information.ToString());
+                response.configuration = resulConfiguration;
+
+                //End System configuration
 
                 return Ok(response);
             }
