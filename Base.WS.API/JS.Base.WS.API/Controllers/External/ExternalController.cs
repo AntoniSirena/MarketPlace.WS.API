@@ -15,7 +15,6 @@ using JS.Base.WS.API.DTO.Request;
 
 namespace JS.Base.WS.API.Controllers.External
 {
-    [Authorize]
     [RoutePrefix("api/external")]
     public class ExternalController : ApiController
     {
@@ -23,33 +22,38 @@ namespace JS.Base.WS.API.Controllers.External
 
         [HttpPost]
         [Route("CreateUser")]
-        public Response CreateUser(User user)
+        public IHttpActionResult CreateUser(User user)
         {
-            var ValidateUser = db.Database.SqlQuery<ValidateUserName>(
+            Response response = new Response();
+
+            var ValidateUserName = db.Database.SqlQuery<ValidateUserName>(
                "Exec SP_ValidateUserName @UserName",
                new SqlParameter() { ParameterName = "@UserName", SqlDbType = System.Data.SqlDbType.Text, Value = (object)user.UserName ?? DBNull.Value }
              ).ToList();
 
-            if (ValidateUser[0].UserNameExist)
+            if (ValidateUserName[0].UserNameExist)
             {
-                throw new ArgumentException("El nombre de usuario que desea registrar ya existe");
+                response.Message = "El nombre de usuario que desea registrar ya existe";
+                response.Code = "001";
+                
+                return Ok(response);
             }
-
-            Response response = new Response();
 
             var PendigToActive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToActive).FirstOrDefault();
 
+            var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();
+
             user.StatusId = PendigToActive.Id;
             user.CreationTime = DateTime.Now;
-            user.CreatorUserId = CurrentUser.GetId();
+            user.CreatorUserId = systemUser.Id;
             user.IsActive = true;
 
             db.Users.Add(user);
             db.SaveChanges();
 
-            response.Message = "Usuario credo con exito";
+            response.Message = "Usuario creado con exito";
 
-            return response; 
+            return Ok(response);
         }
     }
 }

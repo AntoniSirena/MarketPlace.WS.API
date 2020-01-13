@@ -19,8 +19,6 @@ namespace JS.Base.WS.API.Base
         public string Code { get; set; }
         public string Message { get; set; }
         public object MessageDetail { get; set; }
-
-        public IHttpActionResult HttPCode { get; set; }
     }
     
 }

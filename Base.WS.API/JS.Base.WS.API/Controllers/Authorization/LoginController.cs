@@ -83,13 +83,15 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 {
                    var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
                       {
+                       Id = x.Id,
                         Description = x.Description,
                         ShortName = x.ShortName,
                         EntityActions = (from perm in db.RolePermissions
                                          join entAct in db.EntityActions on perm.EntityActionId equals entAct.Id
                                          where perm.RoleId == userRole.Id && x.Id == entAct.EntityId
                                          select new EntityActions
-                                         {
+                                         { 
+                                             Id = entAct.Id,
                                              ActionName = entAct.Action,
                                              HasPermissio = perm.HasPermission
                                          }).ToList(),

@@ -12,6 +12,7 @@ namespace JS.Base.WS.API.DTO.Response.User
 
     public class Entity
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public string ShortName { get; set; }
         public List<EntityActions> EntityActions { get; set; }
@@ -19,6 +20,7 @@ namespace JS.Base.WS.API.DTO.Response.User
 
     public class EntityActions
     {
+        public int Id { get; set; }
         public string ActionName { get; set; }
         public bool HasPermissio { get; set; }
     }

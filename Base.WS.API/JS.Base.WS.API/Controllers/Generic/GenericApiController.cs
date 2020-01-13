@@ -13,6 +13,8 @@ namespace JS.Base.WS.API.Controllers.Generic
     {
         private IGenericRepository<T> repository;
 
+        List<object> RecordsList = new List<object>();
+
         public GenericApiController()
         {
             this.repository = new GenericRepository<T>();
@@ -25,22 +27,20 @@ namespace JS.Base.WS.API.Controllers.Generic
         {          
             dynamic Entities = repository.GetAll();
 
-            List<object> result = new List<object>();
-
             foreach (var item in Entities)
             {
                 if (item.IsActive)
                 {
-                    result.Add(item);
+                    RecordsList.Add(item);
                 }
             }
 
-            if (result.Count() == 0)
+            if (RecordsList.Count() == 0)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(RecordsList);
         }
 
         [HttpGet]
@@ -104,6 +104,17 @@ namespace JS.Base.WS.API.Controllers.Generic
             repository.Save();
 
             return Ok();
+        }
+
+
+        ~GenericApiController()
+        {
+            this.Dispose();
+        }
+
+        private void Dispose()
+        {
+            RecordsList = null;
         }
 
 
