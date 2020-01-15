@@ -7,8 +7,8 @@ namespace JS.Base.WS.API.DTO.Response.User
 {
     public class Profile
     {
-        public User user { get; set; }
-        public Person person { get; set; }
+        public User User { get; set; }
+        public Person Person { get; set; }
     }
 
     public class User

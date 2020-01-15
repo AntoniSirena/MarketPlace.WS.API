@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.DBContext;
+﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO;
 using JS.Base.WS.API.DTO.Response.User;
 using JS.Base.WS.API.Global;
@@ -41,12 +42,18 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("authenticate")]
         public IHttpActionResult Authenticate([FromUri] UserRequest user)
         {
-            //User response
-            UserResponse response = new UserResponse();
+            Response response = new Response();
+
+            UserResponse userResponse = new UserResponse();
 
 
             if (user == null)
-                throw new ArgumentException("La solictud no puede estar vacia");
+            {
+                response.Code = "002";
+                response.Message = "La solictud no puede estar vacia";
+
+                return Ok(response);
+            }
 
             var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
             var statusInactive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Inactive).FirstOrDefault();
@@ -58,17 +65,26 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser == null)
             {
-                throw new ArgumentException("Credenciales invalido");
+                response.Code = "003";
+                response.Message = "Credenciales invalido";
+
+                return Ok(response);
             }
 
             if (currentUser?.StatusId == statusInactive.Id)
             {
-                throw new ArgumentException("Usuario inactivo");
+                response.Code = "003";
+                response.Message = "Usuario inactivo";
+
+                return Ok(response);
             }
 
             if (currentUser?.StatusId == PendigToActive.Id)
             {
-                throw new ArgumentException("Usuario pendiente de activar");
+                response.Code = "005";
+                response.Message = "Usuario pendiente de activar";
+
+                return Ok(response);
             }
 
             if (currentUser != null)
@@ -97,11 +113,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
                                          }).ToList(),
                       }).ToList();
 
-                    response.permissions = permissions;
+                    userResponse.Permissions = permissions;
                 }
                 else
                 {
-                    throw new ArgumentException("Este usuario no tiene un rol asignado");
+                    response.Code = "006";
+                    response.Message = "Este usuario no tiene un rol asignado";
+
+                    return Ok(response);
                 }
                 //End Permissions
 
@@ -116,7 +135,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 Profile profile = new Profile
                 {
-                    user = new DTO.Response.User.User
+                    User = new DTO.Response.User.User
                     {
                         Id = currentUser.Id,
                         UserName = currentUser.UserName,
@@ -127,7 +146,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Token = token,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
                     },
-                    person = currentUser.Person == null ? new Person() : new Person
+                    Person = currentUser.Person == null ? new Person() : new Person
                     {
                         FirstName = currentUser.Person.FirstName,
                         SecondName = currentUser.Person.SecondName,
@@ -140,16 +159,19 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     }                    
                 };
 
-                response.profile = profile;
+                userResponse.Profile = profile;
                 //End Profile
 
 
                 //System configuration
                 var configuration = db.SystemConfigurations.ToList().FirstOrDefault();
                 var resulConfiguration = JsonConvert.DeserializeObject<Configuration>(configuration.Information.ToString());
-                response.configuration = resulConfiguration;
+                userResponse.Configuration = resulConfiguration;
 
                 //End System configuration
+
+                response.Message = "Usuario autenticado con exito.";
+                response.Data = userResponse;
 
                 return Ok(response);
             }

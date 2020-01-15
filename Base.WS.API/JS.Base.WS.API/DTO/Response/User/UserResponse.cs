@@ -8,8 +8,8 @@ namespace JS.Base.WS.API.DTO.Response.User
 {
     public class UserResponse
     {
-        public Configuration configuration { get; set; }
-        public Profile profile { get; set; }
-        public object permissions { get; set; }
+        public Configuration Configuration { get; set; }
+        public Profile Profile { get; set; }
+        public object Permissions { get; set; }
     }
 }
