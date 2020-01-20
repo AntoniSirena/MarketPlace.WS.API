@@ -43,9 +43,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         public IHttpActionResult Authenticate([FromUri] UserRequest user)
         {
             Response response = new Response();
-
             UserResponse userResponse = new UserResponse();
-
 
             if (user == null)
             {
@@ -97,23 +95,27 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 //Permissions
                 if (userRole != null)
                 {
-                   var permissions = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
+                    DTO.Response.User.Permission permissionResponse = new DTO.Response.User.Permission();
+
+                    var permission = db.Entities.Where(x => x.IsActive == true).Select(x => new Entity
                       {
                        Id = x.Id,
                         Description = x.Description,
                         ShortName = x.ShortName,
                         EntityActions = (from perm in db.RolePermissions
                                          join entAct in db.EntityActions on perm.EntityActionId equals entAct.Id
-                                         where perm.RoleId == userRole.Id && x.Id == entAct.EntityId
+                                         where perm.RoleId == userRole.RoleId && x.Id == entAct.EntityId
                                          select new EntityActions
                                          { 
                                              Id = entAct.Id,
                                              ActionName = entAct.Action,
                                              HasPermissio = perm.HasPermission
                                          }).ToList(),
-                      }).ToList();
+                    }).ToList();
 
-                    userResponse.Permissions = permissions;
+                    permissionResponse.Entities = permission;
+
+                    userResponse.Permissions = permissionResponse;
                 }
                 else
                 {
@@ -145,6 +147,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Image = currentUser.Image,
                         Token = token,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
+                        MenuTemplate = userRole.Role.MenuTemplate,
+                        RolDescription = userRole.Role.Description,
+                        RolShortName = userRole.Role.ShortName,
                     },
                     Person = currentUser.Person == null ? new Person() : new Person
                     {

@@ -10,6 +10,6 @@ namespace JS.Base.WS.API.DTO.Response.User
     {
         public Configuration Configuration { get; set; }
         public Profile Profile { get; set; }
-        public object Permissions { get; set; }
+        public Permission Permissions { get; set; }
     }
 }
