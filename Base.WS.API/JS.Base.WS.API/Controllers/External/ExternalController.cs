@@ -26,6 +26,13 @@ namespace JS.Base.WS.API.Controllers.External
         {
             Response response = new Response();
 
+            if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.EmailAddress) || 
+               string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Surname) )
+            {
+                response.Message = "Los Datos ingresados no son validos";
+                response.Code = "007";
+            }
+
             var ValidateUserName = db.Database.SqlQuery<ValidateUserName>(
                "Exec SP_ValidateUserName @UserName",
                new SqlParameter() { ParameterName = "@UserName", SqlDbType = System.Data.SqlDbType.Text, Value = (object)user.UserName ?? DBNull.Value }

@@ -242,22 +242,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202001051444437_Add new Model.cs" />
-    <Compile Include="Migrations\202001051444437_Add new Model.Designer.cs">
-      <DependentUpon>202001051444437_Add new Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001191744308_add prop.cs" />
-    <Compile Include="Migrations\202001191744308_add prop.Designer.cs">
-      <DependentUpon>202001191744308_add prop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001191746143_add pro.cs" />
-    <Compile Include="Migrations\202001191746143_add pro.Designer.cs">
-      <DependentUpon>202001191746143_add pro.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001200028553_add pr.cs" />
-    <Compile Include="Migrations\202001200028553_add pr.Designer.cs">
-      <DependentUpon>202001200028553_add pr.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
@@ -359,20 +343,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001051444437_Add new Model.resx">
-      <DependentUpon>202001051444437_Add new Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001191744308_add prop.resx">
-      <DependentUpon>202001191744308_add prop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001191746143_add pro.resx">
-      <DependentUpon>202001191746143_add pro.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001200028553_add pr.resx">
-      <DependentUpon>202001200028553_add pr.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
