@@ -169,7 +169,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
 
                 //System configuration
-                var configuration = db.SystemConfigurations.ToList().FirstOrDefault();
+                var configuration = db.SystemConfigurations.Where(x => x.IsActive == true).FirstOrDefault();
                 var resulConfiguration = JsonConvert.DeserializeObject<Configuration>(configuration.Information.ToString());
                 userResponse.Configuration = resulConfiguration;
 

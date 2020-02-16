@@ -12,10 +12,13 @@ using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.DTO.SP_Parameter;
 using System.Data.SqlClient;
 using JS.Base.WS.API.DTO.Request;
+using JS.Base.WS.API.Templates;
+using Newtonsoft.Json;
 
 namespace JS.Base.WS.API.Controllers.External
 {
     [RoutePrefix("api/external")]
+    [AllowAnonymous]
     public class ExternalController : ApiController
     {
         MyDBcontext db = new MyDBcontext();
@@ -59,6 +62,23 @@ namespace JS.Base.WS.API.Controllers.External
             db.SaveChanges();
 
             response.Message = "Usuario creado con exito";
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetEnterpriseInfo")]
+        public IHttpActionResult GetEnterpriseInfo()
+        {
+            Response response = new Response();
+
+            var enterpriseResult = db.SystemConfigurations.Where(x => x.IsActive == true).FirstOrDefault();
+            var configuration = JsonConvert.DeserializeObject<Configuration>(enterpriseResult.Information.ToString());
+
+            string cadena = JsonConvert.SerializeObject(configuration.Data.Enterprise);
+            var enterprise = JsonConvert.DeserializeObject<Enterprise>(cadena.ToString());
+
+            response.Data = enterprise;
 
             return Ok(response);
         }
