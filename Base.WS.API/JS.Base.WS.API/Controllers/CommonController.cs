@@ -45,5 +45,60 @@ namespace JS.Base.WS.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetInfoCurrentPerson")]
+        public IHttpActionResult GetInfoCurrentPerson()
+        {
+            var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+
+            if (currentUser.PersonId != null)
+            {
+                var result = db.People.Where(x => x.Id == currentUser.PersonId).Select(x => new
+                {
+                    FirstName = x.FirstName,
+                    SecondName = x.SecondName,
+                    Surname = x.Surname,
+                    secondSurname = x.secondSurname,
+                    BirthDate = x.BirthDate,
+                    FullName = x.FullName,
+                    GenderId = x.GenderId,
+                }).FirstOrDefault();
+
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetInfoCurrentLocators")]
+        public IHttpActionResult GetInfoCurrentLocators()
+        {
+            var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+
+            if (currentUser.PersonId != null)
+            {
+                var result = db.Locators.Where(x => x.PersonId == currentUser.PersonId).Select(x => new
+                {
+                    LocatorTypeId = x.LocatorTypeId,
+                    LocatorTypeDescription = x.LocatorType.Description,
+                    Description = x.Description,
+                    IsMain = x.IsMain
+                }).ToList();
+
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
+        #region Models
+
+        #endregion
     }
 }
