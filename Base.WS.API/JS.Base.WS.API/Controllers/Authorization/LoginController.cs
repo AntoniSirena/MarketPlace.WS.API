@@ -145,7 +145,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Surname = currentUser.Surname,
                         EmailAddress = currentUser.EmailAddress,
                         Image = currentUser.Image,
-                        Token = token,
+                        Token = "Bearer " + token,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
                         MenuTemplate = userRole.Role.MenuTemplate,
                         RolDescription = userRole.Role.Description,
