@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Controllers.Generic;
+﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.SP_Parameter;
 using JS.Base.WS.API.Models.Authorization;
@@ -20,6 +21,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
     {
         MyDBcontext db = new MyDBcontext();
 
+        Response response = new Response();
+
         public override IHttpActionResult Create(dynamic entity)
         {
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
@@ -31,7 +34,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (ValidateUser[0].UserNameExist)
             {
-                throw new ArgumentException("El nombre de usuario que desea registrar ya existe");
+                //throw new ArgumentException("El nombre de usuario que desea registrar ya existe");
+
+                response.Code = "024";
+                response.Message = "El nombre de usuario que desea registrar ya existe";
+                return Ok(response);
             }
 
             return base.Create(input);

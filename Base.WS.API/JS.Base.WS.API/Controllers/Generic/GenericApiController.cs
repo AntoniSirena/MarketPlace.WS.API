@@ -15,6 +15,8 @@ namespace JS.Base.WS.API.Controllers.Generic
 
         List<object> RecordsList = new List<object>();
 
+        Response response = new Response();
+
         public GenericApiController()
         {
             this.repository = new GenericRepository<T>();
@@ -24,7 +26,7 @@ namespace JS.Base.WS.API.Controllers.Generic
         [HttpGet]
         [Route("GetAll")]
         public virtual IHttpActionResult GetAll()
-        {          
+        {
             dynamic Entities = repository.GetAll();
 
             foreach (var item in Entities)
@@ -53,7 +55,7 @@ namespace JS.Base.WS.API.Controllers.Generic
 
             if (entity != null)
             {
-              isAtive = entity.IsActive;
+                isAtive = entity.IsActive;
             }
 
             if (entity == null || isAtive == false)
@@ -68,42 +70,75 @@ namespace JS.Base.WS.API.Controllers.Generic
         [Route("Create")]
         public virtual IHttpActionResult Create(dynamic entity)
         {
-            if (ModelState.IsValid)
+            try
             {
-                repository.Create(entity);
-                repository.Save();
+                if (ModelState.IsValid)
+                {
+                    repository.Create(entity);
+                    repository.Save();
+
+                    response.Message = "Registro creado con exito";
+                    return Ok(response);
+                }
             }
-            return Ok();
+            catch
+            {
+                response.Code = "021";
+                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+            }
+
+            return Ok(response);
         }
 
         [HttpPut]
         [Route("Update")]
         public virtual IHttpActionResult Update(dynamic entity)
         {
-            if (ModelState.IsValid)
-            {                
-                repository.Update(entity);
-                repository.Save();
-            }
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    repository.Update(entity);
+                    repository.Save();
 
-            return Ok();
+                    response.Message = "Registro actualizado con exito";
+                    return Ok(response);
+                }
+            }
+            catch
+            {
+                response.Code = "022";
+                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+            }
+            return Ok(response);
         }
 
         [HttpDelete]
         [Route("Delete/{id}")]
         public virtual IHttpActionResult Delete(int id)
         {
-            var entity = repository.GetById(id);
-
-            if (entity == null)
+            try
             {
-                return NotFound();
+                var entity = repository.GetById(id);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                repository.Delete(id);
+                repository.Save();
+
+                response.Message = "Registro eliminado con exito";
+                return Ok(response);
             }
+            catch
+            {
+                response.Code = "023";
+                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+            }
+            return Ok(response);
 
-            repository.Delete(id);
-            repository.Save();
-
-            return Ok();
         }
 
 

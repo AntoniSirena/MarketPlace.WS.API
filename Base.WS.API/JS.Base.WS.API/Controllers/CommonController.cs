@@ -127,7 +127,7 @@ namespace JS.Base.WS.API.Controllers
                 currentUser.UserName = request.UserName;
                 currentUser.Password = request.Password;
                 currentUser.Name = request.Name;
-                currentUser.Surname = request.Password;
+                currentUser.Surname = request.SurName;
                 currentUser.EmailAddress = request.EmailAddress;
                 currentUser.LastModificationTime = DateTime.Now;
                 currentUser.LastModifierUserId = currenntUserId;
