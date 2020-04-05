@@ -38,9 +38,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
             return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("authenticate")]
-        public IHttpActionResult Authenticate([FromUri] UserRequest user)
+        public IHttpActionResult Authenticate(UserRequest user)
         {
             Response response = new Response();
             UserResponse userResponse = new UserResponse();
@@ -148,8 +148,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Token = "Bearer " + token,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
                         MenuTemplate = userRole.Role.MenuTemplate,
-                        RolDescription = userRole.Role.Description,
-                        RolShortName = userRole.Role.ShortName,
+                        RoleDescription = userRole.Role.Description,
+                        RoleShortName = userRole.Role.ShortName,
+                        RoleParent = userRole.Role.Parent,
                     },
                     Person = currentUser.Person == null ? new Person() : new Person
                     {

@@ -22,8 +22,9 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string Token { get; set; }
         public string WelcomeMessage { get; set; }
         public string MenuTemplate { get; set; }
-        public string RolDescription { get; set; }
-        public string RolShortName { get; set; }
+        public string RoleDescription { get; set; }
+        public string RoleShortName { get; set; }
+        public string RoleParent { get; set; }
     }
 
     public class Person
