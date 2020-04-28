@@ -45,29 +45,39 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         }
 
-        //public override IHttpActionResult Update(dynamic entity)
-        //{
-        //    object input = JsonConvert.DeserializeObject<object>(entity.ToString());
 
-        //     dynamic Entities = GetAll();
+        public override IHttpActionResult GetAll()
+        {
+            var Users = db.Users
+                .Where(y => y.IsActive == true)
+                .Select(x => new
+                                {
+                                    Id = x.Id,
+                                    UserName = x.UserName,
+                                    EmailAddress = x.EmailAddress,
+                                    Name = x.Name,
+                                    Surname = x.Surname,
+                                    Status = x.UserStatus.Description,
+                                    Role = (from ur in db.UserRoles
+                                            where (x.Id == ur.UserId)
+                                            select (new Role
+                                            {
+                                                Description = ur.Role.Description,
+                                                Parent = ur.Role.Parent
+                                            })).FirstOrDefault(),
+                                })
+                                .OrderByDescending(x => x.Id)
+                                .ToList();
 
-        //     List<object> result = new List<object>();
+            return Ok(Users);
+        }
 
-        //     foreach (var item in Entities.Content)
-        //     {
-        //         if (item.UserName == entity["UserName"].ToString() && item.Id != Convert.ToInt64(entity["Id"].ToString()))
-        //         {
-        //             result.Add(item);
-        //             break;
-        //         }
-        //     }
 
-        //     if (result.Count() > 0)
-        //     {
-        //         throw new ArgumentException("El nombre de usuario que desea registrar ya existe");
-        //     }
 
-        //     return base.Update(input);
-        //}
+       public class Role
+        {
+            public string Description { get; set; }
+            public string Parent { get; set; }
+        }
     }
 }

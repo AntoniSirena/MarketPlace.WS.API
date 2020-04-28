@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using System;
 using System.Collections.Generic;

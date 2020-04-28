@@ -216,6 +216,7 @@
     <Compile Include="Base\Response.cs" />
     <Compile Include="Base\ResponseData.cs" />
     <Compile Include="Controllers\Authorization\LoginController.cs" />
+    <Compile Include="Controllers\Authorization\ProfileController.cs" />
     <Compile Include="Controllers\Authorization\TokenGenerator.cs" />
     <Compile Include="Controllers\Authorization\TokenValidationHandler.cs" />
     <Compile Include="Controllers\Authorization\UserController.cs" />
@@ -303,12 +304,12 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

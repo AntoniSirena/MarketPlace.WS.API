@@ -64,7 +64,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             if (currentUser == null)
             {
                 response.Code = "003";
-                response.Message = "Credenciales invalido";
+                response.Message = "Credenciales invalida";
 
                 return Ok(response);
             }
@@ -167,7 +167,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 userResponse.Profile = profile;
                 //End Profile
-
 
                 //System configuration
                 var configuration = db.SystemConfigurations.Where(x => x.IsActive == true).FirstOrDefault();

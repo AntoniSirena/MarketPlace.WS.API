@@ -13,7 +13,7 @@ namespace JS.Base.WS.API.Controllers.Generic
     {
         private IGenericRepository<T> repository;
 
-        List<object> RecordsList = new List<object>();
+        List<dynamic> RecordsList = new List<dynamic>();
 
         Response response = new Response();
 
@@ -42,7 +42,9 @@ namespace JS.Base.WS.API.Controllers.Generic
                 return NotFound();
             }
 
-            return Ok(RecordsList);
+            var result = RecordsList.OrderByDescending(i => i.Id);
+
+            return Ok(result);
         }
 
         [HttpGet]
