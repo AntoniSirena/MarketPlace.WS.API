@@ -83,7 +83,7 @@ namespace JS.Base.WS.API.Controllers.Generic
                     return Ok(response);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 response.Code = "021";
                 response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";

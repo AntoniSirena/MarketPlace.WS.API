@@ -228,6 +228,13 @@ C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.Compression.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\ApplicationInsights.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll
@@ -239,13 +246,9 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\csi.exe
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\csi.exe.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\csi.rsp
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.Win32.Primitives.dll
@@ -255,7 +258,6 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.C
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.Diagnostics.Process.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.Compression.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.FileSystem.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.FileSystem.Primitives.dll
@@ -278,10 +280,8 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.X
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.exe
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.exe.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.rsp
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Antlr3.Runtime.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.SqlServer.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.DependencyCollector.dll
@@ -337,8 +337,7 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.De
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.WindowsServer.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Web.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.addparentinrole.resources
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddColourinUserStatus.resources
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete

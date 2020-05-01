@@ -3,6 +3,7 @@ using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.SP_Parameter;
 using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
     [RoutePrefix("api/user")]
     public class UserController : GenericApiController<User>
     {
-        MyDBcontext db = new MyDBcontext();
+        private UserService UserService;
+        private MyDBcontext db;
+        private Response response;
 
-        Response response = new Response();
+        public UserController()
+        {
+            UserService = new UserService();
+            db = new MyDBcontext();
+            response = new Response();
+        }
+
 
         public override IHttpActionResult Create(dynamic entity)
         {
@@ -34,8 +43,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (ValidateUser[0].UserNameExist)
             {
-                //throw new ArgumentException("El nombre de usuario que desea registrar ya existe");
-
                 response.Code = "024";
                 response.Message = "El nombre de usuario que desea registrar ya existe";
                 return Ok(response);
@@ -45,6 +52,19 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         }
 
+        public override IHttpActionResult Update(dynamic entity)
+        {
+            object input = JsonConvert.DeserializeObject<object>(entity.ToString());
+
+            if (string.IsNullOrEmpty(entity["StatusId"].ToString()) )
+            {
+                response.Code = "444";
+                response.Message = "Debe seleccionar un estado valido";
+                return Ok(response);
+            }
+
+            return base.Update(input);
+        }
 
         public override IHttpActionResult GetAll()
         {
@@ -72,9 +92,18 @@ namespace JS.Base.WS.API.Controllers.Authorization
             return Ok(Users);
         }
 
+        [HttpGet]
+        [Route("GetUserStatuses")]
+        public IHttpActionResult GetUserStatuses()
+        {
+            var result = UserService.GetUserStatuses();
+
+            return Ok(result);
+        }
 
 
-       public class Role
+
+        public class Role
         {
             public string Description { get; set; }
             public string Parent { get; set; }

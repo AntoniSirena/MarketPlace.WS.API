@@ -7,13 +7,13 @@ namespace JS.Base.WS.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addparentinrole : IMigrationMetadata
+    public sealed partial class AddColourinUserStatus : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addparentinrole));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddColourinUserStatus));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004051525070_add parent in role"; }
+            get { return "202004301440344_Add Colour in UserStatus"; }
         }
         
         string IMigrationMetadata.Source

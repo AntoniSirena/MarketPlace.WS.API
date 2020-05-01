@@ -35,11 +35,10 @@ namespace JS.Base.WS.API.Base
         {
             obj.CreationTime = DateTime.Now;
             obj.CreatorUserId = CurrentUser.GetId();
-            obj.StatusId = 3;
             obj.IsActive = true;            
 
             //Convirtiendo el objeto dinamico a la entidad acutal
-            T entity = JsonConvert.DeserializeObject<T>(obj.ToStrStatusIding());
+            T entity = JsonConvert.DeserializeObject<T>(obj.ToString());
 
             table.Attach(entity);
             table.Add(entity);

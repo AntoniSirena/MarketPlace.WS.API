@@ -23,9 +23,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
     {
         MyDBcontext db = new MyDBcontext();
 
+        [Authorize]
         [HttpGet]
-        [Route("echoping")]
-        public IHttpActionResult EchoPing()
+        [Route("readyToRequest")]
+        public IHttpActionResult ReadyToRequest()
         {
             return Ok(true);
         }

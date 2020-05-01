@@ -3,6 +3,8 @@ using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.PersonProfile;
+using JS.Base.WS.API.Services;
+using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,16 @@ namespace JS.Base.WS.API.Controllers.Authorization
     [Authorize]
     public class ProfileController : ApiController
     {
+        private ProfileService ProfileService;
+
+        public ProfileController()
+        {
+            ProfileService = new ProfileService();
+        }
+
         MyDBcontext db = new MyDBcontext();
         long currenntUserId = CurrentUser.GetId();
+
 
         [HttpGet]
         [Route("GetGenders")]
