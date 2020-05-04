@@ -232,7 +232,10 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
     <Compile Include="DTO\Common\GenderDto.cs" />
+    <Compile Include="DTO\Common\RoleDto.cs" />
+    <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
     <Compile Include="DTO\SP_Parameter\ValidateUserName.cs" />
     <Compile Include="DTO\Response\User\Permission.cs" />
@@ -262,9 +265,13 @@
     <Compile Include="Models\PersonProfile\LocatorType.cs" />
     <Compile Include="Models\PersonProfile\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CommonService.cs" />
+    <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
+    <Compile Include="Services\IServices\IUserRoleService.cs" />
     <Compile Include="Services\IServices\IUserService.cs" />
     <Compile Include="Services\ProfileService.cs" />
+    <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
   </ItemGroup>
