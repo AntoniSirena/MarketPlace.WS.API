@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Controllers.Authorization;
+﻿using JS.Base.WS.API.Base.IBase;
+using JS.Base.WS.API.Controllers.Authorization;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;

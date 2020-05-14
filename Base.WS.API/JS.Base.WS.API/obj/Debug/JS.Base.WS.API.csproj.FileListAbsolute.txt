@@ -337,10 +337,11 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.De
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.WindowsServer.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Web.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddColourinUserStatus.resources
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddConfigurationParameter.resources
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache

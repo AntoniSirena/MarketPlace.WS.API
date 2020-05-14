@@ -5,16 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace JS.Base.WS.API.Models.Permission
+namespace JS.Base.WS.API.Models
 {
-    public class Role: Audit
+    public class ConfigurationParameter: Audit
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
         public string Description { get; set; }
-        public string ShortName { get; set; }
-        public string MenuTemplate { get; set; }
-        public string Parent { get; set; }
         public bool Enabled { get; set; }
     }
 }

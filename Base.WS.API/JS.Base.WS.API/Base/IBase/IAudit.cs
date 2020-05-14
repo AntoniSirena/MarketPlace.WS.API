@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JS.Base.WS.API.Base
+namespace JS.Base.WS.API.Base.IBase
 {
     interface IAudit
     {
