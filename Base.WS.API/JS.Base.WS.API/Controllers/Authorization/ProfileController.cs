@@ -95,7 +95,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
             }
             else
             {
-                return NotFound();
+                var result = new { };
+                return Ok(result = null);
             }
         }
 
@@ -119,7 +120,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
             }
             else
             {
-                return NotFound();
+                var result = new { };
+                return Ok(result = null);
             }
         }
 

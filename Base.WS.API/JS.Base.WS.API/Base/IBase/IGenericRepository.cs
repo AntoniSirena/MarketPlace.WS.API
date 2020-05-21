@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JS.Base.WS.API.Base
+namespace JS.Base.WS.API.Base.IBase
 {
     public interface IGenericRepository<T> where T : class
     {

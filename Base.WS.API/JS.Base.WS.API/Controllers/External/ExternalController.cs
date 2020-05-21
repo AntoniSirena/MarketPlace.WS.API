@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using JS.Base.WS.API.DTO.Request;
 using JS.Base.WS.API.Templates;
 using Newtonsoft.Json;
+using JS.Base.WS.API.Services;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -21,7 +22,16 @@ namespace JS.Base.WS.API.Controllers.External
     [AllowAnonymous]
     public class ExternalController : ApiController
     {
-        MyDBcontext db = new MyDBcontext();
+        MyDBcontext db;
+        private ConfigurationParameterService ConfigurationParameterService;
+        private UserRoleService UserRoleService;
+
+        public ExternalController()
+        {
+            db = new MyDBcontext();
+            ConfigurationParameterService = new ConfigurationParameterService();
+            UserRoleService = new UserRoleService();
+        }
 
         [HttpPost]
         [Route("CreateUser")]
@@ -49,17 +59,23 @@ namespace JS.Base.WS.API.Controllers.External
                 return Ok(response);
             }
 
-            var PendigToActive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToActive).FirstOrDefault();
+            string StatusExternalUser = Constants.ConfigurationParameter.StatusExternalUser;
+            var CurrentStatus = db.UserStatus.Where(x => x.ShortName == StatusExternalUser).FirstOrDefault();
 
             var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();
 
-            user.StatusId = PendigToActive.Id;
+            user.StatusId = CurrentStatus.Id;
             user.CreationTime = DateTime.Now;
             user.CreatorUserId = systemUser.Id;
             user.IsActive = true;
 
-            db.Users.Add(user);
+           var UserResult = db.Users.Add(user);
             db.SaveChanges();
+
+            //Create rol by default
+            #region Create rol
+            bool UserRol = UserRoleService.CreateUserRol(UserResult.Id);
+            #endregion
 
             response.Message = "Usuario creado con exito";
 
@@ -72,8 +88,8 @@ namespace JS.Base.WS.API.Controllers.External
         {
             Response response = new Response();
 
-            var enterpriseResult = db.SystemConfigurations.Where(x => x.IsActive == true).FirstOrDefault();
-            var configuration = JsonConvert.DeserializeObject<Configuration>(enterpriseResult.Information.ToString());
+            var enterpriseResult = Constants.ConfigurationParameter.SystemConfigurationTemplate;
+            var configuration = JsonConvert.DeserializeObject<Configuration>(enterpriseResult);
 
             string cadena = JsonConvert.SerializeObject(configuration.Data.Enterprise);
             var enterprise = JsonConvert.DeserializeObject<Enterprise>(cadena.ToString());

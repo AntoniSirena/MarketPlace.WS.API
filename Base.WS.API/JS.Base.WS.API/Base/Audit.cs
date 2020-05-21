@@ -1,4 +1,4 @@
-﻿using JS.Base.WS.API.Base;
+﻿using JS.Base.WS.API.Base.IBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;

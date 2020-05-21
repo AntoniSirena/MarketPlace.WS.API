@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.Base.IBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +84,7 @@ namespace JS.Base.WS.API.Controllers.Generic
                     return Ok(response);
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 response.Code = "021";
                 response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";

@@ -4,6 +4,7 @@ using JS.Base.WS.API.DTO;
 using JS.Base.WS.API.DTO.Response.User;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Services;
 using JS.Base.WS.API.Templates;
 using Newtonsoft.Json;
 using System;
@@ -21,7 +22,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
-        MyDBcontext db = new MyDBcontext();
+        private MyDBcontext db;
+        private ConfigurationParameterService ConfigurationParameterService;
+
+        public LoginController()
+        {
+            db = new MyDBcontext();
+            ConfigurationParameterService = new ConfigurationParameterService();
+        }
 
         [Authorize]
         [HttpGet]
@@ -148,7 +156,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Image = currentUser.Image,
                         Token = "Bearer " + token,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
-                        MenuTemplate = userRole.Role.MenuTemplate,
+                        MenuTemplate = string.Empty,
                         RoleDescription = userRole.Role.Description,
                         RoleShortName = userRole.Role.ShortName,
                         RoleParent = userRole.Role.Parent,
@@ -166,13 +174,31 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     }                    
                 };
 
+                //Get menu template
+                var menu = db.UserRoles
+                              .Where(x => x.UserId == currentUser.Id && x.Role.Enabled == true)
+                              .Select(x => x.Role.MenuTemplate)
+                              .FirstOrDefault();
+
+                if (menu != null)
+                {
+                    profile.User.MenuTemplate = menu;
+                }
+
                 userResponse.Profile = profile;
                 //End Profile
 
                 //System configuration
-                var configuration = db.SystemConfigurations.Where(x => x.IsActive == true).FirstOrDefault();
-                var resulConfiguration = JsonConvert.DeserializeObject<Configuration>(configuration.Information.ToString());
-                userResponse.Configuration = resulConfiguration;
+                string configuration = Constants.ConfigurationParameter.SystemConfigurationTemplate;
+                if (configuration != null)
+                {
+                    var resulConfiguration = JsonConvert.DeserializeObject<Configuration>(configuration);
+                    userResponse.Configuration = resulConfiguration;
+                }
+                else
+                {
+                    userResponse.Configuration = null;
+                }
 
                 //End System configuration
 
