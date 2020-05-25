@@ -80,14 +80,14 @@ namespace JS.Base.WS.API.Controllers.Generic
                     repository.Create(entity);
                     repository.Save();
 
-                    response.Message = "Registro creado con exito";
+                    response.Message = "Registro creado con éxito";
                     return Ok(response);
                 }
             }
             catch(Exception)
             {
                 response.Code = "021";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Message = "Estimado usuario ha ocurrido un error procesando su solicitud";
             }
 
             return Ok(response);
@@ -104,14 +104,14 @@ namespace JS.Base.WS.API.Controllers.Generic
                     repository.Update(entity);
                     repository.Save();
 
-                    response.Message = "Registro actualizado con exito";
+                    response.Message = "Registro actualizado con éxito";
                     return Ok(response);
                 }
             }
             catch
             {
                 response.Code = "022";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Message = "Estimado usuario ha ocurrido un error procesando su solicitud";
             }
             return Ok(response);
         }
@@ -132,13 +132,13 @@ namespace JS.Base.WS.API.Controllers.Generic
                 repository.Delete(id);
                 repository.Save();
 
-                response.Message = "Registro eliminado con exito";
+                response.Message = "Registro eliminado con éxito";
                 return Ok(response);
             }
             catch
             {
                 response.Code = "023";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Message = "Estimado usuario ha ocurrido un error procesando su solicitud";
             }
             return Ok(response);
 

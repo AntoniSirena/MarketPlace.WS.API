@@ -14,7 +14,7 @@ namespace JS.Base.WS.API.Services
         public string GetParameter(string Name)
         {
             string result = db.ConfigurationParameters
-                            .Where(x => x.Name == Name && x.Enabled == true)
+                            .Where(x => x.Name == Name && x.Enabled == true && x.IsActive == true)
                             .Select(x => x.Value)
                             .FirstOrDefault();
             return result;

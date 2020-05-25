@@ -78,6 +78,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                                     Name = x.Name,
                                     Surname = x.Surname,
                                     Status = x.UserStatus.Description,
+                                    StatusColor = x.UserStatus.Colour,
                                     Role = (from ur in db.UserRoles
                                             where (x.Id == ur.UserId)
                                             select (new Role
@@ -101,6 +102,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetUserDetails/{userId}")]
+        public IHttpActionResult GetUserDetails(long userId)
+        {
+            var result = UserService.GetUserDetails(userId);
+
+            return Ok(result);
+        }
 
 
         public class Role

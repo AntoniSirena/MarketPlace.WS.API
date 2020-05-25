@@ -227,6 +227,7 @@
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Permission\UserRoleController.cs" />
+    <Compile Include="Controllers\LocatorController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
     <Compile Include="DTO\SP_Parameter\ValidateUserName.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Helpers\Security.cs" />
     <Compile Include="Migrations\202004301440344_Add Colour in UserStatus.cs" />
     <Compile Include="Migrations\202004301440344_Add Colour in UserStatus.Designer.cs">
       <DependentUpon>202004301440344_Add Colour in UserStatus.cs</DependentUpon>
@@ -274,9 +277,11 @@
     <Compile Include="Services\ConfigurationParameterService.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
+    <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
     <Compile Include="Services\IServices\IUserService.cs" />
+    <Compile Include="Services\LocatorService.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />

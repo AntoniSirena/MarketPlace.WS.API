@@ -23,13 +23,11 @@ namespace JS.Base.WS.API.Controllers.External
     public class ExternalController : ApiController
     {
         MyDBcontext db;
-        private ConfigurationParameterService ConfigurationParameterService;
         private UserRoleService UserRoleService;
 
         public ExternalController()
         {
             db = new MyDBcontext();
-            ConfigurationParameterService = new ConfigurationParameterService();
             UserRoleService = new UserRoleService();
         }
 
@@ -46,12 +44,12 @@ namespace JS.Base.WS.API.Controllers.External
                 response.Code = "007";
             }
 
-            var ValidateUserName = db.Database.SqlQuery<ValidateUserName>(
+            var validateUserName = db.Database.SqlQuery<ValidateUserName>(
                "Exec SP_ValidateUserName @UserName",
                new SqlParameter() { ParameterName = "@UserName", SqlDbType = System.Data.SqlDbType.Text, Value = (object)user.UserName ?? DBNull.Value }
              ).ToList();
 
-            if (ValidateUserName[0].UserNameExist)
+            if (validateUserName[0].UserNameExist)
             {
                 response.Message = "El nombre de usuario que desea registrar ya existe";
                 response.Code = "001";
@@ -97,6 +95,15 @@ namespace JS.Base.WS.API.Controllers.External
             response.Data = enterprise;
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetValueRegisterButton")]
+        public IHttpActionResult GetValueRegisterButton()
+        {
+            string result = Constants.ConfigurationParameter.EnableRegistrationButton;
+
+            return Ok(result);
         }
     }
 }

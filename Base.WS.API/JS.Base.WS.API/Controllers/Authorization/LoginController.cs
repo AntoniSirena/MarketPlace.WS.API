@@ -202,7 +202,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 //End System configuration
 
-                response.Message = "Usuario autenticado con exito.";
+                response.Message = "Usuario autenticado con éxito";
                 response.Data = userResponse;
 
                 return Ok(response);

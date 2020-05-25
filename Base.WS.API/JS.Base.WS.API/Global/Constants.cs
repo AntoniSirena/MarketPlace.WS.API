@@ -32,10 +32,14 @@ namespace JS.Base.WS.API.Global
         public static class ConfigurationParameter
         {
             public static string SystemConfigurationTemplate { get { return ConfigurationParameterService.GetParameter("SystemConfigurationTemplate"); } }
+
             public static string StatusExternalUser { get { return ConfigurationParameterService.GetParameter("StatusExternalUser") ?? UserStatuses.PendingToActive; } }
+
             public static string LoginTime { get { return ConfigurationParameterService.GetParameter("LoginTime")?? "5"; } }
+
             public static string RoleExternalUser { get { return ConfigurationParameterService.GetParameter("RoleExternalUser") ?? "Client"; } }
 
+            public static string EnableRegistrationButton { get { return ConfigurationParameterService.GetParameter("EnableRegistrationButton") ?? "0"; } }
         }
 
     }

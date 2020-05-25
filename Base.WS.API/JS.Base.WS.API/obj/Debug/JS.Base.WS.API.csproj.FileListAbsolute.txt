@@ -228,6 +228,12 @@ C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
 C:\Git\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.dll
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.xml
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddColourinUserStatus.resources
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddConfigurationParameter.resources
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
+C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\ApplicationInsights.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll
@@ -281,7 +287,6 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.rsp
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe.config
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Antlr3.Runtime.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.SqlServer.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.DependencyCollector.dll
@@ -312,7 +317,6 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\System.Web.WebP
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\System.Web.WebPages.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\System.Web.WebPages.Razor.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\WebGrease.dll
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\EntityFramework.SqlServer.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.IdentityModel.JsonWebTokens.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.IdentityModel.Logging.xml
@@ -337,10 +341,6 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.De
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.WindowsServer.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Web.xml
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddColourinUserStatus.resources
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.AddConfigurationParameter.resources
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
-C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb

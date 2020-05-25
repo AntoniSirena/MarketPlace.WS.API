@@ -17,14 +17,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
     public class ProfileController : ApiController
     {
         private ProfileService ProfileService;
+        private MyDBcontext db;
+        private long currentUserId = CurrentUser.GetId();
 
         public ProfileController()
         {
             ProfileService = new ProfileService();
+            db = new MyDBcontext();
         }
-
-        MyDBcontext db = new MyDBcontext();
-        long currenntUserId = CurrentUser.GetId();
 
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("GetInfoCurrentUser")]
         public IHttpActionResult GetInfoCurrentUser()
         {
-            var result = db.Users.Where(x => x.Id == currenntUserId).Select(x => new
+            var result = db.Users.Where(x => x.Id == currentUserId).Select(x => new
             {
                 UserName = x.UserName,
                 Password = x.Password,
@@ -76,7 +76,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("GetInfoCurrentPerson")]
         public IHttpActionResult GetInfoCurrentPerson()
         {
-            var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+            var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
             if (currentUser?.PersonId > 0)
             {
@@ -104,17 +104,19 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("GetInfoCurrentLocators")]
         public IHttpActionResult GetInfoCurrentLocators()
         {
-            var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+            var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
             if (currentUser?.PersonId > 0)
             {
-                var result = db.Locators.Where(x => x.PersonId == currentUser.PersonId).Select(x => new
+                var result = db.Locators.Where(x => x.PersonId == currentUser.PersonId && x.IsActive == true).Select(x => new
                 {
+                    Id = x.Id,
                     LocatorTypeId = x.LocatorTypeId,
                     LocatorTypeDescription = x.LocatorType.Description,
                     Description = x.Description,
                     IsMain = x.IsMain
-                }).ToList();
+                }).ToList()
+                .OrderByDescending(x => x.Id);
 
                 return Ok(result);
             }
@@ -133,7 +135,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             try
             {
-                var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+                var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
                 currentUser.UserName = request.UserName;
                 currentUser.Password = request.Password;
@@ -141,7 +143,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 currentUser.Surname = request.SurName;
                 currentUser.EmailAddress = request.EmailAddress;
                 currentUser.LastModificationTime = DateTime.Now;
-                currentUser.LastModifierUserId = currenntUserId;
+                currentUser.LastModifierUserId = currentUserId;
                 db.SaveChanges();
 
                 response.Message = "Registro actualizado con exito";
@@ -165,7 +167,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             try
             {
-                var currentUser = db.Users.Where(x => x.Id == currenntUserId).FirstOrDefault();
+                var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
                 if (currentUser?.PersonId > 0)
                 {
@@ -179,7 +181,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     currentPerson.BirthDate = request.BirthDate;
                     currentPerson.GenderId = request.GenderId;
                     currentPerson.LastModificationTime = DateTime.Now;
-                    currentPerson.LastModifierUserId = currenntUserId;
+                    currentPerson.LastModifierUserId = currentUserId;
 
                     db.SaveChanges();
 
@@ -198,7 +200,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     person.BirthDate = request.BirthDate;
                     person.GenderId = request.GenderId;
                     person.CreationTime = DateTime.Now;
-                    person.CreatorUserId = currenntUserId;
+                    person.CreatorUserId = currentUserId;
                     person.IsActive = true;
                     person.IsDeleted = false;
 
