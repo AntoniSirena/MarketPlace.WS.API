@@ -1,5 +1,7 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.User;
+using JS.Base.WS.API.Global;
+using JS.Base.WS.API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,8 @@ namespace JS.Base.WS.API.Services
 {
     public class UserService
     {
-        MyDBcontext db = new MyDBcontext();
+        private MyDBcontext db = new MyDBcontext();
+        private long currentUserId = CurrentUser.GetId();
 
         public List<UserStatus> GetUserStatuses()
         {
@@ -40,6 +43,14 @@ namespace JS.Base.WS.API.Services
                     Surname = x.Surname,
                     EmailAddress = x.EmailAddress,
                     Image = x.Image,
+                    LastLoginTime = x.LastLoginTime,
+                    LastLoginTimeEnd = x.LastLoginTimeEnd,
+                    IsOnline = x.IsOnline,
+                    Role = db.UserRoles.Where(p => p.UserId == x.Id).Select(i => new RoleDto
+                    {
+                        Description = i.Role.Description,
+                        Parent = i.Role.Parent,
+                    }).FirstOrDefault(),
                     Person = db.People.Where(y => y.Id == x.PersonId).Select(y => new Person
                     {
                         FirstName = y.FirstName,
@@ -70,6 +81,14 @@ namespace JS.Base.WS.API.Services
                     Surname = user.Surname,
                     EmailAddress = user.EmailAddress,
                     Image = user.Image,
+                    LastLoginTime = user.LastLoginTime,
+                    LastLoginTimeEnd = user.LastLoginTimeEnd,
+                    IsOnline = user.IsOnline,
+                    Role = db.UserRoles.Where(p => p.UserId == user.Id).Select(i => new RoleDto
+                    {
+                        Description = i.Role.Description,
+                        Parent = i.Role.Parent,
+                    }).FirstOrDefault(),
                     Person = new Person
                     {
                         FirstName = string.Empty,
@@ -95,6 +114,30 @@ namespace JS.Base.WS.API.Services
 
 
 
+
+            return result;
+        }
+
+        public bool UpdateUserLogInOut(bool isLogIn, string userName)
+        {
+            bool result = true;
+
+            if (isLogIn)
+            {
+                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
+                user.LastLoginTime = DateTime.Now;
+                user.IsOnline = true;
+
+                db.SaveChanges();
+            }
+            else
+            {
+                var user = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
+                user.LastLoginTimeEnd = DateTime.Now;
+                user.IsOnline = false;
+
+                db.SaveChanges();
+            }
 
             return result;
         }

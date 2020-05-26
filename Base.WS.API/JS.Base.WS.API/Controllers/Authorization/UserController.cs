@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Response.User;
 using JS.Base.WS.API.DTO.SP_Parameter;
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Services;
@@ -18,7 +19,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
     [Authorize]
     [RoutePrefix("api/user")]
-    public class UserController : GenericApiController<User>
+    public class UserController : GenericApiController<Models.Authorization.User>
     {
         private UserService UserService;
         private MyDBcontext db;
@@ -56,7 +57,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         {
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
 
-            if (string.IsNullOrEmpty(entity["StatusId"].ToString()) )
+            if (string.IsNullOrEmpty(entity["StatusId"].ToString()))
             {
                 response.Code = "444";
                 response.Message = "Debe seleccionar un estado valido";
@@ -70,25 +71,27 @@ namespace JS.Base.WS.API.Controllers.Authorization
         {
             var Users = db.Users
                 .Where(y => y.IsActive == true)
-                .Select(x => new
-                                {
-                                    Id = x.Id,
-                                    UserName = x.UserName,
-                                    EmailAddress = x.EmailAddress,
-                                    Name = x.Name,
-                                    Surname = x.Surname,
-                                    Status = x.UserStatus.Description,
-                                    StatusColor = x.UserStatus.Colour,
-                                    Role = (from ur in db.UserRoles
-                                            where (x.Id == ur.UserId)
-                                            select (new Role
-                                            {
-                                                Description = ur.Role.Description,
-                                                Parent = ur.Role.Parent
-                                            })).FirstOrDefault(),
-                                })
-                                .OrderByDescending(x => x.Id)
-                                .ToList();
+                .Select(x => new UserDto
+                {
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    EmailAddress = x.EmailAddress,
+                    Name = x.Name,
+                    Surname = x.Surname,
+                    Status = x.UserStatus.Description,
+                    StatusColor = x.UserStatus.Colour,
+                    LastLoginTime = x.LastLoginTime,
+                    LastLoginTimeEnd = x.LastLoginTimeEnd,
+                    IsOnline = x.IsOnline,
+                    Role = (from ur in db.UserRoles
+                            where (x.Id == ur.UserId)
+                            select (new RoleDto
+                            {
+                                Description = ur.Role.Description,
+                                Parent = ur.Role.Parent
+                            })).FirstOrDefault(),
+                }).OrderByDescending(x => x.Id)
+                  .ToList();
 
             return Ok(Users);
         }
@@ -111,11 +114,5 @@ namespace JS.Base.WS.API.Controllers.Authorization
             return Ok(result);
         }
 
-
-        public class Role
-        {
-            public string Description { get; set; }
-            public string Parent { get; set; }
-        }
     }
 }

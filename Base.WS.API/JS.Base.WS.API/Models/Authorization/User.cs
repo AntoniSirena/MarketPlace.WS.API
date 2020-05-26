@@ -22,6 +22,10 @@ namespace JS.Base.WS.API.Models.Authorization
         public int StatusId { get; set; }
         public long? PersonId { get; set; }
         public string Image { get; set; }
+        public DateTime? LastLoginTime { get; set; }
+        public DateTime? LastLoginTimeEnd { get; set; }
+        public bool IsOnline { get; set; }
+        public string DiviceIP { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual UserStatus UserStatus { get; set; }

@@ -24,11 +24,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
     {
         private MyDBcontext db;
         private ConfigurationParameterService ConfigurationParameterService;
+        private UserService UserService;
 
         public LoginController()
         {
             db = new MyDBcontext();
             ConfigurationParameterService = new ConfigurationParameterService();
+            UserService = new UserService();
         }
 
         [Authorize]
@@ -175,14 +177,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 };
 
                 //Get menu template
-                var menu = db.UserRoles
-                              .Where(x => x.UserId == currentUser.Id && x.Role.Enabled == true)
-                              .Select(x => x.Role.MenuTemplate)
+                var _userRole = db.UserRoles
+                              .Where(x => x.UserId == currentUser.Id)
                               .FirstOrDefault();
 
-                if (menu != null)
+                var menuTemplate = db.Roles.Where(x => x.ShortName == _userRole.Role.Parent && x.Enabled == true)
+                               .Select(x => x.MenuTemplate)
+                               .FirstOrDefault();
+
+                if (menuTemplate != null)
                 {
-                    profile.User.MenuTemplate = menu;
+                    profile.User.MenuTemplate = menuTemplate;
                 }
 
                 userResponse.Profile = profile;
@@ -205,6 +210,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 response.Message = "Usuario autenticado con éxito";
                 response.Data = userResponse;
 
+               //Update user
+               bool UpdateUserLogIn = UserService.UpdateUserLogInOut(true, user.UserName);
+
                 return Ok(response);
             }
             else
@@ -213,6 +221,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
             }
         }
 
+
+        [HttpPost]
+        [Route("logOut")]
+        [Authorize]
+        public IHttpActionResult logOut()
+        {
+            //Update user
+            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, string.Empty);
+
+            return Ok(UpdateUserLogIn);
+        }
 
         public class UserRequest
         {

@@ -10,6 +10,7 @@ namespace JS.Base.WS.API.Services.IServices
     public interface IUserService
     {
         List<UserStatus> GetUserStatuses();
+        bool UpdateUserLogInOut(bool isLogIn, string userName);
 
     }
 }

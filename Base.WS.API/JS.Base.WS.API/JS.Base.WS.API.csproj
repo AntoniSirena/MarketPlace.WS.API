@@ -250,13 +250,13 @@
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
     <Compile Include="Helpers\Security.cs" />
-    <Compile Include="Migrations\202004301440344_Add Colour in UserStatus.cs" />
-    <Compile Include="Migrations\202004301440344_Add Colour in UserStatus.Designer.cs">
-      <DependentUpon>202004301440344_Add Colour in UserStatus.cs</DependentUpon>
+    <Compile Include="Migrations\202005252139589_update user.cs" />
+    <Compile Include="Migrations\202005252139589_update user.Designer.cs">
+      <DependentUpon>202005252139589_update user.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005052359579_Add ConfigurationParameter.cs" />
-    <Compile Include="Migrations\202005052359579_Add ConfigurationParameter.Designer.cs">
-      <DependentUpon>202005052359579_Add ConfigurationParameter.cs</DependentUpon>
+    <Compile Include="Migrations\202005260205237_update user01.cs" />
+    <Compile Include="Migrations\202005260205237_update user01.Designer.cs">
+      <DependentUpon>202005260205237_update user01.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -374,11 +374,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004301440344_Add Colour in UserStatus.resx">
-      <DependentUpon>202004301440344_Add Colour in UserStatus.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005252139589_update user.resx">
+      <DependentUpon>202005252139589_update user.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005052359579_Add ConfigurationParameter.resx">
-      <DependentUpon>202005052359579_Add ConfigurationParameter.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005260205237_update user01.resx">
+      <DependentUpon>202005260205237_update user01.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

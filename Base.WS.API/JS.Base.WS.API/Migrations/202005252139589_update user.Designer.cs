@@ -7,13 +7,13 @@ namespace JS.Base.WS.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddConfigurationParameter : IMigrationMetadata
+    public sealed partial class updateuser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddConfigurationParameter));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateuser));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005052359579_Add ConfigurationParameter"; }
+            get { return "202005252139589_update user"; }
         }
         
         string IMigrationMetadata.Source

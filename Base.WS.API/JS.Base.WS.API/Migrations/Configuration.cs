@@ -35,9 +35,9 @@ namespace JS.Base.WS.API.Migrations
 
             context.UserStatus.AddOrUpdate(
                 x => x.ShortName,
-                new UserStatus { Description = "Activo", ShortName = "Active", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now},
-                new UserStatus { Description = "Inactivo", ShortName = "Inactive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now},
-                new UserStatus { Description = "Pendiente de activar", ShortName = "PendingToActive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new UserStatus { Description = "Activo", ShortName = "Active", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(49, 233, 95)" },
+                new UserStatus { Description = "Inactivo", ShortName = "Inactive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(243, 41, 41)" },
+                new UserStatus { Description = "Pendiente de activar", ShortName = "PendingToActive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(243, 183, 71)" }
                 );
 
             context.Genders.AddOrUpdate(

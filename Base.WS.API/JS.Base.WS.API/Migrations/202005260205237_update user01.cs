@@ -3,16 +3,16 @@ namespace JS.Base.WS.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddColourinUserStatus : DbMigration
+    public partial class updateuser01 : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.UserStatus", "Colour", c => c.String());
+            AddColumn("dbo.Users", "LastLoginTimeEnd", c => c.DateTime());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.UserStatus", "Colour");
+            DropColumn("dbo.Users", "LastLoginTimeEnd");
         }
     }
 }
