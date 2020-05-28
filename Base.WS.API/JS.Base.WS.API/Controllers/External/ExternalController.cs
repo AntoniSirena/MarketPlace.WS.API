@@ -15,6 +15,7 @@ using JS.Base.WS.API.DTO.Request;
 using JS.Base.WS.API.Templates;
 using Newtonsoft.Json;
 using JS.Base.WS.API.Services;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -36,6 +37,38 @@ namespace JS.Base.WS.API.Controllers.External
         public IHttpActionResult CreateUser(User user)
         {
             Response response = new Response();
+
+            //Validate if required securityCodeExternaRegister
+            string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
+            if (securityCodeExternaRegister.Equals("1"))
+            {
+                if (string.IsNullOrEmpty(user.Code))
+                {
+                    response.Code = InternalResponseCodeError.Code308;
+                    response.Message = InternalResponseCodeError.Message308;
+
+                    return Ok(response);
+                }
+            }
+
+            //Validate security code
+            bool resultValidateSecCode = UserRoleService.ValidateSecurityCode(user.Code);
+            if (!resultValidateSecCode)
+            {
+                if (securityCodeExternaRegister.Equals("0"))
+                {
+                    response.Code = InternalResponseCodeError.Code306;
+                    response.Message = InternalResponseCodeError.Message306;
+                }
+                else
+                {
+                    response.Code = InternalResponseCodeError.Code307;
+                    response.Message = InternalResponseCodeError.Message307;
+                }
+
+                return Ok(response);
+            }
+
 
             if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.EmailAddress) || 
                string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Surname) )
@@ -70,10 +103,14 @@ namespace JS.Base.WS.API.Controllers.External
            var UserResult = db.Users.Add(user);
             db.SaveChanges();
 
-            //Create rol by default
+
+            //Create rol
             #region Create rol
-            bool UserRol = UserRoleService.CreateUserRol(UserResult.Id);
+
+            bool UserRol = UserRoleService.CreateUserRol(UserResult.Id, user.Code);
+
             #endregion
+
 
             response.Message = "Usuario creado con exito";
 

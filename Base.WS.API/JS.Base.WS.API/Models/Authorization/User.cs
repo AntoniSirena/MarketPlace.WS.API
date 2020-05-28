@@ -26,6 +26,7 @@ namespace JS.Base.WS.API.Models.Authorization
         public DateTime? LastLoginTimeEnd { get; set; }
         public bool IsOnline { get; set; }
         public string DiviceIP { get; set; }
+        public string Code { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual UserStatus UserStatus { get; set; }

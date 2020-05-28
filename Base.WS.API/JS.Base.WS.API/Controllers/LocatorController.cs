@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers
 {
@@ -45,16 +46,16 @@ namespace JS.Base.WS.API.Controllers
             }
             else
             {
-                response.Code = "444";
-                response.Message = "Favor debes completar los datos de persona, para crear localizadores";
+                response.Code = InternalResponseCodeError.Code305;
+                response.Message = InternalResponseCodeError.Message305;
                 return Ok(response);
             }
 
             bool recordExists = db.Locators.Where(x => x.PersonId == currentUser.PersonId).ToList().Exists(x => x.Description == inputDescription);
             if (recordExists)
             {
-                response.Code = "446";
-                response.Message = "Registro ya existe";
+                response.Code = InternalResponseCodeError.Code302;
+                response.Message = InternalResponseCodeError.Message302;
                 return Ok(response);
             }
 
