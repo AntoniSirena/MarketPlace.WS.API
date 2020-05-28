@@ -62,10 +62,11 @@ namespace JS.Base.WS.API.Services
                         Gender = y.Gender.Description,
                         Locators = db.Locators.Where(z => z.PersonId == y.Id).Select(z => new Locators
                         {
+                            Id = z.Id,
                             Description = z.Description,
                             Type = z.LocatorType.Description,
                             IsMain = z.IsMain,
-                        }).ToList()
+                        }).OrderByDescending(m => m.Id).ToList(),
 
                     }).FirstOrDefault()
 
@@ -132,7 +133,7 @@ namespace JS.Base.WS.API.Services
             }
             else
             {
-                var user = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
+                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
                 user.LastLoginTimeEnd = DateTime.Now;
                 user.IsOnline = false;
 

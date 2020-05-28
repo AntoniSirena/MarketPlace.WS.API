@@ -224,11 +224,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         [HttpPost]
         [Route("logOut")]
-        [Authorize]
-        public IHttpActionResult logOut()
+        public IHttpActionResult logOut([FromBody] string userName)
         {
             //Update user
-            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, string.Empty);
+            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, userName);
 
             return Ok(UpdateUserLogIn);
         }
