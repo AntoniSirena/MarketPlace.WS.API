@@ -60,6 +60,7 @@ namespace JS.Base.WS.API.Services
                         FullName = y.FullName,
                         BirthDate = y.BirthDate,
                         Gender = y.Gender.Description,
+                        PersonType = db.UserRoles.Where(m => m.UserId == x.Id).Select(m => m.Role.PersonType.Description).FirstOrDefault(),
                         Locators = db.Locators.Where(z => z.PersonId == y.Id).Select(z => new Locators
                         {
                             Id = z.Id,

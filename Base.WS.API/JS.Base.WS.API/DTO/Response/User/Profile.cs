@@ -36,6 +36,7 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string BirthDate { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }
+        public string PersonType { get; set; }
         public List<Locators> Locators { get; set; }
     }
 

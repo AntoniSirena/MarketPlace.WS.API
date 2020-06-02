@@ -35,7 +35,7 @@ namespace JS.Base.WS.API.Controllers
         public override IHttpActionResult Create(dynamic entity)
         {
             string inputCode = entity["Code"];
-            var personTypeCode = db.PersonTypes.Where(x => x.Code == inputCode).FirstOrDefault();
+            var personTypeCode = db.PersonTypes.Where(x => x.Code == inputCode && x.IsActive == true).FirstOrDefault();
 
             if (personTypeCode != null)
             {
@@ -46,7 +46,7 @@ namespace JS.Base.WS.API.Controllers
             }
 
             string inputDescription = entity["Description"];
-            var personTypeDescription = db.PersonTypes.Where(x => x.Description == inputDescription).FirstOrDefault();
+            var personTypeDescription = db.PersonTypes.Where(x => x.Description == inputDescription && x.IsActive == true).FirstOrDefault();
 
             if (personTypeDescription != null)
             {
@@ -64,14 +64,19 @@ namespace JS.Base.WS.API.Controllers
         public override IHttpActionResult Update(dynamic entity)
         {
             string inputCode = entity["Code"];
+            int idInput = Convert.ToInt32(entity["Id"]);
             var personTypeCode = db.PersonTypes.Where(x => x.Code == inputCode).FirstOrDefault();
 
             if (personTypeCode != null)
             {
-                response.Code = InternalResponseCodeError.Code303;
-                response.Message = InternalResponseCodeError.Message303;
+                if (idInput != personTypeCode.Id)
+                {
+                    response.Code = InternalResponseCodeError.Code303;
+                    response.Message = InternalResponseCodeError.Message303;
 
-                return Ok(response);
+                    return Ok(response);
+                }
+
             }
 
             string inputDescription = entity["Description"];
@@ -79,10 +84,13 @@ namespace JS.Base.WS.API.Controllers
 
             if (personTypeDescription != null)
             {
-                response.Code = InternalResponseCodeError.Code304;
-                response.Message = InternalResponseCodeError.Message304;
+                if (idInput != personTypeDescription.Id)
+                {
+                    response.Code = InternalResponseCodeError.Code304;
+                    response.Message = InternalResponseCodeError.Message304;
 
-                return Ok(response);
+                    return Ok(response);
+                }
             }
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());

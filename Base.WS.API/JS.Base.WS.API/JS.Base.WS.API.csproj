@@ -237,6 +237,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
@@ -255,13 +256,13 @@
     <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
       <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005280557090_update role.cs" />
-    <Compile Include="Migrations\202005280557090_update role.Designer.cs">
-      <DependentUpon>202005280557090_update role.cs</DependentUpon>
+    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
+    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
+      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005280659218_update user.cs" />
-    <Compile Include="Migrations\202005280659218_update user.Designer.cs">
-      <DependentUpon>202005280659218_update user.cs</DependentUpon>
+    <Compile Include="Migrations\202006010259470_update role add PersonTypeId.cs" />
+    <Compile Include="Migrations\202006010259470_update role add PersonTypeId.Designer.cs">
+      <DependentUpon>202006010259470_update role add PersonTypeId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -383,11 +384,11 @@
     <EmbeddedResource Include="Migrations\202005280437193_creation personType.resx">
       <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005280557090_update role.resx">
-      <DependentUpon>202005280557090_update role.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
+      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005280659218_update user.resx">
-      <DependentUpon>202005280659218_update user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006010259470_update role add PersonTypeId.resx">
+      <DependentUpon>202006010259470_update role add PersonTypeId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

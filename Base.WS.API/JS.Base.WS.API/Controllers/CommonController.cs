@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
+using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.PersonProfile;
@@ -20,19 +21,32 @@ namespace JS.Base.WS.API.Controllers
 
         [HttpGet]
         [Route("GetGenders")]
-        public List<GenderDto> GetGenders()
+        public IHttpActionResult GetGenders()
         {
-            List<GenderDto> genders = db.Genders.Where(x => x.IsActive == true).Select(y => new GenderDto
+            var result = db.Genders.Where(x => x.IsActive == true).Select(y => new GenderDto
             {
                 Id = y.Id,
                 Description = y.Description,
                 ShortName = y.ShortName
             }).ToList();
 
-            return genders;
+            return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetPesonTypes")]
+        public IHttpActionResult GetPesonTypes()
+        {
+            var result = db.PersonTypes.Where(x => x.IsActive == true).Select(x => new PersonType
+            {
 
+                Id = x.Id,
+                Code = x.Code,
+                Description = x.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
 
 
         #region Models

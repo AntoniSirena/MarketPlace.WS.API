@@ -33,5 +33,6 @@ namespace JS.Base.WS.API.Models.Authorization
 
         [ForeignKey("PersonId")]
         public virtual Person Person { get; set; }
+     
     }
 }

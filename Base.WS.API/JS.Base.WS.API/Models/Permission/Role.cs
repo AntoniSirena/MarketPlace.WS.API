@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -17,5 +18,10 @@ namespace JS.Base.WS.API.Models.Permission
         public string Parent { get; set; }
         public bool Enabled { get; set; }
         public string Code { get; set; }
+        public int? PersonTypeId { get; set; }
+
+        [ForeignKey("PersonTypeId")]
+        public virtual PersonType PersonType { get; set; }
+
     }
 }
