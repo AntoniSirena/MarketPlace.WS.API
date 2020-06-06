@@ -233,6 +233,7 @@
     <Compile Include="Controllers\PersonTypeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
+    <Compile Include="DTO\Common\DocumentType.cs" />
     <Compile Include="DTO\Common\GenderDto.cs" />
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
@@ -260,15 +261,12 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006010259470_update role add PersonTypeId.cs" />
-    <Compile Include="Migrations\202006010259470_update role add PersonTypeId.Designer.cs">
-      <DependentUpon>202006010259470_update role add PersonTypeId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
     <Compile Include="Models\ConfigurationParameter.cs" />
     <Compile Include="Models\Configuration\SystemConfiguration.cs" />
+    <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />
@@ -350,6 +348,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Domain\" />
+    <Folder Include="DTO\Request\Domain\" />
+    <Folder Include="DTO\Response\Domain\" />
+    <Folder Include="Models\Domain\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -386,9 +388,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006010259470_update role add PersonTypeId.resx">
-      <DependentUpon>202006010259470_update role add PersonTypeId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
+using JS.Base.WS.API.DTO.Response;
 using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Authorization;
@@ -43,6 +44,21 @@ namespace JS.Base.WS.API.Controllers
                 Id = x.Id,
                 Code = x.Code,
                 Description = x.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetDocumentTypes")]
+        public IHttpActionResult GetDocumentTypes()
+        {
+            var result = db.DocumentTypes.Where(x => x.IsActive == true).Select(y => new DocumentType
+            {
+                Id = y.Id,
+                Description = y.Description,
+                ShortName = y.ShortName
             }).ToList();
 
             return Ok(result);

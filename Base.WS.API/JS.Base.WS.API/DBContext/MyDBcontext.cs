@@ -41,7 +41,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<SystemConfiguration> SystemConfigurations { get; set; }
         public virtual DbSet<ConfigurationParameter> ConfigurationParameters { get; set; }
         public virtual DbSet<PersonType> PersonTypes { get; set; }
-
+        public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
 
     }

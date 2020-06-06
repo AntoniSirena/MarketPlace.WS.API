@@ -181,13 +181,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
                               .Where(x => x.UserId == currentUser.Id)
                               .FirstOrDefault();
 
-                var menuTemplate = db.Roles.Where(x => x.ShortName == _userRole.Role.Parent && x.Enabled == true)
+                string menuTemplate = db.Roles.Where(x => x.ShortName == _userRole.Role.Parent && x.Enabled == true)
                                .Select(x => x.MenuTemplate)
                                .FirstOrDefault();
 
                 if (menuTemplate != null)
                 {
-                    profile.User.MenuTemplate = menuTemplate;
+                    profile.User.MenuTemplate = JsonConvert.DeserializeObject<Object>(menuTemplate); ;
                 }
 
                 userResponse.Profile = profile;

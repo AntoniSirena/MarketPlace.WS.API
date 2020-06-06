@@ -61,6 +61,8 @@ namespace JS.Base.WS.API.Services
                         BirthDate = y.BirthDate,
                         Gender = y.Gender.Description,
                         PersonType = db.UserRoles.Where(m => m.UserId == x.Id).Select(m => m.Role.PersonType.Description).FirstOrDefault(),
+                        DocumentNumber = y.DocumentNumber == null ? string.Empty : y.DocumentNumber,
+                        DocumentDescription = y.DocumentType.Description == null ? string.Empty : y.DocumentType.Description,
                         Locators = db.Locators.Where(z => z.PersonId == y.Id).Select(z => new Locators
                         {
                             Id = z.Id,
@@ -100,6 +102,8 @@ namespace JS.Base.WS.API.Services
                         FullName = string.Empty,
                         BirthDate = string.Empty,
                         Gender = string.Empty,
+                        DocumentNumber = string.Empty,
+                        DocumentDescription = string.Empty,
                         Locators = new List<Locators>()
                         {
                             new Locators

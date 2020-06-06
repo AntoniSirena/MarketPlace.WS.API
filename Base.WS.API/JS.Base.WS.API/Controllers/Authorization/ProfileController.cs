@@ -89,6 +89,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     BirthDate = x.BirthDate,
                     FullName = x.FullName,
                     GenderId = x.GenderId,
+                    DocumentTypeId = x.DocumentTypeId,
+                    DocumentNumber = x.DocumentNumber,
+                    DocumentDescription = x.DocumentType.Description,
                 }).FirstOrDefault();
 
                 return Ok(result);
@@ -180,6 +183,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     currentPerson.FullName = request.FirstName + " " + request.SecondName + " " + request.SurName + " " + request.SecondSurname;
                     currentPerson.BirthDate = request.BirthDate;
                     currentPerson.GenderId = request.GenderId;
+                    currentPerson.DocumentTypeId = request.DocumentTypeId;
+                    currentPerson.DocumentNumber = request.DocumentNumber;
                     currentPerson.LastModificationTime = DateTime.Now;
                     currentPerson.LastModifierUserId = currentUserId;
 
@@ -199,6 +204,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     person.FullName = request.FirstName + " " + request.SecondName + " " + request.SurName + " " + request.SecondSurname;
                     person.BirthDate = request.BirthDate;
                     person.GenderId = request.GenderId;
+                    person.DocumentTypeId = request.DocumentTypeId;
+                    person.DocumentNumber = request.DocumentNumber;
                     person.CreationTime = DateTime.Now;
                     person.CreatorUserId = currentUserId;
                     person.IsActive = true;
@@ -249,6 +256,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
             public string BirthDate { get; set; }
             public string FullName { get; set; }
             public int GenderId { get; set; }
+            public int? DocumentTypeId { get; set; }
+            public string DocumentNumber { get; set; }
         }
 
         #endregion
