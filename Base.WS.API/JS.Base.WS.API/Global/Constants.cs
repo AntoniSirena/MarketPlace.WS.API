@@ -66,6 +66,12 @@ namespace JS.Base.WS.API.Global
 
             public const string Code308 = "308";
             public const string Message308 = "El código de seguridad es obligatorio, para continuar con el proceso";
+
+            public const string Code309 = "309";
+            public const string Message309 = "Estimado usuario el nombre corto que intenta registrar ya existe";
+
+            public const string Code310 = "310";
+            public const string Message310 = "Estimado usuario el nombre que intenta registrar ya existe";
         }
 
         public static class ConfigurationParameter

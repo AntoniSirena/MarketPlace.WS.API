@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Models;
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
+using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using System;
@@ -43,6 +44,11 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<PersonType> PersonTypes { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
+
+
+        //Domin
+
+        public virtual DbSet<Regional> Regionals { get; set; }
 
     }
 }

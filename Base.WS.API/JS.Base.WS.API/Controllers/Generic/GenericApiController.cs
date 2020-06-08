@@ -85,7 +85,7 @@ namespace JS.Base.WS.API.Controllers.Generic
                     return Ok(response);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
@@ -109,7 +109,7 @@ namespace JS.Base.WS.API.Controllers.Generic
                     return Ok(response);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
@@ -136,7 +136,7 @@ namespace JS.Base.WS.API.Controllers.Generic
                 response.Message = InternalResponseMessageGood.Message202;
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
