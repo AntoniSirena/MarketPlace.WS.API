@@ -47,8 +47,8 @@ namespace JS.Base.WS.API.DBContext
 
 
         //Domin
-
         public virtual DbSet<Regional> Regionals { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
 
     }
 }

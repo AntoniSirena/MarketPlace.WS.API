@@ -14,16 +14,15 @@ using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.Domain
 {
-    [RoutePrefix("api/regional")]
+    [RoutePrefix("api/district")]
     [Authorize]
-    public class RegionalController : GenericApiController<Regional>
+    public class DistrictController : GenericApiController<District>
     {
-
         private MyDBcontext db;
         private Response response;
 
 
-        public RegionalController()
+        public DistrictController()
         {
             db = new MyDBcontext();
             response = new Response();
@@ -35,9 +34,9 @@ namespace JS.Base.WS.API.Controllers.Domain
         public override IHttpActionResult Create(dynamic entity)
         {
             string inputShortName = entity["ShortName"];
-            var regionalShortName = db.Regionals.Where(x => x.ShortName == inputShortName && x.IsActive == true).FirstOrDefault();
+            var districtShortName = db.Districts.Where(x => x.ShortName == inputShortName && x.IsActive == true).FirstOrDefault();
 
-            if (regionalShortName != null)
+            if (districtShortName != null)
             {
                 response.Code = InternalResponseCodeError.Code309;
                 response.Message = InternalResponseCodeError.Message309;
@@ -46,9 +45,9 @@ namespace JS.Base.WS.API.Controllers.Domain
             }
 
             string inputName = entity["Name"];
-            var regionalName = db.Regionals.Where(x => x.Name == inputName && x.IsActive == true).FirstOrDefault();
+            var districtName = db.Districts.Where(x => x.Name == inputName && x.IsActive == true).FirstOrDefault();
 
-            if (regionalName != null)
+            if (districtName != null)
             {
                 response.Code = InternalResponseCodeError.Code310;
                 response.Message = InternalResponseCodeError.Message310;
@@ -66,11 +65,11 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             string inputShortName = entity["ShortName"];
             int idInput = Convert.ToInt32(entity["Id"]);
-            var regionalShortName = db.Regionals.Where(x => x.ShortName == inputShortName && x.IsActive == true).FirstOrDefault();
+            var districtShortName = db.Districts.Where(x => x.ShortName == inputShortName && x.IsActive == true).FirstOrDefault();
 
-            if (regionalShortName != null)
+            if (districtShortName != null)
             {
-                if (idInput != regionalShortName.Id)
+                if (idInput != districtShortName.Id)
                 {
                     response.Code = InternalResponseCodeError.Code309;
                     response.Message = InternalResponseCodeError.Message309;
@@ -80,11 +79,11 @@ namespace JS.Base.WS.API.Controllers.Domain
             }
 
             string inputName = entity["Name"];
-            var regionalName = db.Regionals.Where(x => x.Name == inputName && x.IsActive == true).FirstOrDefault();
+            var districtName = db.Districts.Where(x => x.Name == inputName && x.IsActive == true).FirstOrDefault();
 
-            if (regionalName != null)
+            if (districtName != null)
             {
-                if (idInput != regionalName.Id)
+                if (idInput != districtName.Id)
                 {
                     response.Code = InternalResponseCodeError.Code310;
                     response.Message = InternalResponseCodeError.Message310;
@@ -96,6 +95,5 @@ namespace JS.Base.WS.API.Controllers.Domain
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
             return base.Update(input);
         }
-
     }
 }

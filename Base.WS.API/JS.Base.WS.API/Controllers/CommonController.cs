@@ -2,6 +2,7 @@
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
 using JS.Base.WS.API.DTO.Response;
+using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Authorization;
@@ -64,6 +65,21 @@ namespace JS.Base.WS.API.Controllers
             return Ok(result);
         }
 
+
+        [HttpGet]
+        [Route("GetRegionals")]
+        public IHttpActionResult GetRegionals()
+        {
+            var result = db.Regionals.Where(x => x.IsActive == true).Select(y => new Regional_Dto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
 
         #region Models
 
