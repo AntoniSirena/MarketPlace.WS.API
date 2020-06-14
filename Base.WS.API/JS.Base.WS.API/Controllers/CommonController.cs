@@ -81,6 +81,22 @@ namespace JS.Base.WS.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetDistricts")]
+        public IHttpActionResult GetDistricts()
+        {
+            var result = db.Districts.Where(x => x.IsActive == true).Select(y => new District_Dto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
         #region Models
 
         public class InfoCurrentUser

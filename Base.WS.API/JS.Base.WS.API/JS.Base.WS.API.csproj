@@ -224,6 +224,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ConfigurationParameterController.cs" />
     <Compile Include="Controllers\Domain\DistrictController.cs" />
+    <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\District_Dto.cs" />
     <Compile Include="DTO\Response\Domain\Regional_Dto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
@@ -264,13 +266,9 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006080003186_Regional.cs" />
-    <Compile Include="Migrations\202006080003186_Regional.Designer.cs">
-      <DependentUpon>202006080003186_Regional.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006090114312_Add District.cs" />
-    <Compile Include="Migrations\202006090114312_Add District.Designer.cs">
-      <DependentUpon>202006090114312_Add District.cs</DependentUpon>
+    <Compile Include="Migrations\202006141515069_add CenterEducative.cs" />
+    <Compile Include="Migrations\202006141515069_add CenterEducative.Designer.cs">
+      <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -279,6 +277,7 @@
     <Compile Include="Models\Configuration\SystemConfiguration.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Domain\District.cs" />
+    <Compile Include="Models\Domain\EducativeCenter.cs" />
     <Compile Include="Models\Domain\Regional.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
@@ -399,11 +398,8 @@
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006080003186_Regional.resx">
-      <DependentUpon>202006080003186_Regional.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006090114312_Add District.resx">
-      <DependentUpon>202006090114312_Add District.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006141515069_add CenterEducative.resx">
+      <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
