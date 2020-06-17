@@ -50,6 +50,9 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Regional> Regionals { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<EducativeCenter> EducativeCenters { get; set; }
+        public virtual DbSet<Tanda> Tandas { get; set; }
+        public virtual DbSet<Grade> Grades { get; set; }
+        public virtual DbSet<Area> Areas { get; set; }
 
     }
 }

@@ -7,15 +7,15 @@ using System.Web;
 
 namespace JS.Base.WS.API.Models.Domain
 {
-    public class Regional: Audit
+    public class Area : Audit
     {
         [Key]
         public int Id { get; set; }
-        [Required]
 
+        [Required]
         public string ShortName { get; set; }
-        [Required]
 
+        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }

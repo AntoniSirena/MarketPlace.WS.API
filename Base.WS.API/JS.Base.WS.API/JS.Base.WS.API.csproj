@@ -226,6 +226,7 @@
     <Compile Include="Controllers\Domain\DistrictController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
+    <Compile Include="Controllers\Domain\TandaController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -270,15 +271,22 @@
     <Compile Include="Migrations\202006141515069_add CenterEducative.Designer.cs">
       <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006170254340_add Tanda, Grade and Area.cs" />
+    <Compile Include="Migrations\202006170254340_add Tanda, Grade and Area.Designer.cs">
+      <DependentUpon>202006170254340_add Tanda, Grade and Area.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
     <Compile Include="Models\ConfigurationParameter.cs" />
     <Compile Include="Models\Configuration\SystemConfiguration.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\Domain\Area.cs" />
     <Compile Include="Models\Domain\District.cs" />
     <Compile Include="Models\Domain\EducativeCenter.cs" />
+    <Compile Include="Models\Domain\Grade.cs" />
     <Compile Include="Models\Domain\Regional.cs" />
+    <Compile Include="Models\Domain\Tanda.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />
@@ -400,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006141515069_add CenterEducative.resx">
       <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006170254340_add Tanda, Grade and Area.resx">
+      <DependentUpon>202006170254340_add Tanda, Grade and Area.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
