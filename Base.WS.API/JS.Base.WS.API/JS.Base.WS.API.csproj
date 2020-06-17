@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ConfigurationParameterController.cs" />
     <Compile Include="Controllers\Domain\DistrictController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
+    <Compile Include="Controllers\Domain\GradeController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
@@ -266,14 +267,6 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006141515069_add CenterEducative.cs" />
-    <Compile Include="Migrations\202006141515069_add CenterEducative.Designer.cs">
-      <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006170254340_add Tanda, Grade and Area.cs" />
-    <Compile Include="Migrations\202006170254340_add Tanda, Grade and Area.Designer.cs">
-      <DependentUpon>202006170254340_add Tanda, Grade and Area.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -405,12 +398,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006141515069_add CenterEducative.resx">
-      <DependentUpon>202006141515069_add CenterEducative.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006170254340_add Tanda, Grade and Area.resx">
-      <DependentUpon>202006170254340_add Tanda, Grade and Area.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
