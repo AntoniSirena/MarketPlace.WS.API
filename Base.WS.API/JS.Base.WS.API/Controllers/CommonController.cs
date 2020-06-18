@@ -97,6 +97,21 @@ namespace JS.Base.WS.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAreas")]
+        public IHttpActionResult GetAreas()
+        {
+            var result = db.Areas.Where(x => x.IsActive == true).Select(y => new Area_Dto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
         #region Models
 
         public class InfoCurrentUser

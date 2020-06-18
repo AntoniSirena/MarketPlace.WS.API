@@ -72,6 +72,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code310 = "310";
             public const string Message310 = "Estimado usuario el nombre que intenta registrar ya existe";
+
+            public const string Code311 = "311";
+            public const string Message311 = "Ya existe un Docente registrado con el mismo número de docummento";
         }
 
         public static class ConfigurationParameter

@@ -53,6 +53,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Tanda> Tandas { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
+        public virtual DbSet<Docent> Docents { get; set; }
 
     }
 }
