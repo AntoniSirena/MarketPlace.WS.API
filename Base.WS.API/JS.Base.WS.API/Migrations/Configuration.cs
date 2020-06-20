@@ -2,6 +2,7 @@ namespace JS.Base.WS.API.Migrations
 {
     using JS.Base.WS.API.Models;
     using JS.Base.WS.API.Models.Authorization;
+    using JS.Base.WS.API.Models.Domain;
     using JS.Base.WS.API.Models.PersonProfile;
     using System;
     using System.Data.Entity;
@@ -53,6 +54,13 @@ namespace JS.Base.WS.API.Migrations
                 new DocumentType { ShortName = "Cédula", Description = "Cédula", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
                 new DocumentType { ShortName = "Pasaporte", Description = "Pasaporte", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
                 new DocumentType { ShortName = "RNC", Description = "RNC", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                );
+
+            //RequestStatuses
+            context.RequestStatus.AddOrUpdate(
+                x => x.ShortName,
+                new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "rgb(52, 212, 146)", AllowEdit = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Completed", Name = "Completada", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
                 );
 
         }

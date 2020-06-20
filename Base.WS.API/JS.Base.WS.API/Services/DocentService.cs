@@ -17,9 +17,9 @@ namespace JS.Base.WS.API.Services
             db = new MyDBcontext();
         }
 
-        public DocentDetails_Dto GetDocentDetails(long docentId)
+        public DocentDetailsDto GetDocentDetails(long docentId)
         {
-            var response = new DocentDetails_Dto();
+            var response = new DocentDetailsDto();
 
             var docent = db.Docents.Where(x => x.Id == docentId && x.IsActive == true).FirstOrDefault();
             var docentResult = new DocentPersonInfo()

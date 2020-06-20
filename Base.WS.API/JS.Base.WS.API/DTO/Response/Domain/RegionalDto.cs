@@ -5,7 +5,7 @@ using System.Web;
 
 namespace JS.Base.WS.API.DTO.Response.Domain
 {
-    public class Area_Dto
+    public class RegionalDto
     {
         public int Id { get; set; }
         public string ShortName { get; set; }

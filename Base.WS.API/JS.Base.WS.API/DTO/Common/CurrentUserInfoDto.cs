@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace JS.Base.WS.API.DTO.Response.Domain
+namespace JS.Base.WS.API.DTO.Common
 {
-    public class DocentDetails_Dto
-    {
-        public DocentPersonInfo DocentPersonInfo { get; set; }
-    }
-
-
-    public class DocentPersonInfo
+    public class CurrentUserInfoDto
     {
         public string FirstName { get; set; }
         public string SecondName { get; set; }
@@ -21,8 +15,5 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string BirthDate { get; set; }
         public string DocumentType { get; set; }
         public string DocumentNumber { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string Area { get; set; }
     }
 }

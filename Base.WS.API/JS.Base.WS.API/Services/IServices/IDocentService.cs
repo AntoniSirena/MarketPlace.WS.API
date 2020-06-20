@@ -9,6 +9,6 @@ namespace JS.Base.WS.API.Services.IServices
 {
     public interface IDocentService
     {
-        DocentDetails_Dto GetDocentDetails(long docentId);
+        DocentDetailsDto GetDocentDetails(long docentId);
     }
 }
