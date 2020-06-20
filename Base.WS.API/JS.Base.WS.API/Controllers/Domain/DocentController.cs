@@ -3,6 +3,7 @@ using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
+using JS.Base.WS.API.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,13 @@ namespace JS.Base.WS.API.Controllers.Domain
 
         private MyDBcontext db;
         private Response response;
+        private DocentService docentService;
 
         public DocentController()
         {
             db = new MyDBcontext();
             response = new Response();
+            docentService = new DocentService();
         }
 
         private long currentUserId = CurrentUser.GetId();
@@ -75,6 +78,15 @@ namespace JS.Base.WS.API.Controllers.Domain
             return base.Update(input);
         }
 
+
+        [HttpGet]
+        [Route("GetDocentDetails/{docentId}")]
+        public IHttpActionResult GetDocentDetails(long docentId)
+        {
+            var result = docentService.GetDocentDetails(docentId);
+
+            return Ok(result);
+        }
 
     }
 }
