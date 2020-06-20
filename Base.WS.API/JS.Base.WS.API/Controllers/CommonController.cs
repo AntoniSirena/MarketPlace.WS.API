@@ -122,7 +122,7 @@ namespace JS.Base.WS.API.Controllers
 
             var result = new CurrentUserInfoDto();
 
-            if (user.Person == null)
+            if (user.Person != null)
             {
                 result.FirstName = user.Person.FirstName;
                 result.SecondName = user.Person.SecondName;
