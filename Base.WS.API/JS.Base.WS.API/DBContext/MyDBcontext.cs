@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Models;
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
+using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using System;
@@ -40,7 +41,20 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
         public virtual DbSet<SystemConfiguration> SystemConfigurations { get; set; }
         public virtual DbSet<ConfigurationParameter> ConfigurationParameters { get; set; }
+        public virtual DbSet<PersonType> PersonTypes { get; set; }
+        public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
+
+
+        //Domin
+        public virtual DbSet<Regional> Regionals { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<EducativeCenter> EducativeCenters { get; set; }
+        public virtual DbSet<Tanda> Tandas { get; set; }
+        public virtual DbSet<Grade> Grades { get; set; }
+        public virtual DbSet<Area> Areas { get; set; }
+        public virtual DbSet<Docent> Docents { get; set; }
+        public virtual DbSet<RequestStatus> RequestStatus { get; set; }
 
     }
 }

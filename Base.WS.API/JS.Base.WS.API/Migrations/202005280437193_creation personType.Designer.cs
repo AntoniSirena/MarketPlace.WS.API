@@ -7,13 +7,13 @@ namespace JS.Base.WS.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddColourinUserStatus : IMigrationMetadata
+    public sealed partial class creationpersonType : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddColourinUserStatus));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(creationpersonType));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004301440344_Add Colour in UserStatus"; }
+            get { return "202005280437193_creation personType"; }
         }
         
         string IMigrationMetadata.Source

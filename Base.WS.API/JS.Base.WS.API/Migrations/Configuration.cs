@@ -1,6 +1,8 @@
 namespace JS.Base.WS.API.Migrations
 {
+    using JS.Base.WS.API.Models;
     using JS.Base.WS.API.Models.Authorization;
+    using JS.Base.WS.API.Models.Domain;
     using JS.Base.WS.API.Models.PersonProfile;
     using System;
     using System.Data.Entity;
@@ -35,15 +37,30 @@ namespace JS.Base.WS.API.Migrations
 
             context.UserStatus.AddOrUpdate(
                 x => x.ShortName,
-                new UserStatus { Description = "Activo", ShortName = "Active", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now},
-                new UserStatus { Description = "Inactivo", ShortName = "Inactive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now},
-                new UserStatus { Description = "Pendiente de activar", ShortName = "PendingToActive", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new UserStatus { ShortName = "Active", Description = "Activo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(52, 212, 146)" },
+                new UserStatus { ShortName = "Inactive", Description = "Inactivo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(241, 81, 81)" },
+                new UserStatus { ShortName = "PendingToActive", Description = "Pendiente de activar", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(243, 183, 71)" }
                 );
 
             context.Genders.AddOrUpdate(
                 x => x.Description,
-                new Gender { Description = "Male", ShortName = "M", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new Gender { Description = "Female", ShortName = "F", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new Gender { ShortName = "M", Description = "Maculino", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new Gender { ShortName = "F", Description = "Femenino", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                );
+
+            //Document Types
+            context.DocumentTypes.AddOrUpdate(
+                x => x.Description,
+                new DocumentType { ShortName = "Cédula", Description = "Cédula", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new DocumentType { ShortName = "Pasaporte", Description = "Pasaporte", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new DocumentType { ShortName = "RNC", Description = "RNC", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                );
+
+            //RequestStatuses
+            context.RequestStatus.AddOrUpdate(
+                x => x.ShortName,
+                new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "rgb(52, 212, 146)", AllowEdit = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Completed", Name = "Completada", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
                 );
 
         }

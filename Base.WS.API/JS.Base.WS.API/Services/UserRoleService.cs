@@ -65,12 +65,25 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
-        public bool CreateUserRol(long UserId)
+        public bool CreateUserRol(long UserId, string code)
         {
             bool Result = false;
+            int RoleId = 0;
 
-            string RoleShortName = Constants.ConfigurationParameter.RoleExternalUser;
-            int RoleId = db.Roles.Where(x => x.ShortName == RoleShortName).Select(x => x.Id).FirstOrDefault();
+            if (string.IsNullOrEmpty(code))
+            {
+                string RoleShortName = Constants.ConfigurationParameter.RoleExternalUser;
+                RoleId = db.Roles.Where(x => x.ShortName == RoleShortName).Select(x => x.Id).FirstOrDefault();
+            }
+            else
+            {
+                RoleId = db.Roles.Where(x => x.Code == code).Select(x => x.Id).FirstOrDefault();
+                if (RoleId == 0)
+                {
+                    return Result;
+                }
+            }
+
             var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();
 
             var Role = new UserRole
@@ -85,6 +98,27 @@ namespace JS.Base.WS.API.Services
 
             db.UserRoles.Add(Role);
             db.SaveChanges();
+            return Result;
+        }
+
+        public bool ValidateSecurityCode(string code)
+        {
+            bool Result = true;
+
+            if (!string.IsNullOrEmpty(code))
+            {
+                int RoleId = db.Roles.Where(x => x.Code == code).Select(x => x.Id).FirstOrDefault();
+                if (RoleId > 0)
+                {
+                    Result = true;
+                }
+                else
+                {
+                    Result = false;
+                }
+
+            }
+
             return Result;
         }
     }

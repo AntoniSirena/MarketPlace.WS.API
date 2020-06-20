@@ -21,7 +21,7 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string Image { get; set; }
         public string Token { get; set; }
         public string WelcomeMessage { get; set; }
-        public string MenuTemplate { get; set; }
+        public Object MenuTemplate { get; set; }
         public string RoleDescription { get; set; }
         public string RoleShortName { get; set; }
         public string RoleParent { get; set; }
@@ -36,11 +36,15 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string BirthDate { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }
+        public string PersonType { get; set; }
+        public string DocumentNumber { get; set; }
+        public string DocumentDescription { get; set; }
         public List<Locators> Locators { get; set; }
     }
 
     public class Locators
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public bool IsMain { get; set; }
         public string Type { get; set; }

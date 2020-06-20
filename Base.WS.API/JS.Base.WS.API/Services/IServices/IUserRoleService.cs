@@ -9,6 +9,7 @@ namespace JS.Base.WS.API.Services.IServices
     {
         List<UserRoleDto> GetAll();
         UserRoleDto GetById(long Id);
-        bool CreateUserRol(long UserId);
+        bool CreateUserRol(long UserId, string code);
+        bool ValidateSecurityCode(string code);
     }
 }

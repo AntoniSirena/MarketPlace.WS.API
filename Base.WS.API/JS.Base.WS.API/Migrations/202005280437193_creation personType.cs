@@ -3,19 +3,17 @@ namespace JS.Base.WS.API.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddConfigurationParameter : DbMigration
+    public partial class creationpersonType : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.ConfigurationParameters",
+                "dbo.PersonTypes",
                 c => new
                     {
-                        Id = c.Long(nullable: false, identity: true),
-                        Name = c.String(),
-                        Value = c.String(),
+                        Id = c.Int(nullable: false, identity: true),
+                        Code = c.String(),
                         Description = c.String(),
-                        Enabled = c.Boolean(nullable: false),
                         CreationTime = c.DateTime(),
                         CreatorUserId = c.Long(),
                         LastModificationTime = c.DateTime(),
@@ -31,7 +29,7 @@ namespace JS.Base.WS.API.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.ConfigurationParameters");
+            DropTable("dbo.PersonTypes");
         }
     }
 }

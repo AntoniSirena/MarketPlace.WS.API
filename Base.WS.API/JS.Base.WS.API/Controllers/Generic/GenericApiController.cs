@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.Generic
 {
@@ -80,14 +81,14 @@ namespace JS.Base.WS.API.Controllers.Generic
                     repository.Create(entity);
                     repository.Save();
 
-                    response.Message = "Registro creado con exito";
+                    response.Message = InternalResponseMessageGood.Message200;
                     return Ok(response);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                response.Code = "021";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
             }
 
             return Ok(response);
@@ -104,14 +105,14 @@ namespace JS.Base.WS.API.Controllers.Generic
                     repository.Update(entity);
                     repository.Save();
 
-                    response.Message = "Registro actualizado con exito";
+                    response.Message = InternalResponseMessageGood.Message201;
                     return Ok(response);
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                response.Code = "022";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
             }
             return Ok(response);
         }
@@ -132,13 +133,13 @@ namespace JS.Base.WS.API.Controllers.Generic
                 repository.Delete(id);
                 repository.Save();
 
-                response.Message = "Registro eliminado con exito";
+                response.Message = InternalResponseMessageGood.Message202;
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
-                response.Code = "023";
-                response.Message = "Estimado usuario has ocurrido un error procesando su solicitud";
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
             }
             return Ok(response);
 

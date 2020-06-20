@@ -28,9 +28,14 @@ namespace JS.Base.WS.API.Models.PersonProfile
 
         public string FullName { get; set; }
         public int GenderId { get; set; }
+        public int? DocumentTypeId { get; set; }
+        public string DocumentNumber { get; set; }
 
         [ForeignKey("GenderId")]
         public virtual Gender Gender { get; set; }
+
+        [ForeignKey("DocumentTypeId")]
+        public virtual DocumentType DocumentType { get; set; }
 
 
         public virtual ICollection<Locator> Locators { get; set; }
