@@ -230,6 +230,7 @@
     <Compile Include="Controllers\Domain\GradeController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
+    <Compile Include="Controllers\Domain\VisitController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Models\Domain\Regional.cs" />
     <Compile Include="Models\Domain\RequestStatus.cs" />
     <Compile Include="Models\Domain\Tanda.cs" />
+    <Compile Include="Models\Domain\Visit.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />

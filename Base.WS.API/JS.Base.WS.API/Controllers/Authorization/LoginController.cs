@@ -211,7 +211,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 response.Data = userResponse;
 
                //Update user
-               bool UpdateUserLogIn = UserService.UpdateUserLogInOut(true, user.UserName);
+               bool UpdateUserLogIn = UserService.UpdateUserLogInOut(true, user.UserName, 0);
 
                 return Ok(response);
             }
@@ -224,10 +224,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         [HttpPost]
         [Route("logOut")]
-        public IHttpActionResult logOut([FromBody] string userName)
+        public IHttpActionResult logOut([FromBody] long userId)
         {
             //Update user
-            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, userName);
+            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, string.Empty, userId);
 
             return Ok(UpdateUserLogIn);
         }
