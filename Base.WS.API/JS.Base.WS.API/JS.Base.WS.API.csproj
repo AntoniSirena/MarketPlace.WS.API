@@ -228,6 +228,7 @@
     <Compile Include="Controllers\Domain\DocentController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\GradeController.cs" />
+    <Compile Include="Controllers\Domain\IndicatorController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
     <Compile Include="Controllers\Domain\VisitController.cs" />
@@ -274,6 +275,10 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </Compile>
+    <Compile Include="obj\202006211951137_remove.cs" />
+    <Compile Include="obj\202006211951137_remove.Designer.cs">
+      <DependentUpon>202006211951137_remove.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
@@ -285,6 +290,7 @@
     <Compile Include="Models\Domain\Docent.cs" />
     <Compile Include="Models\Domain\EducativeCenter.cs" />
     <Compile Include="Models\Domain\Grade.cs" />
+    <Compile Include="Models\Domain\Indicator.cs" />
     <Compile Include="Models\Domain\Regional.cs" />
     <Compile Include="Models\Domain\RequestStatus.cs" />
     <Compile Include="Models\Domain\Tanda.cs" />
@@ -409,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\202006211951137_remove.resx">
+      <DependentUpon>202006211951137_remove.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
