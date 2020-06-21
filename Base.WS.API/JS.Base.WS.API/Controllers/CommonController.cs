@@ -99,6 +99,39 @@ namespace JS.Base.WS.API.Controllers
 
 
         [HttpGet]
+        [Route("GetDistrictByRegionalId/{regionalId}")]
+        public IHttpActionResult GetDistrictByRegionalId(int regionalId)
+        {
+            var result = db.Districts.Where(x => x.IsActive == true && x.RegionalId == regionalId).Select(y => new DistrictDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetEducativeCenterByDistrictId/{districtId}")]
+        public IHttpActionResult GetEducativeCenterByDistrictId(int districtId)
+        {
+            var result = db.EducativeCenters.Where(x => x.IsActive == true && x.DistrictId == districtId).Select(y => new EducativeCenterDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+
+        [HttpGet]
         [Route("GetAreas")]
         public IHttpActionResult GetAreas()
         {
@@ -147,6 +180,87 @@ namespace JS.Base.WS.API.Controllers
 
             return Ok(result);
         }
+
+
+        [HttpGet]
+        [Route("GetIndicators")]
+        public IHttpActionResult GetIndicators()
+        {
+            var result = db.Indicators.Where(x => x.IsActive == true).Select(y => new IndicatorDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetTandas")]
+        public IHttpActionResult GetTandas()
+        {
+            var result = db.Tandas.Where(x => x.IsActive == true).Select(y => new TandaDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetGrades")]
+        public IHttpActionResult GetGrades()
+        {
+            var result = db.Grades.Where(x => x.IsActive == true).Select(y => new GradeDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetDocents")]
+        public IHttpActionResult GetDocents()
+        {
+            var result = db.Docents.Where(x => x.IsActive == true).Select(y => new DocentDto
+            {
+                Id = y.Id,
+                FullName = y.FullName,
+                DocumentNumber = y.DocumentNumber,
+
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetVisits")]
+        public IHttpActionResult GetVisits()
+        {
+            var result = db.Visits.Where(x => x.IsActive == true).Select(y => new TandaDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
 
         #region Models
 
