@@ -228,6 +228,7 @@
     <Compile Include="Controllers\Domain\DocentController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\GradeController.cs" />
+    <Compile Include="Controllers\Domain\IdentificationDataController.cs" />
     <Compile Include="Controllers\Domain\IndicatorController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
@@ -249,9 +250,16 @@
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
+    <Compile Include="DTO\Response\Domain\DocentDto.cs" />
     <Compile Include="DTO\Response\Domain\DistrictDto.cs" />
     <Compile Include="DTO\Response\Domain\DocentDetailsDto.cs" />
+    <Compile Include="DTO\Response\Domain\EducativeCenterDto.cs" />
+    <Compile Include="DTO\Response\Domain\GradeDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstRequestDto.cs" />
+    <Compile Include="DTO\Response\Domain\IndicatorDto.cs" />
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
+    <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
@@ -275,6 +283,12 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.cs" />
+    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
+      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domain\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\IdentificationData.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
     <Compile Include="obj\202006211951137_remove.Designer.cs">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
@@ -309,9 +323,11 @@
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
     <Compile Include="Services\DocentService.cs" />
+    <Compile Include="Services\AccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
     <Compile Include="Services\IServices\IDocentService.cs" />
+    <Compile Include="Services\IServices\IAccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
@@ -415,6 +431,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
+      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

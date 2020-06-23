@@ -7,6 +7,7 @@ namespace JS.Base.WS.API.DTO.Common
 {
     public class CurrentUserInfoDto
     {
+        public long Id { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Surname { get; set; }

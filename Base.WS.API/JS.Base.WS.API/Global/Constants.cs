@@ -23,10 +23,16 @@ namespace JS.Base.WS.API.Global
             public const string PendingToActive = "PendingToActive";
         }
 
+        public static class RequestStatus
+        {
+            public const string InProcess = "InProcess";
+            public const string Completed = "Completed";
+        }
+
         public static class Genders
         {
-            public const string Male = "Male";
-            public const string Female = "Female";
+            public const string Maculino = "Maculino";
+            public const string Femenino = "Femenino";
         }
 
         public static class InternalResponseMessageGood

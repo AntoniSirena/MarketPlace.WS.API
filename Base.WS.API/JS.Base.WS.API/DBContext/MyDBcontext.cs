@@ -57,7 +57,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<RequestStatus> RequestStatus { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<Indicator> Indicators { get; set; }
-
+        public virtual DbSet<AccompanyingInstrumentRequest> AccompanyingInstrumentRequests { get; set; }
+        public virtual DbSet<IdentificationData> IdentificationDatas { get; set; }
 
     }
 }

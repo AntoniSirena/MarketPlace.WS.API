@@ -157,17 +157,19 @@ namespace JS.Base.WS.API.Controllers
 
             if (user.Person != null)
             {
+                result.Id = user.Id;
                 result.FirstName = user.Person.FirstName;
                 result.SecondName = user.Person.SecondName;
                 result.Surname = user.Person.Surname;
                 result.SecondSurname = user.Person.secondSurname;
                 result.FullName = user.Person.FullName;
                 result.BirthDate = user.Person.BirthDate;
-                result.DocumentType = user.Person.DocumentType.Description;
+                result.DocumentType = user.Person.DocumentType == null ? string.Empty : user.Person.DocumentType.Description;
                 result.DocumentNumber = user.Person.DocumentNumber;
             }
             else
             {
+                result.Id = 0;
                 result.FirstName = string.Empty;
                 result.SecondName = string.Empty;
                 result.Surname = string.Empty;
@@ -241,6 +243,22 @@ namespace JS.Base.WS.API.Controllers
                 DocumentNumber = y.DocumentNumber,
 
             }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetDocentById/{id}")]
+        public IHttpActionResult GetDocentById(long id)
+        {
+            var result = db.Docents.Where(x => x.Id == id).Select(y => new DocentDto
+            {
+                Id = y.Id,
+                FullName = y.FullName,
+                DocumentNumber = y.DocumentNumber,
+
+            }).FirstOrDefault();
 
             return Ok(result);
         }
