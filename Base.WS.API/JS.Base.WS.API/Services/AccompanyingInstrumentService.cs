@@ -21,7 +21,7 @@ namespace JS.Base.WS.API.Services
         {
             var result = new List<AccompInstRequestDto>();
 
-            result = db.AccompanyingInstrumentRequests.Select(x => new AccompInstRequestDto()
+            result = db.AccompanyingInstrumentRequests.Where(x => x.IsActive == true).Select(x => new AccompInstRequestDto()
             {
                 Id = x.Id,
                 DocentFullName = x.Docent.FullName,
