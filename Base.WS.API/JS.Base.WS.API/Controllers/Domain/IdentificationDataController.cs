@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.Domain
 {
@@ -53,8 +54,6 @@ namespace JS.Base.WS.API.Controllers.Domain
             db.SaveChanges();
 
             entity["RequestId"] = requestResult.Id;
-            entity["VisitIdB"] = null;
-            entity["VisitIdC"] = null;
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
             return base.Create(input);
@@ -67,7 +66,18 @@ namespace JS.Base.WS.API.Controllers.Domain
         {
             var result = accompanyingInstrumentService.GetAccompInstRequest();
 
-            return Ok(result);
+            if (result.Count() == 0)
+            {
+                response.Code = InternalResponseCodeError.Code312;
+                response.Message = InternalResponseCodeError.Message312;
+
+                return Ok(response);
+            }
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
         }
     }
 }

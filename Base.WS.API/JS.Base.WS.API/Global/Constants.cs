@@ -81,6 +81,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code311 = "311";
             public const string Message311 = "Ya existe un Docente registrado con el mismo número de docummento";
+
+            public const string Code312 = "312";
+            public const string Message312 = "No existen Instrumentos de Acompañamientos asociados a su usuario";
         }
 
         public static class ConfigurationParameter
@@ -96,7 +99,9 @@ namespace JS.Base.WS.API.Global
             public static string EnableRegistrationButton { get { return ConfigurationParameterService.GetParameter("EnableRegistrationButton") ?? "0"; } }
 
             public static string Required_SecurityCodeExternaRegister { get { return ConfigurationParameterService.GetParameter("Required_SecurityCodeExternaRegister") ?? "0"; } }
-            
+
+            public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
+
         }
 
     }
