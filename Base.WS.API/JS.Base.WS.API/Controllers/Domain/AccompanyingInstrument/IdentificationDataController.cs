@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
@@ -79,5 +80,37 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             return Ok(response);
         }
+
+
+        [HttpPost]
+        [Route("CreateVariable")]
+        public IHttpActionResult CreateVariable([FromBody] long identificationDataId)
+        {
+            bool result = false;
+
+            long requestId = db.IdentificationDatas.Where(x => x.Id == identificationDataId).Select(y => y.RequestId).FirstOrDefault();
+
+            result = accompanyingInstrumentService.CreateVariables(requestId);
+
+            if (result)
+            {
+                result = true;
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetVariableByRequestId")]
+        public IHttpActionResult GetVariableByRequestId(long requestId, string variable)
+        {
+            var result = new VariableDto();
+
+            result = accompanyingInstrumentService.GetVariableByRequestId(requestId, variable);
+
+            return Ok(result);
+        }
+
     }
 }

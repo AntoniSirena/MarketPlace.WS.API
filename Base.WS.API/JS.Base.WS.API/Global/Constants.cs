@@ -29,6 +29,16 @@ namespace JS.Base.WS.API.Global
             public const string Completed = "Completed";
         }
 
+        public static class Areas
+        {
+            public const string Pending = "Pendiente";
+        }
+
+        public static class Indicators
+        {
+            public const string IndicadorInicial = "IndicadorInicial";
+        }
+
         public static class Varibels
         {
             public const string A = "A";

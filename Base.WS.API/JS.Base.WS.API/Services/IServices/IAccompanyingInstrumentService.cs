@@ -10,5 +10,7 @@ namespace JS.Base.WS.API.Services.IServices
   public  interface IAccompanyingInstrumentService
     {
         List<AccompInstRequestDto> GetAccompInstRequest();
+        bool CreateVariables(long requestId);
+        VariableDto GetVariableByRequestId(long requestId, string variable);
     }
 }

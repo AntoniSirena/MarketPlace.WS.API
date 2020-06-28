@@ -32,7 +32,7 @@ namespace JS.Base.WS.API.Base
             return table.Find(id);
         }
 
-        public virtual void Create(dynamic obj)
+        public virtual dynamic Create(dynamic obj)
         {
             obj.CreationTime = DateTime.Now;
             obj.CreatorUserId = CurrentUser.GetId();
@@ -42,7 +42,9 @@ namespace JS.Base.WS.API.Base
             T entity = JsonConvert.DeserializeObject<T>(obj.ToString());
 
             table.Attach(entity);
-            table.Add(entity);
+            dynamic result = table.Add(entity);
+
+            return result;
         }
 
         public virtual void Update(dynamic obj)

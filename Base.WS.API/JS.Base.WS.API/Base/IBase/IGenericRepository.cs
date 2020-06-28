@@ -13,7 +13,7 @@ namespace JS.Base.WS.API.Base.IBase
     {
         IEnumerable<T> GetAll();
         T GetById(object id);
-        void Create(dynamic obj);
+        dynamic Create(dynamic obj);
         void Update(dynamic obj);
         void Delete(object id);
         void Save();

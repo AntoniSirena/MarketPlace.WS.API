@@ -259,6 +259,7 @@
     <Compile Include="DTO\Response\Domain\IndicatorDto.cs" />
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
@@ -287,17 +288,9 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006260418596_Add Variable.cs" />
-    <Compile Include="Migrations\202006260418596_Add Variable.Designer.cs">
-      <DependentUpon>202006260418596_Add Variable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006260458474_Add VariableDetail.cs" />
-    <Compile Include="Migrations\202006260458474_Add VariableDetail.Designer.cs">
-      <DependentUpon>202006260458474_Add VariableDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006280002519_Add new entyties.cs" />
-    <Compile Include="Migrations\202006280002519_Add new entyties.Designer.cs">
-      <DependentUpon>202006280002519_Add new entyties.cs</DependentUpon>
+    <Compile Include="Migrations\202006281436120_rename property.cs" />
+    <Compile Include="Migrations\202006281436120_rename property.Designer.cs">
+      <DependentUpon>202006281436120_rename property.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
@@ -451,14 +444,8 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006260418596_Add Variable.resx">
-      <DependentUpon>202006260418596_Add Variable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006260458474_Add VariableDetail.resx">
-      <DependentUpon>202006260458474_Add VariableDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006280002519_Add new entyties.resx">
-      <DependentUpon>202006280002519_Add new entyties.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006281436120_rename property.resx">
+      <DependentUpon>202006281436120_rename property.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

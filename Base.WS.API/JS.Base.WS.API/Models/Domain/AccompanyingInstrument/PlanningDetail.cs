@@ -18,7 +18,7 @@ namespace JS.Base.WS.API.Models.Domain
         public long PlanningId { get; set; }
 
         [Required]
-        public long VriableDetailId { get; set; }
+        public long VariableDetailId { get; set; }
 
         [Required]
         public int AreaIdA { get; set; }
@@ -43,7 +43,7 @@ namespace JS.Base.WS.API.Models.Domain
         [ForeignKey("PlanningId")]
         public virtual Planning Planning { get; set; }
 
-        [ForeignKey("VriableDetailId")]
+        [ForeignKey("VariableDetailId")]
         public virtual VariableDetail VariableDetail { get; set; }
 
         [ForeignKey("AreaIdA")]
