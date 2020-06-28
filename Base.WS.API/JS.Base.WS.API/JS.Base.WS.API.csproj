@@ -228,7 +228,7 @@
     <Compile Include="Controllers\Domain\DocentController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\GradeController.cs" />
-    <Compile Include="Controllers\Domain\IdentificationDataController.cs" />
+    <Compile Include="Controllers\Domain\AccompanyingInstrument\IdentificationDataController.cs" />
     <Compile Include="Controllers\Domain\IndicatorController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
@@ -287,8 +287,24 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Domain\AccompanyingInstrumentRequest.cs" />
-    <Compile Include="Models\Domain\IdentificationData.cs" />
+    <Compile Include="Migrations\202006260418596_Add Variable.cs" />
+    <Compile Include="Migrations\202006260418596_Add Variable.Designer.cs">
+      <DependentUpon>202006260418596_Add Variable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006260458474_Add VariableDetail.cs" />
+    <Compile Include="Migrations\202006260458474_Add VariableDetail.Designer.cs">
+      <DependentUpon>202006260458474_Add VariableDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006280002519_Add new entyties.cs" />
+    <Compile Include="Migrations\202006280002519_Add new entyties.Designer.cs">
+      <DependentUpon>202006280002519_Add new entyties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
     <Compile Include="obj\202006211951137_remove.Designer.cs">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
@@ -434,6 +450,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006260418596_Add Variable.resx">
+      <DependentUpon>202006260418596_Add Variable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006260458474_Add VariableDetail.resx">
+      <DependentUpon>202006260458474_Add VariableDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006280002519_Add new entyties.resx">
+      <DependentUpon>202006280002519_Add new entyties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

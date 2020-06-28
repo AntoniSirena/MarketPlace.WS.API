@@ -59,6 +59,9 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Indicator> Indicators { get; set; }
         public virtual DbSet<AccompanyingInstrumentRequest> AccompanyingInstrumentRequests { get; set; }
         public virtual DbSet<IdentificationData> IdentificationDatas { get; set; }
-
+        public virtual DbSet<Variable> Variables { get; set; }
+        public virtual DbSet<VariableDetail> VariableDetails { get; set; }
+        public virtual DbSet<Planning> Plannings { get; set; }
+        public virtual DbSet<PlanningDetail> PlanningDetails { get; set; }
     }
 }
