@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace JS.Base.WS.API.Helpers
+namespace JS.Base.WS.API.Utilities
 {
     public static class Security
     {

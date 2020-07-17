@@ -331,12 +331,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
-    <Compile Include="Services\DocentService.cs" />
-    <Compile Include="Services\AccompanyingInstrumentService.cs" />
+    <Compile Include="Services\Domain\DocentService.cs" />
+    <Compile Include="Services\Domain\AccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
-    <Compile Include="Services\IServices\IDocentService.cs" />
-    <Compile Include="Services\IServices\IAccompanyingInstrumentService.cs" />
+    <Compile Include="Services\IServices\IDomain\IDocentService.cs" />
+    <Compile Include="Services\IServices\IDomain\IAccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
