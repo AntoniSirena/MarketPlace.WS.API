@@ -68,5 +68,9 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<ContentDomainDetail> ContentDomainDetails { get; set; }
         public virtual DbSet<StrategyActivity> StrategyActivities { get; set; }
         public virtual DbSet<StrategyActivityDetail> StrategyActivityDetails { get; set; }
+        public virtual DbSet<PedagogicalResource> PedagogicalResources { get; set; }
+        public virtual DbSet<PedagogicalResourceDetail> PedagogicalResourceDetails { get; set; }
+
+
     }
 }

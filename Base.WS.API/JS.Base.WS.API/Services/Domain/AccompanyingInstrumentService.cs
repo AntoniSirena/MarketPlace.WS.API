@@ -218,6 +218,47 @@ namespace JS.Base.WS.API.Services
             #endregion
 
 
+            //Variable D
+            #region variable D
+
+            var variableD = db.Variables.Where(x => x.ShortName == Varibels.D).FirstOrDefault();
+
+            var pedagogicalResourceRequest = new PedagogicalResource()
+            {
+                RequestId = requestId,
+                StatusId = inProcessStatus.Id,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var pedagogicalResource = db.PedagogicalResources.Add(pedagogicalResourceRequest);
+            db.SaveChanges();
+
+            foreach (var item in variableD.variableDetails)
+            {
+                var pedagogicalResourceDetailRequest = new PedagogicalResourceDetail()
+                {
+                    PedagogicalResourceId = pedagogicalResource.Id,
+                    VariableDetailId = item.Id,
+                    AreaIdA = areaId,
+                    IndicadorIdA = indicatorId,
+                    AreaIdB = areaId,
+                    IndicadorIdB = indicatorId,
+                    AreaIdC = areaId,
+                    IndicadorIdC = indicatorId,
+                    CreationTime = DateTime.Now,
+                    CreatorUserId = currentUserId,
+                    IsActive = true,
+                };
+
+                var pedagogicalResourceDetail = db.PedagogicalResourceDetails.Add(pedagogicalResourceDetailRequest);
+                db.SaveChanges();
+            }
+
+            #endregion
+
+
             result = true;
 
             return result;
@@ -336,6 +377,42 @@ namespace JS.Base.WS.API.Services
             }
 
 
+            //Variable C
+            if (variable.Equals(Varibels.D))
+            {
+                result = db.PedagogicalResources.Where(x => x.RequestId == requestId).Select(y => new VariableDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.D,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaIdA = y.PedagogicalResourceDetails.Select(z => z.AreaIdA).FirstOrDefault(),
+                    AreaIdB = y.PedagogicalResourceDetails.Select(z => z.AreaIdB).FirstOrDefault(),
+                    AreaIdC = y.PedagogicalResourceDetails.Select(z => z.AreaIdC).FirstOrDefault(),
+                    VariableDetails = y.PedagogicalResourceDetails.Select(p => new VariableDetailsDto()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaIdA = p.AreaIdA,
+                        IndicadorIdA = p.IndicadorIdA,
+                        AreaIdB = p.AreaIdB,
+                        IndicadorIdB = p.IndicadorIdB,
+                        AreaIdC = p.AreaIdC,
+                        IndicadorIdC = p.IndicadorIdC,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+            }
+
+
             return result;
         }
 
@@ -431,6 +508,35 @@ namespace JS.Base.WS.API.Services
                     }
                 }
                 // End variable C
+
+
+                //Variable D
+                if (request.Variable.Equals(Varibels.D))
+                {
+                    var variable = db.PedagogicalResources.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                    foreach (var item in request.VariableDetails)
+                    {
+                        var variableDetails = db.PedagogicalResourceDetails.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                        variableDetails.AreaIdA = request.AreaIdA;
+                        variableDetails.IndicadorIdA = item.IndicadorIdA;
+
+                        variableDetails.AreaIdB = request.AreaIdB;
+                        variableDetails.IndicadorIdB = item.IndicadorIdB;
+
+                        variableDetails.AreaIdC = request.AreaIdC;
+                        variableDetails.IndicadorIdC = item.IndicadorIdC;
+
+                        variableDetails.LastModifierUserId = currentUserId;
+                        variableDetails.LastModificationTime = DateTime.Now;
+
+                        var response = db.SaveChanges();
+
+                        result = true;
+                    }
+                }
+                // End variable D
 
             }
             catch (Exception ex)

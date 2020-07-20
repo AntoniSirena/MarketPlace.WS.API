@@ -287,18 +287,16 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006281436120_rename property.cs" />
-    <Compile Include="Migrations\202006281436120_rename property.Designer.cs">
-      <DependentUpon>202006281436120_rename property.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007201747304_create StrategyActivity.cs" />
-    <Compile Include="Migrations\202007201747304_create StrategyActivity.Designer.cs">
-      <DependentUpon>202007201747304_create StrategyActivity.cs</DependentUpon>
+    <Compile Include="Migrations\202007202216154_create PedagogicalResource.cs" />
+    <Compile Include="Migrations\202007202216154_create PedagogicalResource.Designer.cs">
+      <DependentUpon>202007202216154_create PedagogicalResource.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResource.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResourceDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
@@ -452,11 +450,8 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006281436120_rename property.resx">
-      <DependentUpon>202006281436120_rename property.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007201747304_create StrategyActivity.resx">
-      <DependentUpon>202007201747304_create StrategyActivity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007202216154_create PedagogicalResource.resx">
+      <DependentUpon>202007202216154_create PedagogicalResource.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
