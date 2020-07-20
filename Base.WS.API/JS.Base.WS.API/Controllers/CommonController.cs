@@ -130,6 +130,22 @@ namespace JS.Base.WS.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetEducativeCenters")]
+        public IHttpActionResult GetEducativeCenters()
+        {
+            var result = db.EducativeCenters.Where(x => x.IsActive == true).Select(y => new EducativeCenterDto
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Name = y.Name,
+                Description = y.Description,
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
 
         [HttpGet]
         [Route("GetAreas")]
@@ -248,6 +264,22 @@ namespace JS.Base.WS.API.Controllers
         public IHttpActionResult GetDocents()
         {
             var result = db.Docents.Where(x => x.IsActive == true).Select(y => new DocentDto
+            {
+                Id = y.Id,
+                FullName = y.FullName,
+                DocumentNumber = y.DocumentNumber,
+
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetDocentsByEducativeCenter/{educativeCenterId}")]
+        public IHttpActionResult GetDocentsByEducativeCenter(int educativeCenterId)
+        {
+            var result = db.Docents.Where(x => x.IsActive == true && x.EducativeCenterId == educativeCenterId).Select(y => new DocentDto
             {
                 Id = y.Id,
                 FullName = y.FullName,

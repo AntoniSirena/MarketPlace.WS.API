@@ -64,6 +64,10 @@ namespace JS.Base.WS.API.Global
             public const string Message201 = "Registro actualizado con éxito";
 
             public const string Message202 = "Registro eliminado con éxito";
+
+            public const string Message203 = "Registros actualizados con éxito";
+
+            public const string Message204 = "Registros eliminados con éxito";
         }
 
         public static class InternalResponseCodeError
@@ -106,6 +110,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code312 = "312";
             public const string Message312 = "No existen Instrumentos de Acompañamientos asociados a su usuario";
+
+            public const string Code313 = "313";
+            public const string Message313 = "Indicadores no encontrados para este formulario";
         }
 
         public static class ConfigurationParameter

@@ -109,8 +109,37 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             result = accompanyingInstrumentService.GetVariableByRequestId(requestId, variable);
 
-            return Ok(result);
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code313;
+                response.Message = InternalResponseCodeError.Message313;
+            }
+            else
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
         }
 
+
+        [HttpPost]
+        [Route("UpdateVariable")]
+        public IHttpActionResult UpdateVariable(VariableDto request)
+        {
+            bool result = accompanyingInstrumentService.UpdateVariable(request);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message203;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
     }
 }

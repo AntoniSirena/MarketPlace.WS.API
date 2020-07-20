@@ -9,12 +9,16 @@ namespace JS.Base.WS.API.DTO.Response.Domain
     {
         public long Id { get; set; }
         public long RequestId { get; set; }
+        public string Variable { get; set; }
         public int StausId { get; set; }
         public string StatusDescription { get; set; }
         public string StatusColour { get; set; }
         public string VariableDescription { get; set; }
         public string VariableTitle { get; set; }
         public List<VariableDetailsDto> VariableDetails { get; set; }
+        public int AreaIdA { get; set; }
+        public int AreaIdB { get; set; }
+        public int AreaIdC { get; set; }
     }
 
     public class VariableDetailsDto

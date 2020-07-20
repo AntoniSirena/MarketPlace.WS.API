@@ -2,6 +2,7 @@
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
+using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using System;
@@ -63,5 +64,9 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<VariableDetail> VariableDetails { get; set; }
         public virtual DbSet<Planning> Plannings { get; set; }
         public virtual DbSet<PlanningDetail> PlanningDetails { get; set; }
+        public virtual DbSet<ContentDomain> ContentDomains { get; set; }
+        public virtual DbSet<ContentDomainDetail> ContentDomainDetails { get; set; }
+        public virtual DbSet<StrategyActivity> StrategyActivities { get; set; }
+        public virtual DbSet<StrategyActivityDetail> StrategyActivityDetails { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -96,7 +97,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 statusCode = HttpStatusCode.InternalServerError;
             }
 
-            return Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+            var result = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+
+            return result;
         }
 
 

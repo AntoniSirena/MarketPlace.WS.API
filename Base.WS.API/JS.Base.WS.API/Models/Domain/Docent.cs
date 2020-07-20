@@ -42,6 +42,9 @@ namespace JS.Base.WS.API.Models.Domain
         [Required]
         public int AreaId { get; set; }
 
+        [Required]
+        public int EducativeCenterId { get; set; }
+
 
         [ForeignKey("DocumentTypeID")]
         public virtual DocumentType DocumentType { get; set; }
@@ -49,5 +52,7 @@ namespace JS.Base.WS.API.Models.Domain
         [ForeignKey("AreaId")]
         public virtual Area Area { get; set; }
 
+        [ForeignKey("EducativeCenterId")]
+        public virtual EducativeCenter EducativeCenter { get; set; }
     }
 }

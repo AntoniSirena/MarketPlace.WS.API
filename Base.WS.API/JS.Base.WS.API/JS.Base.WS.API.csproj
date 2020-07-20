@@ -275,7 +275,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Helpers\Security.cs" />
     <Compile Include="Migrations\202005280437193_creation personType.cs" />
     <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
       <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
@@ -292,10 +291,18 @@
     <Compile Include="Migrations\202006281436120_rename property.Designer.cs">
       <DependentUpon>202006281436120_rename property.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007201747304_create StrategyActivity.cs" />
+    <Compile Include="Migrations\202007201747304_create StrategyActivity.Designer.cs">
+      <DependentUpon>202007201747304_create StrategyActivity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivityDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
@@ -346,6 +353,7 @@
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
+    <Compile Include="Utilities\Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -446,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006281436120_rename property.resx">
       <DependentUpon>202006281436120_rename property.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007201747304_create StrategyActivity.resx">
+      <DependentUpon>202007201747304_create StrategyActivity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
