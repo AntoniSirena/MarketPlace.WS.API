@@ -291,14 +291,30 @@
     <Compile Include="Migrations\202007202216154_create PedagogicalResource.Designer.cs">
       <DependentUpon>202007202216154_create PedagogicalResource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007210322320_create ClassroomClimate.cs" />
+    <Compile Include="Migrations\202007210322320_create ClassroomClimate.Designer.cs">
+      <DependentUpon>202007210322320_create ClassroomClimate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007210342353_create RelationFatherMother.cs" />
+    <Compile Include="Migrations\202007210342353_create RelationFatherMother.Designer.cs">
+      <DependentUpon>202007210342353_create RelationFatherMother.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcess.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcessDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResource.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResourceDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPractice.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPracticeDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMother.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMotherDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivityDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
@@ -452,6 +468,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007202216154_create PedagogicalResource.resx">
       <DependentUpon>202007202216154_create PedagogicalResource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007210322320_create ClassroomClimate.resx">
+      <DependentUpon>202007210322320_create ClassroomClimate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007210342353_create RelationFatherMother.resx">
+      <DependentUpon>202007210342353_create RelationFatherMother.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

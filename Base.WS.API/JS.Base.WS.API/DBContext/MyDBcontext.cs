@@ -58,6 +58,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<RequestStatus> RequestStatus { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<Indicator> Indicators { get; set; }
+
+        //Accompanying InstrumentRequest
         public virtual DbSet<AccompanyingInstrumentRequest> AccompanyingInstrumentRequests { get; set; }
         public virtual DbSet<IdentificationData> IdentificationDatas { get; set; }
         public virtual DbSet<Variable> Variables { get; set; }
@@ -70,6 +72,14 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<StrategyActivityDetail> StrategyActivityDetails { get; set; }
         public virtual DbSet<PedagogicalResource> PedagogicalResources { get; set; }
         public virtual DbSet<PedagogicalResourceDetail> PedagogicalResourceDetails { get; set; }
+        public virtual DbSet<EvaluationProcess> EvaluationProcesses { get; set; }
+        public virtual DbSet<EvaluationProcessDetail> EvaluationProcessDetails { get; set; }
+        public virtual DbSet<ClassroomClimate> ClassroomClimates { get; set; }
+        public virtual DbSet<ClassroomClimateDetail> ClassroomClimateDetails { get; set; }
+        public virtual DbSet<ReflectionPractice> ReflectionPractices { get; set; }
+        public virtual DbSet<ReflectionPracticeDetail> ReflectionPracticeDetails { get; set; }
+        public virtual DbSet<RelationFatherMother> RelationFatherMothers { get; set; }
+        public virtual DbSet<RelationFatherMotherDetail> RelationFatherMotherDetails { get; set; }
 
 
     }
