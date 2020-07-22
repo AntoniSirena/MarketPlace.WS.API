@@ -3,6 +3,7 @@ namespace JS.Base.WS.API.Migrations
     using JS.Base.WS.API.Models;
     using JS.Base.WS.API.Models.Authorization;
     using JS.Base.WS.API.Models.Domain;
+    using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
     using JS.Base.WS.API.Models.PersonProfile;
     using System;
     using System.Data.Entity;
@@ -60,7 +61,7 @@ namespace JS.Base.WS.API.Migrations
             context.RequestStatus.AddOrUpdate(
                 x => x.ShortName,
                 new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "rgb(52, 212, 146)", AllowEdit = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "Completed", Name = "Completada", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new RequestStatus { ShortName = "Completed", Name = "Completado", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
                 );
 
             //Variables
@@ -153,6 +154,16 @@ namespace JS.Base.WS.API.Migrations
                 new VariableDetail { Number = "H2", Description = "Comunicación con los padres, las madres o los tutores acerca del progreso de sus niños", VariableID = hId },
                 new VariableDetail { Number = "H3", Description = "Elaboración de proyectos de aula que potencien la interacción de los niños con la comunidad", VariableID = hId }
                 );
+
+            context.CommentsRevisedDocumentsDefs.AddOrUpdate(
+               x => x.ShortName,
+               new CommentsRevisedDocumentsDef { ShortName = "A", Description = "Portafolio Docente" },
+               new CommentsRevisedDocumentsDef { ShortName = "B", Description = "Diario Reflexivo del docente" },
+               new CommentsRevisedDocumentsDef { ShortName = "C", Description = "Diario Reflexivo del docente" },
+               new CommentsRevisedDocumentsDef { ShortName = "D", Description = "Evidencias de investigaciónacción" },
+               new CommentsRevisedDocumentsDef { ShortName = "E", Description = "Libros de consulta usados (nombre y editora)" },
+               new CommentsRevisedDocumentsDef { ShortName = "F", Description = "Otros elementos" }
+               );
         }
     }
 }

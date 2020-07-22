@@ -113,6 +113,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code313 = "313";
             public const string Message313 = "Indicadores no encontrados para este formulario";
+
+            public const string Code314 = "314";
+            public const string Message314 = "Comentarios no encontrados para este formulario";
         }
 
         public static class ConfigurationParameter

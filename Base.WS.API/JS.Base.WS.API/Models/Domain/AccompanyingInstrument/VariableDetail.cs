@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JS.Base.WS.API.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace JS.Base.WS.API.Models.Domain
 {
-    public class VariableDetail
+    public class VariableDetail : Audit
     {
         [Key]
         public long Id { get; set; }

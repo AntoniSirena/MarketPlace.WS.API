@@ -422,6 +422,48 @@ namespace JS.Base.WS.API.Services
 
             #endregion
 
+
+            //Comments Revised Document
+            #region CommentsRevisedDocument
+
+            var commentsRevisedDocumentDef = db.CommentsRevisedDocumentsDefs.ToList();
+
+            var commentsRevisedDocumentRequest = new CommentsRevisedDocument()
+            {
+                RequestId = requestId,
+                StatusId = inProcessStatus.Id,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var commentsRevisedDocument = db.CommentsRevisedDocuments.Add(commentsRevisedDocumentRequest);
+            db.SaveChanges();
+
+            foreach (var item in commentsRevisedDocumentDef)
+            {
+                var commentsRevisedDocumentsDetailRequest = new CommentsRevisedDocumentsDetail()
+                {
+                    CommentsRevisedDocumentId = commentsRevisedDocument.Id,
+                    CommentsRevisedDocumentsDefId = item.Id,
+                    AreaIdA = areaId,
+                    CommentA = string.Empty,
+                    AreaIdB = areaId,
+                    CommentB = string.Empty,
+                    AreaIdC = areaId,
+                    CommentC = string.Empty,
+                    IsActive = true,
+                    CreatorUserId = currentUserId,
+                    CreationTime = DateTime.Now,
+                };
+
+                var commentsRevisedDocumentsDetail = db.GetCommentsRevisedDocumentsDetails.Add(commentsRevisedDocumentsDetailRequest);
+                db.SaveChanges();
+            }
+
+            #endregion
+
+
             result = true;
 
             return result;
@@ -724,6 +766,45 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        public CommentsRevisedDocumentDto GetCommentsRevisedDocument(long requestId)
+        {
+            var result = new CommentsRevisedDocumentDto();
+
+            result = db.CommentsRevisedDocuments.Where(x => x.RequestId == requestId).Select(y => new CommentsRevisedDocumentDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+                AreaIdA = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaIdA).FirstOrDefault(),
+                DateA = y.CommentsRevisedDocumentsDetails.Select(z => z.DateA).FirstOrDefault(),
+                AreaIdB = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaIdB).FirstOrDefault(),
+                DateB = y.CommentsRevisedDocumentsDetails.Select(z => z.DateB).FirstOrDefault(),
+                AreaIdC = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaIdC).FirstOrDefault(),
+                DateC = y.CommentsRevisedDocumentsDetails.Select(z => z.DateC).FirstOrDefault(),
+                CommentsRevisedDocumenDetails = y.CommentsRevisedDocumentsDetails.Select(p => new Detail()
+                {
+                    Id = p.Id,
+                    Description = p.CommentsRevisedDocumentsDef.Description,
+                    AreaIdA = p.AreaIdA,
+                    DateA = p.DateA,
+                    CommentA = p.CommentA,
+                    AreaIdB = p.AreaIdB,
+                    DateB = p.DateB,
+                    CommentB = p.CommentB,
+                    AreaIdC = p.AreaIdC,
+                    DateC = p.DateC,
+                    CommentC = p.CommentC,
+                }).ToList(),
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
         public bool UpdateVariable(VariableDto request)
         {
             bool result = false;
@@ -965,6 +1046,40 @@ namespace JS.Base.WS.API.Services
             catch (Exception ex)
             {
 
+            }
+
+            return result;
+        }
+
+
+        public bool UpdateCommentsRevisedDocument(CommentsRevisedDocumentDto request)
+        {
+            bool result = false;
+
+            var commentsRevisedDocument = db.CommentsRevisedDocuments.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+            foreach (var item in request.CommentsRevisedDocumenDetails)
+            {
+                var commentsRevisedDocumenDetails = db.GetCommentsRevisedDocumentsDetails.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                commentsRevisedDocumenDetails.AreaIdA = request.AreaIdA;
+                commentsRevisedDocumenDetails.DateA = request.DateA;
+                commentsRevisedDocumenDetails.CommentA = item.CommentA;
+
+                commentsRevisedDocumenDetails.AreaIdB = request.AreaIdB;
+                commentsRevisedDocumenDetails.DateB = request.DateB;
+                commentsRevisedDocumenDetails.CommentB = item.CommentB;
+
+                commentsRevisedDocumenDetails.AreaIdC = request.AreaIdC;
+                commentsRevisedDocumenDetails.DateC = request.DateC;
+                commentsRevisedDocumenDetails.CommentC = item.CommentC;
+
+                commentsRevisedDocumenDetails.LastModifierUserId = currentUserId;
+                commentsRevisedDocumenDetails.LastModificationTime = DateTime.Now;
+
+                var response = db.SaveChanges();
+
+                result = true;
             }
 
             return result;

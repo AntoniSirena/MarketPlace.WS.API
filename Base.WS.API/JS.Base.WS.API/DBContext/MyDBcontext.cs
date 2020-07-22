@@ -80,6 +80,9 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<ReflectionPracticeDetail> ReflectionPracticeDetails { get; set; }
         public virtual DbSet<RelationFatherMother> RelationFatherMothers { get; set; }
         public virtual DbSet<RelationFatherMotherDetail> RelationFatherMotherDetails { get; set; }
+        public virtual DbSet<CommentsRevisedDocumentsDef> CommentsRevisedDocumentsDefs { get; set; }
+        public virtual DbSet<CommentsRevisedDocument> CommentsRevisedDocuments { get; set; }
+        public virtual DbSet<CommentsRevisedDocumentsDetail> GetCommentsRevisedDocumentsDetails { get; set; }
 
 
     }

@@ -250,6 +250,7 @@
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
+    <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
     <Compile Include="DTO\Response\Domain\DocentDto.cs" />
     <Compile Include="DTO\Response\Domain\DistrictDto.cs" />
     <Compile Include="DTO\Response\Domain\DocentDetailsDto.cs" />
@@ -295,13 +296,16 @@
     <Compile Include="Migrations\202007210322320_create ClassroomClimate.Designer.cs">
       <DependentUpon>202007210322320_create ClassroomClimate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007210342353_create RelationFatherMother.cs" />
-    <Compile Include="Migrations\202007210342353_create RelationFatherMother.Designer.cs">
-      <DependentUpon>202007210342353_create RelationFatherMother.cs</DependentUpon>
+    <Compile Include="Migrations\202007220419548_update Com.cs" />
+    <Compile Include="Migrations\202007220419548_update Com.Designer.cs">
+      <DependentUpon>202007220419548_update Com.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocument.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDef.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcess.cs" />
@@ -472,8 +476,8 @@
     <EmbeddedResource Include="Migrations\202007210322320_create ClassroomClimate.resx">
       <DependentUpon>202007210322320_create ClassroomClimate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007210342353_create RelationFatherMother.resx">
-      <DependentUpon>202007210342353_create RelationFatherMother.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007220419548_update Com.resx">
+      <DependentUpon>202007220419548_update Com.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

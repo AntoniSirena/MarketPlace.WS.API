@@ -123,6 +123,28 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
 
+        [HttpGet]
+        [Route("GetCommentsRevisedDocumentByRequestId")]
+        public IHttpActionResult GetCommentsRevisedDocumentByRequestId(long requestId)
+        {
+            var result = new CommentsRevisedDocumentDto();
+
+            result = accompanyingInstrumentService.GetCommentsRevisedDocument(requestId);
+
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code314;
+                response.Message = InternalResponseCodeError.Message314;
+            }
+            else
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
+        }
+
+
         [HttpPost]
         [Route("UpdateVariable")]
         public IHttpActionResult UpdateVariable(VariableDto request)
@@ -141,5 +163,25 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("UpdateCommentsRevisedDocument")]
+        public IHttpActionResult UpdateCommentsRevisedDocument(CommentsRevisedDocumentDto request)
+        {
+            bool result = accompanyingInstrumentService.UpdateCommentsRevisedDocument(request);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message203;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
     }
 }
