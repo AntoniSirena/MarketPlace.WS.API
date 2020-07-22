@@ -144,6 +144,27 @@ namespace JS.Base.WS.API.Controllers.Domain
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("GetDescriptionObservationSupportProvidedByRequestId")]
+        public IHttpActionResult GetDescriptionObservationSupportProvidedByRequestId(long requestId)
+        {
+            var result = new DescriptionObservationSupportProvidedDto();
+
+            result = accompanyingInstrumentService.GetDescriptionObservationSupportProvided(requestId);
+
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code315;
+                response.Message = InternalResponseCodeError.Message315;
+            }
+            else
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
+        }
+
 
         [HttpPost]
         [Route("UpdateVariable")]
@@ -183,5 +204,23 @@ namespace JS.Base.WS.API.Controllers.Domain
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("UpdateDescriptionObservationSupportProvided")]
+        public IHttpActionResult UpdateDescriptionObservationSupportProvided(DescriptionObservationSupportProvidedDto request)
+        {
+            bool result = accompanyingInstrumentService.UpdateDescriptionObservationSupportProvided(request);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message203;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
     }
 }

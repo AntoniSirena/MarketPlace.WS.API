@@ -457,9 +457,37 @@ namespace JS.Base.WS.API.Services
                     CreationTime = DateTime.Now,
                 };
 
-                var commentsRevisedDocumentsDetail = db.GetCommentsRevisedDocumentsDetails.Add(commentsRevisedDocumentsDetailRequest);
+                var commentsRevisedDocumentsDetail = db.CommentsRevisedDocumentsDetails.Add(commentsRevisedDocumentsDetailRequest);
                 db.SaveChanges();
             }
+
+            #endregion
+
+
+            //Description Observation Support Provided
+            #region DescriptionObservationSupportProvided
+
+            var descriptionObservationSupportProvidedRequest = new DescriptionObservationSupportProvided()
+            {
+                RequestId = requestId,
+                StatusId = inProcessStatus.Id,
+
+                AreaIdA = areaId,
+                CommentA = string.Empty,
+
+                AreaIdB = areaId,
+                CommentB = string.Empty,
+
+                AreaIdC = areaId,
+                CommentC = string.Empty,
+
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var descriptionObservationSupportProvided = db.DescriptionObservationSupportProvideds.Add(descriptionObservationSupportProvidedRequest);
+            db.SaveChanges();
 
             #endregion
 
@@ -805,6 +833,38 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        public DescriptionObservationSupportProvidedDto GetDescriptionObservationSupportProvided(long requestId)
+        {
+            var result = new DescriptionObservationSupportProvidedDto();
+
+            result = db.DescriptionObservationSupportProvideds.Where(x => x.RequestId == requestId).Select(y => new DescriptionObservationSupportProvidedDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaIdA = y.AreaIdA,
+                DateA = y.DateA,
+                CommentA = y.CommentA,
+
+                AreaIdB = y.AreaIdB,
+                DateB = y.DateB,
+                CommentB = y.CommentB,
+
+                AreaIdC = y.AreaIdC,
+                DateC = y.DateC,
+                CommentC = y.CommentC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
+
         public bool UpdateVariable(VariableDto request)
         {
             bool result = false;
@@ -1060,7 +1120,7 @@ namespace JS.Base.WS.API.Services
 
             foreach (var item in request.CommentsRevisedDocumenDetails)
             {
-                var commentsRevisedDocumenDetails = db.GetCommentsRevisedDocumentsDetails.Where(x => x.Id == item.Id).FirstOrDefault();
+                var commentsRevisedDocumenDetails = db.CommentsRevisedDocumentsDetails.Where(x => x.Id == item.Id).FirstOrDefault();
 
                 commentsRevisedDocumenDetails.AreaIdA = request.AreaIdA;
                 commentsRevisedDocumenDetails.DateA = request.DateA;
@@ -1085,5 +1145,32 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+
+        public bool UpdateDescriptionObservationSupportProvided(DescriptionObservationSupportProvidedDto request)
+        {
+            bool result = false;
+
+            var descriptionObs = db.DescriptionObservationSupportProvideds.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+            descriptionObs.AreaIdA = request.AreaIdA;
+            descriptionObs.DateA = request.DateA;
+            descriptionObs.CommentA = request.CommentA;
+
+            descriptionObs.AreaIdB = request.AreaIdB;
+            descriptionObs.DateB = request.DateB;
+            descriptionObs.CommentB = request.CommentB;
+
+            descriptionObs.AreaIdC = request.AreaIdC;
+            descriptionObs.DateC = request.DateC;
+            descriptionObs.CommentC = request.CommentC;
+
+            descriptionObs.LastModifierUserId = currentUserId;
+            descriptionObs.LastModificationTime = DateTime.Now;
+
+            db.SaveChanges();
+            result = true;
+
+            return result;
+        }
     }
 }

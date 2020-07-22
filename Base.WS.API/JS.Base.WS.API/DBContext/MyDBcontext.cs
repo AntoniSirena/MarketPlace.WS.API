@@ -82,8 +82,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<RelationFatherMotherDetail> RelationFatherMotherDetails { get; set; }
         public virtual DbSet<CommentsRevisedDocumentsDef> CommentsRevisedDocumentsDefs { get; set; }
         public virtual DbSet<CommentsRevisedDocument> CommentsRevisedDocuments { get; set; }
-        public virtual DbSet<CommentsRevisedDocumentsDetail> GetCommentsRevisedDocumentsDetails { get; set; }
-
+        public virtual DbSet<CommentsRevisedDocumentsDetail> CommentsRevisedDocumentsDetails { get; set; }
+        public virtual DbSet<DescriptionObservationSupportProvided> DescriptionObservationSupportProvideds { get; set; }
 
     }
 }
