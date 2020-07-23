@@ -98,8 +98,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser != null)
             {
-                string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
-                var token = TokenGenerator.GenerateTokenJwt(userParam);
+                int expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
+                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + ","+ lifeDate;
+                var token = TokenGenerator.GenerateTokenJwt(payLoad);
 
                 var userRole  = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
