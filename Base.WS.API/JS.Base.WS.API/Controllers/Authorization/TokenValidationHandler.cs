@@ -88,7 +88,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 return base.SendAsync(request, cancellationToken);
             }
-            catch (SecurityTokenValidationException)
+            catch (SecurityTokenValidationException ex)
             {
                 statusCode = HttpStatusCode.Unauthorized;
             }
