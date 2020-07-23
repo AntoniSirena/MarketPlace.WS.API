@@ -20,8 +20,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
     public class TokenValidationHandler : DelegatingHandler
     {
 
-        public long currentUserId = 0;
-        public string currentUserName = string.Empty;
+        private long currentUserId = 0;
+        private string currentUserName = string.Empty;
+        private DateTime lifeToken;
 
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
@@ -54,6 +55,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
                 var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
                 var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+                int refressTime = Convert.ToInt16(ConfigurationManager.AppSettings["REFRESS_TIME"]);
 
                 SecurityToken securityToken;
                 var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
@@ -67,24 +69,45 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     IssuerSigningKey = securityKey
                 };
 
-                //Delete currentUserId and UserName in Cache 
+                //Delete Cache 
                 CurrentUser.DeleteId();
                 CurrentUser.DeleteName();
+                CurrentUser.DeleteLifeToken();
 
                 // Extract and assign Current Principal and user
                 Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
                 HttpContext.Current.User = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
-
                 
                 string userName = Thread.CurrentPrincipal.Identity.Name;
                 string[] userValue = userName.Split(',');
 
                 this.currentUserName = userValue[0];
                 this.currentUserId = Convert.ToInt64(userValue[1]);
+                this.lifeToken = Convert.ToDateTime(userValue[2]);
+
+                //valita life token
+                var time = 0;
+
+                if (lifeToken.Hour == DateTime.Now.Hour)
+                {
+                    time = (lifeToken.Minute - DateTime.Now.Minute);
+                }
+
+                if (time > 0 && time < refressTime)
+                {
+                    statusCode = HttpStatusCode.Conflict;
+
+                    var refressResult = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+
+                    return refressResult;
+                }
+
 
                 //Cache estorage by 5 minutes
                 CacheStorage.Add("currentUserName", currentUserName, DateTimeOffset.UtcNow.AddMinutes(5));
                 CacheStorage.Add("currentUserId", currentUserId, DateTimeOffset.UtcNow.AddMinutes(5));
+                CacheStorage.Add("lifeToken", currentUserId, DateTimeOffset.UtcNow.AddMinutes(5));
+
 
                 return base.SendAsync(request, cancellationToken);
             }
