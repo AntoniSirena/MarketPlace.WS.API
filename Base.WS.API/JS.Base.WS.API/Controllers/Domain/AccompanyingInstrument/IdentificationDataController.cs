@@ -165,6 +165,26 @@ namespace JS.Base.WS.API.Controllers.Domain
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("GetSuggestionsAgreementByRequestId")]
+        public IHttpActionResult GetSuggestionsAgreementByRequestId(long requestId)
+        {
+            var result = new SuggestionsAgreementDto();
+
+            result = accompanyingInstrumentService.GetSuggestionsAgreement(requestId);
+
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code316;
+                response.Message = InternalResponseCodeError.Message316;
+            }
+            else
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
+        }
 
         [HttpPost]
         [Route("UpdateVariable")]
@@ -222,5 +242,26 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             return Ok(response);
         }
+
+
+        [HttpPost]
+        [Route("UpdateSuggestionsAgreement")]
+        public IHttpActionResult UpdateSuggestionsAgreement(SuggestionsAgreementDto request)
+        {
+            bool result = accompanyingInstrumentService.UpdateSuggestionsAgreement(request);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message203;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
     }
 }

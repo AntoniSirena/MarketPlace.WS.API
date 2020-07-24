@@ -116,17 +116,17 @@ namespace JS.Base.WS.API.Services
             {
                 var planningDetailRequest = new PlanningDetail()
                 {
-                   PlanningId = planning.Id,
-                   VariableDetailId = item.Id,
-                   AreaIdA = areaId,
-                   IndicadorIdA = indicatorId,
-                   AreaIdB = areaId,
-                   IndicadorIdB = indicatorId,
-                   AreaIdC = areaId,
-                   IndicadorIdC = indicatorId,
-                   CreationTime = DateTime.Now,
-                   CreatorUserId = currentUserId,
-                   IsActive = true,
+                    PlanningId = planning.Id,
+                    VariableDetailId = item.Id,
+                    AreaIdA = areaId,
+                    IndicadorIdA = indicatorId,
+                    AreaIdB = areaId,
+                    IndicadorIdB = indicatorId,
+                    AreaIdC = areaId,
+                    IndicadorIdC = indicatorId,
+                    CreationTime = DateTime.Now,
+                    CreatorUserId = currentUserId,
+                    IsActive = true,
                 };
 
                 var planningDetail = db.PlanningDetails.Add(planningDetailRequest);
@@ -492,6 +492,46 @@ namespace JS.Base.WS.API.Services
             #endregion
 
 
+            //Suggestions Agreement
+            #region SuggestionsAgreement
+
+            var suggestionsAgreementRequest = new SuggestionsAgreement()
+            {
+                RequestId = requestId,
+                StatusId = inProcessStatus.Id,
+
+                AreaIdA = areaId,
+                DateA = string.Empty,
+                CommentA = string.Empty,
+                TeacherSignatureA = string.Empty,
+                CompanionSignatureA = string.Empty,
+                DistrictTechnicianSignatureA = string.Empty,
+
+                AreaIdB = areaId,
+                CommentB = string.Empty,
+                DateB = string.Empty,
+                TeacherSignatureB = string.Empty,
+                CompanionSignatureB = string.Empty,
+                DistrictTechnicianSignatureB = string.Empty,
+
+                AreaIdC = areaId,
+                DateC = string.Empty,
+                CommentC = string.Empty,
+                TeacherSignatureC = string.Empty,
+                CompanionSignatureC = string.Empty,
+                DistrictTechnicianSignatureC = string.Empty,
+
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var suggestionsAgreement = db.SuggestionsAgreements.Add(suggestionsAgreementRequest);
+            db.SaveChanges();
+
+            #endregion
+
+
             result = true;
 
             return result;
@@ -507,7 +547,8 @@ namespace JS.Base.WS.API.Services
             //Variable A
             if (variable.Equals(Varibels.A))
             {
-                result = db.Plannings.Where(x => x.RequestId == requestId).Select(y => new VariableDto() {
+                result = db.Plannings.Where(x => x.RequestId == requestId).Select(y => new VariableDto()
+                {
 
                     Id = y.Id,
                     RequestId = y.RequestId,
@@ -520,7 +561,8 @@ namespace JS.Base.WS.API.Services
                     AreaIdA = y.PlanningDetails.Select(z => z.AreaIdA).FirstOrDefault(),
                     AreaIdB = y.PlanningDetails.Select(z => z.AreaIdB).FirstOrDefault(),
                     AreaIdC = y.PlanningDetails.Select(z => z.AreaIdC).FirstOrDefault(),
-                    VariableDetails = y.PlanningDetails.Select(p => new VariableDetailsDto() {
+                    VariableDetails = y.PlanningDetails.Select(p => new VariableDetailsDto()
+                    {
 
                         Id = p.Id,
                         Number = p.VariableDetail.Number,
@@ -864,6 +906,46 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        public SuggestionsAgreementDto GetSuggestionsAgreement(long requestId)
+        {
+            var result = new SuggestionsAgreementDto();
+
+            result = db.SuggestionsAgreements.Where(x => x.RequestId == requestId).Select(y => new SuggestionsAgreementDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaIdA = y.AreaIdA,
+                DateA = y.DateA,
+                CommentA = y.CommentA,
+                TeacherSignatureA = y.TeacherSignatureA,
+                CompanionSignatureA = y.CompanionSignatureA,
+                DistrictTechnicianSignatureA = y.DistrictTechnicianSignatureA,
+
+                AreaIdB = y.AreaIdB,
+                DateB = y.DateB,
+                CommentB = y.CommentB,
+                TeacherSignatureB = y.TeacherSignatureB,
+                CompanionSignatureB = y.CompanionSignatureB,
+                DistrictTechnicianSignatureB = y.DistrictTechnicianSignatureB,
+
+                AreaIdC = y.AreaIdC,
+                DateC = y.DateC,
+                CommentC = y.CommentC,
+                TeacherSignatureC = y.TeacherSignatureC,
+                CompanionSignatureC = y.CompanionSignatureC,
+                DistrictTechnicianSignatureC = y.DistrictTechnicianSignatureC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
 
         public bool UpdateVariable(VariableDto request)
         {
@@ -892,7 +974,7 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModifierUserId = currentUserId;
                         variableDetails.LastModificationTime = DateTime.Now;
 
-                       var response = db.SaveChanges();
+                        var response = db.SaveChanges();
 
                         result = true;
                     }
@@ -1172,5 +1254,43 @@ namespace JS.Base.WS.API.Services
 
             return result;
         }
+
+
+        public bool UpdateSuggestionsAgreement(SuggestionsAgreementDto request)
+        {
+            bool result = false;
+
+            var suggestionsAgreement = db.SuggestionsAgreements.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+            suggestionsAgreement.AreaIdA = request.AreaIdA;
+            suggestionsAgreement.DateA = request.DateA;
+            suggestionsAgreement.CommentA = request.CommentA;
+            suggestionsAgreement.TeacherSignatureA = request.TeacherSignatureA;
+            suggestionsAgreement.CompanionSignatureA = request.CompanionSignatureA;
+            suggestionsAgreement.DistrictTechnicianSignatureA = request.DistrictTechnicianSignatureA;
+
+            suggestionsAgreement.AreaIdB = request.AreaIdB;
+            suggestionsAgreement.DateB = request.DateB;
+            suggestionsAgreement.CommentB = request.CommentB;
+            suggestionsAgreement.TeacherSignatureB = request.TeacherSignatureB;
+            suggestionsAgreement.CompanionSignatureB = request.CompanionSignatureB;
+            suggestionsAgreement.DistrictTechnicianSignatureB = request.DistrictTechnicianSignatureB;
+
+            suggestionsAgreement.AreaIdC = request.AreaIdC;
+            suggestionsAgreement.DateC = request.DateC;
+            suggestionsAgreement.CommentC = request.CommentC;
+            suggestionsAgreement.TeacherSignatureC = request.TeacherSignatureC;
+            suggestionsAgreement.CompanionSignatureC = request.CompanionSignatureC;
+            suggestionsAgreement.DistrictTechnicianSignatureC = request.DistrictTechnicianSignatureC;
+
+            suggestionsAgreement.LastModifierUserId = currentUserId;
+            suggestionsAgreement.LastModificationTime = DateTime.Now;
+
+            db.SaveChanges();
+            result = true;
+
+            return result;
+        }
+
     }
 }

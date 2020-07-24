@@ -119,6 +119,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code315 = "315";
             public const string Message315 = "Descripciones no encontradas para este formulario";
+
+            public const string Code316 = "316";
+            public const string Message316 = "Sugerencias y acuerdos no encontrados para este formulario";
         }
 
         public static class ConfigurationParameter

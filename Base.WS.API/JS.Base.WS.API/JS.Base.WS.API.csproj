@@ -260,6 +260,7 @@
     <Compile Include="DTO\Response\Domain\AccompInstRequestDto.cs" />
     <Compile Include="DTO\Response\Domain\IndicatorDto.cs" />
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
+    <Compile Include="DTO\Response\Domain\SuggestionsAgreementDto.cs" />
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
@@ -293,6 +294,14 @@
     <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.Designer.cs">
       <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.cs" />
+    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.Designer.cs">
+      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.cs" />
+    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.Designer.cs">
+      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -315,6 +324,7 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMotherDetail.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivityDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
@@ -466,6 +476,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.resx">
       <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007232312427_create SuggestionsAgreement.resx">
+      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007232326261_update SuggestionsAgreement.resx">
+      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
