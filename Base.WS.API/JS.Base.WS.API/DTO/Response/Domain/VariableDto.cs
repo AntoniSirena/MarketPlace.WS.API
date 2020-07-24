@@ -19,6 +19,22 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public int AreaIdA { get; set; }
         public int AreaIdB { get; set; }
         public int AreaIdC { get; set; }
+
+        //Efficiency data
+        public string EfficiencyValueA { get; set; }
+        public string EfficiencyColourA { get; set; }
+
+        public string EfficiencyValueB { get; set; }
+        public string EfficiencyColourB { get; set; }
+
+        public string EfficiencyValueC { get; set; }
+        public string EfficiencyColourC { get; set; }
+
+        public string EfficiencyTotalValue { get; set; }
+        public string EfficiencyTotalColour { get; set; }
+
+        public string EfficiencyEvaluateFactor { get; set; }
+
     }
 
     public class VariableDetailsDto
