@@ -20,5 +20,10 @@ namespace JS.Base.WS.API.Models.Domain
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public decimal Value { get; set; }
+
+        public bool IsEvaluationFactor { get; set; }
+
     }
 }

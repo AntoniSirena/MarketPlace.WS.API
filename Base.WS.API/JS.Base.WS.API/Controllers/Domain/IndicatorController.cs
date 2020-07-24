@@ -56,6 +56,15 @@ namespace JS.Base.WS.API.Controllers.Domain
                 return Ok(response);
             }
 
+            //Set IsEvaluationFactor false
+            var indicators = db.Indicators.ToList();
+            foreach (var item in indicators)
+            {
+                item.IsEvaluationFactor = false;
+
+                db.SaveChanges();
+            }
+
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
             return base.Create(input);
         }
@@ -91,6 +100,15 @@ namespace JS.Base.WS.API.Controllers.Domain
 
                     return Ok(response);
                 }
+            }
+
+            //Set IsEvaluationFactor false
+            var indicators = db.Indicators.ToList();
+            foreach (var item in indicators)
+            {
+                item.IsEvaluationFactor = false;
+
+                db.SaveChanges();
             }
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
