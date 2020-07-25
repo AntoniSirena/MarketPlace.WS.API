@@ -23,7 +23,7 @@ namespace JS.Base.WS.API.Services
         }
 
         private long currentUserId = CurrentUser.GetId();
- 
+
         private decimal EfficiencyEvaluateFactor = 0;
 
         private string indicadorPendingLabel = Indicators.IndicadorPendingLabel;
@@ -590,6 +590,10 @@ namespace JS.Base.WS.API.Services
 
                 //Set efficiency
                 result = SetEfficiency(result);
+
+                //Update Varible Efficiency
+                UpdateVaribleEfficiency(result);
+
             }
 
 
@@ -866,6 +870,11 @@ namespace JS.Base.WS.API.Services
                 result = SetEfficiency(result);
             }
 
+
+            //Calculate Efficiency General
+            result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
+            result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
+            result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
 
             return result;
         }
@@ -1397,7 +1406,7 @@ namespace JS.Base.WS.API.Services
             response.EfficiencyValueB = _efficiencyValueB;
             response.EfficiencyValueC = _efficiencyValueC;
             response.EfficiencyTotalValue = _efficiencyTotalValue;
-            
+
 
             return response;
         }
@@ -1484,7 +1493,7 @@ namespace JS.Base.WS.API.Services
             {
                 result = "btn btn-warning";
             }
-            if (value < 60)
+            if (value <= 60)
             {
                 result = "btn btn-danger";
             }
@@ -1493,6 +1502,197 @@ namespace JS.Base.WS.API.Services
         }
 
 
+
+        //Update Varible Efficiency
+        private void UpdateVaribleEfficiency(VariableDto request)
+        {
+            //Variable A
+            if (request.Variable.Equals(Varibels.A))
+            {
+                var variable = db.Plannings.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable B
+            if (request.Variable.Equals(Varibels.B))
+            {
+                var variable = db.ContentDomains.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable C
+            if (request.Variable.Equals(Varibels.C))
+            {
+                var variable = db.StrategyActivities.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable D
+            if (request.Variable.Equals(Varibels.D))
+            {
+                var variable = db.PedagogicalResources.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable E
+            if (request.Variable.Equals(Varibels.E))
+            {
+                var variable = db.EvaluationProcesses.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable F
+            if (request.Variable.Equals(Varibels.F))
+            {
+                var variable = db.ClassroomClimates.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable G
+            if (request.Variable.Equals(Varibels.G))
+            {
+                var variable = db.ReflectionPractices.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+
+            //Variable H
+            if (request.Variable.Equals(Varibels.H))
+            {
+                var variable = db.RelationFatherMothers.Where(x => x.RequestId == request.RequestId).FirstOrDefault();
+
+                variable.EfficiencyValueA = request.EfficiencyValueA;
+                variable.EfficiencyColourA = request.EfficiencyColourA;
+
+                variable.EfficiencyValueB = request.EfficiencyValueB;
+                variable.EfficiencyColourB = request.EfficiencyColourB;
+
+                variable.EfficiencyValueC = request.EfficiencyValueC;
+                variable.EfficiencyColourC = request.EfficiencyColourC;
+
+                variable.EfficiencyTotalValue = request.EfficiencyTotalValue;
+                variable.EfficiencyTotalColour = request.EfficiencyTotalColour;
+
+                variable.EfficiencyEvaluateFactor = request.EfficiencyEvaluateFactor;
+
+                db.SaveChanges();
+            }
+
+        }
+
+
+        //Validate Update Variable
         private ValidateUpdateVariable ValidateUpdateVariable(VariableDto request)
         {
             var result = new ValidateUpdateVariable();
@@ -1533,6 +1733,138 @@ namespace JS.Base.WS.API.Services
                 result.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la tercera visita";
             }
 
+            return result;
+        }
+
+
+        //Calculate General Efficiency
+        private string CalculateGeneralEfficiency(long requestId)
+        {
+            string result = string.Empty;
+
+            int quantityVariable = 0;
+            decimal totalValue = 0;
+
+            var variableA = db.Plannings.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableB = db.ContentDomains.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableC = db.StrategyActivities.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableD = db.PedagogicalResources.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableE = db.EvaluationProcesses.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableF = db.ClassroomClimates.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableG = db.ReflectionPractices.Where(x => x.RequestId == requestId).FirstOrDefault();
+            var variableH = db.RelationFatherMothers.Where(x => x.RequestId == requestId).FirstOrDefault();
+
+            //Variable A
+            if (variableA.EfficiencyTotalValue != null)
+            {
+                if (!variableA.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+
+            }
+
+
+            //Variable B
+            if (variableB.EfficiencyTotalValue != null)
+            {
+                if (!variableB.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable C
+            if (variableC.EfficiencyTotalValue != null)
+            {
+                if (!variableC.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable D
+            if (variableD.EfficiencyTotalValue != null)
+            {
+                if (!variableD.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable E
+            if (variableE.EfficiencyTotalValue != null)
+            {
+                if (!variableE.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable F
+            if (variableF.EfficiencyTotalValue != null)
+            {
+                if (!variableF.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable G
+            if (variableG.EfficiencyTotalValue != null)
+            {
+                if (!variableG.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            //Variable H
+            if (variableH.EfficiencyTotalValue != null)
+            {
+                if (!variableH.EfficiencyTotalValue.Equals(indicadorPendingLabel))
+                {
+                    quantityVariable += 1;
+                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+
+                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                }
+            }
+
+
+            if (quantityVariable > 0)
+            {
+                totalValue = totalValue / quantityVariable;
+            }
+
+            result = totalValue.ToString();
             return result;
         }
 

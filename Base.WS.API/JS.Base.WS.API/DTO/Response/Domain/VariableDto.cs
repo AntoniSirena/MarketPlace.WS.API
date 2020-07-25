@@ -35,7 +35,12 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string EfficiencyTotalValue { get; set; }
         public string EfficiencyTotalColour { get; set; }
 
+        public string EfficiencyGeneralValue { get; set; }
+        public string EfficiencyGeneralColour { get; set; }
+
         public string EfficiencyEvaluateFactor { get; set; }
+
+
 
         //Error
         public bool Error { get; set; }

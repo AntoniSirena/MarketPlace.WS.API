@@ -20,6 +20,22 @@ namespace JS.Base.WS.API.Models.Domain.AccompanyingInstrument
         public int StatusId { get; set; }
 
 
+        //Efficiency data
+        public string EfficiencyValueA { get; set; }
+        public string EfficiencyColourA { get; set; }
+
+        public string EfficiencyValueB { get; set; }
+        public string EfficiencyColourB { get; set; }
+
+        public string EfficiencyValueC { get; set; }
+        public string EfficiencyColourC { get; set; }
+
+        public string EfficiencyTotalValue { get; set; }
+        public string EfficiencyTotalColour { get; set; }
+
+        public string EfficiencyEvaluateFactor { get; set; }
+
+
         [ForeignKey("RequestId")]
         public virtual AccompanyingInstrumentRequest Request { get; set; }
 
