@@ -586,21 +586,7 @@ namespace JS.Base.WS.API.Services
 
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -640,21 +626,7 @@ namespace JS.Base.WS.API.Services
 
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -693,21 +665,7 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -746,21 +704,7 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -799,21 +743,7 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -852,21 +782,7 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -905,21 +821,7 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
@@ -958,95 +860,13 @@ namespace JS.Base.WS.API.Services
                 }).FirstOrDefault();
 
                 //Set efficiency
-                var efficiency = CalculateEfficiency(result);
-
-                result.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
-                result.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
-
-                result.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
-                result.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
-
-                result.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
-                result.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
-
-                result.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
-                result.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
-
-                result.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+                result = SetEfficiency(result);
             }
 
 
             return result;
         }
 
-
-        // Calculate Efficiency
-        private CalculateEfficiency CalculateEfficiency(VariableDto request)
-        {
-
-            decimal _efficiencyValueA = 0;
-            decimal _efficiencyValueB = 0;
-            decimal _efficiencyValueC = 0;
-            decimal _efficiencyTotalValue = 0;
-
-            foreach (var item in request.VariableDetails)
-            {
-                var currentIndicatorA = db.Indicators.Where(x => x.Id == item.IndicadorIdA).FirstOrDefault();
-                var currentIndicatorB = db.Indicators.Where(x => x.Id == item.IndicadorIdB).FirstOrDefault();
-                var currentIndicatorC = db.Indicators.Where(x => x.Id == item.IndicadorIdC).FirstOrDefault();
-
-                _efficiencyValueA += currentIndicatorA.Value;
-                _efficiencyValueB += currentIndicatorB.Value;
-                _efficiencyValueC += currentIndicatorC.Value;
-            }
-
-            _efficiencyValueA = _efficiencyValueA / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count() );
-            _efficiencyValueB = _efficiencyValueB / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count() );
-            _efficiencyValueC = _efficiencyValueC / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count() );
-
-            _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / 3;
-
-            var response = new CalculateEfficiency()
-            {
-                EfficiencyValueA = _efficiencyValueA,
-                EfficiencyValueB = _efficiencyValueB,
-                EfficiencyValueC = _efficiencyValueC,
-                EfficiencyTotalValue = _efficiencyTotalValue,
-            };
-
-            return response;
-        }
-
-        //Get Colour By Efficiency
-        private string GetColourByEfficiency(decimal value)
-        {
-            string result = string.Empty;
-
-            value = Math.Ceiling(value * 100);
-
-            if (value > 90)
-            {
-                result = "rgb(13, 163, 13)";
-            }
-            if (value >= 80 && value < 90)
-            {
-                result = "rgb(209, 206, 27)";
-            }
-            if (value >= 70 && value < 80)
-            {
-                result = "rgb(228, 144, 19)";
-            }
-            if (value >= 60 && value < 70)
-            {
-                result = "rgb(228, 96, 19)";
-            }
-            if (value < 60)
-            {
-                result = "rgb(175, 20, 14)";
-            }
-
-            return result;
-        }
 
 
         public CommentsRevisedDocumentDto GetCommentsRevisedDocument(long requestId)
@@ -1505,7 +1325,105 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+
+
+        #region Private method
+
+        // Calculate Efficiency
+        private CalculateEfficiency CalculateEfficiency(VariableDto request)
+        {
+
+            decimal _efficiencyValueA = 0;
+            decimal _efficiencyValueB = 0;
+            decimal _efficiencyValueC = 0;
+            decimal _efficiencyTotalValue = 0;
+
+            foreach (var item in request.VariableDetails)
+            {
+                var currentIndicatorA = db.Indicators.Where(x => x.Id == item.IndicadorIdA).FirstOrDefault();
+                var currentIndicatorB = db.Indicators.Where(x => x.Id == item.IndicadorIdB).FirstOrDefault();
+                var currentIndicatorC = db.Indicators.Where(x => x.Id == item.IndicadorIdC).FirstOrDefault();
+
+                _efficiencyValueA += currentIndicatorA.Value;
+                _efficiencyValueB += currentIndicatorB.Value;
+                _efficiencyValueC += currentIndicatorC.Value;
+            }
+
+            _efficiencyValueA = _efficiencyValueA / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueB = _efficiencyValueB / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueC = _efficiencyValueC / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+
+            _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / 3;
+
+            var response = new CalculateEfficiency()
+            {
+                EfficiencyValueA = _efficiencyValueA,
+                EfficiencyValueB = _efficiencyValueB,
+                EfficiencyValueC = _efficiencyValueC,
+                EfficiencyTotalValue = _efficiencyTotalValue,
+            };
+
+            return response;
+        }
+
+
+        //Set Efficiency
+        private VariableDto SetEfficiency(VariableDto request)
+        {
+            var efficiency = CalculateEfficiency(request);
+
+            request.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
+            request.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
+
+            request.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
+            request.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
+
+            request.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
+            request.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
+
+            request.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
+            request.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
+
+            request.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+
+            return request;
+        }
+
+
+        //Get Colour By Efficiency
+        private string GetColourByEfficiency(decimal value)
+        {
+            string result = string.Empty;
+
+            value = Math.Ceiling(value * 100);
+
+            if (value > 90)
+            {
+                result = "btn btn-success";
+            }
+            if (value >= 80 && value < 90)
+            {
+                result = "btn btn-primary";
+            }
+            if (value >= 70 && value < 80)
+            {
+                result = "btn btn-info";
+            }
+            if (value >= 60 && value < 70)
+            {
+                result = "btn btn-warning";
+            }
+            if (value < 60)
+            {
+                result = "btn btn-danger";
+            }
+
+            return result;
+        }
+
+        #endregion
     }
+
 
 
 
