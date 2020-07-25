@@ -18,6 +18,8 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public List<VariableDetailsDto> VariableDetails { get; set; }
         public int AreaIdA { get; set; }
         public int AreaIdB { get; set; }
+
+
         public int AreaIdC { get; set; }
 
         //Efficiency data
@@ -34,6 +36,10 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string EfficiencyTotalColour { get; set; }
 
         public string EfficiencyEvaluateFactor { get; set; }
+
+        //Error
+        public bool Error { get; set; }
+        public string ErrorMessage { get; set; }
 
     }
 

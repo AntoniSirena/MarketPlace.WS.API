@@ -114,6 +114,12 @@ namespace JS.Base.WS.API.Controllers.Domain
                 response.Code = InternalResponseCodeError.Code313;
                 response.Message = InternalResponseCodeError.Message313;
             }
+            if (result.Error)
+            {
+                response.Data = result;
+                response.Code = "999";
+                response.Message = result.ErrorMessage;
+            }
             else
             {
                 response.Data = result;
@@ -190,10 +196,11 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("UpdateVariable")]
         public IHttpActionResult UpdateVariable(VariableDto request)
         {
-            bool result = accompanyingInstrumentService.UpdateVariable(request);
+            var result = accompanyingInstrumentService.UpdateVariable(request);
 
-            if (result)
+            if (!result.Error)
             {
+                response.Data = result;
                 response.Message = InternalResponseMessageGood.Message203;
             }
             else

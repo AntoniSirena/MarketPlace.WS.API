@@ -26,6 +26,9 @@ namespace JS.Base.WS.API.Services
  
         private decimal EfficiencyEvaluateFactor = 0;
 
+        private string indicadorPendingLabel = Indicators.IndicadorPendingLabel;
+        private string areaPending = Constants.Areas.Pending;
+
 
         public List<AccompInstRequestDto> GetAccompInstRequest()
         {
@@ -980,9 +983,13 @@ namespace JS.Base.WS.API.Services
 
 
 
-        public bool UpdateVariable(VariableDto request)
+        public VariableDto UpdateVariable(VariableDto request)
         {
-            bool result = false;
+            var result = new VariableDto();
+            result = request;
+
+            result.Error = false;
+            result.ErrorMessage = string.Empty;
 
             try
             {
@@ -1008,8 +1015,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable A
@@ -1037,8 +1042,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable B
@@ -1066,8 +1069,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable C
@@ -1095,8 +1096,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable D
@@ -1124,8 +1123,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable E
@@ -1153,8 +1150,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable F
@@ -1182,8 +1177,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable G
@@ -1211,8 +1204,6 @@ namespace JS.Base.WS.API.Services
                         variableDetails.LastModificationTime = DateTime.Now;
 
                         var response = db.SaveChanges();
-
-                        result = true;
                     }
                 }
                 // End variable H
@@ -1332,11 +1323,31 @@ namespace JS.Base.WS.API.Services
         // Calculate Efficiency
         private CalculateEfficiency CalculateEfficiency(VariableDto request)
         {
+            var response = new CalculateEfficiency();
 
             decimal _efficiencyValueA = 0;
             decimal _efficiencyValueB = 0;
             decimal _efficiencyValueC = 0;
             decimal _efficiencyTotalValue = 0;
+
+            int visitQuantity = 0;
+
+            var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.Id == request.AreaIdC).FirstOrDefault();
+
+            if (!areaA.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaB.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaC.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
 
             foreach (var item in request.VariableDetails)
             {
@@ -1353,15 +1364,40 @@ namespace JS.Base.WS.API.Services
             _efficiencyValueB = _efficiencyValueB / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
             _efficiencyValueC = _efficiencyValueC / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
 
-            _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / 3;
 
-            var response = new CalculateEfficiency()
+            //Validate indicators
+            if (areaA.ShortName.Equals(areaPending) && _efficiencyValueA > 0)
             {
-                EfficiencyValueA = _efficiencyValueA,
-                EfficiencyValueB = _efficiencyValueB,
-                EfficiencyValueC = _efficiencyValueC,
-                EfficiencyTotalValue = _efficiencyTotalValue,
-            };
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la primera visita";
+
+                return response;
+            }
+            if (areaB.ShortName.Equals(areaPending) && _efficiencyValueB > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la segunda visita";
+
+                return response;
+            }
+            if (areaC.ShortName.Equals(areaPending) && _efficiencyValueC > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la tercera visita";
+
+                return response;
+            }
+
+            if (visitQuantity > 0)
+            {
+                _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / visitQuantity;
+            }
+
+            response.EfficiencyValueA = _efficiencyValueA;
+            response.EfficiencyValueB = _efficiencyValueB;
+            response.EfficiencyValueC = _efficiencyValueC;
+            response.EfficiencyTotalValue = _efficiencyTotalValue;
+            
 
             return response;
         }
@@ -1386,6 +1422,41 @@ namespace JS.Base.WS.API.Services
 
             request.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
 
+            request.Error = efficiency.Error;
+            request.ErrorMessage = efficiency.ErrorMessage;
+
+
+            //Validate visit
+            var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.Id == request.AreaIdC).FirstOrDefault();
+            int quantityAreaPending = 0;
+
+            if (areaA.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueA = indicadorPendingLabel;
+                request.EfficiencyColourA = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaB.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueB = indicadorPendingLabel;
+                request.EfficiencyColourB = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaC.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueC = indicadorPendingLabel;
+                request.EfficiencyColourC = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+
+            if (quantityAreaPending == 3)
+            {
+                request.EfficiencyTotalValue = indicadorPendingLabel;
+                request.EfficiencyTotalColour = "btn btn-default";
+            }
+
             return request;
         }
 
@@ -1397,7 +1468,7 @@ namespace JS.Base.WS.API.Services
 
             value = Math.Ceiling(value * 100);
 
-            if (value > 90)
+            if (value >= 90)
             {
                 result = "btn btn-success";
             }
@@ -1421,6 +1492,50 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+
+        private ValidateUpdateVariable ValidateUpdateVariable(VariableDto request)
+        {
+            var result = new ValidateUpdateVariable();
+            result.Variable = request;
+
+            decimal indicatorValueA = 0;
+            decimal indicatorValueB = 0;
+            decimal indicatorValueC = 0;
+
+            var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.Id == request.AreaIdC).FirstOrDefault();
+
+            foreach (var item in request.VariableDetails)
+            {
+                var currentIndicatorA = db.Indicators.Where(x => x.Id == item.IndicadorIdA).FirstOrDefault();
+                var currentIndicatorB = db.Indicators.Where(x => x.Id == item.IndicadorIdB).FirstOrDefault();
+                var currentIndicatorC = db.Indicators.Where(x => x.Id == item.IndicadorIdC).FirstOrDefault();
+
+                indicatorValueA += currentIndicatorA.Value;
+                indicatorValueB += currentIndicatorA.Value;
+                indicatorValueC += currentIndicatorC.Value;
+            }
+
+            if (areaA.ShortName.Equals(areaPending) && indicatorValueA > 0)
+            {
+                result.Error = true;
+                result.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la primera visita";
+            }
+            if (areaB.ShortName.Equals(areaPending) && indicatorValueB > 0)
+            {
+                result.Error = true;
+                result.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la segunda visita";
+            }
+            if (areaC.ShortName.Equals(areaPending) && indicatorValueC > 0)
+            {
+                result.Error = true;
+                result.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la tercera visita";
+            }
+
+            return result;
+        }
+
         #endregion
     }
 
@@ -1435,6 +1550,17 @@ namespace JS.Base.WS.API.Services
         public decimal EfficiencyValueB { get; set; }
         public decimal EfficiencyValueC { get; set; }
         public decimal EfficiencyTotalValue { get; set; }
+
+        //Error
+        public bool Error { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
+    public class ValidateUpdateVariable
+    {
+        public bool Error { get; set; }
+        public string ErrorMessage { get; set; }
+        public VariableDto Variable { get; set; }
     }
 
     #endregion

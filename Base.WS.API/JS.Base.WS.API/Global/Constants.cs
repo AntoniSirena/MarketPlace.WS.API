@@ -37,6 +37,7 @@ namespace JS.Base.WS.API.Global
         public static class Indicators
         {
             public const string IndicadorInicial = "IndicadorInicial";
+            public const string IndicadorPendingLabel = "Pendiente";
         }
 
         public static class Varibels
