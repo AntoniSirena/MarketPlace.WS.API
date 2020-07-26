@@ -39,12 +39,21 @@ namespace JS.Base.WS.API.Services
             var currentUserRole = db.UserRoles.Where(x => x.UserId == currentUserId)
                                                .Select(x => new { roleName = x.Role.ShortName })
                                                .FirstOrDefault();
-
+            
+            if (string.IsNullOrEmpty(viewAllAccompanyingInstrumentRequests_ByRoles))
+            {
+                viewAllAccompanyingInstrumentRequests_ByRoles = ",";
+            }
             var roles = viewAllAccompanyingInstrumentRequests_ByRoles.Split(',');
 
             if (roles.Count() > 0)
             {
-                bool validateRole = roles.Contains(currentUserRole.roleName);
+                bool validateRole = false;
+                if (currentUserRole != null)
+                {
+                   validateRole = roles.Contains(currentUserRole.roleName);
+                }
+
                 if (validateRole)
                 {
                     result = (from rq in db.AccompanyingInstrumentRequests
@@ -61,6 +70,8 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
+                                  EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
                        .OrderByDescending(x => x.Id)
                        .ToList();
@@ -81,6 +92,8 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
+                                  EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
                           .OrderByDescending(x => x.Id)
                           .ToList();
@@ -874,10 +887,16 @@ namespace JS.Base.WS.API.Services
             //Update Varible Efficiency
             UpdateVaribleEfficiency(result);
 
+
             //Calculate Efficiency General
             result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
             result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
             result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
+
+
+            //Update request
+            UpdateRequest(result.EfficiencyGeneralValue, result.EfficiencyGeneralColour, result.RequestId);
+
 
             return result;
         }
@@ -1869,6 +1888,18 @@ namespace JS.Base.WS.API.Services
 
             result = Math.Ceiling(totalValue).ToString();
             return result;
+        }
+
+
+        //Update request
+        private void UpdateRequest(string efficiencyGeneralValue, string efficiencyGeneralColour, long requestId)
+        {
+            var variable = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            variable.EfficiencyGeneralValue = efficiencyGeneralValue;
+            variable.EfficiencyGeneralColour = efficiencyGeneralColour;
+
+            db.SaveChanges();
         }
 
         #endregion

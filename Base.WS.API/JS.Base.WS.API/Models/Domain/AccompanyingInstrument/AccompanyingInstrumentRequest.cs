@@ -16,6 +16,8 @@ namespace JS.Base.WS.API.Models.Domain
         public long? DocentId { get; set; }
         public DateTime OpeningDate { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public string EfficiencyGeneralValue { get; set; }
+        public string EfficiencyGeneralColour { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual RequestStatus RequestStatu { get; set; }

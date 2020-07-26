@@ -290,26 +290,6 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.cs" />
-    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.Designer.cs">
-      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.cs" />
-    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.Designer.cs">
-      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.cs" />
-    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.Designer.cs">
-      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007240138347_update Indicator.cs" />
-    <Compile Include="Migrations\202007240138347_update Indicator.Designer.cs">
-      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007251919475_update variables.cs" />
-    <Compile Include="Migrations\202007251919475_update variables.Designer.cs">
-      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -481,21 +461,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.resx">
-      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007232312427_create SuggestionsAgreement.resx">
-      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007232326261_update SuggestionsAgreement.resx">
-      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007240138347_update Indicator.resx">
-      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007251919475_update variables.resx">
-      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

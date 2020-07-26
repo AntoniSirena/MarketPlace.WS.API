@@ -16,5 +16,8 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string OpeningDate { get; set; }
         public string ClosingDate { get; set; }
         public bool AllowEdit { get; set; }
+
+        public string EfficiencyGeneralValue { get; set; }
+        public string EfficiencyGeneralColour { get; set; }
     }
 }
