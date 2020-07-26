@@ -871,6 +871,9 @@ namespace JS.Base.WS.API.Services
             }
 
 
+            //Update Varible Efficiency
+            UpdateVaribleEfficiency(result);
+
             //Calculate Efficiency General
             result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
             result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
@@ -1774,9 +1777,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableB.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableB.EfficiencyTotalValue = variableB.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableB.EfficiencyTotalValue);
                 }
             }
 
@@ -1787,9 +1790,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableC.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableC.EfficiencyTotalValue = variableC.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableC.EfficiencyTotalValue);
                 }
             }
 
@@ -1800,9 +1803,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableD.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableD.EfficiencyTotalValue = variableD.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableD.EfficiencyTotalValue);
                 }
             }
 
@@ -1813,9 +1816,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableE.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableE.EfficiencyTotalValue = variableE.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableE.EfficiencyTotalValue);
                 }
             }
 
@@ -1826,9 +1829,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableF.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableF.EfficiencyTotalValue = variableF.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableF.EfficiencyTotalValue);
                 }
             }
 
@@ -1839,9 +1842,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableG.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableG.EfficiencyTotalValue = variableG.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableG.EfficiencyTotalValue);
                 }
             }
 
@@ -1852,9 +1855,9 @@ namespace JS.Base.WS.API.Services
                 if (!variableH.EfficiencyTotalValue.Equals(indicadorPendingLabel))
                 {
                     quantityVariable += 1;
-                    variableA.EfficiencyTotalValue = variableA.EfficiencyTotalValue.Replace(" %", "");
+                    variableH.EfficiencyTotalValue = variableH.EfficiencyTotalValue.Replace(" %", "");
 
-                    totalValue += Convert.ToDecimal(variableA.EfficiencyTotalValue);
+                    totalValue += Convert.ToDecimal(variableH.EfficiencyTotalValue);
                 }
             }
 
@@ -1864,7 +1867,7 @@ namespace JS.Base.WS.API.Services
                 totalValue = totalValue / quantityVariable;
             }
 
-            result = totalValue.ToString();
+            result = Math.Ceiling(totalValue).ToString();
             return result;
         }
 
