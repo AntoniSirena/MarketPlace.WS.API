@@ -1356,12 +1356,26 @@ namespace JS.Base.WS.API.Services
         {
             var response = new CalculateEfficiency();
 
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+            }
+
             decimal _efficiencyValueA = 0;
             decimal _efficiencyValueB = 0;
             decimal _efficiencyValueC = 0;
             decimal _efficiencyTotalValue = 0;
 
             int visitQuantity = 0;
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+
+                return response;
+            }
 
             var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
             var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
@@ -1437,6 +1451,15 @@ namespace JS.Base.WS.API.Services
         //Set Efficiency
         private VariableDto SetEfficiency(VariableDto request)
         {
+            if (request == null)
+            {
+                var _request = new VariableDto();
+                _request.Error = true;
+                _request.ErrorMessage = "Solicitud inválida";
+
+                return request;
+            }
+
             var efficiency = CalculateEfficiency(request);
 
             request.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";

@@ -19,6 +19,9 @@ namespace JS.Base.WS.API.Models.Permission
         public bool Enabled { get; set; }
         public string Code { get; set; }
         public int? PersonTypeId { get; set; }
+        public bool CanCreate { get; set; }
+        public bool CanRead { get; set; }
+        public bool CanDelete { get; set; }
 
         [ForeignKey("PersonTypeId")]
         public virtual PersonType PersonType { get; set; }
