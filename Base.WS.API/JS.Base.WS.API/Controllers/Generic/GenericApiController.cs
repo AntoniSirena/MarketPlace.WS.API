@@ -78,10 +78,11 @@ namespace JS.Base.WS.API.Controllers.Generic
             {
                 if (ModelState.IsValid)
                 {
-                    repository.Create(entity);
+                    dynamic result = repository.Create(entity);
                     repository.Save();
 
                     response.Message = InternalResponseMessageGood.Message200;
+                    response.Data = result.Id;
                     return Ok(response);
                 }
             }

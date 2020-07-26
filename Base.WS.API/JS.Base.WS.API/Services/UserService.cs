@@ -124,7 +124,7 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
-        public bool UpdateUserLogInOut(bool isLogIn, string userName)
+        public bool UpdateUserLogInOut(bool isLogIn, string userName, long userId)
         {
             bool result = true;
 
@@ -138,9 +138,13 @@ namespace JS.Base.WS.API.Services
             }
             else
             {
-                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
-                user.LastLoginTimeEnd = DateTime.Now;
-                user.IsOnline = false;
+                var user = db.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+                if (user != null)
+                {
+                    user.LastLoginTimeEnd = DateTime.Now;
+                    user.IsOnline = false;
+                }
 
                 db.SaveChanges();
             }

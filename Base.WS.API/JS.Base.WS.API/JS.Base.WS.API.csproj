@@ -228,8 +228,11 @@
     <Compile Include="Controllers\Domain\DocentController.cs" />
     <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
     <Compile Include="Controllers\Domain\GradeController.cs" />
+    <Compile Include="Controllers\Domain\AccompanyingInstrument\IdentificationDataController.cs" />
+    <Compile Include="Controllers\Domain\IndicatorController.cs" />
     <Compile Include="Controllers\Domain\RegionalController.cs" />
     <Compile Include="Controllers\Domain\TandaController.cs" />
+    <Compile Include="Controllers\Domain\VisitController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -247,9 +250,20 @@
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
+    <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
+    <Compile Include="DTO\Response\Domain\DescriptionObservationSupportProvidedDto.cs" />
+    <Compile Include="DTO\Response\Domain\DocentDto.cs" />
     <Compile Include="DTO\Response\Domain\DistrictDto.cs" />
     <Compile Include="DTO\Response\Domain\DocentDetailsDto.cs" />
+    <Compile Include="DTO\Response\Domain\EducativeCenterDto.cs" />
+    <Compile Include="DTO\Response\Domain\GradeDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstRequestDto.cs" />
+    <Compile Include="DTO\Response\Domain\IndicatorDto.cs" />
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
+    <Compile Include="DTO\Response\Domain\SuggestionsAgreementDto.cs" />
+    <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\VariableDto.cs" />
+    <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
@@ -264,7 +278,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Helpers\Security.cs" />
     <Compile Include="Migrations\202005280437193_creation personType.cs" />
     <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
       <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
@@ -272,6 +285,59 @@
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
     <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.cs" />
+    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
+      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.cs" />
+    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.Designer.cs">
+      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.cs" />
+    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.Designer.cs">
+      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.cs" />
+    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.Designer.cs">
+      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007240138347_update Indicator.cs" />
+    <Compile Include="Migrations\202007240138347_update Indicator.Designer.cs">
+      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007251919475_update variables.cs" />
+    <Compile Include="Migrations\202007251919475_update variables.Designer.cs">
+      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocument.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDef.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\DescriptionObservationSupportProvided.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcess.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcessDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResource.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResourceDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPractice.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPracticeDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMother.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMotherDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivityDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="obj\202006211951137_remove.cs" />
+    <Compile Include="obj\202006211951137_remove.Designer.cs">
+      <DependentUpon>202006211951137_remove.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
@@ -284,9 +350,11 @@
     <Compile Include="Models\Domain\Docent.cs" />
     <Compile Include="Models\Domain\EducativeCenter.cs" />
     <Compile Include="Models\Domain\Grade.cs" />
+    <Compile Include="Models\Domain\Indicator.cs" />
     <Compile Include="Models\Domain\Regional.cs" />
     <Compile Include="Models\Domain\RequestStatus.cs" />
     <Compile Include="Models\Domain\Tanda.cs" />
+    <Compile Include="Models\Domain\Visit.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />
@@ -300,10 +368,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
-    <Compile Include="Services\DocentService.cs" />
+    <Compile Include="Services\Domain\DocentService.cs" />
+    <Compile Include="Services\Domain\AccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
-    <Compile Include="Services\IServices\IDocentService.cs" />
+    <Compile Include="Services\IServices\IDomain\IDocentService.cs" />
+    <Compile Include="Services\IServices\IDomain\IAccompanyingInstrumentService.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
@@ -313,6 +383,7 @@
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
+    <Compile Include="Utilities\Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -407,6 +478,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
       <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
+      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.resx">
+      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007232312427_create SuggestionsAgreement.resx">
+      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007232326261_update SuggestionsAgreement.resx">
+      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007240138347_update Indicator.resx">
+      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007251919475_update variables.resx">
+      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\202006211951137_remove.resx">
+      <DependentUpon>202006211951137_remove.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

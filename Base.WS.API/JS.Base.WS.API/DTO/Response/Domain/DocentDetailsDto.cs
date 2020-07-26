@@ -24,5 +24,6 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Area { get; set; }
+        public string EducativeCenter { get; set; }
     }
 }

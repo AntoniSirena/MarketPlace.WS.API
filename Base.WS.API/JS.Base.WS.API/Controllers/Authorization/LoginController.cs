@@ -98,8 +98,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser != null)
             {
-                string userParam = currentUser.UserName + "," + currentUser.Id.ToString();
-                var token = TokenGenerator.GenerateTokenJwt(userParam);
+                int expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
+                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + ","+ lifeDate;
+                var token = TokenGenerator.GenerateTokenJwt(payLoad);
 
                 var userRole  = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
@@ -211,7 +213,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 response.Data = userResponse;
 
                //Update user
-               bool UpdateUserLogIn = UserService.UpdateUserLogInOut(true, user.UserName);
+               bool UpdateUserLogIn = UserService.UpdateUserLogInOut(true, user.UserName, 0);
 
                 return Ok(response);
             }
@@ -224,10 +226,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         [HttpPost]
         [Route("logOut")]
-        public IHttpActionResult logOut([FromBody] string userName)
+        public IHttpActionResult logOut([FromBody] long userId)
         {
             //Update user
-            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, userName);
+            bool UpdateUserLogIn = UserService.UpdateUserLogInOut(false, string.Empty, userId);
 
             return Ok(UpdateUserLogIn);
         }

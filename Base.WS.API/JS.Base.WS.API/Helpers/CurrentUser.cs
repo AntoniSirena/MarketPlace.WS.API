@@ -31,5 +31,10 @@ namespace JS.Base.WS.API.Helpers
         {
             CacheStorage.Delete("currentUserName");
         }
+
+        public static void DeleteLifeToken()
+        {
+            CacheStorage.Delete("lifeToken");
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace JS.Base.WS.API.Services
                 Phone = docent.Phone,
                 Address = docent.Address,
                 Area = docent.Area.Description,
+                EducativeCenter = docent.EducativeCenter.Name,
             };
             response.DocentPersonInfo = docentResult;
 
