@@ -290,13 +290,13 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007261315444_update Role.cs" />
-    <Compile Include="Migrations\202007261315444_update Role.Designer.cs">
-      <DependentUpon>202007261315444_update Role.cs</DependentUpon>
+    <Compile Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.cs" />
+    <Compile Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.Designer.cs">
+      <DependentUpon>202007271629312_update AccompanyingInstrumentRequest_.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007261508129_update Role_.cs" />
-    <Compile Include="Migrations\202007261508129_update Role_.Designer.cs">
-      <DependentUpon>202007261508129_update Role_.cs</DependentUpon>
+    <Compile Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.cs" />
+    <Compile Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.Designer.cs">
+      <DependentUpon>202007271735595_update AccompanyingInstrumentRequest__.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
@@ -470,11 +470,11 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007261315444_update Role.resx">
-      <DependentUpon>202007261315444_update Role.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.resx">
+      <DependentUpon>202007271629312_update AccompanyingInstrumentRequest_.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007261508129_update Role_.resx">
-      <DependentUpon>202007261508129_update Role_.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.resx">
+      <DependentUpon>202007271735595_update AccompanyingInstrumentRequest__.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

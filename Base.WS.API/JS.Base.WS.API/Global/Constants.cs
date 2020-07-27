@@ -123,6 +123,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code316 = "316";
             public const string Message316 = "Sugerencias y acuerdos no encontrados para este formulario";
+
+            public const string Code317 = "317";
+            public const string Message317 = "";
         }
 
         public static class ConfigurationParameter

@@ -41,6 +41,11 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string EfficiencyEvaluateFactor { get; set; }
 
 
+        //Visit available
+        public bool VisitAIsAvailable { get; set; }
+        public bool VisitBIsAvailable { get; set; }
+        public bool VisitCIsAvailable { get; set; }
+
 
         //Error
         public bool Error { get; set; }

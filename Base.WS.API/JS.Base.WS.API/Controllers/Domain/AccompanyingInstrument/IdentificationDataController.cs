@@ -34,16 +34,31 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
         private long currentUserId = CurrentUser.GetId();
+        private string statusInProcess = Constants.RequestStatus.InProcess;
 
 
         public override IHttpActionResult Create(dynamic entity)
         {
+            long docentId = Convert.ToInt64(entity["DocentId"]);
+
+            var docentRequest = db.AccompanyingInstrumentRequests.Where(x => x.DocentId == docentId && x.RequestStatu.ShortName == statusInProcess).ToList().LastOrDefault();
+
+            if (docentRequest != null)
+            {
+                response.Code = InternalResponseCodeError.Code317;
+                string ms = string.Format("{0}{1}{2}", docentRequest.Docent.FullName, " tiene una evaluación en ", docentRequest.RequestStatu.Name);
+                ms = ms.Replace("En", "");
+                response.Message = ms;
+
+                return Ok(response);
+            }
+
             //Creating Accompanying Instrument Request
             var inProcess = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.InProcess).FirstOrDefault();
             var request = new AccompanyingInstrumentRequest()
             {
                 StatusId = inProcess.Id,
-                DocentId = Convert.ToInt64(entity["DocentId"]),
+                DocentId = docentId,
                 OpeningDate = DateTime.Now,
                 ClosingDate = null,
                 CreationTime = DateTime.Now,

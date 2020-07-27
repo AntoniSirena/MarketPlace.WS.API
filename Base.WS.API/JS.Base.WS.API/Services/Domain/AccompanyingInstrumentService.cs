@@ -39,7 +39,7 @@ namespace JS.Base.WS.API.Services
             var currentUserRole = db.UserRoles.Where(x => x.UserId == currentUserId)
                                                .Select(x => new { roleName = x.Role.ShortName })
                                                .FirstOrDefault();
-            
+
             if (string.IsNullOrEmpty(viewAllAccompanyingInstrumentRequests_ByRoles))
             {
                 viewAllAccompanyingInstrumentRequests_ByRoles = ",";
@@ -51,7 +51,7 @@ namespace JS.Base.WS.API.Services
                 bool validateRole = false;
                 if (currentUserRole != null)
                 {
-                   validateRole = roles.Contains(currentUserRole.roleName);
+                    validateRole = roles.Contains(currentUserRole.roleName);
                 }
 
                 if (validateRole)
@@ -551,6 +551,10 @@ namespace JS.Base.WS.API.Services
             #endregion
 
 
+            //Update Visit A Is Availble
+            UpdateVisitAIsAvailble(requestId);
+
+
             result = true;
 
             return result;
@@ -564,6 +568,9 @@ namespace JS.Base.WS.API.Services
             variable = variable.Trim();
 
             EfficiencyEvaluateFactor = db.Indicators.Where(x => x.IsEvaluationFactor == true).Select(x => x.Value).FirstOrDefault();
+
+            //Request
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
 
 
             //Variable A
@@ -892,6 +899,12 @@ namespace JS.Base.WS.API.Services
             result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
             result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
             result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
+
+
+            //Set visit available
+            result.VisitAIsAvailable = request.VisitAIsAvailable;
+            result.VisitBIsAvailable = request.VisitBIsAvailable;
+            result.VisitCIsAvailable = request.VisitCIsAvailable;
 
 
             //Update request
@@ -1236,6 +1249,24 @@ namespace JS.Base.WS.API.Services
 
                         var response = db.SaveChanges();
                     }
+
+
+                    //Update Visit B Is Availble
+                    var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
+
+                    if (!areaA.ShortName.Equals(areaPending))
+                    {
+                        UpdateVisitBIsAvailble(request.RequestId);
+                    }
+
+                    //Update Visit C Is Availble
+                    var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
+
+                    if (!areaB.ShortName.Equals(areaPending))
+                    {
+                        UpdateVisitCIsAvailble(request.RequestId);
+                    }
+
                 }
                 // End variable H
 
@@ -1924,6 +1955,35 @@ namespace JS.Base.WS.API.Services
 
             db.SaveChanges();
         }
+
+
+        //The update visit A is available
+        private void UpdateVisitAIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitAIsAvailable = true;
+            db.SaveChanges();
+        }
+
+        //The update visit B is available
+        private void UpdateVisitBIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitBIsAvailable = true;
+            db.SaveChanges();
+        }
+
+        //The update visit C is available
+        private void UpdateVisitCIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitCIsAvailable = true;
+            db.SaveChanges();
+        }
+
 
         #endregion
     }

@@ -7,13 +7,13 @@ namespace JS.Base.WS.API.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class updateRole_ : IMigrationMetadata
+    public sealed partial class updateAccompanyingInstrumentRequest__ : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateRole_));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateAccompanyingInstrumentRequest__));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007261508129_update Role_"; }
+            get { return "202007271735595_update AccompanyingInstrumentRequest__"; }
         }
         
         string IMigrationMetadata.Source
