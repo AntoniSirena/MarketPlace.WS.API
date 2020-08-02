@@ -5,6 +5,7 @@ using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
+using JS.Base.WS.API.Models.Publicity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -44,6 +45,10 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<ConfigurationParameter> ConfigurationParameters { get; set; }
         public virtual DbSet<PersonType> PersonTypes { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+
+
+        //Publicity
+        public virtual DbSet<Template> Templates { get; set; }
 
 
 

@@ -241,6 +241,8 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\PersonTypeController.cs" />
+    <Compile Include="Controllers\Publicity\PortadaController.cs" />
+    <Compile Include="Controllers\Publicity\TemplateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
     <Compile Include="DTO\Common\CurrentUserInfoDto.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
+    <Compile Include="DTO\Response\Publicity\PortadaDto.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
@@ -290,13 +293,9 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.cs" />
-    <Compile Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.Designer.cs">
-      <DependentUpon>202007271629312_update AccompanyingInstrumentRequest_.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.cs" />
-    <Compile Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.Designer.cs">
-      <DependentUpon>202007271735595_update AccompanyingInstrumentRequest__.cs</DependentUpon>
+    <Compile Include="Migrations\202008012234021_Update Template.cs" />
+    <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
+      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
@@ -323,6 +322,7 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
     <Compile Include="obj\202006211951137_remove.Designer.cs">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
@@ -470,11 +470,8 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007271629312_update AccompanyingInstrumentRequest_.resx">
-      <DependentUpon>202007271629312_update AccompanyingInstrumentRequest_.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007271735595_update AccompanyingInstrumentRequest__.resx">
-      <DependentUpon>202007271735595_update AccompanyingInstrumentRequest__.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
+      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

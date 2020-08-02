@@ -126,6 +126,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code317 = "317";
             public const string Message317 = "";
+
+            public const string Code318 = "318";
+            public const string Message318 = "No existe una plantilla para la operación seleccionada";
         }
 
         public static class ConfigurationParameter
