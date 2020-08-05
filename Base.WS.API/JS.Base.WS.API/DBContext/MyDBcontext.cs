@@ -3,6 +3,7 @@ using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
+using JS.Base.WS.API.Models.FileDocument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
 using JS.Base.WS.API.Models.Publicity;
@@ -49,6 +50,9 @@ namespace JS.Base.WS.API.DBContext
 
         //Publicity
         public virtual DbSet<Template> Templates { get; set; }
+
+        //File
+        public virtual DbSet<FileDocument> FileDocuments  { get; set; }
 
 
 

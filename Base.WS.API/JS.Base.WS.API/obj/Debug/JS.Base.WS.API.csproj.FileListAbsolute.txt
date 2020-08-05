@@ -346,6 +346,9 @@ C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.W
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.creationpersonType.resources
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updateuseraddPersonTypeId.resources
 C:\Git\BaseProject\JS.Base.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updateroleaddPersonTypeId.resources
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.exe.config
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.rsp
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\ApplicationInsights.config
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll.config
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll
@@ -363,7 +366,6 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\Microsoft.Win32.Primitives.dll
@@ -394,8 +396,6 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.Xml.XPath.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.Xml.XPath.XDocument.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.exe
-C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.exe.config
-C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\vbc.rsp
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\Antlr3.Runtime.dll
@@ -459,10 +459,11 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.creationpersonType.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updateuseraddPersonTypeId.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.CreateIdentificationDatas.resources
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.UpdateTemplate.resources
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.CreateFileDocument.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.remove.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
-C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.UpdateTemplate.resources

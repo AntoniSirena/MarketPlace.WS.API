@@ -234,6 +234,7 @@
     <Compile Include="Controllers\Domain\TandaController.cs" />
     <Compile Include="Controllers\Domain\VisitController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Permission\UserRoleController.cs" />
@@ -297,6 +298,10 @@
     <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
       <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008030139448_Create FileDocument.cs" />
+    <Compile Include="Migrations\202008030139448_Create FileDocument.Designer.cs">
+      <DependentUpon>202008030139448_Create FileDocument.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -322,6 +327,7 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
     <Compile Include="obj\202006211951137_remove.Designer.cs">
@@ -358,10 +364,12 @@
     <Compile Include="Services\ConfigurationParameterService.cs" />
     <Compile Include="Services\Domain\DocentService.cs" />
     <Compile Include="Services\Domain\AccompanyingInstrumentService.cs" />
+    <Compile Include="Services\FileDocument.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
     <Compile Include="Services\IServices\IDomain\IDocentService.cs" />
     <Compile Include="Services\IServices\IDomain\IAccompanyingInstrumentService.cs" />
+    <Compile Include="Services\IServices\IFileDocument.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
@@ -371,6 +379,7 @@
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
+    <Compile Include="Utilities\File.cs" />
     <Compile Include="Utilities\Security.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +415,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -472,6 +482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
       <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008030139448_Create FileDocument.resx">
+      <DependentUpon>202008030139448_Create FileDocument.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

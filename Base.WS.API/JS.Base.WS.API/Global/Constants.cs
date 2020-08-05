@@ -129,6 +129,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code318 = "318";
             public const string Message318 = "No existe una plantilla para la operación seleccionada";
+
+            public const string Code319 = "319";
+            public const string Message319 = "Existe un archivo registrado con el mismo nombre del archivo que intenta subir, favor cambiar el mismo";
         }
 
         public static class ConfigurationParameter
