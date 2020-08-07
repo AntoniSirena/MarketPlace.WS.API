@@ -27,6 +27,11 @@ namespace JS.Base.WS.API.Global
         {
             public const string InProcess = "InProcess";
             public const string Completed = "Completed";
+            public const string PendingToApprove = "PendingToApprove";
+            public const string Approved = "Aprobado";
+            public const string Cancelad = "Cancelad";
+            public const string InObservation = "InObservation";
+
         }
 
         public static class Areas
@@ -39,6 +44,7 @@ namespace JS.Base.WS.API.Global
             public const string IndicadorInicial = "IndicadorInicial";
             public const string IndicadorPendingLabel = "Pendiente";
         }
+
 
         public static class Varibels
         {
@@ -69,6 +75,9 @@ namespace JS.Base.WS.API.Global
             public const string Message203 = "Registros actualizados con éxito";
 
             public const string Message204 = "Registros eliminados con éxito";
+
+            public const string Message205 = "Formulario completado con éxito";
+
         }
 
         public static class InternalResponseCodeError
@@ -123,6 +132,15 @@ namespace JS.Base.WS.API.Global
 
             public const string Code316 = "316";
             public const string Message316 = "Sugerencias y acuerdos no encontrados para este formulario";
+
+            public const string Code317 = "317";
+            public const string Message317 = "";
+
+            public const string Code318 = "318";
+            public const string Message318 = "No existe una plantilla para la operación seleccionada";
+
+            public const string Code319 = "319";
+            public const string Message319 = "Existe un archivo registrado con el mismo nombre del archivo que intenta subir, favor cambiar el mismo";
         }
 
         public static class ConfigurationParameter
@@ -140,6 +158,8 @@ namespace JS.Base.WS.API.Global
             public static string Required_SecurityCodeExternaRegister { get { return ConfigurationParameterService.GetParameter("Required_SecurityCodeExternaRegister") ?? "0"; } }
 
             public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
+
+            public static string FileDirectory  { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
 
         }
 

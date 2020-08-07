@@ -164,6 +164,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         RoleDescription = userRole.Role.Description,
                         RoleShortName = userRole.Role.ShortName,
                         RoleParent = userRole.Role.Parent,
+                        CanEdit = userRole.Role.CanEdit,
+                        CanDelete = userRole.Role.CanDelete,
+                        CanCreate = userRole.Role.CanCreate,
+                        CanCreateRequest = userRole.Role.CanCreateRequest,
+                        CanEditRequest = userRole.Role.CanEditRequest,
                     },
                     Person = currentUser.Person == null ? new Person() : new Person
                     {

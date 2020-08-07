@@ -61,7 +61,12 @@ namespace JS.Base.WS.API.Migrations
             context.RequestStatus.AddOrUpdate(
                 x => x.ShortName,
                 new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "rgb(52, 212, 146)", AllowEdit = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "Completed", Name = "Completado", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new RequestStatus { ShortName = "Completed", Name = "Completado", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "PendingToApprove", Name = "Pendiente de aprobar", Colour = "rgb(52, 135, 243)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Approved", Name = "Aprobado", Colour = "rgb(157, 68, 230)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Cancelad", Name = "Cancelado", Colour = "rgb(243, 41, 91)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "InObservation", Name = "En observación", Colour = "rgb(111, 219, 205)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+
                 );
 
             //Variables

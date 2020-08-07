@@ -295,15 +295,6 @@ namespace JS.Base.WS.API.Controllers
         [Route("GetDocentById/{id}")]
         public IHttpActionResult GetDocentById(long? id)
         {
-
-            //Verifica si el id pertenece a una solicitud
-            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == id).FirstOrDefault();
-
-            if (request != null)
-            {
-                id = request.DocentId;
-            }
-
             var result = db.Docents.Where(x => x.Id == id).Select(y => new DocentDto
             {
                 Id = y.Id,

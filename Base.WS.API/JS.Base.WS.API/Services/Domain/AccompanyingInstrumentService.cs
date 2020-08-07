@@ -4,6 +4,7 @@ using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
+using JS.Base.WS.API.Models.Domain.RequestFlowAI;
 using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
@@ -40,11 +41,20 @@ namespace JS.Base.WS.API.Services
                                                .Select(x => new { roleName = x.Role.ShortName })
                                                .FirstOrDefault();
 
+            if (string.IsNullOrEmpty(viewAllAccompanyingInstrumentRequests_ByRoles))
+            {
+                viewAllAccompanyingInstrumentRequests_ByRoles = ",";
+            }
             var roles = viewAllAccompanyingInstrumentRequests_ByRoles.Split(',');
 
             if (roles.Count() > 0)
             {
-                bool validateRole = roles.Contains(currentUserRole.roleName);
+                bool validateRole = false;
+                if (currentUserRole != null)
+                {
+                    validateRole = roles.Contains(currentUserRole.roleName);
+                }
+
                 if (validateRole)
                 {
                     result = (from rq in db.AccompanyingInstrumentRequests
@@ -61,6 +71,8 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
+                                  EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
                        .OrderByDescending(x => x.Id)
                        .ToList();
@@ -81,6 +93,8 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
+                                  EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
                           .OrderByDescending(x => x.Id)
                           .ToList();
@@ -538,6 +552,10 @@ namespace JS.Base.WS.API.Services
             #endregion
 
 
+            //Update Visit A Is Availble
+            UpdateVisitAIsAvailble(requestId);
+
+
             result = true;
 
             return result;
@@ -551,6 +569,9 @@ namespace JS.Base.WS.API.Services
             variable = variable.Trim();
 
             EfficiencyEvaluateFactor = db.Indicators.Where(x => x.IsEvaluationFactor == true).Select(x => x.Value).FirstOrDefault();
+
+            //Request
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
 
 
             //Variable A
@@ -874,10 +895,22 @@ namespace JS.Base.WS.API.Services
             //Update Varible Efficiency
             UpdateVaribleEfficiency(result);
 
+
             //Calculate Efficiency General
             result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
             result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
             result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
+
+
+            //Set visit available
+            result.VisitAIsAvailable = request.VisitAIsAvailable;
+            result.VisitBIsAvailable = request.VisitBIsAvailable;
+            result.VisitCIsAvailable = request.VisitCIsAvailable;
+
+
+            //Update request
+            UpdateRequest(result.EfficiencyGeneralValue, result.EfficiencyGeneralColour, result.RequestId);
+
 
             return result;
         }
@@ -1217,6 +1250,24 @@ namespace JS.Base.WS.API.Services
 
                         var response = db.SaveChanges();
                     }
+
+
+                    //Update Visit B Is Availble
+                    var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
+
+                    if (!areaA.ShortName.Equals(areaPending))
+                    {
+                        UpdateVisitBIsAvailble(request.RequestId);
+                    }
+
+                    //Update Visit C Is Availble
+                    var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
+
+                    if (!areaB.ShortName.Equals(areaPending))
+                    {
+                        UpdateVisitCIsAvailble(request.RequestId);
+                    }
+
                 }
                 // End variable H
 
@@ -1329,6 +1380,34 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        public bool CompleteRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusCompletedeId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Completed).Select(y => y.Id).FirstOrDefault();
+            int statusPendingToApproveId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.PendingToApprove).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAICompleted()
+            {
+                RequestId = requestId,
+                StatusId = statusCompletedeId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAICompleteds.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusPendingToApproveId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        } 
+
+
 
         #region Private method
 
@@ -1337,12 +1416,26 @@ namespace JS.Base.WS.API.Services
         {
             var response = new CalculateEfficiency();
 
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+            }
+
             decimal _efficiencyValueA = 0;
             decimal _efficiencyValueB = 0;
             decimal _efficiencyValueC = 0;
             decimal _efficiencyTotalValue = 0;
 
             int visitQuantity = 0;
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+
+                return response;
+            }
 
             var areaA = db.Areas.Where(x => x.Id == request.AreaIdA).FirstOrDefault();
             var areaB = db.Areas.Where(x => x.Id == request.AreaIdB).FirstOrDefault();
@@ -1418,6 +1511,15 @@ namespace JS.Base.WS.API.Services
         //Set Efficiency
         private VariableDto SetEfficiency(VariableDto request)
         {
+            if (request == null)
+            {
+                var _request = new VariableDto();
+                _request.Error = true;
+                _request.ErrorMessage = "Solicitud inválida";
+
+                return request;
+            }
+
             var efficiency = CalculateEfficiency(request);
 
             request.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
@@ -1870,6 +1972,47 @@ namespace JS.Base.WS.API.Services
             result = Math.Ceiling(totalValue).ToString();
             return result;
         }
+
+
+        //Update request
+        private void UpdateRequest(string efficiencyGeneralValue, string efficiencyGeneralColour, long requestId)
+        {
+            var variable = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            variable.EfficiencyGeneralValue = efficiencyGeneralValue;
+            variable.EfficiencyGeneralColour = efficiencyGeneralColour;
+
+            db.SaveChanges();
+        }
+
+
+        //The update visit A is available
+        private void UpdateVisitAIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitAIsAvailable = true;
+            db.SaveChanges();
+        }
+
+        //The update visit B is available
+        private void UpdateVisitBIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitBIsAvailable = true;
+            db.SaveChanges();
+        }
+
+        //The update visit C is available
+        private void UpdateVisitCIsAvailble(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+            request.VisitCIsAvailable = true;
+            db.SaveChanges();
+        }
+
 
         #endregion
     }

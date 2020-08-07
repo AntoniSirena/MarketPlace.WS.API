@@ -234,6 +234,7 @@
     <Compile Include="Controllers\Domain\TandaController.cs" />
     <Compile Include="Controllers\Domain\VisitController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Permission\UserRoleController.cs" />
@@ -241,6 +242,8 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\PersonTypeController.cs" />
+    <Compile Include="Controllers\Publicity\PortadaController.cs" />
+    <Compile Include="Controllers\Publicity\TemplateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
     <Compile Include="DTO\Common\CurrentUserInfoDto.cs" />
@@ -264,7 +267,9 @@
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
+    <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
+    <Compile Include="DTO\Response\Publicity\PortadaDto.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
@@ -290,25 +295,9 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.cs" />
-    <Compile Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.Designer.cs">
-      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.cs" />
-    <Compile Include="Migrations\202007232312427_create SuggestionsAgreement.Designer.cs">
-      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.cs" />
-    <Compile Include="Migrations\202007232326261_update SuggestionsAgreement.Designer.cs">
-      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007240138347_update Indicator.cs" />
-    <Compile Include="Migrations\202007240138347_update Indicator.Designer.cs">
-      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007251919475_update variables.cs" />
-    <Compile Include="Migrations\202007251919475_update variables.Designer.cs">
-      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
+    <Compile Include="Migrations\202008012234021_Update Template.cs" />
+    <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
+      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
@@ -335,6 +324,9 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICompleted.cs" />
+    <Compile Include="Models\FileDocument\FileDocument.cs" />
+    <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
     <Compile Include="obj\202006211951137_remove.Designer.cs">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
@@ -370,10 +362,12 @@
     <Compile Include="Services\ConfigurationParameterService.cs" />
     <Compile Include="Services\Domain\DocentService.cs" />
     <Compile Include="Services\Domain\AccompanyingInstrumentService.cs" />
+    <Compile Include="Services\FileDocument.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
     <Compile Include="Services\IServices\IDomain\IDocentService.cs" />
     <Compile Include="Services\IServices\IDomain\IAccompanyingInstrumentService.cs" />
+    <Compile Include="Services\IServices\IFileDocument.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
@@ -383,6 +377,7 @@
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
+    <Compile Include="Utilities\File.cs" />
     <Compile Include="Utilities\Security.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +413,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\JS.BaseWS.API.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -482,20 +478,8 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007220532176_Creation DescriptionObservationSupportProvided.resx">
-      <DependentUpon>202007220532176_Creation DescriptionObservationSupportProvided.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007232312427_create SuggestionsAgreement.resx">
-      <DependentUpon>202007232312427_create SuggestionsAgreement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007232326261_update SuggestionsAgreement.resx">
-      <DependentUpon>202007232326261_update SuggestionsAgreement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007240138347_update Indicator.resx">
-      <DependentUpon>202007240138347_update Indicator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007251919475_update variables.resx">
-      <DependentUpon>202007251919475_update variables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
+      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
