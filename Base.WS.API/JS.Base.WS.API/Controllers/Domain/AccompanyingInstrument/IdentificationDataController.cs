@@ -285,5 +285,25 @@ namespace JS.Base.WS.API.Controllers.Domain
             return Ok(response);
         }
 
+
+        [HttpGet]
+        [Route("CompleteRequest")]
+        public IHttpActionResult CompleteRequest(long requestId)
+        {
+            bool result = accompanyingInstrumentService.CompleteRequest(requestId);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message205;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
     }
 }

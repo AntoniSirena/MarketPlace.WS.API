@@ -3,6 +3,7 @@ using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
+using JS.Base.WS.API.Models.Domain.RequestFlowAI;
 using JS.Base.WS.API.Models.FileDocument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
@@ -67,6 +68,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<RequestStatus> RequestStatus { get; set; }
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<Indicator> Indicators { get; set; }
+        public virtual DbSet<RequestFlowAICompleted> RequestFlowAICompleteds { get; set; }
+
 
         //Accompanying InstrumentRequest
         public virtual DbSet<AccompanyingInstrumentRequest> AccompanyingInstrumentRequests { get; set; }

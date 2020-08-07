@@ -267,6 +267,7 @@
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
+    <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\Publicity\PortadaDto.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
@@ -298,10 +299,6 @@
     <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
       <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008030139448_Create FileDocument.cs" />
-    <Compile Include="Migrations\202008030139448_Create FileDocument.Designer.cs">
-      <DependentUpon>202008030139448_Create FileDocument.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -327,6 +324,7 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICompleted.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
@@ -482,9 +480,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
       <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008030139448_Create FileDocument.resx">
-      <DependentUpon>202008030139448_Create FileDocument.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

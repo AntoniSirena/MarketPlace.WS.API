@@ -19,15 +19,16 @@ namespace JS.Base.WS.API.Services
         }
 
 
-        public void SaveFile(string name, string path)
+        public void SaveFile(string name, string path, bool isPublic)
         {
             var file = new Models.FileDocument.FileDocument()
             {
                 Name = name,
                 Path = path,
+                IsPublic = isPublic,
                 CreationTime = DateTime.Now,
                 CreatorUserId = currentUserId,
-            };
+                IsActive = true,            };
 
             var result = db.FileDocuments.Add(file);
 

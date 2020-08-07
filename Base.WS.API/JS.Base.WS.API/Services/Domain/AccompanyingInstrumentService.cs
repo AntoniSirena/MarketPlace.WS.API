@@ -4,6 +4,7 @@ using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
+using JS.Base.WS.API.Models.Domain.RequestFlowAI;
 using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
@@ -1377,6 +1378,34 @@ namespace JS.Base.WS.API.Services
 
             return result;
         }
+
+
+        public bool CompleteRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusCompletedeId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Completed).Select(y => y.Id).FirstOrDefault();
+            int statusPendingToApproveId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.PendingToApprove).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAICompleted()
+            {
+                RequestId = requestId,
+                StatusId = statusCompletedeId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAICompleteds.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusPendingToApproveId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        } 
 
 
 

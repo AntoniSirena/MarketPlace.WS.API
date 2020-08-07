@@ -1,5 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Response.FileDocument;
+using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Services;
 using System;
 using System.Collections.Generic;
@@ -22,12 +24,14 @@ namespace JS.Base.WS.API.Controllers
         private Response response;
         private FileDocument fileDocumentService;
         private MyDBcontext db;
+        private long currentUserId;
 
         public FileUploadController()
         {
             response = new Response();
             fileDocumentService = new FileDocument();
             db = new MyDBcontext();
+            currentUserId = CurrentUser.GetId();
         }
 
         [HttpPost]
@@ -58,7 +62,7 @@ namespace JS.Base.WS.API.Controllers
                     File.Move(localFileName, filePath);
 
                     //Save file info in Data Base
-                    fileDocumentService.SaveFile(name, filePath);
+                    fileDocumentService.SaveFile(name, filePath, true);
 
                 }
             }
@@ -105,6 +109,40 @@ namespace JS.Base.WS.API.Controllers
                 return Ok();
         }
 
+
+        [HttpGet]
+        [Route("GetFiles")]
+        public IHttpActionResult GetFiles()
+        {
+            var response = new List<FileDocumentDto>();
+
+            long userVisitor = db.Users.Where(x => x.Id == currentUserId && x.IsVisitorUser == true).Select(y => y.Id).FirstOrDefault();
+
+            if (userVisitor > 0)
+            {
+                response = db.FileDocuments.Where(x => x.IsActive == true && x.IsPublic == true).Select(y => new FileDocumentDto()
+                {
+                    Id = y.Id,
+                    Name = y.Name,
+                    Description = y.Description,
+                    Path = y.Path,
+                    IsPublic = y.IsPublic,
+                }).ToList();
+            }
+            else
+            {
+                response = db.FileDocuments.Where(x => x.IsActive == true).Select(y => new FileDocumentDto()
+                {
+                    Id = y.Id,
+                    Name = y.Name,
+                    Description = y.Description,
+                    Path = y.Path,
+                    IsPublic = y.IsPublic,
+                }).ToList();
+            }
+
+            return Ok(response);
+        }
 
     }
 }

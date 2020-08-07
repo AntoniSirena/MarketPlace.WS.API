@@ -27,6 +27,11 @@ namespace JS.Base.WS.API.Global
         {
             public const string InProcess = "InProcess";
             public const string Completed = "Completed";
+            public const string PendingToApprove = "PendingToApprove";
+            public const string Approved = "Aprobado";
+            public const string Cancelad = "Cancelad";
+            public const string InObservation = "InObservation";
+
         }
 
         public static class Areas
@@ -69,6 +74,9 @@ namespace JS.Base.WS.API.Global
             public const string Message203 = "Registros actualizados con éxito";
 
             public const string Message204 = "Registros eliminados con éxito";
+
+            public const string Message205 = "Formulario completado con éxito";
+
         }
 
         public static class InternalResponseCodeError
