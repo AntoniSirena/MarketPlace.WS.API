@@ -45,6 +45,7 @@ namespace JS.Base.WS.API.Global
             public const string IndicadorPendingLabel = "Pendiente";
         }
 
+
         public static class Varibels
         {
             public const string A = "A";
@@ -157,6 +158,8 @@ namespace JS.Base.WS.API.Global
             public static string Required_SecurityCodeExternaRegister { get { return ConfigurationParameterService.GetParameter("Required_SecurityCodeExternaRegister") ?? "0"; } }
 
             public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
+
+            public static string FileDirectory  { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
 
         }
 

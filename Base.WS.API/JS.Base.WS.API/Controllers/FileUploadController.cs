@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.FileDocument;
+using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Services;
 using System;
@@ -39,7 +40,7 @@ namespace JS.Base.WS.API.Controllers
         public async Task<IHttpActionResult> UploadFile()
         {
             var ctx = HttpContext.Current;
-            var root = ctx.Server.MapPath("~/APP_Data");
+            var root = ConfigurationParameter.FileDirectory;
             var provider = new MultipartFormDataStreamProvider(root);
 
             try
@@ -78,12 +79,12 @@ namespace JS.Base.WS.API.Controllers
 
 
         [HttpGet]
-        [Route("GetFile")]
-        public IHttpActionResult GetFile(string name)
+        [Route("GetFileById")]
+        public IHttpActionResult GetFileById(long id)
         {
             string result = string.Empty;
 
-            string path = db.FileDocuments.Where(x => x.Name == name).Select(y => y.Path).FirstOrDefault();
+            string path = db.FileDocuments.Where(x => x.Id == id).Select(y => y.Path).FirstOrDefault();
 
             byte[] file = File.ReadAllBytes(path);
 
