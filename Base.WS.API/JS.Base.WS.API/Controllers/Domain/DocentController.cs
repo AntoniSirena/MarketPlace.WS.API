@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
 
@@ -38,6 +39,10 @@ namespace JS.Base.WS.API.Controllers.Domain
         public override IHttpActionResult Create(dynamic entity)
         {
             string documentNumber = entity["DocumentNumber"];
+            //string expresion = @"[a-zA-Z' '*-_]";
+
+            //documentNumber = Regex.Replace(documentNumber, expresion, "");
+
             var docent = db.Docents.Where(x => x.DocumentNumber.Equals(documentNumber) && x.IsActive == true).FirstOrDefault();
 
             if (docent != null)

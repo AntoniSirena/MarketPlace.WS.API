@@ -91,10 +91,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 15:25:29</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>08/07/2020 18:08:21</publishTime>
+      <publishTime>08/08/2020 22:26:24</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>08/07/2020 18:08:21</publishTime>
+      <publishTime>08/08/2020 22:26:24</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>08/07/2020 15:25:29</publishTime>
