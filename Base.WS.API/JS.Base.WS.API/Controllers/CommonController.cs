@@ -56,7 +56,7 @@ namespace JS.Base.WS.API.Controllers
         [Route("GetDocumentTypes")]
         public IHttpActionResult GetDocumentTypes()
         {
-            var result = db.DocumentTypes.Where(x => x.IsActive == true).Select(y => new DocumentTypeDto
+            var result = db.DocumentTypes.Where(x => x.IsActive == true && x.ShowToCustomer == true).Select(y => new DocumentTypeDto
             {
                 Id = y.Id,
                 Description = y.Description,

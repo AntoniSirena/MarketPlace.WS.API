@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Request.Domain.RequestFlowAI;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
@@ -71,6 +72,7 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  CanViewResumenOption = rq.RequestStatu.CanViewResumenOption,
                                   EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
                                   EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
@@ -93,6 +95,7 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  CanViewResumenOption = rq.RequestStatu.CanViewResumenOption,
                                   EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
                                   EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
@@ -1405,7 +1408,138 @@ namespace JS.Base.WS.API.Services
             result = true;
 
             return result;
-        } 
+        }
+
+
+        public bool ApproveRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusApproveId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Approved).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIApproved()
+            {
+                RequestId = requestId,
+                StatusId = statusApproveId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIApproveds.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusApproveId;
+            request.ClosingDate = DateTime.Now;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool SendToObservationRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusInObservationId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.InObservation).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIInObservation()
+            {
+                RequestId = requestId,
+                StatusId = statusInObservationId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIInObservations.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusInObservationId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool Process(long requestId)
+        {
+            bool result = false;
+
+            int statusInProcessId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.InProcess).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIInProcess()
+            {
+                RequestId = requestId,
+                StatusId = statusInProcessId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIInProcesses.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusInProcessId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool CancelRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusCancelId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Cancelad).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAICancelad()
+            {
+                RequestId = requestId,
+                StatusId = statusCancelId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAICancelads.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusCancelId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool CreateResearchSummary(ResearchSummaryDto request)
+        {
+            bool response = false;
+
+            var researchSummaryRequest = new ResearchSummary()
+            {
+                RequestId = request.RequestId,
+                Summary = request.Summary,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var result = db.ResearchSummaries.Add(researchSummaryRequest);
+            db.SaveChanges();
+
+            response = true;
+
+            return response;
+        }
 
 
 

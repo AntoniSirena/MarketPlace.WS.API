@@ -38,9 +38,9 @@ namespace JS.Base.WS.API.Migrations
 
             context.UserStatus.AddOrUpdate(
                 x => x.ShortName,
-                new UserStatus { ShortName = "Active", Description = "Activo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(52, 212, 146)" },
-                new UserStatus { ShortName = "Inactive", Description = "Inactivo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(241, 81, 81)" },
-                new UserStatus { ShortName = "PendingToActive", Description = "Pendiente de activar", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "rgb(243, 183, 71)" }
+                new UserStatus { ShortName = "Active", Description = "Activo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-success" },
+                new UserStatus { ShortName = "Inactive", Description = "Inactivo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-danger" },
+                new UserStatus { ShortName = "PendingToActive", Description = "Pendiente de activar", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-warning" }
                 );
 
             context.Genders.AddOrUpdate(
@@ -60,12 +60,12 @@ namespace JS.Base.WS.API.Migrations
             //RequestStatuses
             context.RequestStatus.AddOrUpdate(
                 x => x.ShortName,
-                new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "rgb(52, 212, 146)", AllowEdit = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "Completed", Name = "Completado", Colour = "rgb(59, 159, 199)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "PendingToApprove", Name = "Pendiente de aprobar", Colour = "rgb(52, 135, 243)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "Approved", Name = "Aprobado", Colour = "rgb(157, 68, 230)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "Cancelad", Name = "Cancelado", Colour = "rgb(243, 41, 91)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
-                new RequestStatus { ShortName = "InObservation", Name = "En observación", Colour = "rgb(111, 219, 205)", AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
+                new RequestStatus { ShortName = "InProcess", Name = "En proceso", Colour = "btn btn-success", AllowEdit = true, CanViewResumenOption = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Completed", Name = "Completado", Colour = "btn btn-secondary", AllowEdit = false, CanViewResumenOption = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "PendingToApprove", Name = "Pendiente de aprobar", Colour = "btn btn-info", CanViewResumenOption = false, AllowEdit = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Approved", Name = "Aprobado", Colour = "btn btn-primary", AllowEdit = false, CanViewResumenOption = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "Cancelad", Name = "Cancelado", Colour = "btn btn-danger", AllowEdit = false, CanViewResumenOption = false, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now },
+                new RequestStatus { ShortName = "InObservation", Name = "En observación", Colour = "btn btn-warning", AllowEdit = false, CanViewResumenOption = true, IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now }
 
                 );
 

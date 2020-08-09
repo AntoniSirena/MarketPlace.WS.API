@@ -28,7 +28,7 @@ namespace JS.Base.WS.API.Global
             public const string InProcess = "InProcess";
             public const string Completed = "Completed";
             public const string PendingToApprove = "PendingToApprove";
-            public const string Approved = "Aprobado";
+            public const string Approved = "Approved";
             public const string Cancelad = "Cancelad";
             public const string InObservation = "InObservation";
 
@@ -77,6 +77,16 @@ namespace JS.Base.WS.API.Global
             public const string Message204 = "Registros eliminados con éxito";
 
             public const string Message205 = "Formulario completado con éxito";
+
+            public const string Message206 = "Formulario aprovado con éxito";
+
+            public const string Message207 = "Formulario enviado a observación con éxito";
+
+            public const string Message208 = "Formulario cancelado con éxito";
+
+            public const string Message209 = "Formulario marcado en proceso con éxito";
+
+            public const string Message210 = "Resumen guardado con éxito";
 
         }
 
@@ -141,6 +151,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code319 = "319";
             public const string Message319 = "Existe un archivo registrado con el mismo nombre del archivo que intenta subir, favor cambiar el mismo";
+
+            public const string Code320 = "320";
+            public const string Message320 = "";
         }
 
         public static class ConfigurationParameter

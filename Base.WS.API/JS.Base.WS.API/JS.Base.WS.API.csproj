@@ -251,6 +251,7 @@
     <Compile Include="DTO\Common\GenderDto.cs" />
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
+    <Compile Include="DTO\Request\Domain\RequestFlowAI\ResearchSummaryDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
     <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
@@ -295,9 +296,9 @@
     <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008012234021_Update Template.cs" />
-    <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
-      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
+    <Compile Include="Migrations\202008080119002_update requestFlow.cs" />
+    <Compile Include="Migrations\202008080119002_update requestFlow.Designer.cs">
+      <DependentUpon>202008080119002_update requestFlow.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
@@ -324,7 +325,12 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIApproved.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICancelad.cs" />
     <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICompleted.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInObservation.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInProcess.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\ResearchSummary.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="obj\202006211951137_remove.cs" />
@@ -437,7 +443,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DTO\Request\Domain\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -478,8 +483,8 @@
     <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
       <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
-      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008080119002_update requestFlow.resx">
+      <DependentUpon>202008080119002_update requestFlow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>

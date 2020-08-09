@@ -51,6 +51,8 @@ namespace JS.Base.WS.API.Controllers
                 {
                     var name = file.Headers.ContentDisposition.FileName;
                     name = name.Trim('"');
+                    string[] splitName = name.Split('.');
+                    string contentType = splitName[splitName.Length - 1];
 
                     var localFileName = file.LocalFileName;
                     var filePath = Path.Combine(root, name);
@@ -63,7 +65,7 @@ namespace JS.Base.WS.API.Controllers
                     File.Move(localFileName, filePath);
 
                     //Save file info in Data Base
-                    fileDocumentService.SaveFile(name, filePath, true);
+                    fileDocumentService.SaveFile(name, filePath, true, contentType);
 
                 }
             }
@@ -126,9 +128,10 @@ namespace JS.Base.WS.API.Controllers
                     Id = y.Id,
                     Name = y.Name,
                     Description = y.Description,
+                    ContentType = y.ContentType,
                     Path = y.Path,
                     IsPublic = y.IsPublic,
-                }).ToList();
+                }).OrderByDescending(x => x.Id).ToList();
             }
             else
             {
@@ -137,9 +140,10 @@ namespace JS.Base.WS.API.Controllers
                     Id = y.Id,
                     Name = y.Name,
                     Description = y.Description,
+                    ContentType = y.ContentType,
                     Path = y.Path,
                     IsPublic = y.IsPublic,
-                }).ToList();
+                }).OrderByDescending(x => x.Id).ToList();
             }
 
             return Ok(response);

@@ -111,7 +111,6 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.creationpersonType.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.updateuseraddPersonTypeId.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.CreateIdentificationDatas.resources
-C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.UpdateTemplate.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.remove.resources
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.csproj.CoreCompileInputs.cache
