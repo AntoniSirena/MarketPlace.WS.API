@@ -154,6 +154,9 @@ namespace JS.Base.WS.API.Global
 
             public const string Code320 = "320";
             public const string Message320 = "";
+
+            public const string Code321 = "321";
+            public const string Message321 = "Los detalles no fuerón encontrados, favor contactar al centro de soporte";
         }
 
         public static class ConfigurationParameter

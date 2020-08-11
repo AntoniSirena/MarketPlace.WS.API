@@ -100,6 +100,27 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
 
+        [HttpGet]
+        [Route("GetAccompanyInstrumentDetails")]
+        public IHttpActionResult GetAccompanyInstrumentDetails(long requestId)
+        {
+            var result = accompanyingInstrumentService.GetAccompanyInstrumentDetails(requestId);
+
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code321;
+                response.Message = InternalResponseCodeError.Message321;
+
+                return Ok(response);
+            }
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
+        }
+
+
         [HttpPost]
         [Route("CreateVariable")]
         public IHttpActionResult CreateVariable([FromBody] long identificationDataId)

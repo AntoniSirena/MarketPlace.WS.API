@@ -1,5 +1,6 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Request.Domain.RequestFlowAI;
+using JS.Base.WS.API.DTO.Response.AccompInstDetail.Domain;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
@@ -32,6 +33,7 @@ namespace JS.Base.WS.API.Services
         private string areaPending = Constants.Areas.Pending;
 
 
+        //Get Accomp Inst Request
         public List<AccompInstRequestDto> GetAccompInstRequest()
         {
             var result = new List<AccompInstRequestDto>();
@@ -107,6 +109,66 @@ namespace JS.Base.WS.API.Services
 
             return result;
 
+        }
+
+
+        //Get Accompany Instrumen tDetails
+        public AccompanyInstrumentDetailsDto GetAccompanyInstrumentDetails(long requestId)
+        {
+            var response = new AccompanyInstrumentDetailsDto();
+
+            response.IdentificationData = db.IdentificationDatas.Where(x => x.RequestId == requestId).Select(y => new _IdentificationData()
+            {
+                Id = y.Id,
+                RequestId = requestId,
+                Regional = y.Regional.Name,
+                Distrit = y.District.Name,
+                Center = y.EducativeCenter.Name,
+                Tanda = y.Tanda.Name,
+                Grade = y.Grade.Name,
+                Docent = y.Docent.FullName == null ? string.Empty : y.Docent.FullName,
+                DocentDocument = y.Docent.DocumentNumber,
+                Companion = y.Companion.Person.FullName == null ? string.Empty : y.Companion.Person.FullName,
+                CompanionDocument = y.Companion.Person.DocumentNumber,
+
+                VisitA = y.VisitA.Name,
+                VisitDateA = y.VisitDateA == null ? string.Empty : y.VisitDateA,
+                QuantityChildrenA = y.QuantityChildrenA,
+                QuantityGirlsA = y.QuantityGirlsA,
+                ExpectedTimeA = y.ExpectedTimeA,
+                RealTimeA = y.RealTimeA,
+
+                VisitB = y.VisitB.Name,
+                VisitDateB = y.VisitDateB == null ? string.Empty : y.VisitDateB,
+                QuantityChildrenB = y.QuantityChildrenB,
+                QuantityGirlsB = y.QuantityGirlsB,
+                ExpectedTimeB = y.ExpectedTimeB,
+                RealTimeB = y.RealTimeB,
+
+                VisitC = y.VisitC.Name,
+                VisitDateC = string.IsNullOrEmpty(y.VisitDateC) ? string.Empty : y.VisitDateC,
+                QuantityChildrenC = y.QuantityChildrenC,
+                QuantityGirlsC = y.QuantityGirlsC,
+                ExpectedTimeC = y.ExpectedTimeC,
+                RealTimeC = y.RealTimeC,
+
+            }).FirstOrDefault();
+
+            response.VariableA = GetVariableDetailsByRequestId(requestId, Varibels.A);
+            response.VariableB = GetVariableDetailsByRequestId(requestId, Varibels.B);
+            response.VariableC = GetVariableDetailsByRequestId(requestId, Varibels.C);
+            response.VariableD = GetVariableDetailsByRequestId(requestId, Varibels.D);
+            response.VariableE = GetVariableDetailsByRequestId(requestId, Varibels.E);
+            response.VariableF = GetVariableDetailsByRequestId(requestId, Varibels.F);
+            response.VariableG = GetVariableDetailsByRequestId(requestId, Varibels.G);
+            response.VariableH = GetVariableDetailsByRequestId(requestId, Varibels.H);
+
+            response.CommentsRevisedDocument = GetCommentsRevisedDocumentDetail(requestId);
+            response.DescriptionObservationSupportProvided = GetDescriptionObservationSupportProvidedDetail(requestId);
+            response.SuggestionsAgreement = GetSuggestionsAgreementDetail(requestId);
+
+
+            return response;
         }
 
 
@@ -919,6 +981,347 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        private _VariableDetailsDto GetVariableDetailsByRequestId(long requestId, string variable)
+        {
+            var result = new _VariableDetailsDto();
+            variable = variable.ToUpper();
+            variable = variable.Trim();
+
+            EfficiencyEvaluateFactor = db.Indicators.Where(x => x.IsEvaluationFactor == true).Select(x => x.Value).FirstOrDefault();
+
+            //Request
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+
+            //Variable A
+            if (variable.Equals(Varibels.A))
+            {
+                result = db.Plannings.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.A,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.PlanningDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.PlanningDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.PlanningDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.PlanningDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.PlanningDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.PlanningDetails.Select(p => new _VariableDetail()
+                    {
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+
+                //Set efficiency Detail
+                result = SetEfficiencyDetail(result);
+
+            }
+
+
+            //Variable B
+            if (variable.Equals(Varibels.B))
+            {
+                result = db.ContentDomains.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.B,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ContentDomainDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ContentDomainDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ContentDomainDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ContentDomainDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ContentDomainDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ContentDomainDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable C
+            if (variable.Equals(Varibels.C))
+            {
+                result = db.StrategyActivities.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.C,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.StrategyActivityDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.StrategyActivityDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.StrategyActivityDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.StrategyActivityDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.StrategyActivityDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.StrategyActivityDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable D
+            if (variable.Equals(Varibels.D))
+            {
+                result = db.PedagogicalResources.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.D,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.PedagogicalResourceDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.PedagogicalResourceDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.PedagogicalResourceDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.PedagogicalResourceDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable E
+            if (variable.Equals(Varibels.E))
+            {
+                result = db.EvaluationProcesses.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.E,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.EvaluationProcessDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.EvaluationProcessDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.EvaluationProcessDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.EvaluationProcessDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.EvaluationProcessDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.EvaluationProcessDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable F
+            if (variable.Equals(Varibels.F))
+            {
+                result = db.ClassroomClimates.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.F,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ClassroomClimateDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ClassroomClimateDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ClassroomClimateDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ClassroomClimateDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ClassroomClimateDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ClassroomClimateDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable G
+            if (variable.Equals(Varibels.G))
+            {
+                result = db.ReflectionPractices.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.G,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ReflectionPracticeDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ReflectionPracticeDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ReflectionPracticeDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ReflectionPracticeDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ReflectionPracticeDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ReflectionPracticeDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable H
+            if (variable.Equals(Varibels.H))
+            {
+                result = db.RelationFatherMothers.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.H,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.RelationFatherMotherDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.RelationFatherMotherDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.RelationFatherMotherDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.RelationFatherMotherDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.RelationFatherMotherDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.RelationFatherMotherDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Calculate Efficiency General
+            result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
+            result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
+            result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
+
+
+            //Set visit available
+            result.VisitAIsAvailable = request.VisitAIsAvailable;
+            result.VisitBIsAvailable = request.VisitBIsAvailable;
+            result.VisitCIsAvailable = request.VisitCIsAvailable;
+
+
+            return result;
+        }
+
+
 
         public CommentsRevisedDocumentDto GetCommentsRevisedDocument(long requestId)
         {
@@ -958,6 +1361,44 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+        public _CommentsRevisedDocumentDto GetCommentsRevisedDocumentDetail(long requestId)
+        {
+            var result = new _CommentsRevisedDocumentDto();
+
+            result = db.CommentsRevisedDocuments.Where(x => x.RequestId == requestId).Select(y => new _CommentsRevisedDocumentDto()
+            {
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+                AreaA = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                DateA = y.CommentsRevisedDocumentsDetails.Select(z => z.DateA).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateA).FirstOrDefault(),
+                AreaB = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                DateB = y.CommentsRevisedDocumentsDetails.Select(z => z.DateB).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateB).FirstOrDefault(),
+                AreaC = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                DateC = y.CommentsRevisedDocumentsDetails.Select(z => z.DateC).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateC).FirstOrDefault(),
+                CommentsRevisedDocumenDetails = y.CommentsRevisedDocumentsDetails.Select(p => new _CommentsRevisedDocumentDetailDto()
+                {
+                    Id = p.Id,
+                    Description = p.CommentsRevisedDocumentsDef.Description,
+                    AreaA = p.AreaA.ShortName,
+                    DateA = p.DateA == null ? string.Empty : p.DateA,
+                    CommentA = p.CommentA,
+                    AreaB = p.AreaB.ShortName,
+                    DateB = p.DateB == null ? string.Empty : p.DateB,
+                    CommentB = p.CommentB,
+                    AreaC = p.AreaC.ShortName,
+                    DateC = p.DateC == null ? string.Empty : p.DateC,
+                    CommentC = p.CommentC,
+                }).ToList(),
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
 
         public DescriptionObservationSupportProvidedDto GetDescriptionObservationSupportProvided(long requestId)
         {
@@ -989,6 +1430,37 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+        public _DescriptionObservationSupportProvidedDto GetDescriptionObservationSupportProvidedDetail(long requestId)
+        {
+            var result = new _DescriptionObservationSupportProvidedDto();
+
+            result = db.DescriptionObservationSupportProvideds.Where(x => x.RequestId == requestId).Select(y => new _DescriptionObservationSupportProvidedDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaA = y.AreaA.ShortName,
+                DateA = y.DateA == null ? string.Empty : y.DateA,
+                CommentA = y.CommentA,
+
+                AreaB = y.AreaB.ShortName,
+                DateB = y.DateB == null ? string.Empty : y.DateB,
+                CommentB = y.CommentB,
+
+                AreaC = y.AreaC.ShortName,
+                DateC = y.DateC == null ? string.Empty : y.DateC,
+                CommentC = y.CommentC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
 
         public SuggestionsAgreementDto GetSuggestionsAgreement(long requestId)
         {
@@ -1019,6 +1491,45 @@ namespace JS.Base.WS.API.Services
 
                 AreaIdC = y.AreaIdC,
                 DateC = y.DateC,
+                CommentC = y.CommentC,
+                TeacherSignatureC = y.TeacherSignatureC,
+                CompanionSignatureC = y.CompanionSignatureC,
+                DistrictTechnicianSignatureC = y.DistrictTechnicianSignatureC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+        public _SuggestionsAgreementDto GetSuggestionsAgreementDetail(long requestId)
+        {
+            var result = new _SuggestionsAgreementDto();
+
+            result = db.SuggestionsAgreements.Where(x => x.RequestId == requestId).Select(y => new _SuggestionsAgreementDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaA = y.AreaA.ShortName,
+                DateA = y.DateA == null ? string.Empty : y.DateA,
+                CommentA = y.CommentA,
+                TeacherSignatureA = y.TeacherSignatureA,
+                CompanionSignatureA = y.CompanionSignatureA,
+                DistrictTechnicianSignatureA = y.DistrictTechnicianSignatureA,
+
+                AreaB = y.AreaB.ShortName,
+                DateB = y.DateB == null ? string.Empty : y.DateB,
+                CommentB = y.CommentB,
+                TeacherSignatureB = y.TeacherSignatureB,
+                CompanionSignatureB = y.CompanionSignatureB,
+                DistrictTechnicianSignatureB = y.DistrictTechnicianSignatureB,
+
+                AreaC = y.AreaC.ShortName,
+                DateC = y.DateC == null ? string.Empty : y.DateC,
                 CommentC = y.CommentC,
                 TeacherSignatureC = y.TeacherSignatureC,
                 CompanionSignatureC = y.CompanionSignatureC,
@@ -1543,6 +2054,9 @@ namespace JS.Base.WS.API.Services
 
 
 
+
+
+
         #region Private method
 
         // Calculate Efficiency
@@ -1641,6 +2155,103 @@ namespace JS.Base.WS.API.Services
             return response;
         }
 
+        // Calculate Efficiency Detail
+        private CalculateEfficiency CalculateEfficiencyDetail(_VariableDetailsDto request)
+        {
+            var response = new CalculateEfficiency();
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+            }
+
+            decimal _efficiencyValueA = 0;
+            decimal _efficiencyValueB = 0;
+            decimal _efficiencyValueC = 0;
+            decimal _efficiencyTotalValue = 0;
+
+            int visitQuantity = 0;
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+
+                return response;
+            }
+
+            var areaA = db.Areas.Where(x => x.ShortName == request.AreaA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.ShortName == request.AreaB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.ShortName == request.AreaC).FirstOrDefault();
+
+            if (!areaA.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaB.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaC.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+
+            foreach (var item in request.VariableDetails)
+            {
+                var currentIndicatorA = db.Indicators.Where(x => x.Name == item.IndicadorA).FirstOrDefault();
+                var currentIndicatorB = db.Indicators.Where(x => x.Name == item.IndicadorB).FirstOrDefault();
+                var currentIndicatorC = db.Indicators.Where(x => x.Name == item.IndicadorC).FirstOrDefault();
+
+                _efficiencyValueA += currentIndicatorA.Value;
+                _efficiencyValueB += currentIndicatorB.Value;
+                _efficiencyValueC += currentIndicatorC.Value;
+            }
+
+            _efficiencyValueA = _efficiencyValueA / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueB = _efficiencyValueB / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueC = _efficiencyValueC / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+
+
+            //Validate indicators
+            if (areaA.ShortName.Equals(areaPending) && _efficiencyValueA > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la primera visita";
+
+                return response;
+            }
+            if (areaB.ShortName.Equals(areaPending) && _efficiencyValueB > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la segunda visita";
+
+                return response;
+            }
+            if (areaC.ShortName.Equals(areaPending) && _efficiencyValueC > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la tercera visita";
+
+                return response;
+            }
+
+            if (visitQuantity > 0)
+            {
+                _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / visitQuantity;
+            }
+
+            response.EfficiencyValueA = _efficiencyValueA;
+            response.EfficiencyValueB = _efficiencyValueB;
+            response.EfficiencyValueC = _efficiencyValueC;
+            response.EfficiencyTotalValue = _efficiencyTotalValue;
+
+
+            return response;
+        }
+
+
 
         //Set Efficiency
         private VariableDto SetEfficiency(VariableDto request)
@@ -1707,6 +2318,73 @@ namespace JS.Base.WS.API.Services
 
             return request;
         }
+
+        //Set Efficiency Detail
+        private _VariableDetailsDto SetEfficiencyDetail(_VariableDetailsDto request)
+        {
+            if (request == null)
+            {
+                var _request = new _VariableDetailsDto();
+                _request.Error = true;
+                _request.ErrorMessage = "Solicitud inválida";
+
+                return request;
+            }
+
+            var efficiency = CalculateEfficiencyDetail(request);
+
+            request.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
+            request.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
+
+            request.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
+            request.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
+
+            request.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
+            request.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
+
+            request.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
+            request.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
+
+            request.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+
+            request.Error = efficiency.Error;
+            request.ErrorMessage = efficiency.ErrorMessage;
+
+
+            //Validate visit
+            var areaA = db.Areas.Where(x => x.ShortName == request.AreaA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.ShortName == request.AreaB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.ShortName == request.AreaC).FirstOrDefault();
+            int quantityAreaPending = 0;
+
+            if (areaA.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueA = indicadorPendingLabel;
+                request.EfficiencyColourA = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaB.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueB = indicadorPendingLabel;
+                request.EfficiencyColourB = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaC.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueC = indicadorPendingLabel;
+                request.EfficiencyColourC = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+
+            if (quantityAreaPending == 3)
+            {
+                request.EfficiencyTotalValue = indicadorPendingLabel;
+                request.EfficiencyTotalColour = "btn btn-default";
+            }
+
+            return request;
+        }
+
 
 
         //Get Colour By Efficiency

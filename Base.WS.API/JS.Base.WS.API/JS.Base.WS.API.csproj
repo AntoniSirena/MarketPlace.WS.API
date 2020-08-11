@@ -253,6 +253,7 @@
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\Domain\RequestFlowAI\ResearchSummaryDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\AccompanyInstrumentDetailsDto.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
     <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
     <Compile Include="DTO\Response\Domain\DescriptionObservationSupportProvidedDto.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
     <Compile Include="DTO\Response\Domain\SuggestionsAgreementDto.cs" />
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\_VariableDetailsDto.cs" />
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
@@ -303,6 +305,10 @@
     <Compile Include="Migrations\202008091538417_update Role.cs" />
     <Compile Include="Migrations\202008091538417_update Role.Designer.cs">
       <DependentUpon>202008091538417_update Role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008112020310_update model.cs" />
+    <Compile Include="Migrations\202008112020310_update model.Designer.cs">
+      <DependentUpon>202008112020310_update model.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
@@ -492,6 +498,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008091538417_update Role.resx">
       <DependentUpon>202008091538417_update Role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008112020310_update model.resx">
+      <DependentUpon>202008112020310_update model.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\202006211951137_remove.resx">
       <DependentUpon>202006211951137_remove.cs</DependentUpon>
