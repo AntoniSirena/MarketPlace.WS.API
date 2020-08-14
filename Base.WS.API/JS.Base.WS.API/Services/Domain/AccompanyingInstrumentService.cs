@@ -1322,6 +1322,20 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        //Create Accompany Instrument PDF
+        public string CreateAccompanyInstrumentPDF(long requestId)
+        {
+            string response = string.Empty;
+
+            var data = GetAccompanyInstrumentDetails(requestId);
+
+
+
+
+            return response;
+        }
+
+
 
         public CommentsRevisedDocumentDto GetCommentsRevisedDocument(long requestId)
         {

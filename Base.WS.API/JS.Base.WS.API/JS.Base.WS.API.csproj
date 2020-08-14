@@ -286,30 +286,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.cs" />
-    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
-      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008080119002_update requestFlow.cs" />
-    <Compile Include="Migrations\202008080119002_update requestFlow.Designer.cs">
-      <DependentUpon>202008080119002_update requestFlow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008091538417_update Role.cs" />
-    <Compile Include="Migrations\202008091538417_update Role.Designer.cs">
-      <DependentUpon>202008091538417_update Role.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008112020310_update model.cs" />
-    <Compile Include="Migrations\202008112020310_update model.Designer.cs">
-      <DependentUpon>202008112020310_update model.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -343,10 +319,6 @@
     <Compile Include="Models\Domain\RequestFlowAI\ResearchSummary.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
-    <Compile Include="obj\202006211951137_remove.cs" />
-    <Compile Include="obj\202006211951137_remove.Designer.cs">
-      <DependentUpon>202006211951137_remove.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
@@ -453,6 +425,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -482,29 +455,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005280437193_creation personType.resx">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
-      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008080119002_update requestFlow.resx">
-      <DependentUpon>202008080119002_update requestFlow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008091538417_update Role.resx">
-      <DependentUpon>202008091538417_update Role.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008112020310_update model.resx">
-      <DependentUpon>202008112020310_update model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="obj\202006211951137_remove.resx">
-      <DependentUpon>202006211951137_remove.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

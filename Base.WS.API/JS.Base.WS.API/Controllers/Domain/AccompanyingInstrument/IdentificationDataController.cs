@@ -410,6 +410,9 @@ namespace JS.Base.WS.API.Controllers.Domain
             if (result)
             {
                 response.Message = InternalResponseMessageGood.Message207;
+
+                request.QuantityVecesSendedObservation += 1;
+                db.SaveChanges();
             }
             else
             {
@@ -452,6 +455,16 @@ namespace JS.Base.WS.API.Controllers.Domain
             {
                 response.Code = InternalResponseCodeError.Message320;
                 response.Message = "El formulario debe estar en observación, para volver a ser procesado";
+
+                return Ok(response);
+            }
+
+            var requestFlow = db.ResearchSummaries.Where(x => x.RequestId == requestId).ToList();
+
+            if (requestFlow.Count() < request.QuantityVecesSendedObservation)
+            {
+                response.Code = InternalResponseCodeError.Code322;
+                response.Message = InternalResponseCodeError.Message322;
 
                 return Ok(response);
             }
