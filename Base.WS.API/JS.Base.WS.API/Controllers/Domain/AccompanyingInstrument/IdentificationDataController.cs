@@ -515,5 +515,20 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
 
+
+        [HttpGet]
+        [Route("CreateAccompanyInstrumentPDF")]
+        [AllowAnonymous]
+        public IHttpActionResult CreateAccompanyInstrumentPDF(long requestId)
+        {
+
+            var result = accompanyingInstrumentService.CreateAccompanyInstrumentPDF(requestId);
+
+            response.Data = result;
+
+            return Ok(response);
+        }
+
+
     }
 }

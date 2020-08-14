@@ -1,4 +1,6 @@
-﻿using JS.Base.WS.API.DBContext;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Request.Domain.RequestFlowAI;
 using JS.Base.WS.API.DTO.Response.AccompInstDetail.Domain;
 using JS.Base.WS.API.DTO.Response.Domain;
@@ -10,8 +12,10 @@ using JS.Base.WS.API.Models.Domain.RequestFlowAI;
 using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Services
@@ -1323,16 +1327,217 @@ namespace JS.Base.WS.API.Services
 
 
         //Create Accompany Instrument PDF
-        public string CreateAccompanyInstrumentPDF(long requestId)
+        public FileStreamResult CreateAccompanyInstrumentPDF(long requestId)
         {
             string response = string.Empty;
 
             var data = GetAccompanyInstrumentDetails(requestId);
 
 
+            MemoryStream ms = new MemoryStream();
+
+            Document document = new Document(iTextSharp.text.PageSize.LETTER,0,0,20,0);
+            PdfWriter pdfW = PdfWriter.GetInstance(document, ms);
+
+            var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+
+            //Document open
+            document.Open();
 
 
-            return response;
+            Paragraph Title = new Paragraph("DATOS DE IDENTIFICACIÓN", boldFont);
+            Title.Alignment = Element.ALIGN_CENTER;
+            document.Add(Chunk.NEWLINE);
+            document.Add(Title);
+
+            document.Add(Chunk.NEWLINE);
+
+            //Table 1
+            #region Table 1
+
+            PdfPTable table1 = new PdfPTable(2);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clRegional = new PdfPCell(new Phrase("Regional", boldFont));
+            clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
+            clRegional.BorderWidth = 0;
+            clRegional.BorderWidthBottom = 0;
+
+            PdfPCell clDistrito = new PdfPCell(new Phrase("Distrito", boldFont));
+            clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDistrito.BorderWidth = 0;
+            clDistrito.BorderWidthBottom = 0;
+
+            table1.AddCell(clRegional);
+            table1.AddCell(clDistrito);
+
+            clRegional = new PdfPCell(new Phrase(data.IdentificationData.Regional));
+            clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
+            clRegional.BorderWidth = 0;
+
+            clDistrito = new PdfPCell(new Phrase(data.IdentificationData.Distrit));
+            clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDistrito.BorderWidth = 0;
+
+            table1.AddCell(clRegional);
+            table1.AddCell(clDistrito);
+
+            document.Add(table1);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 2
+            #region Table 2
+
+            PdfPTable table2 = new PdfPTable(1);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clCenter = new PdfPCell(new Phrase("Nombre Completo del Centro", boldFont));
+            clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCenter.BorderWidth = 0;
+            clCenter.BorderWidthBottom = 0;
+
+            table2.AddCell(clCenter);
+
+            clCenter = new PdfPCell(new Phrase(data.IdentificationData.Center));
+            clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCenter.BorderWidth = 0;
+
+            table2.AddCell(clCenter);
+
+            document.Add(table2);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 3
+            #region Table 3
+
+            PdfPTable table3 = new PdfPTable(2);
+            table3.WidthPercentage = 75F;
+
+            PdfPCell clTanda = new PdfPCell(new Phrase("Tanda", boldFont));
+            clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
+            clTanda.BorderWidth = 0;
+            clTanda.BorderWidthBottom = 0;
+
+            PdfPCell clGrade = new PdfPCell(new Phrase("Grado", boldFont));
+            clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
+            clGrade.BorderWidth = 0;
+            clGrade.BorderWidthBottom = 0;
+
+            table3.AddCell(clTanda);
+            table3.AddCell(clGrade);
+
+            clTanda = new PdfPCell(new Phrase(data.IdentificationData.Tanda));
+            clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
+            clTanda.BorderWidth = 0;
+
+            clGrade = new PdfPCell(new Phrase(data.IdentificationData.Grade));
+            clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
+            clGrade.BorderWidth = 0;
+
+            table3.AddCell(clTanda);
+            table3.AddCell(clGrade);
+
+            document.Add(table3);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 4
+            #region Table 4
+
+            PdfPTable table4 = new PdfPTable(2);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clDocent = new PdfPCell(new Phrase("Nombre y Apellido del Docente", boldFont));
+            clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocent.BorderWidth = 0;
+            clDocent.BorderWidthBottom = 0;
+
+            PdfPCell clDocentIdent = new PdfPCell(new Phrase("Cédula", boldFont));
+            clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocentIdent.BorderWidth = 0;
+            clDocentIdent.BorderWidthBottom = 0;
+
+            table4.AddCell(clDocent);
+            table4.AddCell(clDocentIdent);
+
+            clDocent = new PdfPCell(new Phrase(data.IdentificationData.Docent));
+            clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocent.BorderWidth = 0;
+
+            clDocentIdent = new PdfPCell(new Phrase(data.IdentificationData.DocentDocument));
+            clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocentIdent.BorderWidth = 0;
+
+            table4.AddCell(clDocent);
+            table4.AddCell(clDocentIdent);
+
+            document.Add(table4);
+
+            #endregion
+
+
+            //Table 5
+            #region Table 5
+
+            PdfPTable table5 = new PdfPTable(2);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clCompanion = new PdfPCell(new Phrase("Nombre y Apellido del Acompañante", boldFont));
+            clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanion.BorderWidth = 0;
+            clCompanion.BorderWidthBottom = 0;
+
+            PdfPCell clCompanionDocument = new PdfPCell(new Phrase("Cédula", boldFont));
+            clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanionDocument.BorderWidth = 0;
+            clCompanionDocument.BorderWidthBottom = 0;
+
+            table5.AddCell(clCompanion);
+            table5.AddCell(clCompanionDocument);
+
+            clCompanion = new PdfPCell(new Phrase(data.IdentificationData.Companion));
+            clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanion.BorderWidth = 0;
+
+            clCompanionDocument = new PdfPCell(new Phrase(data.IdentificationData.CompanionDocument));
+            clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanionDocument.BorderWidth = 0;
+
+            table5.AddCell(clCompanion);
+            table5.AddCell(clCompanionDocument);
+
+            document.Add(table5);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+
+
+            document.Close();
+            //Document close
+
+            byte[] bytesSt = ms.ToArray();
+
+            ms = new MemoryStream();
+            ms.Write(bytesSt, 0, bytesSt.Length);
+            ms.Position = 0;
+
+            var result = new FileStreamResult(ms, "application/pdf");
+
+            return result;
         }
 
 
