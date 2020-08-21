@@ -150,7 +150,7 @@ namespace JS.Base.WS.API.Services
                 RealTimeB = y.RealTimeB,
 
                 VisitC = y.VisitC.Name,
-                VisitDateC = string.IsNullOrEmpty(y.VisitDateC) ? string.Empty : y.VisitDateC,
+                VisitDateC = y.VisitDateC == null ? string.Empty : y.VisitDateC,
                 QuantityChildrenC = y.QuantityChildrenC,
                 QuantityGirlsC = y.QuantityGirlsC,
                 ExpectedTimeC = y.ExpectedTimeC,
@@ -1336,16 +1336,19 @@ namespace JS.Base.WS.API.Services
 
             MemoryStream ms = new MemoryStream();
 
-            Document document = new Document(iTextSharp.text.PageSize.LETTER,0,0,20,0);
+            Document document = new Document(iTextSharp.text.PageSize.LETTER,20,20,20,0);
             PdfWriter pdfW = PdfWriter.GetInstance(document, ms);
 
-            var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12);
+            var labelFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
+            var variableTitleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
+            var variableNameFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLDOBLIQUE, 12);
+            var textFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
 
             //Document open
             document.Open();
 
 
-            Paragraph Title = new Paragraph("DATOS DE IDENTIFICACIÓN", boldFont);
+            Paragraph Title = new Paragraph("DATOS DE IDENTIFICACIÓN", labelFont);
             Title.Alignment = Element.ALIGN_CENTER;
             document.Add(Chunk.NEWLINE);
             document.Add(Title);
@@ -1358,12 +1361,12 @@ namespace JS.Base.WS.API.Services
             PdfPTable table1 = new PdfPTable(2);
             table1.WidthPercentage = 100;
 
-            PdfPCell clRegional = new PdfPCell(new Phrase("Regional", boldFont));
+            PdfPCell clRegional = new PdfPCell(new Phrase("Regional", labelFont));
             clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
             clRegional.BorderWidth = 0;
             clRegional.BorderWidthBottom = 0;
 
-            PdfPCell clDistrito = new PdfPCell(new Phrase("Distrito", boldFont));
+            PdfPCell clDistrito = new PdfPCell(new Phrase("Distrito", labelFont));
             clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
             clDistrito.BorderWidth = 0;
             clDistrito.BorderWidthBottom = 0;
@@ -1371,11 +1374,11 @@ namespace JS.Base.WS.API.Services
             table1.AddCell(clRegional);
             table1.AddCell(clDistrito);
 
-            clRegional = new PdfPCell(new Phrase(data.IdentificationData.Regional));
+            clRegional = new PdfPCell(new Phrase(data.IdentificationData.Regional, textFont));
             clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
             clRegional.BorderWidth = 0;
 
-            clDistrito = new PdfPCell(new Phrase(data.IdentificationData.Distrit));
+            clDistrito = new PdfPCell(new Phrase(data.IdentificationData.Distrit, textFont));
             clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
             clDistrito.BorderWidth = 0;
 
@@ -1395,14 +1398,14 @@ namespace JS.Base.WS.API.Services
             PdfPTable table2 = new PdfPTable(1);
             table1.WidthPercentage = 100;
 
-            PdfPCell clCenter = new PdfPCell(new Phrase("Nombre Completo del Centro", boldFont));
+            PdfPCell clCenter = new PdfPCell(new Phrase("Nombre Completo del Centro", labelFont));
             clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
             clCenter.BorderWidth = 0;
             clCenter.BorderWidthBottom = 0;
 
             table2.AddCell(clCenter);
 
-            clCenter = new PdfPCell(new Phrase(data.IdentificationData.Center));
+            clCenter = new PdfPCell(new Phrase(data.IdentificationData.Center, textFont));
             clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
             clCenter.BorderWidth = 0;
 
@@ -1421,12 +1424,12 @@ namespace JS.Base.WS.API.Services
             PdfPTable table3 = new PdfPTable(2);
             table3.WidthPercentage = 75F;
 
-            PdfPCell clTanda = new PdfPCell(new Phrase("Tanda", boldFont));
+            PdfPCell clTanda = new PdfPCell(new Phrase("Tanda", labelFont));
             clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
             clTanda.BorderWidth = 0;
             clTanda.BorderWidthBottom = 0;
 
-            PdfPCell clGrade = new PdfPCell(new Phrase("Grado", boldFont));
+            PdfPCell clGrade = new PdfPCell(new Phrase("Grado", labelFont));
             clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
             clGrade.BorderWidth = 0;
             clGrade.BorderWidthBottom = 0;
@@ -1434,11 +1437,11 @@ namespace JS.Base.WS.API.Services
             table3.AddCell(clTanda);
             table3.AddCell(clGrade);
 
-            clTanda = new PdfPCell(new Phrase(data.IdentificationData.Tanda));
+            clTanda = new PdfPCell(new Phrase(data.IdentificationData.Tanda, textFont));
             clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
             clTanda.BorderWidth = 0;
 
-            clGrade = new PdfPCell(new Phrase(data.IdentificationData.Grade));
+            clGrade = new PdfPCell(new Phrase(data.IdentificationData.Grade, textFont));
             clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
             clGrade.BorderWidth = 0;
 
@@ -1458,12 +1461,12 @@ namespace JS.Base.WS.API.Services
             PdfPTable table4 = new PdfPTable(2);
             table1.WidthPercentage = 100;
 
-            PdfPCell clDocent = new PdfPCell(new Phrase("Nombre y Apellido del Docente", boldFont));
+            PdfPCell clDocent = new PdfPCell(new Phrase("Nombre y Apellido del Docente", labelFont));
             clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
             clDocent.BorderWidth = 0;
             clDocent.BorderWidthBottom = 0;
 
-            PdfPCell clDocentIdent = new PdfPCell(new Phrase("Cédula", boldFont));
+            PdfPCell clDocentIdent = new PdfPCell(new Phrase("Cédula", labelFont));
             clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
             clDocentIdent.BorderWidth = 0;
             clDocentIdent.BorderWidthBottom = 0;
@@ -1471,11 +1474,11 @@ namespace JS.Base.WS.API.Services
             table4.AddCell(clDocent);
             table4.AddCell(clDocentIdent);
 
-            clDocent = new PdfPCell(new Phrase(data.IdentificationData.Docent));
+            clDocent = new PdfPCell(new Phrase(data.IdentificationData.Docent + "\n\n", textFont));
             clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
             clDocent.BorderWidth = 0;
 
-            clDocentIdent = new PdfPCell(new Phrase(data.IdentificationData.DocentDocument));
+            clDocentIdent = new PdfPCell(new Phrase(data.IdentificationData.DocentDocument + "\n\n", textFont));
             clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
             clDocentIdent.BorderWidth = 0;
 
@@ -1493,12 +1496,12 @@ namespace JS.Base.WS.API.Services
             PdfPTable table5 = new PdfPTable(2);
             table1.WidthPercentage = 100;
 
-            PdfPCell clCompanion = new PdfPCell(new Phrase("Nombre y Apellido del Acompañante", boldFont));
+            PdfPCell clCompanion = new PdfPCell(new Phrase("Nombre y Apellido del Acompañante", labelFont));
             clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
             clCompanion.BorderWidth = 0;
             clCompanion.BorderWidthBottom = 0;
 
-            PdfPCell clCompanionDocument = new PdfPCell(new Phrase("Cédula", boldFont));
+            PdfPCell clCompanionDocument = new PdfPCell(new Phrase("Cédula", labelFont));
             clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
             clCompanionDocument.BorderWidth = 0;
             clCompanionDocument.BorderWidthBottom = 0;
@@ -1506,11 +1509,11 @@ namespace JS.Base.WS.API.Services
             table5.AddCell(clCompanion);
             table5.AddCell(clCompanionDocument);
 
-            clCompanion = new PdfPCell(new Phrase(data.IdentificationData.Companion));
+            clCompanion = new PdfPCell(new Phrase(data.IdentificationData.Companion, textFont));
             clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
             clCompanion.BorderWidth = 0;
 
-            clCompanionDocument = new PdfPCell(new Phrase(data.IdentificationData.CompanionDocument));
+            clCompanionDocument = new PdfPCell(new Phrase(data.IdentificationData.CompanionDocument, textFont));
             clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
             clCompanionDocument.BorderWidth = 0;
 
@@ -1523,6 +1526,201 @@ namespace JS.Base.WS.API.Services
 
             #endregion
 
+
+            //Table 6
+            #region Table 6
+
+            PdfPTable table6 = new PdfPTable(4);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clVisita = new PdfPCell(new Phrase("Visita #", labelFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+            clVisita.BorderWidthBottom = 0;
+
+            PdfPCell clFecha = new PdfPCell(new Phrase("Fecha:", labelFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+            clFecha.BorderWidthBottom = 0;
+
+            PdfPCell clCantidad = new PdfPCell(new Phrase("Cantidad de alumnos(as) asistentes el día de la visita: \n \nNiños \nNiñas", labelFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+            clCantidad.BorderWidthBottom = 0;
+
+            PdfPCell clTotalMinuts = new PdfPCell(new Phrase("Escriba el total de minutos dedicados a la clase: \n \nTiempo Esperado \nTiempo Real", labelFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+            clTotalMinuts.BorderWidthBottom = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit A
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitA, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateA, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenA.ToString() + "\n" + data.IdentificationData.QuantityGirlsA.ToString() + "\n\n", textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeA.ToString() + "\n" + data.IdentificationData.RealTimeA.ToString() + "\n\n", textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit B
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitB, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateB, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenB.ToString() + "\n" + data.IdentificationData.QuantityGirlsB.ToString() + "\n\n", textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeB.ToString() + "\n" + data.IdentificationData.RealTimeB.ToString() + "\n\n", textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit C
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitC, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateC, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenC.ToString() + "\n" + data.IdentificationData.QuantityGirlsC.ToString(), textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeC.ToString() + "\n" + data.IdentificationData.RealTimeC.ToString(), textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            document.Add(table6);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+
+            document.Add(Chunk.NEWLINE);
+            document.Add(Chunk.NEWLINE);
+            document.Add(Chunk.NEWLINE);
+            Paragraph VariableTitleI = new Paragraph("I. ASPECTOS A OBSERVAR", variableTitleFont);
+            VariableTitleI.Alignment = Element.ALIGN_CENTER;
+            document.Add(Chunk.NEWLINE);
+            document.Add(VariableTitleI);
+
+
+            //Variable A
+            #region Variable A
+
+            Paragraph VariableATitle = new Paragraph("Variable A: Planificación", variableNameFont);
+            VariableATitle.Alignment = Element.ALIGN_LEFT;
+            document.Add(Chunk.NEWLINE);
+            document.Add(VariableATitle);
+
+            document.Add(new Paragraph("\n"));
+
+            PdfPTable tbVariableA = new PdfPTable(5);
+            tbVariableA.WidthPercentage = 100;
+            float[] widthsA = new float[] { 5f, 65f, 10f, 10f, 10f};
+            tbVariableA.SetWidths(widthsA);
+
+
+            PdfPCell clnumberA = new PdfPCell(new Phrase("#", labelFont));
+            clnumberA.HorizontalAlignment = Element.ALIGN_CENTER;
+            clnumberA.BorderWidth = 1;
+
+            PdfPCell clIndicatorA = new PdfPCell(new Phrase("Indicadores", labelFont));
+            clIndicatorA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clIndicatorA.BorderWidth = 1;
+
+            PdfPCell clAreaA = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaA, labelFont));
+            clAreaA.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaA.BorderWidth = 1;
+
+            PdfPCell clAreaB = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaB, labelFont));
+            clAreaB.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaB.BorderWidth = 1;
+
+            PdfPCell clAreaC = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaC, labelFont));
+            clAreaC.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaC.BorderWidth = 1;
+
+            tbVariableA.AddCell(clnumberA);
+            tbVariableA.AddCell(clIndicatorA);
+            tbVariableA.AddCell(clAreaA);
+            tbVariableA.AddCell(clAreaB);
+            tbVariableA.AddCell(clAreaC);
+
+
+            foreach (var itemA in data.VariableA.VariableDetails)
+            {
+                clnumberA = new PdfPCell(new Phrase(itemA.Number, textFont));
+                clnumberA.HorizontalAlignment = Element.ALIGN_CENTER;
+                clnumberA.BorderWidth = 1;
+
+                clIndicatorA = new PdfPCell(new Phrase(itemA.Description, textFont));
+                clIndicatorA.HorizontalAlignment = Element.ALIGN_LEFT;
+                clIndicatorA.BorderWidth = 1;
+
+                clAreaA = new PdfPCell(new Phrase(itemA.IndicadorA, textFont));
+                clAreaA.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaA.BorderWidth = 1;
+
+                clAreaB = new PdfPCell(new Phrase(itemA.IndicadorB, textFont));
+                clAreaB.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaB.BorderWidth = 1;
+
+                clAreaC = new PdfPCell(new Phrase(itemA.IndicadorC, textFont));
+                clAreaC.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaC.BorderWidth = 1;
+
+                tbVariableA.AddCell(clnumberA);
+                tbVariableA.AddCell(clIndicatorA);
+                tbVariableA.AddCell(clAreaA);
+                tbVariableA.AddCell(clAreaB);
+                tbVariableA.AddCell(clAreaC);
+            }
+
+
+            document.Add(tbVariableA);
+
+            #endregion
 
 
 
