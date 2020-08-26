@@ -61,6 +61,8 @@ namespace JS.Base.WS.API.DTO.Response.AccompInstDetail.Domain
         public int? ExpectedTimeC { get; set; }
         public int? RealTimeC { get; set; }
 
+        public string PrintDate { get; set; }
+
     }
 
     public class _CommentsRevisedDocumentDto
