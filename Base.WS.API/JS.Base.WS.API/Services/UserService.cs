@@ -1,11 +1,13 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.User;
-using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using JS.Base.WS.API.DTO.SP_Parameter;
+using System.Data.SqlClient;
+using JS.Utilities;
+using JS.Base.WS.API.Global;
 
 namespace JS.Base.WS.API.Services
 {
@@ -150,6 +152,30 @@ namespace JS.Base.WS.API.Services
             }
 
             return result;
+        }
+
+        public ValidateUserName ValidateUserName(string userName)
+        {
+            try
+            {
+                var response = ExecuteSP.ExecuteStoredProcedure<ValidateUserName>("SP_ValidateUserName", Constants.ConnectionStrings.JSBase,
+                    new SqlParameter[]{
+                    new SqlParameter("@UserName", userName),
+                    },
+                    reader =>
+                    {
+                        return new ValidateUserName
+                        {
+                            UserNameExist = (bool)reader["UserNameExist"],                           
+                        };
+                    });
+
+                return response.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al validar el nombre de usuario" + ex.Message);
+            }
         }
     }
 }

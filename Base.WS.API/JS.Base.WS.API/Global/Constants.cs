@@ -1,8 +1,5 @@
 ﻿using JS.Base.WS.API.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 
 namespace JS.Base.WS.API.Global
 {
@@ -14,6 +11,12 @@ namespace JS.Base.WS.API.Global
         static Constants()
         {
             ConfigurationParameterService = new ConfigurationParameterService();
+        }
+
+
+        public static class ConnectionStrings
+        {
+            public static string JSBase { get { return ConfigurationManager.ConnectionStrings["JS.Base"].ConnectionString; } }
         }
 
         public static class UserStatuses

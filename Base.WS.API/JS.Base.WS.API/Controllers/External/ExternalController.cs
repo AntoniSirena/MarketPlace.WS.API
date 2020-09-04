@@ -25,11 +25,13 @@ namespace JS.Base.WS.API.Controllers.External
     {
         MyDBcontext db;
         private UserRoleService UserRoleService;
+        private UserService userService;
 
         public ExternalController()
         {
             db = new MyDBcontext();
             UserRoleService = new UserRoleService();
+            userService = new UserService();
         }
 
         [HttpPost]
@@ -77,12 +79,8 @@ namespace JS.Base.WS.API.Controllers.External
                 response.Code = "007";
             }
 
-            var validateUserName = db.Database.SqlQuery<ValidateUserName>(
-               "Exec SP_ValidateUserName @UserName",
-               new SqlParameter() { ParameterName = "@UserName", SqlDbType = System.Data.SqlDbType.Text, Value = (object)user.UserName ?? DBNull.Value }
-             ).ToList();
-
-            if (validateUserName[0].UserNameExist)
+            var validateUserName = userService.ValidateUserName(user.UserName);
+            if (validateUserName.UserNameExist)
             {
                 response.Message = "El nombre de usuario que desea registrar ya existe";
                 response.Code = "001";

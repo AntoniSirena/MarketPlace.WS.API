@@ -458,8 +458,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JS.Utilities\JS.Utilities.csproj">
-      <Project>{dd603790-6f4a-4819-b8c9-99863eb04d6b}</Project>
+    <ProjectReference Include="..\JS.Utilities_\JS.Utilities.csproj">
+      <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
   </ItemGroup>

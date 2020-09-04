@@ -21,7 +21,7 @@ namespace JS.Base.WS.API.DBContext
     public class MyDBcontext: DbContext
     {
 
-        public MyDBcontext() : base("name=Defult")
+        public MyDBcontext() : base("name=JS.Base")
         {
 
         }
