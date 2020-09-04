@@ -29,7 +29,15 @@ namespace JS.Base.WS.API.DTO.Response.User
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
         public bool CanCreateRequest { get; set; }
+
+        //Accompainen Instrument
         public bool CanEditRequest { get; set; }
+        public bool IsVisitorUser { get; set; }
+        public bool CanViewActionsButton { get; set; }
+        public bool CanApprove { get; set; }
+        public bool CanSendToObservation { get; set; }
+        public bool CanProcess { get; set; }
+        public bool CanCancel { get; set; }
     }
 
     public class Person

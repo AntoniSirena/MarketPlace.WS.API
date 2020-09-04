@@ -11,15 +11,12 @@ namespace JS.Base.WS.API.Models.Domain
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         public string ShortName { get; set; }
-
         [Required]
         public string Name { get; set; }
-
         public string Colour { get; set; }
-
         public bool AllowEdit { get; set; }
+        public bool CanViewResumenOption { get; set; }
     }
 }

@@ -22,8 +22,16 @@ namespace JS.Base.WS.API.Models.Permission
         public bool CanCreate { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
+
+        //Accompainen Instrument
         public bool CanCreateRequest { get; set; }
         public bool CanEditRequest { get; set; }
+        public bool CanViewActionsButton { get; set; }
+        public bool CanApprove { get; set; }
+        public bool CanSendToObservation { get; set; }
+        public bool CanProcess { get; set; }
+        public bool CanCancel { get; set; }
+
 
         [ForeignKey("PersonTypeId")]
         public virtual PersonType PersonType { get; set; }

@@ -8,6 +8,6 @@ namespace JS.Base.WS.API.Services.IServices
 {
     interface IFileDocument
     {
-       void SaveFile(string name, string path, bool isPublic);
+       void SaveFile(string name, string path, bool isPublic, string contentType);
     }
 }

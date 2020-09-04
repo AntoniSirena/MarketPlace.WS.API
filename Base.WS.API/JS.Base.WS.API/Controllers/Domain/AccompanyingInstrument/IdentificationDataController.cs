@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Request.Domain.RequestFlowAI;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
@@ -34,21 +35,20 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
         private long currentUserId = CurrentUser.GetId();
-        private string statusInProcess = Constants.RequestStatus.InProcess;
 
 
         public override IHttpActionResult Create(dynamic entity)
         {
             long docentId = Convert.ToInt64(entity["DocentId"]);
 
-            var docentRequest = db.AccompanyingInstrumentRequests.Where(x => x.DocentId == docentId && x.RequestStatu.ShortName == statusInProcess).ToList().LastOrDefault();
+            var docentRequest = db.AccompanyingInstrumentRequests.Where(x => x.DocentId == docentId && 
+                                                                       x.RequestStatu.ShortName == Constants.RequestStatus.Approved ||
+                                                                       x.RequestStatu.ShortName == Constants.RequestStatus.Cancelad).ToList().LastOrDefault();
 
-            if (docentRequest != null)
+            if (docentRequest == null)
             {
                 response.Code = InternalResponseCodeError.Code317;
-                string ms = string.Format("{0}{1}{2}", docentRequest.Docent.FullName, " tiene una evaluación en ", docentRequest.RequestStatu.Name);
-                ms = ms.Replace("En", "");
-                response.Message = ms;
+                response.Message = "No puede crear un nuevo formulario, porque tiene uno en un estado diferente de aprovado o cancelado";
 
                 return Ok(response);
             }
@@ -69,6 +69,9 @@ namespace JS.Base.WS.API.Controllers.Domain
             var requestResult = db.AccompanyingInstrumentRequests.Add(request);
             db.SaveChanges();
 
+            //Update RequestFlowAIInProcess
+            accompanyingInstrumentService.Process(requestResult.Id);
+
             entity["RequestId"] = requestResult.Id;
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
@@ -86,6 +89,27 @@ namespace JS.Base.WS.API.Controllers.Domain
             {
                 response.Code = InternalResponseCodeError.Code312;
                 response.Message = InternalResponseCodeError.Message312;
+
+                return Ok(response);
+            }
+            {
+                response.Data = result;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetAccompanyInstrumentDetails")]
+        public IHttpActionResult GetAccompanyInstrumentDetails(long requestId)
+        {
+            var result = accompanyingInstrumentService.GetAccompanyInstrumentDetails(requestId);
+
+            if (result == null)
+            {
+                response.Code = InternalResponseCodeError.Code321;
+                response.Message = InternalResponseCodeError.Message321;
 
                 return Ok(response);
             }
@@ -290,6 +314,16 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("CompleteRequest")]
         public IHttpActionResult CompleteRequest(long requestId)
         {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.InProcess).FirstOrDefault();
+
+            if (request == null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario debe estar en proceso, para ser completado";
+
+                return Ok(response);
+            }
+
             bool result = accompanyingInstrumentService.CompleteRequest(requestId);
 
             if (result)
@@ -304,6 +338,197 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(long requestId)
+        {
+            var request0 = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.Approved).FirstOrDefault();
+
+            if (request0 != null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario ya se encuentra aprobado, el mismo no puede ser modificado";
+
+                return Ok(response);
+            }
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.PendingToApprove).FirstOrDefault();
+
+            if (request == null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario debe estar pendiendete de aprobar, para ser aprobado";
+
+                return Ok(response);
+            }
+
+            bool result = accompanyingInstrumentService.ApproveRequest(requestId);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message206;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("SendToObservationRequest")]
+        public IHttpActionResult SendToObservationRequest(long requestId)
+        {
+            var request0 = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.InObservation).FirstOrDefault();
+
+            if (request0 != null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario ya se encuentra en observación, favor proceda con la investigación";
+
+                return Ok(response);
+            }
+
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.PendingToApprove).FirstOrDefault();
+
+            if (request == null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario debe estar pendiendete de aprobar, para ser enviado a observación";
+
+                return Ok(response);
+            }
+
+            bool result = accompanyingInstrumentService.SendToObservationRequest(requestId);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message207;
+
+                request.QuantityVecesSendedObservation += 1;
+                db.SaveChanges();
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpPost]
+        [Route("CreateResearchSummary")]
+        public IHttpActionResult CreateResearchSummary(ResearchSummaryDto request)
+        {
+
+            bool result = accompanyingInstrumentService.CreateResearchSummary(request);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message210;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("ProcessRequest")]
+        public IHttpActionResult ProcessRequest(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.InObservation).FirstOrDefault();
+
+            if (request == null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario debe estar en observación, para volver a ser procesado";
+
+                return Ok(response);
+            }
+
+            var requestFlow = db.ResearchSummaries.Where(x => x.RequestId == requestId).ToList();
+
+            if (requestFlow.Count() < request.QuantityVecesSendedObservation)
+            {
+                response.Code = InternalResponseCodeError.Code322;
+                response.Message = InternalResponseCodeError.Message322;
+
+                return Ok(response);
+            }
+
+            bool result = accompanyingInstrumentService.Process(requestId);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message209;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("CancelRequest")]
+        public IHttpActionResult CancelRequest(long requestId)
+        {
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.PendingToApprove).FirstOrDefault();
+
+            if (request == null)
+            {
+                response.Code = InternalResponseCodeError.Message320;
+                response.Message = "El formulario debe estar pendiendete de aprobar, para ser cancelado";
+
+                return Ok(response);
+            }
+
+            bool result = accompanyingInstrumentService.CancelRequest(requestId);
+
+            if (result)
+            {
+                response.Message = InternalResponseMessageGood.Message208;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code301;
+                response.Message = InternalResponseCodeError.Message301;
+            }
+
+            return Ok(response);
+        }
+
+
+
+        [HttpGet]
+        [Route("CreateAccompanyInstrumentPDF")]
+        [AllowAnonymous]
+        public IHttpActionResult CreateAccompanyInstrumentPDF(long requestId)
+        {
+
+            var result = accompanyingInstrumentService.CreateAccompanyInstrumentPDF(requestId);
+
+            response.Data = result;
+
+            return Ok(response);
+        }
+
 
     }
 }

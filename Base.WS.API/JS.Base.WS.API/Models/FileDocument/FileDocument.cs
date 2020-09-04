@@ -16,6 +16,7 @@ namespace JS.Base.WS.API.Models.FileDocument
         public string Path { get; set; }
         public bool IsPublic { get; set; }
         public string Description { get; set; }
+        public string ContentType { get; set; }
 
     }
 }

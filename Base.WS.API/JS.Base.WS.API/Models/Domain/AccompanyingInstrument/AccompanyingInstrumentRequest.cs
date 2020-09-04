@@ -21,6 +21,7 @@ namespace JS.Base.WS.API.Models.Domain
         public bool VisitAIsAvailable { get; set; }
         public bool VisitBIsAvailable { get; set; }
         public bool VisitCIsAvailable { get; set; }
+        public int QuantityVecesSendedObservation { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual RequestStatus RequestStatu { get; set; }

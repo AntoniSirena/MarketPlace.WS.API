@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Controllers.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;

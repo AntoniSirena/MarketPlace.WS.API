@@ -40,33 +40,21 @@ namespace JS.Base.WS.API.Models.Domain
 
 
         public int? VisitIdA { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string VisitDateA { get; set; }
-
         public int? QuantityChildrenA { get; set; }
         public int? QuantityGirlsA { get; set; }
         public int? ExpectedTimeA { get; set; }
         public int? RealTimeA { get; set; }
+        public int? VisitIdB { get; set; }  
 
-        public int? VisitIdB { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string VisitDateB { get; set; }
-
         public int? QuantityChildrenB { get; set; }
         public int? QuantityGirlsB { get; set; }
         public int? ExpectedTimeB { get; set; }
         public int? RealTimeB { get; set; }
 
         public int? VisitIdC { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string VisitDateC { get; set; }
-
         public int? QuantityChildrenC { get; set; }
         public int? QuantityGirlsC { get; set; }
         public int? ExpectedTimeC { get; set; }

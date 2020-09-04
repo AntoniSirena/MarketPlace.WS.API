@@ -12,5 +12,6 @@ namespace JS.Base.WS.API.DTO.Response.FileDocument
         public string Description { get; set; }
         public string Path { get; set; }
         public bool IsPublic { get; set; }
+        public string ContentType { get; set; }
     }
 }

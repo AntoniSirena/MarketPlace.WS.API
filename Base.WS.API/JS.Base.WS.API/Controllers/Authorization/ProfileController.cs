@@ -235,6 +235,35 @@ namespace JS.Base.WS.API.Controllers.Authorization
         }
 
 
+        [HttpPut]
+        [Route("UpdateProfileImagen")]
+        public IHttpActionResult UpdateProfileImagen([FromBody]string request)
+        {
+            var response = new Response(); 
+
+            try
+            {
+                if (!string.IsNullOrEmpty(request))
+                {
+                    request = request.Replace("data:image/jpeg;base64,", "");
+
+                    var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
+                    currentUser.Image = request;
+                    db.SaveChanges();
+
+                    response.Message = "Imagen actualizada con exito";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+            return Ok(response);
+        }
+
+
+
 
         #region Models
 

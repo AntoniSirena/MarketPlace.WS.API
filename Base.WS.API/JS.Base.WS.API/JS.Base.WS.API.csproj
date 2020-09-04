@@ -52,6 +52,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.6.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
@@ -251,7 +254,9 @@
     <Compile Include="DTO\Common\GenderDto.cs" />
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
+    <Compile Include="DTO\Request\Domain\RequestFlowAI\ResearchSummaryDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\AccompanyInstrumentDetailsDto.cs" />
     <Compile Include="DTO\Response\Domain\AreaDto.cs" />
     <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
     <Compile Include="DTO\Response\Domain\DescriptionObservationSupportProvidedDto.cs" />
@@ -265,6 +270,7 @@
     <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
     <Compile Include="DTO\Response\Domain\SuggestionsAgreementDto.cs" />
     <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\_VariableDetailsDto.cs" />
     <Compile Include="DTO\Response\Domain\VariableDto.cs" />
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
@@ -283,22 +289,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.cs" />
-    <Compile Include="Migrations\202006221721063_Create IdentificationDatas.Designer.cs">
-      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202008012234021_Update Template.cs" />
-    <Compile Include="Migrations\202008012234021_Update Template.Designer.cs">
-      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -324,13 +314,14 @@
     <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIApproved.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICancelad.cs" />
     <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICompleted.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInObservation.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInProcess.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\ResearchSummary.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
-    <Compile Include="obj\202006211951137_remove.cs" />
-    <Compile Include="obj\202006211951137_remove.Designer.cs">
-      <DependentUpon>202006211951137_remove.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
@@ -377,8 +368,6 @@
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Templates\Configuration.cs" />
-    <Compile Include="Utilities\File.cs" />
-    <Compile Include="Utilities\Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -437,7 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DTO\Request\Domain\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -469,21 +458,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005280437193_creation personType.resx">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006221721063_Create IdentificationDatas.resx">
-      <DependentUpon>202006221721063_Create IdentificationDatas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202008012234021_Update Template.resx">
-      <DependentUpon>202008012234021_Update Template.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="obj\202006211951137_remove.resx">
-      <DependentUpon>202006211951137_remove.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\JS.Utilities_\JS.Utilities.csproj">
+      <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
+      <Name>JS.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

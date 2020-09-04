@@ -21,7 +21,7 @@ namespace JS.Base.WS.API.DBContext
     public class MyDBcontext: DbContext
     {
 
-        public MyDBcontext() : base("name=Defult")
+        public MyDBcontext() : base("name=JS.Base")
         {
 
         }
@@ -69,6 +69,11 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<Visit> Visits { get; set; }
         public virtual DbSet<Indicator> Indicators { get; set; }
         public virtual DbSet<RequestFlowAICompleted> RequestFlowAICompleteds { get; set; }
+        public virtual DbSet<RequestFlowAIApproved> RequestFlowAIApproveds { get; set; }
+        public virtual DbSet<RequestFlowAICancelad> RequestFlowAICancelads { get; set; }
+        public virtual DbSet<RequestFlowAIInObservation> RequestFlowAIInObservations { get; set; }
+        public virtual DbSet<RequestFlowAIInProcess> RequestFlowAIInProcesses { get; set; }
+        public virtual DbSet<ResearchSummary> ResearchSummaries { get; set; }
 
 
         //Accompanying InstrumentRequest

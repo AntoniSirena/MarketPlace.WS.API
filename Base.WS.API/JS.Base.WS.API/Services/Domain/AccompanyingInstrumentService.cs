@@ -1,4 +1,8 @@
-﻿using JS.Base.WS.API.DBContext;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Request.Domain.RequestFlowAI;
+using JS.Base.WS.API.DTO.Response.AccompInstDetail.Domain;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
@@ -8,8 +12,10 @@ using JS.Base.WS.API.Models.Domain.RequestFlowAI;
 using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Services
@@ -31,6 +37,7 @@ namespace JS.Base.WS.API.Services
         private string areaPending = Constants.Areas.Pending;
 
 
+        //Get Accomp Inst Request
         public List<AccompInstRequestDto> GetAccompInstRequest()
         {
             var result = new List<AccompInstRequestDto>();
@@ -71,6 +78,7 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  CanViewResumenOption = rq.RequestStatu.CanViewResumenOption,
                                   EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
                                   EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
@@ -93,6 +101,7 @@ namespace JS.Base.WS.API.Services
                                   OpeningDate = rq.OpeningDate.ToString(),
                                   ClosingDate = rq.ClosingDate.ToString(),
                                   AllowEdit = rq.RequestStatu.AllowEdit,
+                                  CanViewResumenOption = rq.RequestStatu.CanViewResumenOption,
                                   EfficiencyGeneralValue = rq.EfficiencyGeneralValue == null ? string.Empty : rq.EfficiencyGeneralValue,
                                   EfficiencyGeneralColour = rq.EfficiencyGeneralColour == null ? string.Empty : rq.EfficiencyGeneralColour,
                               })
@@ -104,6 +113,70 @@ namespace JS.Base.WS.API.Services
 
             return result;
 
+        }
+
+
+        //Get Accompany Instrumen Details
+        public AccompanyInstrumentDetailsDto GetAccompanyInstrumentDetails(long requestId)
+        {
+            var response = new AccompanyInstrumentDetailsDto();
+
+            var currentDate = DateTime.Now;
+            currentDate.ToString("yyyy-M-dd hh:mm:ss");
+
+            response.IdentificationData = db.IdentificationDatas.Where(x => x.RequestId == requestId).Select(y => new _IdentificationData()
+            {
+                Id = y.Id,
+                RequestId = requestId,
+                Regional = y.Regional.Name,
+                Distrit = y.District.Name,
+                Center = y.EducativeCenter.Name,
+                Tanda = y.Tanda.Name,
+                Grade = y.Grade.Name,
+                Docent = y.Docent.FullName == null ? string.Empty : y.Docent.FullName,
+                DocentDocument = y.Docent.DocumentNumber,
+                Companion = y.Companion.Person.FullName == null ? string.Empty : y.Companion.Person.FullName,
+                CompanionDocument = y.Companion.Person.DocumentNumber,
+
+                VisitA = y.VisitA.Name,
+                VisitDateA = y.VisitDateA == null ? string.Empty : y.VisitDateA,
+                QuantityChildrenA = y.QuantityChildrenA,
+                QuantityGirlsA = y.QuantityGirlsA,
+                ExpectedTimeA = y.ExpectedTimeA,
+                RealTimeA = y.RealTimeA,
+
+                VisitB = y.VisitB.Name,
+                VisitDateB = y.VisitDateB == null ? string.Empty : y.VisitDateB,
+                QuantityChildrenB = y.QuantityChildrenB,
+                QuantityGirlsB = y.QuantityGirlsB,
+                ExpectedTimeB = y.ExpectedTimeB,
+                RealTimeB = y.RealTimeB,
+
+                VisitC = y.VisitC.Name,
+                VisitDateC = y.VisitDateC == null ? string.Empty : y.VisitDateC,
+                QuantityChildrenC = y.QuantityChildrenC,
+                QuantityGirlsC = y.QuantityGirlsC,
+                ExpectedTimeC = y.ExpectedTimeC,
+                RealTimeC = y.RealTimeC,         
+
+            }).FirstOrDefault();
+            response.IdentificationData.PrintDate = currentDate.ToString();
+
+            response.VariableA = GetVariableDetailsByRequestId(requestId, Varibels.A);
+            response.VariableB = GetVariableDetailsByRequestId(requestId, Varibels.B);
+            response.VariableC = GetVariableDetailsByRequestId(requestId, Varibels.C);
+            response.VariableD = GetVariableDetailsByRequestId(requestId, Varibels.D);
+            response.VariableE = GetVariableDetailsByRequestId(requestId, Varibels.E);
+            response.VariableF = GetVariableDetailsByRequestId(requestId, Varibels.F);
+            response.VariableG = GetVariableDetailsByRequestId(requestId, Varibels.G);
+            response.VariableH = GetVariableDetailsByRequestId(requestId, Varibels.H);
+
+            response.CommentsRevisedDocument = GetCommentsRevisedDocumentDetail(requestId);
+            response.DescriptionObservationSupportProvided = GetDescriptionObservationSupportProvidedDetail(requestId);
+            response.SuggestionsAgreement = GetSuggestionsAgreementDetail(requestId);
+
+
+            return response;
         }
 
 
@@ -916,6 +989,1023 @@ namespace JS.Base.WS.API.Services
         }
 
 
+        private _VariableDetailsDto GetVariableDetailsByRequestId(long requestId, string variable)
+        {
+            var result = new _VariableDetailsDto();
+            variable = variable.ToUpper();
+            variable = variable.Trim();
+
+            EfficiencyEvaluateFactor = db.Indicators.Where(x => x.IsEvaluationFactor == true).Select(x => x.Value).FirstOrDefault();
+
+            //Request
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+
+
+            //Variable A
+            if (variable.Equals(Varibels.A))
+            {
+                result = db.Plannings.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.A,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.PlanningDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.PlanningDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.PlanningDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.PlanningDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.PlanningDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.PlanningDetails.Select(p => new _VariableDetail()
+                    {
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+
+                //Set efficiency Detail
+                result = SetEfficiencyDetail(result);
+
+            }
+
+
+            //Variable B
+            if (variable.Equals(Varibels.B))
+            {
+                result = db.ContentDomains.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.B,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ContentDomainDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ContentDomainDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ContentDomainDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ContentDomainDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ContentDomainDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ContentDomainDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable C
+            if (variable.Equals(Varibels.C))
+            {
+                result = db.StrategyActivities.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.C,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.StrategyActivityDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.StrategyActivityDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.StrategyActivityDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.StrategyActivityDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.StrategyActivityDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.StrategyActivityDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable D
+            if (variable.Equals(Varibels.D))
+            {
+                result = db.PedagogicalResources.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.D,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.PedagogicalResourceDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.PedagogicalResourceDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.PedagogicalResourceDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.PedagogicalResourceDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.PedagogicalResourceDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable E
+            if (variable.Equals(Varibels.E))
+            {
+                result = db.EvaluationProcesses.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.E,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.EvaluationProcessDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.EvaluationProcessDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.EvaluationProcessDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.EvaluationProcessDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.EvaluationProcessDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.EvaluationProcessDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable F
+            if (variable.Equals(Varibels.F))
+            {
+                result = db.ClassroomClimates.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.F,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ClassroomClimateDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ClassroomClimateDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ClassroomClimateDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ClassroomClimateDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ClassroomClimateDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ClassroomClimateDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable G
+            if (variable.Equals(Varibels.G))
+            {
+                result = db.ReflectionPractices.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.G,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.ReflectionPracticeDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.ReflectionPracticeDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.ReflectionPracticeDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.ReflectionPracticeDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.ReflectionPracticeDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.ReflectionPracticeDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Variable H
+            if (variable.Equals(Varibels.H))
+            {
+                result = db.RelationFatherMothers.Where(x => x.RequestId == requestId).Select(y => new _VariableDetailsDto()
+                {
+
+                    Id = y.Id,
+                    RequestId = y.RequestId,
+                    Variable = Varibels.H,
+                    StausId = y.StatusId,
+                    StatusDescription = y.Status.Name,
+                    StatusColour = y.Status.Colour,
+                    VariableDescription = y.RelationFatherMotherDetails.Select(z => z.VariableDetail.Variable.Description).FirstOrDefault(),
+                    VariableTitle = y.RelationFatherMotherDetails.Select(z => z.VariableDetail.Variable.Title).FirstOrDefault(),
+                    AreaA = y.RelationFatherMotherDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                    AreaB = y.RelationFatherMotherDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                    AreaC = y.RelationFatherMotherDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                    VariableDetails = y.RelationFatherMotherDetails.Select(p => new _VariableDetail()
+                    {
+
+                        Id = p.Id,
+                        Number = p.VariableDetail.Number,
+                        Description = p.VariableDetail.Description,
+                        AreaA = p.AreaA.Name,
+                        IndicadorA = p.IndicatorA.Name,
+                        AreaB = p.AreaB.Name,
+                        IndicadorB = p.IndicatorB.Name,
+                        AreaC = p.AreaC.Name,
+                        IndicadorC = p.IndicatorC.Name,
+
+                    }).ToList(),
+
+                }).FirstOrDefault();
+
+                //Set efficiency
+                result = SetEfficiencyDetail(result);
+            }
+
+
+            //Calculate Efficiency General
+            result.EfficiencyGeneralValue = CalculateGeneralEfficiency(result.RequestId);
+            result.EfficiencyGeneralColour = GetColourByEfficiency(Convert.ToDecimal(result.EfficiencyGeneralValue) / 100);
+            result.EfficiencyGeneralValue = result.EfficiencyGeneralValue + " %";
+
+
+            //Set visit available
+            result.VisitAIsAvailable = request.VisitAIsAvailable;
+            result.VisitBIsAvailable = request.VisitBIsAvailable;
+            result.VisitCIsAvailable = request.VisitCIsAvailable;
+
+
+            return result;
+        }
+
+
+        //Create Accompany Instrument PDF
+        public FileStreamResult CreateAccompanyInstrumentPDF(long requestId)
+        {
+            string response = string.Empty;
+
+            var data = GetAccompanyInstrumentDetails(requestId);
+
+
+            MemoryStream ms = new MemoryStream();
+
+            Document document = new Document(iTextSharp.text.PageSize.LETTER,20,20,20,0);
+            PdfWriter pdfW = PdfWriter.GetInstance(document, ms);
+
+            var labelFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
+            var variableTitleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
+            var variableNameFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLDOBLIQUE, 12);
+            var textFont = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+
+            //Document open
+            document.Open();
+
+
+            Paragraph Title = new Paragraph("DATOS DE IDENTIFICACIÓN", labelFont);
+            Title.Alignment = Element.ALIGN_CENTER;
+            document.Add(Chunk.NEWLINE);
+            document.Add(Title);
+
+            document.Add(Chunk.NEWLINE);
+
+            //Table 1
+            #region Table 1
+
+            PdfPTable table1 = new PdfPTable(2);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clRegional = new PdfPCell(new Phrase("Regional", labelFont));
+            clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
+            clRegional.BorderWidth = 0;
+            clRegional.BorderWidthBottom = 0;
+
+            PdfPCell clDistrito = new PdfPCell(new Phrase("Distrito", labelFont));
+            clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDistrito.BorderWidth = 0;
+            clDistrito.BorderWidthBottom = 0;
+
+            table1.AddCell(clRegional);
+            table1.AddCell(clDistrito);
+
+            clRegional = new PdfPCell(new Phrase(data.IdentificationData.Regional, textFont));
+            clRegional.HorizontalAlignment = Element.ALIGN_CENTER;
+            clRegional.BorderWidth = 0;
+
+            clDistrito = new PdfPCell(new Phrase(data.IdentificationData.Distrit, textFont));
+            clDistrito.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDistrito.BorderWidth = 0;
+
+            table1.AddCell(clRegional);
+            table1.AddCell(clDistrito);
+
+            document.Add(table1);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 2
+            #region Table 2
+
+            PdfPTable table2 = new PdfPTable(1);
+            table1.WidthPercentage = 100;
+
+            PdfPCell clCenter = new PdfPCell(new Phrase("Nombre Completo del Centro", labelFont));
+            clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCenter.BorderWidth = 0;
+            clCenter.BorderWidthBottom = 0;
+
+            table2.AddCell(clCenter);
+
+            clCenter = new PdfPCell(new Phrase(data.IdentificationData.Center, textFont));
+            clCenter.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCenter.BorderWidth = 0;
+
+            table2.AddCell(clCenter);
+
+            document.Add(table2);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 3
+            #region Table 3
+
+            PdfPTable table3 = new PdfPTable(2);
+            table3.WidthPercentage = 100;
+
+            PdfPCell clTanda = new PdfPCell(new Phrase("Tanda", labelFont));
+            clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
+            clTanda.BorderWidth = 0;
+            clTanda.BorderWidthBottom = 0;
+
+            PdfPCell clGrade = new PdfPCell(new Phrase("Grado", labelFont));
+            clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
+            clGrade.BorderWidth = 0;
+            clGrade.BorderWidthBottom = 0;
+
+            table3.AddCell(clTanda);
+            table3.AddCell(clGrade);
+
+            clTanda = new PdfPCell(new Phrase(data.IdentificationData.Tanda, textFont));
+            clTanda.HorizontalAlignment = Element.ALIGN_CENTER;
+            clTanda.BorderWidth = 0;
+
+            clGrade = new PdfPCell(new Phrase(data.IdentificationData.Grade, textFont));
+            clGrade.HorizontalAlignment = Element.ALIGN_CENTER;
+            clGrade.BorderWidth = 0;
+
+            table3.AddCell(clTanda);
+            table3.AddCell(clGrade);
+
+            document.Add(table3);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 4
+            #region Table 4
+
+            PdfPTable table4 = new PdfPTable(2);
+            table4.WidthPercentage = 100;
+
+            PdfPCell clDocent = new PdfPCell(new Phrase("Nombre y Apellido del Docente", labelFont));
+            clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocent.BorderWidth = 0;
+            clDocent.BorderWidthBottom = 0;
+
+            PdfPCell clDocentIdent = new PdfPCell(new Phrase("Cédula", labelFont));
+            clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocentIdent.BorderWidth = 0;
+            clDocentIdent.BorderWidthBottom = 0;
+
+            table4.AddCell(clDocent);
+            table4.AddCell(clDocentIdent);
+
+            clDocent = new PdfPCell(new Phrase(data.IdentificationData.Docent + "\n\n", textFont));
+            clDocent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocent.BorderWidth = 0;
+
+            clDocentIdent = new PdfPCell(new Phrase(data.IdentificationData.DocentDocument + "\n\n", textFont));
+            clDocentIdent.HorizontalAlignment = Element.ALIGN_CENTER;
+            clDocentIdent.BorderWidth = 0;
+
+            table4.AddCell(clDocent);
+            table4.AddCell(clDocentIdent);
+
+            document.Add(table4);
+
+            #endregion
+
+
+            //Table 5
+            #region Table 5
+
+            PdfPTable table5 = new PdfPTable(2);
+            table5.WidthPercentage = 100;
+
+            PdfPCell clCompanion = new PdfPCell(new Phrase("Nombre y Apellido del Acompañante", labelFont));
+            clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanion.BorderWidth = 0;
+            clCompanion.BorderWidthBottom = 0;
+
+            PdfPCell clCompanionDocument = new PdfPCell(new Phrase("Cédula", labelFont));
+            clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanionDocument.BorderWidth = 0;
+            clCompanionDocument.BorderWidthBottom = 0;
+
+            table5.AddCell(clCompanion);
+            table5.AddCell(clCompanionDocument);
+
+            clCompanion = new PdfPCell(new Phrase(data.IdentificationData.Companion, textFont));
+            clCompanion.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanion.BorderWidth = 0;
+
+            clCompanionDocument = new PdfPCell(new Phrase(data.IdentificationData.CompanionDocument, textFont));
+            clCompanionDocument.HorizontalAlignment = Element.ALIGN_CENTER;
+            clCompanionDocument.BorderWidth = 0;
+
+            table5.AddCell(clCompanion);
+            table5.AddCell(clCompanionDocument);
+
+            document.Add(table5);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+            //Table 6
+            #region Table 6
+
+            PdfPTable table6 = new PdfPTable(4);
+            table6.WidthPercentage = 100;
+
+            PdfPCell clVisita = new PdfPCell(new Phrase("Visita #", labelFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+            clVisita.BorderWidthBottom = 0;
+
+            PdfPCell clFecha = new PdfPCell(new Phrase("Fecha:", labelFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+            clFecha.BorderWidthBottom = 0;
+
+            PdfPCell clCantidad = new PdfPCell(new Phrase("Cantidad de alumnos(as) asistentes el día de la visita: \n \nNiños \nNiñas", labelFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+            clCantidad.BorderWidthBottom = 0;
+
+            PdfPCell clTotalMinuts = new PdfPCell(new Phrase("Escriba el total de minutos dedicados a la clase: \n \nTiempo Esperado \nTiempo Real", labelFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+            clTotalMinuts.BorderWidthBottom = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit A
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitA, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateA, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenA.ToString() + "\n" + data.IdentificationData.QuantityGirlsA.ToString() + "\n\n", textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeA.ToString() + "\n" + data.IdentificationData.RealTimeA.ToString() + "\n\n", textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit B
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitB, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateB, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenB.ToString() + "\n" + data.IdentificationData.QuantityGirlsB.ToString() + "\n\n", textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeB.ToString() + "\n" + data.IdentificationData.RealTimeB.ToString() + "\n\n", textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            //Visit C
+            clVisita = new PdfPCell(new Phrase(data.IdentificationData.VisitC, textFont));
+            clVisita.HorizontalAlignment = Element.ALIGN_LEFT;
+            clVisita.BorderWidth = 0;
+
+            clFecha = new PdfPCell(new Phrase(data.IdentificationData.VisitDateC, textFont));
+            clFecha.HorizontalAlignment = Element.ALIGN_LEFT;
+            clFecha.BorderWidth = 0;
+
+            clCantidad = new PdfPCell(new Phrase(data.IdentificationData.QuantityChildrenC.ToString() + "\n" + data.IdentificationData.QuantityGirlsC.ToString(), textFont));
+            clCantidad.HorizontalAlignment = Element.ALIGN_LEFT;
+            clCantidad.BorderWidth = 0;
+
+            clTotalMinuts = new PdfPCell(new Phrase(data.IdentificationData.ExpectedTimeC.ToString() + "\n" + data.IdentificationData.RealTimeC.ToString(), textFont));
+            clTotalMinuts.HorizontalAlignment = Element.ALIGN_LEFT;
+            clTotalMinuts.BorderWidth = 0;
+
+            table6.AddCell(clVisita);
+            table6.AddCell(clFecha);
+            table6.AddCell(clCantidad);
+            table6.AddCell(clTotalMinuts);
+
+
+            document.Add(table6);
+
+            document.Add(Chunk.NEWLINE);
+
+            #endregion
+
+
+
+            document.Add(Chunk.NEWLINE);
+            document.Add(Chunk.NEWLINE);
+
+            //General eficiencia
+            PdfPTable tbGeneralEfficiency = new PdfPTable(2);
+            tbGeneralEfficiency.WidthPercentage = 100;
+            float[] widthsGeneralEfficiency = new float[] { 80f, 20f };
+            tbGeneralEfficiency.SetWidths(widthsGeneralEfficiency);
+
+
+            PdfPCell clGEDescription = new PdfPCell(new Phrase("Eficiencia general", labelFont));
+            clGEDescription.HorizontalAlignment = Element.ALIGN_LEFT;
+            clGEDescription.BorderWidth = 1;
+
+            PdfPCell clGEValue = new PdfPCell(new Phrase(data.VariableA.EfficiencyGeneralValue, textFont));
+            clGEValue.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clGEValue.BorderWidth = 1;
+
+            tbGeneralEfficiency.AddCell(clGEDescription);
+            tbGeneralEfficiency.AddCell(clGEValue);
+
+            document.Add(tbGeneralEfficiency);
+
+
+            document.Add(Chunk.NEWLINE);
+            Paragraph VariableTitleI = new Paragraph("I. ASPECTOS A OBSERVAR", variableTitleFont);
+            VariableTitleI.Alignment = Element.ALIGN_CENTER;
+            document.Add(Chunk.NEWLINE);
+            document.Add(VariableTitleI);
+
+
+            //Variable A
+            #region Variable A
+
+            Paragraph VariableATitle = new Paragraph("Variable A: Planificación", variableNameFont);
+            VariableATitle.Alignment = Element.ALIGN_LEFT;
+            document.Add(Chunk.NEWLINE);
+            document.Add(VariableATitle);
+
+            document.Add(new Paragraph("\n"));
+
+            //Eficiencia
+            PdfPTable tbEfficiencyA = new PdfPTable(2);
+            tbEfficiencyA.WidthPercentage = 100;
+            float[] widthsEfficiencyA = new float[] { 80f, 20f };
+            tbEfficiencyA.SetWidths(widthsEfficiencyA);
+
+            PdfPCell clDescriptionA = new PdfPCell(new Phrase("Descripción", labelFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            PdfPCell clValueA = new PdfPCell(new Phrase("Valor", labelFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+            clDescriptionA = new PdfPCell(new Phrase("Factor evaluador por cada indicador", textFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            clValueA = new PdfPCell(new Phrase(data.VariableA.EfficiencyEvaluateFactor, textFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+
+            clDescriptionA = new PdfPCell(new Phrase("Eficiencia de la primera visita", textFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            clValueA = new PdfPCell(new Phrase(data.VariableA.EfficiencyValueA, textFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+
+            clDescriptionA = new PdfPCell(new Phrase("Eficiencia de la segunda visita", textFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            clValueA = new PdfPCell(new Phrase(data.VariableA.EfficiencyValueB, textFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+
+            clDescriptionA = new PdfPCell(new Phrase("Eficiencia de la tercera visita", textFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            clValueA = new PdfPCell(new Phrase(data.VariableA.EfficiencyValueC, textFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+
+            clDescriptionA = new PdfPCell(new Phrase("Eficiencia total por las visitas asistidas", textFont));
+            clDescriptionA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionA.BorderWidth = 1;
+
+            clValueA = new PdfPCell(new Phrase(data.VariableA.EfficiencyTotalValue, textFont));
+            clValueA.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyA.AddCell(clDescriptionA);
+            tbEfficiencyA.AddCell(clValueA);
+
+
+            document.Add(tbEfficiencyA);
+
+            document.Add(new Paragraph("\n"));
+
+            PdfPTable tbVariableA = new PdfPTable(5);
+            tbVariableA.WidthPercentage = 100;
+            float[] widthsA = new float[] { 5f, 65f, 10f, 10f, 10f};
+            tbVariableA.SetWidths(widthsA);
+
+
+            PdfPCell clnumberA = new PdfPCell(new Phrase("#", labelFont));
+            clnumberA.HorizontalAlignment = Element.ALIGN_CENTER;
+            clnumberA.BorderWidth = 1;
+
+            PdfPCell clIndicatorA = new PdfPCell(new Phrase("Indicadores", labelFont));
+            clIndicatorA.HorizontalAlignment = Element.ALIGN_LEFT;
+            clIndicatorA.BorderWidth = 1;
+
+            PdfPCell clAreaA_A = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaA, labelFont));
+            clAreaA_A.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaA_A.BorderWidth = 1;
+
+            PdfPCell clAreaB_A = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaB, labelFont));
+            clAreaB_A.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaB_A.BorderWidth = 1;
+
+            PdfPCell clAreaC_A = new PdfPCell(new Phrase("Área: \n\n" + data.VariableA.AreaC, labelFont));
+            clAreaC_A.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaC_A.BorderWidth = 1;
+
+            tbVariableA.AddCell(clnumberA);
+            tbVariableA.AddCell(clIndicatorA);
+            tbVariableA.AddCell(clAreaA_A);
+            tbVariableA.AddCell(clAreaB_A);
+            tbVariableA.AddCell(clAreaC_A);
+
+
+            foreach (var itemA in data.VariableA.VariableDetails)
+            {
+                clnumberA = new PdfPCell(new Phrase(itemA.Number, textFont));
+                clnumberA.HorizontalAlignment = Element.ALIGN_CENTER;
+                clnumberA.BorderWidth = 1;
+
+                clIndicatorA = new PdfPCell(new Phrase(itemA.Description, textFont));
+                clIndicatorA.HorizontalAlignment = Element.ALIGN_LEFT;
+                clIndicatorA.BorderWidth = 1;
+
+                clAreaA_A = new PdfPCell(new Phrase(itemA.IndicadorA, textFont));
+                clAreaA_A.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaA_A.BorderWidth = 1;
+
+                clAreaB_A = new PdfPCell(new Phrase(itemA.IndicadorB, textFont));
+                clAreaB_A.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaB_A.BorderWidth = 1;
+
+                clAreaC_A = new PdfPCell(new Phrase(itemA.IndicadorC, textFont));
+                clAreaC_A.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaC_A.BorderWidth = 1;
+
+                tbVariableA.AddCell(clnumberA);
+                tbVariableA.AddCell(clIndicatorA);
+                tbVariableA.AddCell(clAreaA_A);
+                tbVariableA.AddCell(clAreaB_A);
+                tbVariableA.AddCell(clAreaC_A);
+            }
+
+
+            document.Add(tbVariableA);
+
+            #endregion
+
+
+            //Variable B
+            #region Variable B
+
+            Paragraph VariableBTitle = new Paragraph("Variable B: Dominio de contenidos", variableNameFont);
+            VariableBTitle.Alignment = Element.ALIGN_LEFT;
+            document.Add(Chunk.NEWLINE);
+            document.Add(VariableBTitle);
+
+            document.Add(new Paragraph("\n"));
+
+            //Eficiencia
+            PdfPTable tbEfficiencyB = new PdfPTable(2);
+            tbEfficiencyB.WidthPercentage = 100;
+            float[] widthsEfficiencyB = new float[] { 80f, 20f };
+            tbEfficiencyB.SetWidths(widthsEfficiencyB);
+
+            PdfPCell clDescriptionB = new PdfPCell(new Phrase("Descripción", labelFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            PdfPCell clValueB = new PdfPCell(new Phrase("Valor", labelFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueB.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+            clDescriptionB = new PdfPCell(new Phrase("Factor evaluador por cada indicador", textFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            clValueB = new PdfPCell(new Phrase(data.VariableB.EfficiencyEvaluateFactor, textFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueB.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+
+            clDescriptionB = new PdfPCell(new Phrase("Eficiencia de la primera visita", textFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            clValueB = new PdfPCell(new Phrase(data.VariableB.EfficiencyValueA, textFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueB.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+
+            clDescriptionB = new PdfPCell(new Phrase("Eficiencia de la segunda visita", textFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            clValueB = new PdfPCell(new Phrase(data.VariableB.EfficiencyValueB, textFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueA.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+
+            clDescriptionB = new PdfPCell(new Phrase("Eficiencia de la tercera visita", textFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            clValueB = new PdfPCell(new Phrase(data.VariableB.EfficiencyValueC, textFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueB.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+
+            clDescriptionB = new PdfPCell(new Phrase("Eficiencia total por las visitas asistidas", textFont));
+            clDescriptionB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescriptionB.BorderWidth = 1;
+
+            clValueB = new PdfPCell(new Phrase(data.VariableB.EfficiencyTotalValue, textFont));
+            clValueB.HorizontalAlignment = Element.ALIGN_RIGHT;
+            clValueB.BorderWidth = 1;
+
+            tbEfficiencyB.AddCell(clDescriptionB);
+            tbEfficiencyB.AddCell(clValueB);
+
+
+            document.Add(tbEfficiencyB);
+
+            document.Add(new Paragraph("\n"));
+
+            PdfPTable tbVariableB = new PdfPTable(5);
+            tbVariableB.WidthPercentage = 100;
+            float[] widthsB = new float[] { 5f, 65f, 10f, 10f, 10f };
+            tbVariableB.SetWidths(widthsB);
+
+
+            PdfPCell clnumberB = new PdfPCell(new Phrase("#", labelFont));
+            clnumberB.HorizontalAlignment = Element.ALIGN_CENTER;
+            clnumberB.BorderWidth = 1;
+
+            PdfPCell clIndicatorB = new PdfPCell(new Phrase("Indicadores", labelFont));
+            clIndicatorB.HorizontalAlignment = Element.ALIGN_LEFT;
+            clIndicatorB.BorderWidth = 1;
+
+            PdfPCell clAreaA_B = new PdfPCell(new Phrase("Área: \n\n" + data.VariableB.AreaA, labelFont));
+            clAreaA_B.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaA_B.BorderWidth = 1;
+
+            PdfPCell clAreaB_B = new PdfPCell(new Phrase("Área: \n\n" + data.VariableB.AreaB, labelFont));
+            clAreaB_B.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaB_B.BorderWidth = 1;
+
+            PdfPCell clAreaC_B = new PdfPCell(new Phrase("Área: \n\n" + data.VariableB.AreaC, labelFont));
+            clAreaC_B.HorizontalAlignment = Element.ALIGN_CENTER;
+            clAreaC_B.BorderWidth = 1;
+
+            tbVariableB.AddCell(clnumberB);
+            tbVariableB.AddCell(clIndicatorB);
+            tbVariableB.AddCell(clAreaA_B);
+            tbVariableB.AddCell(clAreaB_B);
+            tbVariableB.AddCell(clAreaC_B);
+
+
+            foreach (var itemB in data.VariableB.VariableDetails)
+            {
+                clnumberB = new PdfPCell(new Phrase(itemB.Number, textFont));
+                clnumberB.HorizontalAlignment = Element.ALIGN_CENTER;
+                clnumberB.BorderWidth = 1;
+
+                clIndicatorB = new PdfPCell(new Phrase(itemB.Description, textFont));
+                clIndicatorB.HorizontalAlignment = Element.ALIGN_LEFT;
+                clIndicatorB.BorderWidth = 1;
+
+                clAreaA_B = new PdfPCell(new Phrase(itemB.IndicadorA, textFont));
+                clAreaA_B.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaA_B.BorderWidth = 1;
+
+                clAreaB_B = new PdfPCell(new Phrase(itemB.IndicadorB, textFont));
+                clAreaB_B.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaB_B.BorderWidth = 1;
+
+                clAreaC_B = new PdfPCell(new Phrase(itemB.IndicadorC, textFont));
+                clAreaC_B.HorizontalAlignment = Element.ALIGN_CENTER;
+                clAreaC_B.BorderWidth = 1;
+
+                tbVariableB.AddCell(clnumberB);
+                tbVariableB.AddCell(clIndicatorB);
+                tbVariableB.AddCell(clAreaA_B);
+                tbVariableB.AddCell(clAreaB_B);
+                tbVariableB.AddCell(clAreaC_B);
+            }
+
+
+            document.Add(tbVariableB);
+
+            #endregion
+
+
+
+
+            document.Close();
+            //Document close
+
+            byte[] bytesSt = ms.ToArray();
+
+            ms = new MemoryStream();
+            ms.Write(bytesSt, 0, bytesSt.Length);
+            ms.Position = 0;
+
+            var result = new FileStreamResult(ms, "application/pdf");
+
+            return result;
+        }
+
+
 
         public CommentsRevisedDocumentDto GetCommentsRevisedDocument(long requestId)
         {
@@ -955,6 +2045,44 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+        public _CommentsRevisedDocumentDto GetCommentsRevisedDocumentDetail(long requestId)
+        {
+            var result = new _CommentsRevisedDocumentDto();
+
+            result = db.CommentsRevisedDocuments.Where(x => x.RequestId == requestId).Select(y => new _CommentsRevisedDocumentDto()
+            {
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+                AreaA = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaA.ShortName).FirstOrDefault(),
+                DateA = y.CommentsRevisedDocumentsDetails.Select(z => z.DateA).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateA).FirstOrDefault(),
+                AreaB = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaB.ShortName).FirstOrDefault(),
+                DateB = y.CommentsRevisedDocumentsDetails.Select(z => z.DateB).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateB).FirstOrDefault(),
+                AreaC = y.CommentsRevisedDocumentsDetails.Select(z => z.AreaC.ShortName).FirstOrDefault(),
+                DateC = y.CommentsRevisedDocumentsDetails.Select(z => z.DateC).FirstOrDefault() == null ? string.Empty : y.CommentsRevisedDocumentsDetails.Select(z => z.DateC).FirstOrDefault(),
+                CommentsRevisedDocumenDetails = y.CommentsRevisedDocumentsDetails.Select(p => new _CommentsRevisedDocumentDetailDto()
+                {
+                    Id = p.Id,
+                    Description = p.CommentsRevisedDocumentsDef.Description,
+                    AreaA = p.AreaA.ShortName,
+                    DateA = p.DateA == null ? string.Empty : p.DateA,
+                    CommentA = p.CommentA,
+                    AreaB = p.AreaB.ShortName,
+                    DateB = p.DateB == null ? string.Empty : p.DateB,
+                    CommentB = p.CommentB,
+                    AreaC = p.AreaC.ShortName,
+                    DateC = p.DateC == null ? string.Empty : p.DateC,
+                    CommentC = p.CommentC,
+                }).ToList(),
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
 
         public DescriptionObservationSupportProvidedDto GetDescriptionObservationSupportProvided(long requestId)
         {
@@ -986,6 +2114,37 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
+        public _DescriptionObservationSupportProvidedDto GetDescriptionObservationSupportProvidedDetail(long requestId)
+        {
+            var result = new _DescriptionObservationSupportProvidedDto();
+
+            result = db.DescriptionObservationSupportProvideds.Where(x => x.RequestId == requestId).Select(y => new _DescriptionObservationSupportProvidedDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaA = y.AreaA.ShortName,
+                DateA = y.DateA == null ? string.Empty : y.DateA,
+                CommentA = y.CommentA,
+
+                AreaB = y.AreaB.ShortName,
+                DateB = y.DateB == null ? string.Empty : y.DateB,
+                CommentB = y.CommentB,
+
+                AreaC = y.AreaC.ShortName,
+                DateC = y.DateC == null ? string.Empty : y.DateC,
+                CommentC = y.CommentC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+
 
         public SuggestionsAgreementDto GetSuggestionsAgreement(long requestId)
         {
@@ -1016,6 +2175,45 @@ namespace JS.Base.WS.API.Services
 
                 AreaIdC = y.AreaIdC,
                 DateC = y.DateC,
+                CommentC = y.CommentC,
+                TeacherSignatureC = y.TeacherSignatureC,
+                CompanionSignatureC = y.CompanionSignatureC,
+                DistrictTechnicianSignatureC = y.DistrictTechnicianSignatureC,
+
+            }).FirstOrDefault();
+
+            return result;
+        }
+
+        public _SuggestionsAgreementDto GetSuggestionsAgreementDetail(long requestId)
+        {
+            var result = new _SuggestionsAgreementDto();
+
+            result = db.SuggestionsAgreements.Where(x => x.RequestId == requestId).Select(y => new _SuggestionsAgreementDto()
+            {
+
+                Id = y.Id,
+                RequestId = y.RequestId,
+                StausId = y.StatusId,
+                StatusDescription = y.Status.Name,
+                StatusColour = y.Status.Colour,
+
+                AreaA = y.AreaA.ShortName,
+                DateA = y.DateA == null ? string.Empty : y.DateA,
+                CommentA = y.CommentA,
+                TeacherSignatureA = y.TeacherSignatureA,
+                CompanionSignatureA = y.CompanionSignatureA,
+                DistrictTechnicianSignatureA = y.DistrictTechnicianSignatureA,
+
+                AreaB = y.AreaB.ShortName,
+                DateB = y.DateB == null ? string.Empty : y.DateB,
+                CommentB = y.CommentB,
+                TeacherSignatureB = y.TeacherSignatureB,
+                CompanionSignatureB = y.CompanionSignatureB,
+                DistrictTechnicianSignatureB = y.DistrictTechnicianSignatureB,
+
+                AreaC = y.AreaC.ShortName,
+                DateC = y.DateC == null ? string.Empty : y.DateC,
                 CommentC = y.CommentC,
                 TeacherSignatureC = y.TeacherSignatureC,
                 CompanionSignatureC = y.CompanionSignatureC,
@@ -1405,7 +2603,141 @@ namespace JS.Base.WS.API.Services
             result = true;
 
             return result;
-        } 
+        }
+
+
+        public bool ApproveRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusApproveId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Approved).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIApproved()
+            {
+                RequestId = requestId,
+                StatusId = statusApproveId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIApproveds.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusApproveId;
+            request.ClosingDate = DateTime.Now;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool SendToObservationRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusInObservationId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.InObservation).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIInObservation()
+            {
+                RequestId = requestId,
+                StatusId = statusInObservationId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIInObservations.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusInObservationId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool Process(long requestId)
+        {
+            bool result = false;
+
+            int statusInProcessId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.InProcess).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAIInProcess()
+            {
+                RequestId = requestId,
+                StatusId = statusInProcessId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAIInProcesses.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusInProcessId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool CancelRequest(long requestId)
+        {
+            bool result = false;
+
+            int statusCancelId = db.RequestStatus.Where(x => x.ShortName == Constants.RequestStatus.Cancelad).Select(y => y.Id).FirstOrDefault();
+
+            var requestFlowRequest = new RequestFlowAICancelad()
+            {
+                RequestId = requestId,
+                StatusId = statusCancelId,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var requestFlow = db.RequestFlowAICancelads.Add(requestFlowRequest);
+
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId).FirstOrDefault();
+            request.StatusId = statusCancelId;
+            db.SaveChanges();
+
+            result = true;
+
+            return result;
+        }
+
+
+        public bool CreateResearchSummary(ResearchSummaryDto request)
+        {
+            bool response = false;
+
+            var researchSummaryRequest = new ResearchSummary()
+            {
+                RequestId = request.RequestId,
+                Summary = request.Summary,
+                CreationTime = DateTime.Now,
+                CreatorUserId = currentUserId,
+                IsActive = true,
+            };
+
+            var result = db.ResearchSummaries.Add(researchSummaryRequest);
+            db.SaveChanges();
+
+            response = true;
+
+            return response;
+        }
+
+
+
 
 
 
@@ -1507,6 +2839,103 @@ namespace JS.Base.WS.API.Services
             return response;
         }
 
+        // Calculate Efficiency Detail
+        private CalculateEfficiency CalculateEfficiencyDetail(_VariableDetailsDto request)
+        {
+            var response = new CalculateEfficiency();
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+            }
+
+            decimal _efficiencyValueA = 0;
+            decimal _efficiencyValueB = 0;
+            decimal _efficiencyValueC = 0;
+            decimal _efficiencyTotalValue = 0;
+
+            int visitQuantity = 0;
+
+            if (request == null)
+            {
+                response.Error = true;
+                response.ErrorMessage = "Solicitud inválida";
+
+                return response;
+            }
+
+            var areaA = db.Areas.Where(x => x.ShortName == request.AreaA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.ShortName == request.AreaB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.ShortName == request.AreaC).FirstOrDefault();
+
+            if (!areaA.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaB.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+            if (!areaC.ShortName.Equals(areaPending))
+            {
+                visitQuantity += 1;
+            }
+
+            foreach (var item in request.VariableDetails)
+            {
+                var currentIndicatorA = db.Indicators.Where(x => x.Name == item.IndicadorA).FirstOrDefault();
+                var currentIndicatorB = db.Indicators.Where(x => x.Name == item.IndicadorB).FirstOrDefault();
+                var currentIndicatorC = db.Indicators.Where(x => x.Name == item.IndicadorC).FirstOrDefault();
+
+                _efficiencyValueA += currentIndicatorA.Value;
+                _efficiencyValueB += currentIndicatorB.Value;
+                _efficiencyValueC += currentIndicatorC.Value;
+            }
+
+            _efficiencyValueA = _efficiencyValueA / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueB = _efficiencyValueB / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+            _efficiencyValueC = _efficiencyValueC / (EfficiencyEvaluateFactor * (decimal)request.VariableDetails.Count());
+
+
+            //Validate indicators
+            if (areaA.ShortName.Equals(areaPending) && _efficiencyValueA > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la primera visita";
+
+                return response;
+            }
+            if (areaB.ShortName.Equals(areaPending) && _efficiencyValueB > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la segunda visita";
+
+                return response;
+            }
+            if (areaC.ShortName.Equals(areaPending) && _efficiencyValueC > 0)
+            {
+                response.Error = true;
+                response.ErrorMessage = "No puedes marcar un indicador, teniendo el área pendiente de la tercera visita";
+
+                return response;
+            }
+
+            if (visitQuantity > 0)
+            {
+                _efficiencyTotalValue = (_efficiencyValueA + _efficiencyValueB + _efficiencyValueC) / visitQuantity;
+            }
+
+            response.EfficiencyValueA = _efficiencyValueA;
+            response.EfficiencyValueB = _efficiencyValueB;
+            response.EfficiencyValueC = _efficiencyValueC;
+            response.EfficiencyTotalValue = _efficiencyTotalValue;
+
+
+            return response;
+        }
+
+
 
         //Set Efficiency
         private VariableDto SetEfficiency(VariableDto request)
@@ -1573,6 +3002,73 @@ namespace JS.Base.WS.API.Services
 
             return request;
         }
+
+        //Set Efficiency Detail
+        private _VariableDetailsDto SetEfficiencyDetail(_VariableDetailsDto request)
+        {
+            if (request == null)
+            {
+                var _request = new _VariableDetailsDto();
+                _request.Error = true;
+                _request.ErrorMessage = "Solicitud inválida";
+
+                return request;
+            }
+
+            var efficiency = CalculateEfficiencyDetail(request);
+
+            request.EfficiencyValueA = Math.Ceiling(efficiency.EfficiencyValueA * 100).ToString() + " %";
+            request.EfficiencyColourA = GetColourByEfficiency(efficiency.EfficiencyValueA);
+
+            request.EfficiencyValueB = Math.Ceiling(efficiency.EfficiencyValueB * 100).ToString() + " %";
+            request.EfficiencyColourB = GetColourByEfficiency(efficiency.EfficiencyValueB);
+
+            request.EfficiencyValueC = Math.Ceiling(efficiency.EfficiencyValueC * 100).ToString() + " %";
+            request.EfficiencyColourC = GetColourByEfficiency(efficiency.EfficiencyValueC);
+
+            request.EfficiencyTotalValue = Math.Ceiling(efficiency.EfficiencyTotalValue * 100).ToString() + " %";
+            request.EfficiencyTotalColour = GetColourByEfficiency(efficiency.EfficiencyTotalValue);
+
+            request.EfficiencyEvaluateFactor = ((int)EfficiencyEvaluateFactor).ToString();
+
+            request.Error = efficiency.Error;
+            request.ErrorMessage = efficiency.ErrorMessage;
+
+
+            //Validate visit
+            var areaA = db.Areas.Where(x => x.ShortName == request.AreaA).FirstOrDefault();
+            var areaB = db.Areas.Where(x => x.ShortName == request.AreaB).FirstOrDefault();
+            var areaC = db.Areas.Where(x => x.ShortName == request.AreaC).FirstOrDefault();
+            int quantityAreaPending = 0;
+
+            if (areaA.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueA = indicadorPendingLabel;
+                request.EfficiencyColourA = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaB.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueB = indicadorPendingLabel;
+                request.EfficiencyColourB = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+            if (areaC.ShortName.Equals(areaPending))
+            {
+                request.EfficiencyValueC = indicadorPendingLabel;
+                request.EfficiencyColourC = "btn btn-default";
+                quantityAreaPending += 1;
+            }
+
+            if (quantityAreaPending == 3)
+            {
+                request.EfficiencyTotalValue = indicadorPendingLabel;
+                request.EfficiencyTotalColour = "btn btn-default";
+            }
+
+            return request;
+        }
+
 
 
         //Get Colour By Efficiency
