@@ -82,10 +82,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 15:59:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/04/2020 00:49:36</publishTime>
+      <publishTime>09/07/2020 12:07:31</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/04/2020 00:49:36</publishTime>
+      <publishTime>09/07/2020 12:07:31</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -94,16 +94,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/JS.Alert.WS.API.dll">
-      <publishTime>09/04/2020 00:49:31</publishTime>
+      <publishTime>09/07/2020 12:07:25</publishTime>
     </File>
     <File Include="bin/JS.Alert.WS.API.pdb">
-      <publishTime>09/04/2020 00:49:31</publishTime>
+      <publishTime>09/07/2020 12:07:25</publishTime>
     </File>
     <File Include="bin/JS.Utilities_.dll">
-      <publishTime>09/04/2020 00:47:39</publishTime>
+      <publishTime>09/07/2020 12:07:22</publishTime>
     </File>
     <File Include="bin/JS.Utilities_.pdb">
-      <publishTime>09/04/2020 00:47:39</publishTime>
+      <publishTime>09/07/2020 12:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>06/27/2017 12:59:34</publishTime>
@@ -370,7 +370,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2020 21:57:12</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/04/2020 00:49:31</publishTime>
+      <publishTime>09/07/2020 12:07:26</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>09/03/2020 21:57:12</publishTime>
@@ -415,7 +415,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2020 21:57:11</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/04/2020 00:47:43</publishTime>
+      <publishTime>09/07/2020 12:07:25</publishTime>
     </File>
   </ItemGroup>
 </Project>

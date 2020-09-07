@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.Utilities", "JS.Utilitie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.Alert.WS.API", "JS.Alert.WS.API\JS.Alert.WS.API.csproj", "{9E5F8971-502C-4149-9D06-D1206E98837E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.AlertService", "JS.AlertService\JS.AlertService.csproj", "{FE8206EC-B5A7-41C5-9006-18BD3E184E37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9E5F8971-502C-4149-9D06-D1206E98837E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E5F8971-502C-4149-9D06-D1206E98837E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5F8971-502C-4149-9D06-D1206E98837E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE8206EC-B5A7-41C5-9006-18BD3E184E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE8206EC-B5A7-41C5-9006-18BD3E184E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE8206EC-B5A7-41C5-9006-18BD3E184E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE8206EC-B5A7-41C5-9006-18BD3E184E37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

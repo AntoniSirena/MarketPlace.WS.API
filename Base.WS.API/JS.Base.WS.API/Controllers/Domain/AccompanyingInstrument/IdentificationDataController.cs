@@ -7,11 +7,9 @@ using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Services;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Linq;
-using JS.Utilities;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
 
@@ -83,6 +81,17 @@ namespace JS.Base.WS.API.Controllers.Domain
         public IHttpActionResult GetAccompInstRequest()
         {
             var result = accompanyingInstrumentService.GetAccompInstRequest();
+
+            //Send alert
+            var requestAlert = new AlertService.DTO.Request.Mail
+            {
+                MailAddresses = "antoni.sirena@gmail.com,lic-juansirena@hotmail.com",
+                Subject = "Integration Test JS.Alert.WS.API",
+                Body = "Good Integration JS.Alert.WS.API. Att: Juan Antonio Sirena",
+            };
+
+            var wsAlertResponse = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+
 
             if (result.Count() == 0)
             {
@@ -334,20 +343,6 @@ namespace JS.Base.WS.API.Controllers.Domain
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
             }
-
-            //Send alert
-            //var requestAlert = new
-            //{
-            //    MailAddress = "antoni.sirena@gmail.com",
-            //    Subject = "Instrumento de Acompanamiento completado",
-            //    Body = string.Format("{0}{1}", "N&ugrave;mero: ", requestId.ToString()),
-            //};
-
-            //string dataRequest = JsonConvert.SerializeObject(requestAlert);
-
-            //var wsResponse = JS_HttpRequest.Post("http://localhost:3002/api/alert/SendMail", dataRequest);
-
-
 
             return Ok(response);
         }

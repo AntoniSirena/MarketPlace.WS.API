@@ -8,7 +8,7 @@ namespace JS.Utilities
 {
     public static class JS_HttpRequest
     {
-        public static string Post(string url, string data, Dictionary<string, string> headers = null, string contenType = "application/json")
+        public static string Post(string url, string data, string contenType, Dictionary<string, string> headers)
         {
             string response = string.Empty;
 
