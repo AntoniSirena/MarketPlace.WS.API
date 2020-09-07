@@ -11,8 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using JS.Utilities;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
 
@@ -335,6 +334,20 @@ namespace JS.Base.WS.API.Controllers.Domain
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
             }
+
+            //Send alert
+            //var requestAlert = new
+            //{
+            //    MailAddress = "antoni.sirena@gmail.com",
+            //    Subject = "Instrumento de Acompanamiento completado",
+            //    Body = string.Format("{0}{1}", "N&ugrave;mero: ", requestId.ToString()),
+            //};
+
+            //string dataRequest = JsonConvert.SerializeObject(requestAlert);
+
+            //var wsResponse = JS_HttpRequest.Post("http://localhost:3002/api/alert/SendMail", dataRequest);
+
+
 
             return Ok(response);
         }

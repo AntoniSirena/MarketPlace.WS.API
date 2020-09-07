@@ -14,34 +14,38 @@ namespace JS.Alert.WS.API.Services
         public bool SendMail(Mail request)
         {
             bool response = false;
+            string[] mails = request.MailAddresses.Split(',');
 
             try
             {
                 var fromAddress = new MailAddress(ConfigurationManager.AppSettings["MailAddress"], ConfigurationManager.AppSettings["MailName"]);
                 string fromPassword = ConfigurationManager.AppSettings["Password"];
 
-                var toAddress = new MailAddress(request.MailAddress);
-                string subject = request.Subject;
-                string body = request.Body;
+                foreach (var item in mails)
+                {
+                    var toAddress = new MailAddress(item);
+                    string subject = request.Subject;
+                    string body = request.Body;
 
-                var smtp = new SmtpClient
-                {
-                    Host = ConfigurationManager.AppSettings["Host"],
-                    Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"]),
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    var smtp = new SmtpClient
+                    {
+                        Host = ConfigurationManager.AppSettings["Host"],
+                        Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"]),
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
 
-                };
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true,
-                })
-                {
-                    smtp.Send(message);
+                    };
+                    using (var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true,
+                    })
+                    {
+                        smtp.Send(message);
+                    }
                 }
 
                 response = true;
