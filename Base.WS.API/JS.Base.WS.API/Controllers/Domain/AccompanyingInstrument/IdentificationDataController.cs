@@ -82,17 +82,6 @@ namespace JS.Base.WS.API.Controllers.Domain
         {
             var result = accompanyingInstrumentService.GetAccompInstRequest();
 
-            //Send alert
-            var requestAlert = new AlertService.DTO.Request.Mail
-            {
-                MailAddresses = "antoni.sirena@gmail.com,lic-juansirena@hotmail.com",
-                Subject = "Integration Test JS.Alert.WS.API",
-                Body = "Good Integration JS.Alert.WS.API. Att: Juan Antonio Sirena",
-            };
-
-            var wsAlertResponse = AlertService.Alert.SendMail(requestAlert, "application/json", null);
-
-
             if (result.Count() == 0)
             {
                 response.Code = InternalResponseCodeError.Code312;
