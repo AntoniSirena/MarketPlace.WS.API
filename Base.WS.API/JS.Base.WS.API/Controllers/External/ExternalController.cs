@@ -23,7 +23,7 @@ namespace JS.Base.WS.API.Controllers.External
     [AllowAnonymous]
     public class ExternalController : ApiController
     {
-        MyDBcontext db;
+        private MyDBcontext db;
         private UserRoleService UserRoleService;
         private UserService userService;
 

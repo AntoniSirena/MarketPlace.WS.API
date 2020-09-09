@@ -7,12 +7,9 @@ using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Services;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
 
