@@ -72,7 +72,23 @@ namespace JS.Base.WS.API.Controllers.Domain
             entity["RequestId"] = requestResult.Id;
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
-            return base.Create(input);
+            var result = base.Create(input);
+
+            //Send alert
+            #region Send alert
+            string userMail = db.Users.Where(x => x.Id == currentUserId).Select(y => y.EmailAddress).FirstOrDefault();
+
+            var requestAlert = new AlertService.DTO.Request.Mail
+            {
+                MailAddresses = userMail,
+                Subject = string.Format("{0}", "Notificación de formulario"),
+                Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestResult.Id.ToString(), " ha sido creado sastifactoriamente."),
+            };
+
+            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            #endregion
+
+            return result;
         }
 
 
@@ -311,7 +327,7 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("CompleteRequest")]
         public IHttpActionResult CompleteRequest(long requestId)
         {
-            var request = db.AccompanyingInstrumentRequests.Where(x => x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.InProcess).FirstOrDefault();
+            var request = db.AccompanyingInstrumentRequests.Where(x => x.IsActive == true && x.Id == requestId && x.RequestStatu.ShortName == Constants.RequestStatus.InProcess).FirstOrDefault();
 
             if (request == null)
             {
@@ -332,6 +348,19 @@ namespace JS.Base.WS.API.Controllers.Domain
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
             }
+
+            //Send alert
+            #region Send alert
+            string userMail = db.Users.Where(x => x.Id == currentUserId).Select(y => y.EmailAddress).FirstOrDefault();
+
+            var requestAlert = new AlertService.DTO.Request.Mail {
+                MailAddresses = userMail,
+                Subject = string.Format("{0}", "Notificación de formulario"),
+                Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestId.ToString(), " ha sido completado sastifactoriamente."),
+            };
+
+            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            #endregion
 
             return Ok(response);
         }
@@ -372,6 +401,20 @@ namespace JS.Base.WS.API.Controllers.Domain
                 response.Code = InternalResponseCodeError.Code301;
                 response.Message = InternalResponseCodeError.Message301;
             }
+
+            //Send alert
+            #region Send alert
+            string userMail = db.Users.Where(x => x.Id == currentUserId).Select(y => y.EmailAddress).FirstOrDefault();
+
+            var requestAlert = new AlertService.DTO.Request.Mail
+            {
+                MailAddresses = userMail,
+                Subject = string.Format("{0}", "Notificación de formulario"),
+                Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestId.ToString(), " ha sido aprobado sastifactoriamente."),
+            };
+
+            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            #endregion
 
             return Ok(response);
         }

@@ -91,19 +91,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 15:25:29</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
-      <publishTime>06/20/2019 17:39:40</publishTime>
+      <publishTime>09/03/2020 21:40:33</publishTime>
+    </File>
+    <File Include="bin/JS.AlertService.dll">
+      <publishTime>10/03/2020 00:54:26</publishTime>
+    </File>
+    <File Include="bin/JS.AlertService.pdb">
+      <publishTime>10/03/2020 00:54:26</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>09/01/2020 10:59:21</publishTime>
+      <publishTime>10/03/2020 00:54:31</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>09/01/2020 10:59:21</publishTime>
+      <publishTime>10/03/2020 00:54:31</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
       <publishTime>09/01/2020 10:59:14</publishTime>
     </File>
     <File Include="bin/JS.Utilities.pdb">
       <publishTime>09/01/2020 10:59:14</publishTime>
+    </File>
+    <File Include="bin/JS.Utilities_.dll">
+      <publishTime>10/03/2020 00:54:25</publishTime>
+    </File>
+    <File Include="bin/JS.Utilities_.pdb">
+      <publishTime>10/03/2020 00:54:25</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>08/07/2020 15:25:29</publishTime>
@@ -151,7 +163,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/01/2018 05:47:46</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>08/07/2020 15:25:29</publishTime>
+      <publishTime>09/09/2020 12:42:14</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/07/2020 15:25:29</publishTime>
@@ -715,7 +727,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 15:25:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/01/2020 10:59:21</publishTime>
+      <publishTime>09/15/2020 18:30:27</publishTime>
     </File>
   </ItemGroup>
 </Project>

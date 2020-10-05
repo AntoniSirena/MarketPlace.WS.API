@@ -246,6 +246,7 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\PersonTypeController.cs" />
+    <Compile Include="Controllers\Publicity\NoveltyController.cs" />
     <Compile Include="Controllers\Publicity\PortadaController.cs" />
     <Compile Include="Controllers\Publicity\TemplateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -276,6 +277,9 @@
     <Compile Include="DTO\Response\Domain\VisitDto.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltyDto.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltyTypeDto.cs" />
     <Compile Include="DTO\Response\Publicity\PortadaDto.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
@@ -322,6 +326,8 @@
     <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInProcess.cs" />
     <Compile Include="Models\Domain\RequestFlowAI\ResearchSummary.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
+    <Compile Include="Models\Publicity\Novelty.cs" />
+    <Compile Include="Models\Publicity\NoveltyType.cs" />
     <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />

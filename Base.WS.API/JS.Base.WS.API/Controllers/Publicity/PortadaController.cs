@@ -1,8 +1,10 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Publicity;
+using JS.Base.WS.API.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,6 +27,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
             db = new MyDBcontext();
             response = new Response();
         }
+
+        private long currentUserId = CurrentUser.GetId();
 
 
         [HttpGet]
@@ -51,5 +55,57 @@ namespace JS.Base.WS.API.Controllers.Publicity
         }
 
 
+        [HttpGet]
+        [Route("GetNovelties")]
+        public IHttpActionResult GetNovelties(string noveltyType)
+        {
+            bool isVisitorUser = db.Users.Where(x => x.Id == currentUserId).Select(y => y.IsVisitorUser).FirstOrDefault();
+
+            var novelties = new List<NoveltiesByTypeDto>();
+            var result = new List<NoveltiesByTypeDto>();
+
+            if (isVisitorUser)
+            {
+                novelties = db.Novelties.Where(x => x.IsPublic == true && x.IsEnabled == true && x.IsPublic == true && x.IsActive == true && x.NoveltyType.ShortName == noveltyType).Select(y => new NoveltiesByTypeDto()
+                {
+                    Id = y.Id,
+                    Title = y.Title,
+                    Description = y.Description,
+                    ImgPath = y.ImgPath,
+                }).OrderByDescending(x => x.Id).ToList();
+            }
+            else
+            {
+                novelties = db.Novelties.Where(x => x.IsEnabled == true && x.IsActive == true && x.NoveltyType.ShortName == noveltyType).Select(y => new NoveltiesByTypeDto()
+                {
+                    Id = y.Id,
+                    Title = y.Title,
+                    Description = y.Description,
+                    ImgPath = y.ImgPath,
+                }).OrderByDescending(x => x.Id).ToList();
+            }
+
+            foreach (var item in novelties)
+            {
+                item.ImgBase64 = GetStrigBase64(item.ImgPath);
+                result.Add(item);
+            }
+
+            return Ok(result);
+        }
+
+
+        private string GetStrigBase64(string path)
+        {
+            string result = string.Empty;
+
+            if (!String.IsNullOrEmpty(path))
+            {
+                byte[] file = File.ReadAllBytes(path);
+                result = Convert.ToBase64String(file);
+            }
+
+            return result;
+        }
     }
 }

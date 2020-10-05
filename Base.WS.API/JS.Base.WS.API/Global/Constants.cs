@@ -82,7 +82,7 @@ namespace JS.Base.WS.API.Global
 
             public const string Message205 = "Formulario completado con éxito";
 
-            public const string Message206 = "Formulario aprovado con éxito";
+            public const string Message206 = "Formulario aprobado con éxito";
 
             public const string Message207 = "Formulario enviado a observación con éxito";
 
@@ -164,6 +164,12 @@ namespace JS.Base.WS.API.Global
 
             public const string Code322 = "322";
             public const string Message322 = "Debes insertar el resumen de la investigación para poder continuar";
+
+            public const string Code323 = "323";
+            public const string Message323 = "El tipo de documento que intenta subir es desconocido";
+
+            public const string Code324 = "324";
+            public const string Message324 = "El tipo de imagen que intenta subir es desconocido";
         }
 
         public static class ConfigurationParameter
@@ -183,6 +189,11 @@ namespace JS.Base.WS.API.Global
             public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
 
             public static string FileDirectory  { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
+
+            public static string FileTypeAllowed { get { return ConfigurationParameterService.GetParameter("FileTypeAllowed") ?? string.Empty; } }
+
+            public static string ImgTypeAllowed { get { return ConfigurationParameterService.GetParameter("ImgTypeAllowed") ?? string.Empty; } }
+
 
         }
 
