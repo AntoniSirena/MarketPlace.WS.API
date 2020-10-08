@@ -1,8 +1,11 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Publicity;
+using JS.Base.WS.API.Helpers;
+using JS.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,6 +28,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
             db = new MyDBcontext();
             response = new Response();
         }
+
+        private long currentUserId = CurrentUser.GetId();
 
 
         [HttpGet]
@@ -50,6 +55,51 @@ namespace JS.Base.WS.API.Controllers.Publicity
             return Ok(response);
         }
 
+
+        [HttpGet]
+        [Route("GetNovelties")]
+        public IHttpActionResult GetNovelties(string noveltyType)
+        {
+            bool isVisitorUser = db.Users.Where(x => x.Id == currentUserId).Select(y => y.IsVisitorUser).FirstOrDefault();
+
+            var novelties = new List<NoveltiesByTypeDto>();
+            var result = new List<NoveltiesByTypeDto>();
+
+            if (isVisitorUser)
+            {
+                novelties = db.Novelties.Where(x => x.IsPublic == true && x.IsEnabled == true && x.IsPublic == true && x.IsActive == true && x.NoveltyType.ShortName == noveltyType).Select(y => new NoveltiesByTypeDto()
+                {
+                    Id = y.Id,
+                    Title = y.Title,
+                    Description = y.Description,
+                    ImgPath = y.ImgPath,
+                    ContenTypeShort = y.ContenTypeShort,
+                    ContenTypeLong = y.ContenTypeLong,
+
+                }).OrderByDescending(x => x.Id).ToList();
+            }
+            else
+            {
+                novelties = db.Novelties.Where(x => x.IsEnabled == true && x.IsActive == true && x.NoveltyType.ShortName == noveltyType).Select(y => new NoveltiesByTypeDto()
+                {
+                    Id = y.Id,
+                    Title = y.Title,
+                    Description = y.Description,
+                    ImgPath = y.ImgPath,
+                    ContenTypeShort = y.ContenTypeShort,
+                    ContenTypeLong = y.ContenTypeLong,
+
+                }).OrderByDescending(x => x.Id).ToList();
+            }
+
+            foreach (var item in novelties)
+            {
+                item.ImgBase64 = string.Concat(item.ContenTypeLong, ',', JS_File.GetStrigBase64(item.ImgPath));
+                result.Add(item);
+            }
+
+            return Ok(result);
+        }
 
     }
 }

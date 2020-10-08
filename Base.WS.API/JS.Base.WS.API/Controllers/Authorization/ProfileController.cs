@@ -245,7 +245,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 if (!string.IsNullOrEmpty(request))
                 {
-                    request = request.Replace("data:image/jpeg;base64,", "");
+                    string[] arrayImgBase64 = request.Split(',');
+                    request = arrayImgBase64[arrayImgBase64.Length - 1];
 
                     var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
                     currentUser.Image = request;

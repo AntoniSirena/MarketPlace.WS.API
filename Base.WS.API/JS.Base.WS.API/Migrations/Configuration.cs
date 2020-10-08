@@ -5,6 +5,7 @@ namespace JS.Base.WS.API.Migrations
     using JS.Base.WS.API.Models.Domain;
     using JS.Base.WS.API.Models.Domain.AccompanyingInstrument;
     using JS.Base.WS.API.Models.PersonProfile;
+    using JS.Base.WS.API.Models.Publicity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -39,11 +40,11 @@ namespace JS.Base.WS.API.Migrations
             int userStatusId = context.UserStatus.Where(x => x.ShortName == "Active").Select(x => x.Id).FirstOrDefault();
 
             //System users
-            context.Users.AddOrUpdate(
-              p => p.UserName,
-              new User { UserName = "system", Password = "system123", Name = "System", Surname = "System", PersonId = null, EmailAddress = "system@hotmail.com", StatusId = userStatusId, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false },
-              new User { UserName = "admin", Password = "admin123", Name = "Admin", Surname = "Admin", PersonId = null, EmailAddress = "admin@hotmail.com", StatusId = userStatusId, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false }
-            );
+            //context.Users.AddOrUpdate(
+            //  p => p.UserName,
+            //  new User { UserName = "system", Password = "system123", Name = "System", Surname = "System", PersonId = null, EmailAddress = "system@hotmail.com", StatusId = userStatusId, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false },
+            //  new User { UserName = "admin", Password = "admin123", Name = "Admin", Surname = "Admin", PersonId = null, EmailAddress = "admin@hotmail.com", StatusId = userStatusId, CreationTime = DateTime.Now, CreatorUserId = 1, IsActive = true, IsDeleted = false }
+            //);
 
             long userId = context.Users.Where(x => x.UserName == "system").Select(x => x.Id).FirstOrDefault();
 
@@ -173,6 +174,21 @@ namespace JS.Base.WS.API.Migrations
                new CommentsRevisedDocumentsDef { ShortName = "E", Description = "Libros de consulta usados (nombre y editora)" },
                new CommentsRevisedDocumentsDef { ShortName = "F", Description = "Otros elementos" }
                );
+
+            //NoveltyTypes
+            context.NoveltyTypes.AddOrUpdate(
+                x => x.ShortName,
+                new NoveltyType { ShortName = "Sporty", Description = "Deporte" },
+                new NoveltyType { ShortName = "Politics", Description = "Política" },
+                new NoveltyType { ShortName = "Show", Description = "Espectáculo" },
+                new NoveltyType { ShortName = "Unusual", Description = "Insólita" },
+                new NoveltyType { ShortName = "Economy", Description = "Economía" },
+                new NoveltyType { ShortName = "Art", Description = "Arte" },
+                new NoveltyType { ShortName = "Police", Description = "Policiale" },
+                new NoveltyType { ShortName = "Science", Description = "Ciencia" },
+                new NoveltyType { ShortName = "Education", Description = "Educación" }
+                );
+
         }
     }
 }

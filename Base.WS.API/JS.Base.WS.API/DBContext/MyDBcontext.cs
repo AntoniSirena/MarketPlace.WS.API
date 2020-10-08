@@ -51,6 +51,8 @@ namespace JS.Base.WS.API.DBContext
 
         //Publicity
         public virtual DbSet<Template> Templates { get; set; }
+        public virtual DbSet<Novelty> Novelties { get; set; }
+        public virtual DbSet<NoveltyType> NoveltyTypes { get; set; }
 
         //File
         public virtual DbSet<FileDocument> FileDocuments  { get; set; }
