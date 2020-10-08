@@ -2,6 +2,7 @@
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Publicity;
 using JS.Base.WS.API.Helpers;
+using JS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -72,6 +73,9 @@ namespace JS.Base.WS.API.Controllers.Publicity
                     Title = y.Title,
                     Description = y.Description,
                     ImgPath = y.ImgPath,
+                    ContenTypeShort = y.ContenTypeShort,
+                    ContenTypeLong = y.ContenTypeLong,
+
                 }).OrderByDescending(x => x.Id).ToList();
             }
             else
@@ -82,30 +86,20 @@ namespace JS.Base.WS.API.Controllers.Publicity
                     Title = y.Title,
                     Description = y.Description,
                     ImgPath = y.ImgPath,
+                    ContenTypeShort = y.ContenTypeShort,
+                    ContenTypeLong = y.ContenTypeLong,
+
                 }).OrderByDescending(x => x.Id).ToList();
             }
 
             foreach (var item in novelties)
             {
-                item.ImgBase64 = GetStrigBase64(item.ImgPath);
+                item.ImgBase64 = string.Concat(item.ContenTypeLong, ',', JS_File.GetStrigBase64(item.ImgPath));
                 result.Add(item);
             }
 
             return Ok(result);
         }
 
-
-        private string GetStrigBase64(string path)
-        {
-            string result = string.Empty;
-
-            if (!String.IsNullOrEmpty(path))
-            {
-                byte[] file = File.ReadAllBytes(path);
-                result = Convert.ToBase64String(file);
-            }
-
-            return result;
-        }
     }
 }

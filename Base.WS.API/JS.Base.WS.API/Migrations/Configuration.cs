@@ -178,14 +178,15 @@ namespace JS.Base.WS.API.Migrations
             //NoveltyTypes
             context.NoveltyTypes.AddOrUpdate(
                 x => x.ShortName,
-                new NoveltyType { ShortName = "Sporty", Description = "Deportiva" },
+                new NoveltyType { ShortName = "Sporty", Description = "Deporte" },
                 new NoveltyType { ShortName = "Politics", Description = "Política" },
-                new NoveltyType { ShortName = "Show", Description = "Del Espectáculo" },
+                new NoveltyType { ShortName = "Show", Description = "Espectáculo" },
                 new NoveltyType { ShortName = "Unusual", Description = "Insólita" },
-                new NoveltyType { ShortName = "Economy", Description = "De Economía" },
-                new NoveltyType { ShortName = "Art", Description = "Del Arte" },
+                new NoveltyType { ShortName = "Economy", Description = "Economía" },
+                new NoveltyType { ShortName = "Art", Description = "Arte" },
                 new NoveltyType { ShortName = "Police", Description = "Policiale" },
-                new NoveltyType { ShortName = "Science", Description = "Del mundo de la Ciencia" }
+                new NoveltyType { ShortName = "Science", Description = "Ciencia" },
+                new NoveltyType { ShortName = "Education", Description = "Educación" }
                 );
 
         }

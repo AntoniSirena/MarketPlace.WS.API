@@ -100,10 +100,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/03/2020 00:54:26</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>10/03/2020 00:54:31</publishTime>
+      <publishTime>10/05/2020 18:11:58</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>10/03/2020 00:54:31</publishTime>
+      <publishTime>10/05/2020 18:11:58</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
       <publishTime>09/01/2020 10:59:14</publishTime>

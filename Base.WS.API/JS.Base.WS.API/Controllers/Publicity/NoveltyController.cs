@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
+using JS.Utilities;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -65,7 +65,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
 
         [HttpGet]
         [Route("GetNoveltyById")]
-        public async Task<NoveltyDto> GetNoveltyById(long Id)
+        public NoveltyDto GetNoveltyById(long Id)
         {
             var result = db.Novelties.Where(x => x.IsActive == true & x.Id == Id).Select(y => new NoveltyDto() {
                 Id = y.Id,
@@ -76,6 +76,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 NoveltyType = y.NoveltyType.Description,
                 Img = y.Img,
                 ImgPath = y.ImgPath,
+                ContenTypeShort = y.ContenTypeShort,
+                ContenTypeLong = y.ContenTypeLong,
                 StartDate = y.StartDate,
                 EndDate = y.EndDate,
                 IsPublic = y.IsPublic,
@@ -88,7 +90,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 DeletionTime = y.DeletionTime,
                 DeleterUserId = y.DeleterUserId,
             }).FirstOrDefault();
-            result.Img = await GetStrigBase64(result.ImgPath);
+            result.Img = string.Concat(result.ContenTypeLong, ',', JS_File.GetStrigBase64(result.ImgPath));
 
             return result;
         }
@@ -119,6 +121,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
 
             request.Img = string.Empty;
             request.ImgPath = string.Empty;
+            request.ContenTypeShort = contentType;
+            request.ContenTypeLong = arrayImgBase64[0];
             request.CreationTime = DateTime.Now;
             request.CreatorUserId = currentUserId;
             request.IsActive = true;
@@ -161,6 +165,10 @@ namespace JS.Base.WS.API.Controllers.Publicity
             string[] splitName2 = splitName1[1].Split(';');
             string contentType = splitName2[0];
 
+            string root = string.Empty;
+            string fileName = string.Empty;
+            string filePath = string.Empty;
+
             //Validate contentType
             if (!fileTypeAlloweds.Contains(contentType) & arrayImgBase64.Count() > 1)
             {
@@ -171,11 +179,26 @@ namespace JS.Base.WS.API.Controllers.Publicity
             }
 
             request.Img = string.Empty;
+            request.ContenTypeShort = contentType;
+            request.ContenTypeLong = arrayImgBase64[0];
             request.LastModificationTime = DateTime.Now;
             request.LastModifierUserId = currentUserId;
 
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
+
+            //Validate path
+            if (string.IsNullOrEmpty(request.ImgPath))
+            {
+                root = @"C:\Shared\Publicity\Novelties";
+                fileName = string.Concat("Novelty_img_", request.Id.ToString());
+                filePath = Path.Combine(root, fileName);
+                request.ImgPath = filePath;
+
+                var novelty = db.Novelties.Where(x => x.Id == request.Id).FirstOrDefault();
+                novelty.ImgPath = filePath;
+                db.SaveChanges();
+            }
 
             //Save img
             if (File.Exists(request.ImgPath))
@@ -206,8 +229,11 @@ namespace JS.Base.WS.API.Controllers.Publicity
             result.IsDeleted = true;
             result.DeletionTime = DateTime.Now;
             result.DeleterUserId = currentUserId;
+            db.SaveChanges();
 
-            return Ok();
+            response.Message = InternalResponseMessageGood.Message202;
+
+            return Ok(response);
         }
 
 
@@ -220,20 +246,6 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 ShortName = y.ShortName,
                 Description = y.Description,
             }).ToList();
-
-            return result;
-        }
-
-
-        private async Task<string> GetStrigBase64(string path)
-        {
-            string result = string.Empty;
-
-            if (!String.IsNullOrEmpty(path))
-            {
-                byte[] file = File.ReadAllBytes(path);
-                result = Convert.ToBase64String(file);
-            }
 
             return result;
         }

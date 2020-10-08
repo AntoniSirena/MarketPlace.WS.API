@@ -7,8 +7,8 @@
     <ProjectGuid>{29B76C64-BAE1-498A-B4E4-23B0676E1BEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JS.Utilities_</RootNamespace>
-    <AssemblyName>JS.Utilities_</AssemblyName>
+    <RootNamespace>JS.Utilities</RootNamespace>
+    <AssemblyName>JS.Utilities</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExecuteSP.cs" />
+    <Compile Include="JS_File.cs" />
     <Compile Include="JS_HttpRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />

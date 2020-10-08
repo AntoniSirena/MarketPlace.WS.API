@@ -18,6 +18,9 @@ namespace JS.Base.WS.API.Models.Publicity
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public bool IsPublic { get; set; }
+        public string ContenTypeShort { get; set; }
+        public string ContenTypeLong { get; set; }
+
 
         [ForeignKey("NoveltyTypeId")]
         public virtual NoveltyType NoveltyType { get; set; }

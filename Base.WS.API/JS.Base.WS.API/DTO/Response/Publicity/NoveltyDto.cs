@@ -19,6 +19,7 @@ namespace JS.Base.WS.API.DTO.Response.Publicity
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public bool IsPublic { get; set; }
-
+        public string ContenTypeShort { get; set; }
+        public string ContenTypeLong { get; set; }
     }
 }

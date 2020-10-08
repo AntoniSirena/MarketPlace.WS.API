@@ -12,6 +12,7 @@ namespace JS.Base.WS.API.DTO.Response.Publicity
         public string Description { get; set; }
         public string ImgBase64 { get; set; }
         public string ImgPath { get; set; }
-
+        public string ContenTypeShort { get; set; }
+        public string ContenTypeLong { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace JS.Utilities_
+namespace JS.Utilities
 {
     public static class Security
     {
