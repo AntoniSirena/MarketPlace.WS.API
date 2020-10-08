@@ -294,14 +294,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202010052347187_update nov.cs" />
-    <Compile Include="Migrations\202010052347187_update nov.Designer.cs">
-      <DependentUpon>202010052347187_update nov.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010052350182_update novel.cs" />
-    <Compile Include="Migrations\202010052350182_update novel.Designer.cs">
-      <DependentUpon>202010052350182_update novel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -481,14 +473,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010052347187_update nov.resx">
-      <DependentUpon>202010052347187_update nov.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010052350182_update novel.resx">
-      <DependentUpon>202010052350182_update novel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
