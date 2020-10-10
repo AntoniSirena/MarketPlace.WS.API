@@ -32,9 +32,10 @@ namespace JS.Base.WS.API.Migrations
 
             context.UserStatus.AddOrUpdate(
                 x => x.ShortName,
-                new UserStatus { ShortName = "Active", Description = "Activo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-success" },
-                new UserStatus { ShortName = "Inactive", Description = "Inactivo", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-danger" },
-                new UserStatus { ShortName = "PendingToActive", Description = "Pendiente de activar", IsActive = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-warning" }
+                new UserStatus { ShortName = "Active", Description = "Activo", IsActive = true, ShowToCustomer = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-success" },
+                new UserStatus { ShortName = "Inactive", Description = "Inactivo", IsActive = true, ShowToCustomer = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-danger" },
+                new UserStatus { ShortName = "PendingToActive", Description = "Pendiente de activar", IsActive = true, ShowToCustomer = true, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-warning" },
+                new UserStatus { ShortName = "PendingToChangePassword", Description = "Pendiente de cambiar contraseña", IsActive = true, ShowToCustomer = false, CreatorUserId = 1, CreationTime = DateTime.Now, Colour = "btn btn-primary" }
                 );
 
             int userStatusId = context.UserStatus.Where(x => x.ShortName == "Active").Select(x => x.Id).FirstOrDefault();

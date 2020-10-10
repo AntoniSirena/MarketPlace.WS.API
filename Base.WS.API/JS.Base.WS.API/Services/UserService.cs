@@ -18,7 +18,7 @@ namespace JS.Base.WS.API.Services
 
         public List<UserStatus> GetUserStatuses()
         {
-            var result = db.UserStatus.Select(x => new UserStatus
+            var result = db.UserStatus.Where(y => y.IsActive == true & y.ShowToCustomer == true).Select(x => new UserStatus
             {
                 Id = x.Id,
                 ShortName = x.ShortName,
@@ -132,7 +132,7 @@ namespace JS.Base.WS.API.Services
 
             if (isLogIn)
             {
-                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
+                var user = db.Users.Where(x => x.UserName == userName || x.EmailAddress == userName).FirstOrDefault();
                 user.LastLoginTime = DateTime.Now;
                 user.IsOnline = true;
 

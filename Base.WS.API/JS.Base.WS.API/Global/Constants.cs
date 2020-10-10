@@ -25,6 +25,7 @@ namespace JS.Base.WS.API.Global
             public const string Active = "Active";
             public const string Inactive = "Inactive";
             public const string PendingToActive = "PendingToActive";
+            public const string PendingToChangePassword = "PendingToChangePassword";
         }
 
         public static class RequestStatus
@@ -193,6 +194,8 @@ namespace JS.Base.WS.API.Global
             public static string FileTypeAllowed { get { return ConfigurationParameterService.GetParameter("FileTypeAllowed") ?? string.Empty; } }
 
             public static string ImgTypeAllowed { get { return ConfigurationParameterService.GetParameter("ImgTypeAllowed") ?? string.Empty; } }
+
+            public static string URL_ConfirmPassword { get { return ConfigurationParameterService.GetParameter("URL_ConfirmPassword") ?? string.Empty; } }
 
 
         }

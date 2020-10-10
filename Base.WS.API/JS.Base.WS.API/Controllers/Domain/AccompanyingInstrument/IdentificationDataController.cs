@@ -85,7 +85,7 @@ namespace JS.Base.WS.API.Controllers.Domain
                 Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestResult.Id.ToString(), " ha sido creado sastifactoriamente."),
             };
 
-            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            var responseAlert = AlertService.Alert.SendMail(requestAlert);
             #endregion
 
             return result;
@@ -359,7 +359,7 @@ namespace JS.Base.WS.API.Controllers.Domain
                 Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestId.ToString(), " ha sido completado sastifactoriamente."),
             };
 
-            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            var responseAlert = AlertService.Alert.SendMail(requestAlert);
             #endregion
 
             return Ok(response);
@@ -413,7 +413,7 @@ namespace JS.Base.WS.API.Controllers.Domain
                 Body = string.Format("{0}{1}{2}", "El Instrumento de Acomp. No. ", requestId.ToString(), " ha sido aprobado sastifactoriamente."),
             };
 
-            var responseAlert = AlertService.Alert.SendMail(requestAlert, "application/json", null);
+            var responseAlert = AlertService.Alert.SendMail(requestAlert);
             #endregion
 
             return Ok(response);

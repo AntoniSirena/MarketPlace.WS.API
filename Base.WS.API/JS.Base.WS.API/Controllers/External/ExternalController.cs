@@ -136,7 +136,7 @@ namespace JS.Base.WS.API.Controllers.External
         [Route("GetValueRegisterButton")]
         public IHttpActionResult GetValueRegisterButton()
         {
-            string result = Constants.ConfigurationParameter.EnableRegistrationButton;
+            string result = ConfigurationParameter.EnableRegistrationButton;
 
             return Ok(result);
         }

@@ -10,11 +10,11 @@ namespace JS.AlertService
     public static class Alert
     {
 
-        public static ClientResponse<bool> SendMail(Mail request, string contenType, Dictionary<string, string> headers)
+        public static ClientResponse<bool> SendMail(Mail request, string contenType = "application/json", Dictionary<string, string> headers = null)
         {
             var response = new ClientResponse<bool>();
 
-            string url = string.Format("{0}{1}", Constant.IPE.JSAlert, "alert/SendMail");
+            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "alert/SendMail");
 
             var requestAlert = new
             {

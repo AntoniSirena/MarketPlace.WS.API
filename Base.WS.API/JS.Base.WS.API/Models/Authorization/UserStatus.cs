@@ -14,5 +14,6 @@ namespace JS.Base.WS.API.Models.Authorization
         public string Description { get; set; }
         public string ShortName { get; set; }
         public string Colour { get; set; }
+        public bool ShowToCustomer { get; set; }
     }
 }
