@@ -209,6 +209,7 @@
     </Compile>
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\IServices\IAlertService.cs" />
@@ -269,7 +270,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DTO\Response\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

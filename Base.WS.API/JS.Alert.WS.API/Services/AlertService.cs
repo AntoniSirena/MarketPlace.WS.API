@@ -16,6 +16,9 @@ namespace JS.Alert.WS.API.Services
             bool response = false;
             string[] mails = request.MailAddresses.Split(',');
 
+            request.Body = request.Body.Replace("\\r\\n", "");
+            request.Body = request.Body.Replace("\"", "");
+
             try
             {
                 var fromAddress = new MailAddress(ConfigurationManager.AppSettings["MailAddress"], ConfigurationManager.AppSettings["MailName"]);

@@ -30,5 +30,15 @@ namespace JS.AlertService
             return response;
         }
 
+
+        public static string GetOperation(string request, string contenType = "application/json", Dictionary<string, string> headers = null)
+        {
+            string url = string.Format("{0}{1}{2}", Constant.IP.JSAlert, "alert/GetOperation?shortName=", request);
+
+            var wsResponse = JS_HttpRequest.Get(url, contenType, headers);
+
+            return wsResponse;
+        }
+
     }
 }

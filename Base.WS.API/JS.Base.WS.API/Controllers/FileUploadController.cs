@@ -39,7 +39,6 @@ namespace JS.Base.WS.API.Controllers
         [Route("UploadFile")]
         public async Task<IHttpActionResult> UploadFile()
         {
-            var ctx = HttpContext.Current;
             var root = ConfigurationParameter.FileDirectory;
             var provider = new MultipartFormDataStreamProvider(root);
 
@@ -93,23 +92,6 @@ namespace JS.Base.WS.API.Controllers
             result = Convert.ToBase64String(file);
 
             return Ok(result);
-        }
-
-
-        [HttpPost]
-        [Route("SaveFile")]
-        public async Task<IHttpActionResult> SaveFile(object image)
-        {
-            var filePath = Path.GetTempFileName();
-
-            
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-
-            }
-
-            return Ok();
         }
 
 

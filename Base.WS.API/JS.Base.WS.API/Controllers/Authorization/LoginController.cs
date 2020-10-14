@@ -293,11 +293,15 @@ namespace JS.Base.WS.API.Controllers.Authorization
             //Send alert
             #region Send alert
 
+            string operationBody = AlertService.Alert.GetOperation("ResetPassword");
+            operationBody = operationBody.Replace("@UserName", user.UserName);
+            operationBody = operationBody.Replace("@Link", url);
+
             var requestAlert = new AlertService.DTO.Request.Mail
             {
                 MailAddresses = request.EmailAddress,
-                Subject = "Cambio de contrasena",
-                Body = string.Concat("Favor confirmar contrasena ", url),
+                Subject = "Cambio de clave",
+                Body = operationBody,
             };
 
             var responseAlert = AlertService.Alert.SendMail(requestAlert);

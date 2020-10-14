@@ -29,9 +29,21 @@ namespace JS.Base.WS.API.Services
                 ContentType = contentType,
                 CreationTime = DateTime.Now,
                 CreatorUserId = currentUserId,
-                IsActive = true,            };
+                IsActive = true,
+            };
 
-            var result = db.FileDocuments.Add(file);
+
+            var validateFile = db.FileDocuments.Where(x => x.Name == name & x.IsActive == true).FirstOrDefault();
+
+            if (validateFile != null)
+            {
+                validateFile.LastModificationTime = DateTime.Now;
+                validateFile.LastModifierUserId = currentUserId;
+            }
+            else
+            {
+               db.FileDocuments.Add(file);
+            }
 
             db.SaveChanges();
         }

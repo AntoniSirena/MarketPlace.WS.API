@@ -42,7 +42,7 @@ namespace JS.Utilities
             return response;
         }
 
-        public static string Get(string url, Dictionary<string, object> headers, string contenType)
+        public static string Get(string url, string contenType, Dictionary<string, string> headers)
         {
             string response = string.Empty;
 
@@ -53,10 +53,15 @@ namespace JS.Utilities
             WebRequest request = WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = contenType;
-            foreach (var item in headers)
+
+            if (headers != null)
             {
-                request.Headers.Add(item.Key, item.Value.ToString());
+                foreach (var item in headers)
+                {
+                    request.Headers.Add(item.Key, item.Value.ToString());
+                }
             }
+
             request.ContentLength = _data.Length;
 
             WebResponse wsResponse = request.GetResponse();
