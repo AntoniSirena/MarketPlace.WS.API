@@ -94,22 +94,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2020 21:40:33</publishTime>
     </File>
     <File Include="bin/JS.AlertService.dll">
-      <publishTime>10/03/2020 00:54:26</publishTime>
+      <publishTime>11/04/2020 10:48:16</publishTime>
     </File>
     <File Include="bin/JS.AlertService.pdb">
-      <publishTime>10/03/2020 00:54:26</publishTime>
+      <publishTime>11/04/2020 10:48:16</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>10/05/2020 18:11:58</publishTime>
+      <publishTime>11/04/2020 10:48:20</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>10/05/2020 18:11:58</publishTime>
+      <publishTime>11/04/2020 10:48:20</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
-      <publishTime>09/01/2020 10:59:14</publishTime>
+      <publishTime>11/04/2020 10:48:16</publishTime>
     </File>
     <File Include="bin/JS.Utilities.pdb">
-      <publishTime>09/01/2020 10:59:14</publishTime>
+      <publishTime>11/04/2020 10:48:16</publishTime>
     </File>
     <File Include="bin/JS.Utilities_.dll">
       <publishTime>10/03/2020 00:54:25</publishTime>
@@ -163,7 +163,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/01/2018 05:47:46</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>09/09/2020 12:42:14</publishTime>
+      <publishTime>10/08/2020 12:04:32</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/07/2020 15:25:29</publishTime>
@@ -633,6 +633,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Xml.XPath.XDocument.dll">
       <publishTime>07/01/2018 05:47:46</publishTime>
     </File>
+    <File Include="bin/WebApiContrib.Formatting.JavaScriptSerializer.dll">
+      <publishTime>02/26/2013 06:22:24</publishTime>
+    </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/07/2020 15:25:29</publishTime>
     </File>
@@ -727,7 +730,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/07/2020 15:25:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/15/2020 18:30:27</publishTime>
+      <publishTime>11/04/2020 10:48:21</publishTime>
     </File>
   </ItemGroup>
 </Project>
