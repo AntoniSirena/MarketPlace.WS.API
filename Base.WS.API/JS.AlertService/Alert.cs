@@ -10,11 +10,11 @@ namespace JS.AlertService
     public static class Alert
     {
 
-        public static ClientResponse<bool> SendMail(Mail request, string contenType, Dictionary<string, string> headers)
+        public static ClientResponse<bool> SendMail(Mail request, string contenType = "application/json", Dictionary<string, string> headers = null)
         {
             var response = new ClientResponse<bool>();
 
-            string url = string.Format("{0}{1}", Constant.IPE.JSAlert, "alert/SendMail");
+            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "alert/SendMail");
 
             var requestAlert = new
             {
@@ -28,6 +28,16 @@ namespace JS.AlertService
             var wsResponse = JS_HttpRequest.Post(url, dataRequest, contenType, headers);
 
             return response;
+        }
+
+
+        public static string GetOperation(string request, string contenType = "application/json", Dictionary<string, string> headers = null)
+        {
+            string url = string.Format("{0}{1}{2}", Constant.IP.JSAlert, "alert/GetOperation?shortName=", request);
+
+            var wsResponse = JS_HttpRequest.Get(url, contenType, headers);
+
+            return wsResponse;
         }
 
     }

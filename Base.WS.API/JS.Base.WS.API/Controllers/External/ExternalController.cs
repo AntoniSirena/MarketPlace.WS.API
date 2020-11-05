@@ -16,6 +16,7 @@ using JS.Base.WS.API.Templates;
 using Newtonsoft.Json;
 using JS.Base.WS.API.Services;
 using static JS.Base.WS.API.Global.Constants;
+using JS.Base.WS.API.DTO.Response.Publicity;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -26,20 +27,20 @@ namespace JS.Base.WS.API.Controllers.External
         private MyDBcontext db;
         private UserRoleService UserRoleService;
         private UserService userService;
+        private Response response;
 
         public ExternalController()
         {
             db = new MyDBcontext();
             UserRoleService = new UserRoleService();
             userService = new UserService();
+            response = new Response();
         }
 
         [HttpPost]
         [Route("CreateUser")]
         public IHttpActionResult CreateUser(User user)
         {
-            Response response = new Response();
-
             //Validate if required securityCodeExternaRegister
             string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
             if (securityCodeExternaRegister.Equals("1"))
@@ -136,9 +137,34 @@ namespace JS.Base.WS.API.Controllers.External
         [Route("GetValueRegisterButton")]
         public IHttpActionResult GetValueRegisterButton()
         {
-            string result = Constants.ConfigurationParameter.EnableRegistrationButton;
+            string result = ConfigurationParameter.EnableRegistrationButton;
 
             return Ok(result);
         }
+
+
+        [HttpGet]
+        [Route("GetTemplate")]
+        public IHttpActionResult GetTemplate(string operation)
+        {
+            var result = new PortadaDto();
+            var template = db.Templates.Where(x => x.Operation == operation && x.IsActive == true && x.Enabled == true).FirstOrDefault();
+
+            if (template != null)
+            {
+                result.Body = template.Body == null ? "Información en proceso, para ser publicada" : template.Body;
+                response.Data = result;
+            }
+            else
+            {
+                response.Code = InternalResponseCodeError.Code318;
+                response.Message = InternalResponseCodeError.Message318;
+
+                return Ok(response);
+            }
+
+            return Ok(response);
+        }
+
     }
 }

@@ -140,6 +140,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
+                if (request.Password != currentUser.Password)
+                {
+                    request.Password = Utilities.Security.Encrypt_OneWay(request.Password);
+                }
+
                 currentUser.UserName = request.UserName;
                 currentUser.Password = request.Password;
                 currentUser.Name = request.Name;

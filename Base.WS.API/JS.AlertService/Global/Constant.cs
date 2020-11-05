@@ -8,7 +8,7 @@ namespace JS.AlertService.Global
 {
     public static class Constant
     {
-        public static class IPE
+        public static class IP
         {
             public const string JSAlert = "http://localhost:3002/api/";
         }

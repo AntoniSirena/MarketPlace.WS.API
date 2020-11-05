@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using JS.Alert.WS.API.Models;
+using System.Data.Entity;
 
 namespace JS.Alert.WS.API.DBContext
 {
@@ -8,6 +9,9 @@ namespace JS.Alert.WS.API.DBContext
         {
 
         }
+
+
+        public virtual DbSet<Operation> Operations { get; set; }
 
     }
 }

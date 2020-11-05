@@ -3,6 +3,7 @@ using JS.Alert.WS.API.DBContext;
 using System.Web.Http;
 using JS.Alert.WS.API.DTO.Request.Alert;
 using JS.Alert.WS.API.Services;
+using System.Linq;
 
 namespace JS.Alert.WS.API.Controllers.Alerts
 {
@@ -29,6 +30,16 @@ namespace JS.Alert.WS.API.Controllers.Alerts
             var result = alertService.SendMail(request);
 
             response.Data = result;
+
+            return response;
+        }
+
+
+        [HttpGet]
+        [Route("GetOperation")]
+        public string GetOperation(string shortName)
+        {
+            string response = db.Operations.Where(x => x.ShortName == shortName & x.IsEnabled == true & x.IsActive == true).Select(y => y.Body).FirstOrDefault();
 
             return response;
         }
