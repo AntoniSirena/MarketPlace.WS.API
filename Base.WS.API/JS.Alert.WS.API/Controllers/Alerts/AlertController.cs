@@ -35,6 +35,20 @@ namespace JS.Alert.WS.API.Controllers.Alerts
         }
 
 
+        [HttpPost]
+        [Route("SendSMS")]
+        public ClientResponse<bool> SendSMS(SMS request)
+        {
+            var response = new ClientResponse<bool>();
+
+            var result = alertService.SendSMS(request);
+
+            response.Data = result;
+
+            return response;
+        }
+
+
         [HttpGet]
         [Route("GetOperation")]
         public string GetOperation(string shortName)

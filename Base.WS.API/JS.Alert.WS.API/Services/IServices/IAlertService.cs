@@ -6,5 +6,6 @@ namespace JS.Alert.WS.API.Services.IServices
     interface IAlertService
     {
         bool SendMail(Mail request);
+        bool SendSMS(SMS request);
     }
 }

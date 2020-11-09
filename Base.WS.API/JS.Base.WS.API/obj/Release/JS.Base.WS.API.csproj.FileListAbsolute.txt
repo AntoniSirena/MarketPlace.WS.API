@@ -119,3 +119,5 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Utilities.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\WebApiContrib.Formatting.JavaScriptSerializer.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.updateusermodel.resources
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.csproj.GenerateResource.cache

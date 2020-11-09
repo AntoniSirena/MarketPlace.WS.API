@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Base;
+﻿using JS.AlertService.DTO.Request;
+using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO;
 using JS.Base.WS.API.DTO.Response.User;
@@ -15,6 +16,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Web.Http;
 
 namespace JS.Base.WS.API.Controllers.Authorization
@@ -59,6 +61,20 @@ namespace JS.Base.WS.API.Controllers.Authorization
         {
             UserResponse userResponse = new UserResponse();
 
+            string secondFactorAuthentication = Constants.ConfigurationParameter.SecondFactorAuthentication;
+            secondFactorAuthentication = secondFactorAuthentication.ToUpper();
+
+            string currentSecuryCode = string.Empty;
+            var currentUser = new Models.Authorization.User();
+
+            var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
+            var statusInactive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Inactive).FirstOrDefault();
+            var pendigToActive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToActive).FirstOrDefault();
+            var pendingToChangePassword = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToChangePassword).FirstOrDefault();
+
+            string encryptPassword = Utilities.Security.Encrypt_OneWay(user.Password);
+
+
             if (user == null)
             {
                 response.Code = "002";
@@ -67,17 +83,32 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 return Ok(response);
             }
 
-            var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
-            var statusInactive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Inactive).FirstOrDefault();
-            var pendigToActive = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToActive).FirstOrDefault();
-            var pendingToChangePassword = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToChangePassword).FirstOrDefault();
 
-            //Encrypt password
-            user.Password = Utilities.Security.Encrypt_OneWay(user.Password);
+            //Decrypt Token2FA
+            if (secondFactorAuthentication.Equals("TRUE") & (!string.IsNullOrEmpty(user.SecurityCode) & !string.IsNullOrEmpty(user.Token2AF)))
+            {
+                user.Token2AF = HttpUtility.UrlDecode(user.Token2AF);
+                string decryptToken2FA = Utilities.Security.Decrypt_TwoWay(user.Token2AF);
 
-            var currentUser = db.Users.Where(x => x.IsActive == true
-                              && (x.UserName == user.UserName || x.EmailAddress == user.UserName)
-                              && x.Password == user.Password).FirstOrDefault();
+                string[] arrayToken2AF = decryptToken2FA.Split(',');
+
+                user.UserName = arrayToken2AF[0];
+                user.Password = arrayToken2AF[1];
+                currentSecuryCode = arrayToken2AF[2];
+            }
+
+            if (!string.IsNullOrEmpty(user.Token2AF) & !string.IsNullOrEmpty(user.SecurityCode))
+            {
+                currentUser = db.Users.Where(x => x.IsActive == true
+                  && (x.UserName == user.UserName || x.EmailAddress == user.UserName)
+                  && x.Password == user.Password).FirstOrDefault();
+            }
+            else
+            {
+                currentUser = db.Users.Where(x => x.IsActive == true
+                  && (x.UserName == user.UserName || x.EmailAddress == user.UserName)
+                  && x.Password == encryptPassword).FirstOrDefault();
+            }
 
             if (currentUser == null)
             {
@@ -110,6 +141,118 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 return Ok(response);
             }
+
+
+            //Validate 2FA second factor authentication 
+            #region 2FA
+
+            if (secondFactorAuthentication.Equals("TRUE") & !currentUser.IsVisitorUser)
+            {
+                if (string.IsNullOrEmpty(user.SecurityCode) & string.IsNullOrEmpty(user.Token2AF))
+                {
+                    string url_SecondFactorAuthentication = Constants.ConfigurationParameter.URL_SecondFactorAuthentication;
+
+                    string securityCode = Utilities.Security.GenerateSecurityCode(6);
+
+                    string token2FA = string.Concat(user.UserName, ",", Utilities.Security.Encrypt_OneWay(user.Password), ",", securityCode);
+                    token2FA = Utilities.Security.Encrypt_TwoWay(token2FA);
+
+                    string url2FA = string.Concat(url_SecondFactorAuthentication, "/", HttpUtility.UrlEncode(token2FA));
+
+                    string sendEmailAlert2FA = Constants.ConfigurationParameter.SendEmailAlert_SecondFactorAuthentication;
+                    sendEmailAlert2FA = sendEmailAlert2FA.ToUpper();
+
+                    string sendSMSAlert2FA = Constants.ConfigurationParameter.SendSMSAlert_SecondFactorAuthentication;
+                    sendSMSAlert2FA = sendSMSAlert2FA.ToUpper();
+
+
+                    //Send Email Alert
+                    #region Send Email Alert
+
+                    string confirmation_Operation = AlertService.Alert.GetOperation("AccessConfirmation");
+                    confirmation_Operation = confirmation_Operation.Replace("@UserName", currentUser.UserName);
+                    confirmation_Operation = confirmation_Operation.Replace("@SecurityCode", securityCode);
+
+                    var requestEmail = new Mail();
+                    var responseEmail = new AlertService.Base.ClientResponse<bool>();
+
+                    if (sendEmailAlert2FA.Equals("TRUE"))
+                    {
+                        //Validate email
+                        if (string.IsNullOrEmpty(currentUser.EmailAddress))
+                        {
+                            response.Code = "005";
+                            response.Message = string.Concat("Estimado ", currentUser.UserName, " usted no tiene un correo registrado, para recibir notificaciones");
+
+                            return Ok(response);
+                        }
+
+                        requestEmail.MailAddresses = currentUser.EmailAddress;
+                        requestEmail.Subject = "Confirmar acceso";
+                        requestEmail.Body = confirmation_Operation;
+                        
+                        responseEmail = AlertService.Alert.SendMail(requestEmail);
+                    }
+                    #endregion
+
+
+                    //Send SMS Alert
+                    #region Send SMS Alert
+
+                    var requestSMS = new SMS();
+                    var responseSMS = new AlertService.Base.ClientResponse<bool>();
+
+                    if (sendSMSAlert2FA.Equals("TRUE"))
+                    {
+                        //Validate phoneNumber
+                        if (string.IsNullOrEmpty(currentUser.PhoneNumber) & !responseEmail.Data)
+                        {
+                            response.Code = "005";
+                            response.Message = string.Concat("Estimado ", currentUser.UserName, " usted no tiene un número movil registrado, para recibir notificaciones");
+
+                            return Ok(response);
+                        }
+
+                        if (!string.IsNullOrEmpty(currentUser.PhoneNumber))
+                        {
+                            requestSMS.Body = string.Concat("Saludo estimado ", currentUser.UserName, " su codigo de seguridad es: ", securityCode);
+                            requestSMS.PhoneNumber = currentUser.PhoneNumber;
+
+                            responseSMS = AlertService.Alert.SendSMS(requestSMS);
+                        }
+                    };
+                    #endregion
+
+
+                    if (responseEmail.Data  || responseSMS.Data)
+                    {
+                        return Content(HttpStatusCode.Redirect, url2FA);
+                    }
+                    else
+                    {
+                        response.Code = "005";
+                        response.Message = "No se encontró un canal disponible, para enviar el código de seguridad";
+                        return Ok(response);
+                    }
+
+                }
+
+
+                if (!string.IsNullOrEmpty(user.SecurityCode) & !string.IsNullOrEmpty(user.Token2AF))
+                {
+                    if (!user.SecurityCode.Equals(currentSecuryCode))
+                    {
+                        response.Code = "005";
+                        response.Message = "Código invalido, favor verifique el mismo ó vuelva a iniciar sesión";
+
+                        return Ok(response);
+                    }
+                }
+
+            }
+
+            #endregion
+
 
             if (currentUser != null)
             {
@@ -285,7 +428,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             }
 
             string parameters = string.Concat(user.Id.ToString(), ",", user.UserName);
-            string url = string.Concat(ip, "api/login/confirmPassword?userName=", Utilities.Security.Encrypt_TwoWay(parameters));
+            string url = string.Concat(ip, "api/login/confirmPassword?userName=", HttpUtility.UrlEncode(Utilities.Security.Encrypt_TwoWay(parameters)));
 
             user.StatusId = pendingToChangePassword.Id;
             db.SaveChanges();
@@ -317,7 +460,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("confirmPassword")]
         public IHttpActionResult ConfirmPassword(string userName)
         {
-
             string urlConfirmPassword = string.Concat(Constants.ConfigurationParameter.URL_ConfirmPassword, "/", userName);
 
             return Redirect(urlConfirmPassword);
@@ -328,6 +470,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("updatePassword")]
         public IHttpActionResult UpdatePassword(UserRequest request)
         {
+            request.UserName = HttpUtility.UrlDecode(request.UserName);
             request.UserName = Utilities.Security.Decrypt_TwoWay(request.UserName);
 
             var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
@@ -362,6 +505,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
             public string UserName { get; set; }
             public string Password { get; set; }
             public string EmailAddress { get; set; }
+            public string SecurityCode { get; set; }
+            public string Token2AF { get; set; }
         }
     }
 }

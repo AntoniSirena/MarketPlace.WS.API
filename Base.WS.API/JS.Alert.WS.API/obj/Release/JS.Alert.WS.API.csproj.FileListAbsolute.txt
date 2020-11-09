@@ -105,3 +105,10 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\obj\Release\JS.Alert.WS.API.pdb
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\JS.Utilities.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Twilio.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Twilio.xml

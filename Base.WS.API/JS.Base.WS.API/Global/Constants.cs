@@ -197,6 +197,14 @@ namespace JS.Base.WS.API.Global
 
             public static string URL_ConfirmPassword { get { return ConfigurationParameterService.GetParameter("URL_ConfirmPassword") ?? string.Empty; } }
 
+            public static string SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SecondFactorAuthentication") ?? "false"; } }
+
+            public static string URL_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("URL_SecondFactorAuthentication") ?? string.Empty; } }
+
+            public static string SendEmailAlert_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SendEmailAlert_SecondFactorAuthentication") ?? "false"; } }
+
+            public static string SendSMSAlert_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SendSMSAlert_SecondFactorAuthentication") ?? "false"; } }
+
 
         }
 

@@ -62,9 +62,12 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.ApplicationInsights.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Tokens.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Newtonsoft.Json.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Net.Http.Formatting.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.Cors.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.Helpers.dll
@@ -77,11 +80,14 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.Deployment.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.Razor.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Twilio.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\WebGrease.dll
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\JS.Utilities.pdb
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\EntityFramework.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\EntityFramework.SqlServer.xml
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.IdentityModel.Tokens.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Newtonsoft.Json.xml
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.IdentityModel.Tokens.Jwt.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Net.Http.Formatting.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.Http.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.Http.Cors.xml
@@ -93,6 +99,7 @@ C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\J
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.Deployment.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Web.WebPages.Razor.xml
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Twilio.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Antlr3.Runtime.pdb
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Alert.WS.API\bin\Microsoft.AspNet.TelemetryCorrelation.xml

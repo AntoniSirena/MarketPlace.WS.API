@@ -5,6 +5,9 @@ using JS.Alert.WS.API.Services.IServices;
 using System.Net.Mail;
 using System.Net;
 using System.Configuration;
+using Twilio.Exceptions;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace JS.Alert.WS.API.Services
 {
@@ -62,6 +65,40 @@ namespace JS.Alert.WS.API.Services
             }
 
             return response;
+        }
+
+
+        public bool SendSMS(SMS request)
+        {
+            bool result = false;
+
+            string accountSid = ConfigurationManager.AppSettings["AccountSid"];
+            string authToken = ConfigurationManager.AppSettings["AuthToken"];
+            string phoneNumber = ConfigurationManager.AppSettings["PhoneNumber"];
+
+            request.PhoneNumber = request.PhoneNumber.Replace("-", "");
+            request.PhoneNumber = request.PhoneNumber.Replace(" ", "");
+            request.PhoneNumber = request.PhoneNumber.Replace("(", "");
+            request.PhoneNumber = request.PhoneNumber.Replace(")", "");
+
+            try
+            {
+                TwilioClient.Init(accountSid, authToken);
+
+                var message = MessageResource.Create(
+                    body: request.Body,
+                    from: new Twilio.Types.PhoneNumber(phoneNumber),
+                    to: new Twilio.Types.PhoneNumber(request.PhoneNumber)
+                );
+
+                result = true;
+            }
+            catch (TwilioException ex)
+            {
+                throw (ex);
+            }
+
+            return result;
         }
 
     }

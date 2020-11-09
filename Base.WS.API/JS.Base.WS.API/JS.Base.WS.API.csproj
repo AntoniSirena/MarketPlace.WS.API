@@ -297,6 +297,10 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202011052347253_update user model.cs" />
+    <Compile Include="Migrations\202011052347253_update user model.Designer.cs">
+      <DependentUpon>202011052347253_update user model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
     <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
@@ -466,6 +470,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011052347253_update user model.resx">
+      <DependentUpon>202011052347253_update user model.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JS.AlertService\JS.AlertService.csproj">

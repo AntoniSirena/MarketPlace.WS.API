@@ -26,6 +26,31 @@ namespace JS.AlertService
             string dataRequest = JsonConvert.SerializeObject(requestAlert);
 
             var wsResponse = JS_HttpRequest.Post(url, dataRequest, contenType, headers);
+            dynamic _wsResponse = JsonConvert.DeserializeObject<dynamic>(wsResponse);
+
+            response.Data = _wsResponse.Data;
+
+            return response;
+        }
+
+        public static ClientResponse<bool> SendSMS(SMS request, string contenType = "application/json", Dictionary<string, string> headers = null)
+        {
+            var response = new ClientResponse<bool>();
+
+            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "alert/SendSMS");
+
+            var requestAlert = new
+            {
+                Body = request.Body,
+                PhoneNumber = request.PhoneNumber,
+            };
+
+            string dataRequest = JsonConvert.SerializeObject(requestAlert);
+
+            var wsResponse = JS_HttpRequest.Post(url, dataRequest, contenType, headers);
+            dynamic _wsResponse = JsonConvert.DeserializeObject<dynamic>(wsResponse);
+
+            response.Data = _wsResponse.Data;
 
             return response;
         }

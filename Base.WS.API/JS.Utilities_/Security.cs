@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace JS.Utilities
 {
@@ -95,6 +96,16 @@ namespace JS.Utilities
             }
         }
 
+
+        public static string GenerateSecurityCode(int codeLength)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+
+            string result = new string(Enumerable.Repeat(chars, codeLength).Select(s => s[random.Next(s.Length)]).ToArray());
+
+            return result;
+        }
 
 
         private static byte[] HmacSHA256(String data, String key)

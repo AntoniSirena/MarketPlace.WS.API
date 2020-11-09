@@ -46,6 +46,7 @@
     <Compile Include="Alert.cs" />
     <Compile Include="Base\ClientResponse.cs" />
     <Compile Include="DTO\Request\Mail.cs" />
+    <Compile Include="DTO\Request\SMS.cs" />
     <Compile Include="Global\Constant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
