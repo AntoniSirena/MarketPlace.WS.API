@@ -1,11 +1,13 @@
 ﻿using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.User;
-using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using JS.Base.WS.API.DTO.SP_Parameter;
+using System.Data.SqlClient;
+using JS.Utilities;
+using JS.Base.WS.API.Global;
 
 namespace JS.Base.WS.API.Services
 {
@@ -16,7 +18,7 @@ namespace JS.Base.WS.API.Services
 
         public List<UserStatus> GetUserStatuses()
         {
-            var result = db.UserStatus.Select(x => new UserStatus
+            var result = db.UserStatus.Where(y => y.IsActive == true & y.ShowToCustomer == true).Select(x => new UserStatus
             {
                 Id = x.Id,
                 ShortName = x.ShortName,
@@ -124,13 +126,13 @@ namespace JS.Base.WS.API.Services
             return result;
         }
 
-        public bool UpdateUserLogInOut(bool isLogIn, string userName)
+        public bool UpdateUserLogInOut(bool isLogIn, string userName, long userId)
         {
             bool result = true;
 
             if (isLogIn)
             {
-                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
+                var user = db.Users.Where(x => x.UserName == userName || x.EmailAddress == userName).FirstOrDefault();
                 user.LastLoginTime = DateTime.Now;
                 user.IsOnline = true;
 
@@ -138,14 +140,42 @@ namespace JS.Base.WS.API.Services
             }
             else
             {
-                var user = db.Users.Where(x => x.UserName == userName).FirstOrDefault();
-                user.LastLoginTimeEnd = DateTime.Now;
-                user.IsOnline = false;
+                var user = db.Users.Where(x => x.Id == userId).FirstOrDefault();
+
+                if (user != null)
+                {
+                    user.LastLoginTimeEnd = DateTime.Now;
+                    user.IsOnline = false;
+                }
 
                 db.SaveChanges();
             }
 
             return result;
+        }
+
+        public ValidateUserName ValidateUserName(string userName)
+        {
+            try
+            {
+                var response = ExecuteSP.ExecuteStoredProcedure<ValidateUserName>("SP_ValidateUserName", Constants.ConnectionStrings.JSBase,
+                    new SqlParameter[]{
+                    new SqlParameter("@UserName", userName),
+                    },
+                    reader =>
+                    {
+                        return new ValidateUserName
+                        {
+                            UserNameExist = (bool)reader["UserNameExist"],                           
+                        };
+                    });
+
+                return response.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al validar el nombre de usuario" + ex.Message);
+            }
         }
     }
 }

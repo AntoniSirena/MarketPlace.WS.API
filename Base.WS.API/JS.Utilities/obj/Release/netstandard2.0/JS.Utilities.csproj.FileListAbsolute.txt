@@ -1,0 +1,9 @@
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\bin\Release\netstandard2.0\JS.Utilities.deps.json
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\bin\Release\netstandard2.0\JS.Utilities.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\bin\Release\netstandard2.0\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.csprojAssemblyReference.cache
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.AssemblyInfoInputs.cache
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.AssemblyInfo.cs
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.dll
+C:\Users\TEMP\Documents\Clients\Dist.Edu.1007\Dist.Edu.1007.WS.API\Base.WS.API\JS.Utilities\obj\Release\netstandard2.0\JS.Utilities.pdb

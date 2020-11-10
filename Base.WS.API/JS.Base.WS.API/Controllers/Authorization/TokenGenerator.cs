@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Global;
+﻿using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.Global;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
         /// JWT Token generator class using "secret-key"
         /// more info: https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
         /// </summary>
-         
+        /// 
+
+        private static MyDBcontext db = new MyDBcontext();
+
+
         public static string GenerateTokenJwt(string username)
         {
             // appsetting for Token JWT
@@ -23,9 +28,20 @@ namespace JS.Base.WS.API.Controllers.Authorization
             var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
             var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
             string expireTime = Constants.ConfigurationParameter.LoginTime;
+            var expireTimeUserVisitador = ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"];
 
             var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            string[] payLoad = username.Split(',');
+            long currentUserId = Convert.ToInt64(payLoad[1]);
+
+            var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
+
+            if (currentUser.IsVisitorUser)
+            {
+                expireTime = expireTimeUserVisitador;
+            }
 
             // create a claimsIdentity
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) });

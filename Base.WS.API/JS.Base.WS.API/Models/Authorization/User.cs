@@ -27,6 +27,8 @@ namespace JS.Base.WS.API.Models.Authorization
         public bool IsOnline { get; set; }
         public string DiviceIP { get; set; }
         public string Code { get; set; }
+        public bool IsVisitorUser { get; set; }
+        public string PhoneNumber { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual UserStatus UserStatus { get; set; }

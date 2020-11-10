@@ -140,6 +140,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
+                if (request.Password != currentUser.Password)
+                {
+                    request.Password = Utilities.Security.Encrypt_OneWay(request.Password);
+                }
+
                 currentUser.UserName = request.UserName;
                 currentUser.Password = request.Password;
                 currentUser.Name = request.Name;
@@ -233,6 +238,36 @@ namespace JS.Base.WS.API.Controllers.Authorization
             response.Message = "Petición no procesada";
             return Ok(response);
         }
+
+
+        [HttpPut]
+        [Route("UpdateProfileImagen")]
+        public IHttpActionResult UpdateProfileImagen([FromBody]string request)
+        {
+            var response = new Response(); 
+
+            try
+            {
+                if (!string.IsNullOrEmpty(request))
+                {
+                    string[] arrayImgBase64 = request.Split(',');
+                    request = arrayImgBase64[arrayImgBase64.Length - 1];
+
+                    var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
+                    currentUser.Image = request;
+                    db.SaveChanges();
+
+                    response.Message = "Imagen actualizada con exito";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+            return Ok(response);
+        }
+
 
 
 

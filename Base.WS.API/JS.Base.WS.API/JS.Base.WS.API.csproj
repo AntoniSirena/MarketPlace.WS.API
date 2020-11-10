@@ -52,6 +52,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Hangfire.Core, Version=1.7.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.7.17\lib\net46\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.7.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.7.17\lib\net45\Hangfire.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.6.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
@@ -61,6 +70,18 @@
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.6.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -97,9 +118,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
@@ -133,6 +151,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiContrib.Formatting.JavaScriptSerializer, Version=0.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebApiContrib.Formatting.JavaScriptSerializer.0.9.4.0\lib\net40\WebApiContrib.Formatting.JavaScriptSerializer.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -208,6 +229,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Base\ClientResponse.cs" />
     <Compile Include="Base\GenericRepository.cs" />
     <Compile Include="Base\IBase\IGenericRepository.cs" />
     <Compile Include="Base\Audit.cs" />
@@ -223,7 +245,18 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ConfigurationParameterController.cs" />
+    <Compile Include="Controllers\Domain\AreaController.cs" />
+    <Compile Include="Controllers\Domain\DistrictController.cs" />
+    <Compile Include="Controllers\Domain\DocentController.cs" />
+    <Compile Include="Controllers\Domain\EducativeCenterController.cs" />
+    <Compile Include="Controllers\Domain\GradeController.cs" />
+    <Compile Include="Controllers\Domain\AccompanyingInstrument\IdentificationDataController.cs" />
+    <Compile Include="Controllers\Domain\IndicatorController.cs" />
+    <Compile Include="Controllers\Domain\RegionalController.cs" />
+    <Compile Include="Controllers\Domain\TandaController.cs" />
+    <Compile Include="Controllers\Domain\VisitController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Permission\UserRoleController.cs" />
@@ -231,14 +264,41 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\Permission\RoleController.cs" />
     <Compile Include="Controllers\PersonTypeController.cs" />
+    <Compile Include="Controllers\Publicity\NoveltyController.cs" />
+    <Compile Include="Controllers\Publicity\PortadaController.cs" />
+    <Compile Include="Controllers\Publicity\TemplateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBContext\MyDBcontext.cs" />
-    <Compile Include="DTO\Common\DocumentType.cs" />
+    <Compile Include="DTO\Common\CurrentUserInfoDto.cs" />
+    <Compile Include="DTO\Common\DocumentTypeDto.cs" />
     <Compile Include="DTO\Common\GenderDto.cs" />
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
+    <Compile Include="DTO\Request\Domain\RequestFlowAI\ResearchSummaryDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\AccompanyInstrumentDetailsDto.cs" />
+    <Compile Include="DTO\Response\Domain\AreaDto.cs" />
+    <Compile Include="DTO\Response\Domain\CommentsRevisedDocumentDto.cs" />
+    <Compile Include="DTO\Response\Domain\DescriptionObservationSupportProvidedDto.cs" />
+    <Compile Include="DTO\Response\Domain\DocentDto.cs" />
+    <Compile Include="DTO\Response\Domain\DistrictDto.cs" />
+    <Compile Include="DTO\Response\Domain\DocentDetailsDto.cs" />
+    <Compile Include="DTO\Response\Domain\EducativeCenterDto.cs" />
+    <Compile Include="DTO\Response\Domain\GradeDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstRequestDto.cs" />
+    <Compile Include="DTO\Response\Domain\IndicatorDto.cs" />
+    <Compile Include="DTO\Response\Domain\RegionalDto.cs" />
+    <Compile Include="DTO\Response\Domain\SuggestionsAgreementDto.cs" />
+    <Compile Include="DTO\Response\Domain\TandaDto.cs" />
+    <Compile Include="DTO\Response\Domain\AccompInstDetail\_VariableDetailsDto.cs" />
+    <Compile Include="DTO\Response\Domain\VariableDto.cs" />
+    <Compile Include="DTO\Response\Domain\VisitDto.cs" />
+    <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltyDto.cs" />
+    <Compile Include="DTO\Response\Publicity\NoveltyTypeDto.cs" />
+    <Compile Include="DTO\Response\Publicity\PortadaDto.cs" />
     <Compile Include="DTO\Response\User\UserDetails.cs" />
     <Compile Include="DTO\Response\User\UserRoleDto.cs" />
     <Compile Include="DTO\Response\User\UserStatus.cs" />
@@ -252,21 +312,61 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Helpers\Security.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.cs" />
-    <Compile Include="Migrations\202005280437193_creation personType.Designer.cs">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
+    <Compile Include="Migrations\202011052347253_update user model.cs" />
+    <Compile Include="Migrations\202011052347253_update user model.Designer.cs">
+      <DependentUpon>202011052347253_update user model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.cs" />
-    <Compile Include="Migrations\202005310457075_update user add PersonTypeId.Designer.cs">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Domain\AccompanyingInstrument\AccompanyingInstrumentRequest.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimate.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ClassroomClimateDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocument.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDef.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\CommentsRevisedDocumentsDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomain.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ContentDomainDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\DescriptionObservationSupportProvided.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcess.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\EvaluationProcessDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\IdentificationData.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResource.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PedagogicalResourceDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Planning.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\PlanningDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPractice.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\ReflectionPracticeDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMother.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\RelationFatherMotherDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivity.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\StrategyActivityDetail.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\SuggestionsAgreement.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\Variable.cs" />
+    <Compile Include="Models\Domain\AccompanyingInstrument\VariableDetail.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIApproved.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICancelad.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAICompleted.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInObservation.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\RequestFlowAIInProcess.cs" />
+    <Compile Include="Models\Domain\RequestFlowAI\ResearchSummary.cs" />
+    <Compile Include="Models\FileDocument\FileDocument.cs" />
+    <Compile Include="Models\Publicity\Novelty.cs" />
+    <Compile Include="Models\Publicity\NoveltyType.cs" />
+    <Compile Include="Models\Publicity\Template.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authorization\User.cs" />
     <Compile Include="Models\Authorization\UserStatus.cs" />
     <Compile Include="Models\ConfigurationParameter.cs" />
     <Compile Include="Models\Configuration\SystemConfiguration.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\Domain\Area.cs" />
+    <Compile Include="Models\Domain\District.cs" />
+    <Compile Include="Models\Domain\Docent.cs" />
+    <Compile Include="Models\Domain\EducativeCenter.cs" />
+    <Compile Include="Models\Domain\Grade.cs" />
+    <Compile Include="Models\Domain\Indicator.cs" />
+    <Compile Include="Models\Domain\Regional.cs" />
+    <Compile Include="Models\Domain\RequestStatus.cs" />
+    <Compile Include="Models\Domain\Tanda.cs" />
+    <Compile Include="Models\Domain\Visit.cs" />
     <Compile Include="Models\Permission\Entity.cs" />
     <Compile Include="Models\Permission\EntityAction.cs" />
     <Compile Include="Models\Permission\Role.cs" />
@@ -280,8 +380,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
+    <Compile Include="Services\Domain\DocentService.cs" />
+    <Compile Include="Services\Domain\AccompanyingInstrumentService.cs" />
+    <Compile Include="Services\FileDocument.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
+    <Compile Include="Services\IServices\IDomain\IDocentService.cs" />
+    <Compile Include="Services\IServices\IDomain\IAccompanyingInstrumentService.cs" />
+    <Compile Include="Services\IServices\IFileDocument.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
     <Compile Include="Services\IServices\IUserRoleService.cs" />
@@ -290,6 +396,7 @@
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Templates\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +432,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\JS.BaseWS.API.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -348,10 +456,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Domain\" />
-    <Folder Include="DTO\Request\Domain\" />
-    <Folder Include="DTO\Response\Domain\" />
-    <Folder Include="Models\Domain\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -383,12 +488,19 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005280437193_creation personType.resx">
-      <DependentUpon>202005280437193_creation personType.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011052347253_update user model.resx">
+      <DependentUpon>202011052347253_update user model.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005310457075_update user add PersonTypeId.resx">
-      <DependentUpon>202005310457075_update user add PersonTypeId.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JS.AlertService\JS.AlertService.csproj">
+      <Project>{fe8206ec-b5a7-41c5-9006-18bd3e184e37}</Project>
+      <Name>JS.AlertService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JS.Utilities_\JS.Utilities.csproj">
+      <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
+      <Name>JS.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
