@@ -205,6 +205,8 @@ namespace JS.Base.WS.API.Global
 
             public static string SendSMSAlert_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SendSMSAlert_SecondFactorAuthentication") ?? "false"; } }
 
+            public static string SecurityCode_ExpirationTime_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SecurityCode_ExpirationTime_SecondFactorAuthentication") ?? "2"; } }
+
 
         }
 

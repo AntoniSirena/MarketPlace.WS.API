@@ -74,6 +74,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             string encryptPassword = Utilities.Security.Encrypt_OneWay(user.Password);
 
+            var date_2FA_ExpirationTime = new DateTime();
+
 
             if (user == null)
             {
@@ -95,6 +97,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 user.UserName = arrayToken2AF[0];
                 user.Password = arrayToken2AF[1];
                 currentSecuryCode = arrayToken2AF[2];
+                date_2FA_ExpirationTime = Convert.ToDateTime(arrayToken2AF[3]);
             }
 
             if (!string.IsNullOrEmpty(user.Token2AF) & !string.IsNullOrEmpty(user.SecurityCode))
@@ -154,7 +157,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                     string securityCode = Utilities.Security.GenerateSecurityCode(6);
 
-                    string token2FA = string.Concat(user.UserName, ",", Utilities.Security.Encrypt_OneWay(user.Password), ",", securityCode);
+                    int securityCode_ExpirationTime = Convert.ToInt32(Constants.ConfigurationParameter.SecurityCode_ExpirationTime_SecondFactorAuthentication);
+
+                    string token2FA = string.Concat(user.UserName, ",", Utilities.Security.Encrypt_OneWay(user.Password), ",", securityCode, ",", DateTime.Now.AddMinutes(securityCode_ExpirationTime).ToString() );
                     token2FA = Utilities.Security.Encrypt_TwoWay(token2FA);
 
                     string url2FA = string.Concat(url_SecondFactorAuthentication, "/", HttpUtility.UrlEncode(token2FA));
@@ -172,6 +177,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     string confirmation_Operation = AlertService.Alert.GetOperation("AccessConfirmation");
                     confirmation_Operation = confirmation_Operation.Replace("@UserName", currentUser.UserName);
                     confirmation_Operation = confirmation_Operation.Replace("@SecurityCode", securityCode);
+                    confirmation_Operation = confirmation_Operation.Replace("@Time", securityCode_ExpirationTime.ToString());
 
                     var requestEmail = new Mail();
                     var responseEmail = new AlertService.Base.ClientResponse<bool>();
@@ -215,7 +221,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                         if (!string.IsNullOrEmpty(currentUser.PhoneNumber))
                         {
-                            requestSMS.Body = string.Concat("Saludo estimado ", currentUser.UserName, " su codigo de seguridad es: ", securityCode);
+                            requestSMS.Body = string.Concat("Saludo estimado ", currentUser.UserName, " su codigo de seguridad es: ", securityCode, " y expira en ", securityCode_ExpirationTime.ToString(),  " minutos.");
                             requestSMS.PhoneNumber = currentUser.PhoneNumber;
 
                             responseSMS = AlertService.Alert.SendSMS(requestSMS);
@@ -244,6 +250,14 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     {
                         response.Code = "005";
                         response.Message = "Código invalido, favor verifique el mismo ó vuelva a iniciar sesión";
+
+                        return Ok(response);
+                    }
+
+                    if (DateTime.Now > date_2FA_ExpirationTime)
+                    {
+                        response.Code = "005";
+                        response.Message = string.Concat("Estimado ", currentUser.UserName, " su código ha expirado, favor vuelva a iniciar sesión");
 
                         return Ok(response);
                     }

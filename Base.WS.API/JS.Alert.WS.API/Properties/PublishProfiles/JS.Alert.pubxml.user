@@ -82,10 +82,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2020 12:42:13</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>11/09/2020 01:20:13</publishTime>
+      <publishTime>11/09/2020 14:08:44</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>11/09/2020 01:20:13</publishTime>
+      <publishTime>11/09/2020 14:08:44</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>09/09/2020 12:42:13</publishTime>
@@ -94,10 +94,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2020 12:42:13</publishTime>
     </File>
     <File Include="bin/JS.Alert.WS.API.dll">
-      <publishTime>11/09/2020 01:20:07</publishTime>
+      <publishTime>11/09/2020 14:08:37</publishTime>
     </File>
     <File Include="bin/JS.Alert.WS.API.pdb">
-      <publishTime>11/09/2020 01:20:07</publishTime>
+      <publishTime>11/09/2020 14:08:37</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
       <publishTime>11/08/2020 22:02:16</publishTime>
@@ -388,7 +388,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2020 12:42:13</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>11/09/2020 01:20:08</publishTime>
+      <publishTime>11/09/2020 14:08:38</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>09/09/2020 12:42:13</publishTime>
@@ -433,7 +433,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/09/2020 12:42:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/05/2020 20:31:38</publishTime>
+      <publishTime>11/09/2020 14:08:37</publishTime>
     </File>
   </ItemGroup>
 </Project>
