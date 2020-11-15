@@ -336,22 +336,12 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         RoleDescription = userRole.Role.Description,
                         RoleShortName = userRole.Role.ShortName,
                         RoleParent = userRole.Role.Parent,
+                        IsVisitorUser = currentUser.IsVisitorUser,
 
                         //Permissions
                         CanEdit = userRole.Role.CanEdit,
                         CanDelete = userRole.Role.CanDelete,
                         CanCreate = userRole.Role.CanCreate,
-
-                        //Accompainen Instrument
-                        CanCreateRequest = userRole.Role.CanCreateRequest,
-                        CanEditRequest = userRole.Role.CanEditRequest,
-                        CanViewActionsButton = userRole.Role.CanViewActionsButton,
-                        CanApprove = userRole.Role.CanApprove,
-                        CanSendToObservation = userRole.Role.CanSendToObservation,
-                        CanProcess = userRole.Role.CanProcess,
-                        CanCancel = userRole.Role.CanCancel,
-
-                        IsVisitorUser = currentUser.IsVisitorUser,
                     },
                     Person = currentUser.Person == null ? new Person() : new Person
                     {

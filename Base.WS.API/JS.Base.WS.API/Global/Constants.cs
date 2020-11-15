@@ -152,7 +152,7 @@ namespace JS.Base.WS.API.Global
             public const string Message317 = "";
 
             public const string Code318 = "318";
-            public const string Message318 = "No existe una plantilla para la operación seleccionada";
+            public const string Message318 = "No existe una operación definida";
 
             public const string Code319 = "319";
             public const string Message319 = "Existe un archivo registrado con el mismo nombre del archivo que intenta subir, favor cambiar el mismo";
@@ -190,6 +190,8 @@ namespace JS.Base.WS.API.Global
             public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
 
             public static string FileDirectory  { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
+
+            public static string PublicityFileDirectory { get { return ConfigurationParameterService.GetParameter("PublicityFileDirectory") ?? @"C:\SharedGuerra\Publicity\Novelties"; } }
 
             public static string FileTypeAllowed { get { return ConfigurationParameterService.GetParameter("FileTypeAllowed") ?? string.Empty; } }
 

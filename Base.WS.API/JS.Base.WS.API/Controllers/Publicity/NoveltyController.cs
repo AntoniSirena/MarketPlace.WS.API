@@ -102,7 +102,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
         {
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
-            string root = @"C:\Shared\Publicity\Novelties";
+            string root = ConfigurationParameter.PublicityFileDirectory;
             string[] arrayImgBase64 = request.Img.Split(',');
             string imgBase64 = arrayImgBase64[arrayImgBase64.Length - 1];
 
@@ -190,7 +190,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
             //Validate path
             if (string.IsNullOrEmpty(request.ImgPath))
             {
-                root = @"C:\Shared\Publicity\Novelties";
+                root = ConfigurationParameter.PublicityFileDirectory;
                 fileName = string.Concat("Novelty_img_", request.Id.ToString());
                 filePath = Path.Combine(root, fileName);
                 request.ImgPath = filePath;
