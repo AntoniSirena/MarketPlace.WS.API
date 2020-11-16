@@ -9,6 +9,9 @@ using System.Web.Http;
 
 namespace JS.Base.WS.API.Controllers.Domain
 {
+
+    [RoutePrefix("api/companyRegister")]
+    [Authorize]
     public class CompanyRegisterController : GenericApiController<CompanyRegister>
     {
     }

@@ -266,6 +266,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
@@ -285,6 +286,10 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202011151600079_update ompany.cs" />
+    <Compile Include="Migrations\202011151600079_update ompany.Designer.cs">
+      <DependentUpon>202011151600079_update ompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
@@ -383,7 +388,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DTO\Request\Domain\" />
-    <Folder Include="DTO\Response\Domain\" />
     <Folder Include="obj\" />
     <Folder Include="Services\Domain\" />
     <Folder Include="Services\IServices\IDomain\" />
@@ -426,6 +430,11 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011151600079_update ompany.resx">
+      <DependentUpon>202011151600079_update ompany.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

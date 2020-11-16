@@ -17,6 +17,7 @@ namespace JS.Base.WS.API.Models.Domain
         public string PhoneNumber { get; set; }
         public string Schedule { get; set; }
         public int CategoryId { get; set; }
+        public bool IsReviewed { get; set; }
 
 
         [ForeignKey("CategoryId")]

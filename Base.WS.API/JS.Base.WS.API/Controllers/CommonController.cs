@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
+using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
@@ -61,7 +62,22 @@ namespace JS.Base.WS.API.Controllers
             return Ok(result);
         }
 
-        
+
+        [HttpGet]
+        [Route("GetCompanyCategories")]
+        public IHttpActionResult GetCompanyCategories()
+        {
+            var result = db.CompanyCategories.Where(x => x.IsActive == true).Select(y => new CompanyCategoryDTO
+            {
+                Id = y.Id,
+                Description = y.Description,
+                ShortName = y.ShortName
+            }).ToList();
+
+            return Ok(result);
+        }
+
+
 
         #region Models
 
