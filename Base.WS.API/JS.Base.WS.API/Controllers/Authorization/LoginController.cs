@@ -444,7 +444,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             operationBody = operationBody.Replace("@UserName", user.UserName);
             operationBody = operationBody.Replace("@Link", url);
 
-            var requestAlert = new AlertService.DTO.Request.Mail
+            var requestAlert = new Mail
             {
                 MailAddresses = request.EmailAddress,
                 Subject = "Cambio de clave",

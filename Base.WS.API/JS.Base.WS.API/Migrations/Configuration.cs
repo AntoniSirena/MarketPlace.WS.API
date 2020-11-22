@@ -49,6 +49,12 @@ namespace JS.Base.WS.API.Migrations
 
             long userId = context.Users.Where(x => x.UserName == "system").Select(x => x.Id).FirstOrDefault();
 
+            context.UserTypes.AddOrUpdate(
+                x => x.ShortName,
+                new UserType { ShortName = "Person", Description = "Persona", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new UserType { ShortName = "Enterprise", Description = "Empresa", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
             context.Genders.AddOrUpdate(
                 x => x.Description,
                 new Gender { ShortName = "M", Description = "Maculino", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
@@ -86,7 +92,8 @@ namespace JS.Base.WS.API.Migrations
                 new CompanyCategory { ShortName = "CellPhoneComputer", Description = "Celulares y Computadoras", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Pharmacy", Description = "Farmacia", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "HardwareStoreReplacement", Description = "Ferretería y Repuesto", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "BeautyStyle", Description = "Salones, Uñas y Barberías", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+                new CompanyCategory { ShortName = "BeautyStyle", Description = "Salones, Uñas y Barberías", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Workshops", Description = "Taller: (Mecánica, Soldadura & Herrería, Puertas & Ventanas y Tapicería)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
                 );
         }
     }

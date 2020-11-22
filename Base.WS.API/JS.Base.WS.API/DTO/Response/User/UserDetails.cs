@@ -12,6 +12,8 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string Name { get; set; }
         public string Surname { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Type { get; set; }
         public string Image { get; set; }
         public DateTime? LastLoginTime { get; set; }
         public DateTime? LastLoginTimeEnd { get; set; }
@@ -28,6 +30,8 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string Name { get; set; }
         public string Surname { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Type { get; set; }
         public string Image { get; set; }
         public string Status { get; set; }
         public string StatusColor { get; set; }

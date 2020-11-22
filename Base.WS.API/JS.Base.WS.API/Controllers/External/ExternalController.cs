@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using JS.Base.WS.API.Services;
 using static JS.Base.WS.API.Global.Constants;
 using JS.Base.WS.API.DTO.Response.Publicity;
+using System.Text.RegularExpressions;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -89,7 +90,11 @@ namespace JS.Base.WS.API.Controllers.External
                 return Ok(response);
             }
 
-            string StatusExternalUser = Constants.ConfigurationParameter.StatusExternalUser;
+            //Clear PhoneNumber
+            Regex re = new Regex("[;\\\\/:*?\"<>|&' ._-]");
+            user.PhoneNumber = re.Replace(user.PhoneNumber, "");
+
+            string StatusExternalUser = ConfigurationParameter.StatusExternalUser;
             var CurrentStatus = db.UserStatus.Where(x => x.ShortName == StatusExternalUser).FirstOrDefault();
 
             var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();

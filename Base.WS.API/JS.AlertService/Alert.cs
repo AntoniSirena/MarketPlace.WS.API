@@ -14,7 +14,7 @@ namespace JS.AlertService
         {
             var response = new ClientResponse<bool>();
 
-            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "alert/SendMail");
+            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "api/alert/SendMail");
 
             var requestAlert = new
             {
@@ -37,7 +37,7 @@ namespace JS.AlertService
         {
             var response = new ClientResponse<bool>();
 
-            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "alert/SendSMS");
+            string url = string.Format("{0}{1}", Constant.IP.JSAlert, "api/alert/SendSMS");
 
             var requestAlert = new
             {
@@ -58,7 +58,7 @@ namespace JS.AlertService
 
         public static string GetOperation(string request, string contenType = "application/json", Dictionary<string, string> headers = null)
         {
-            string url = string.Format("{0}{1}{2}", Constant.IP.JSAlert, "alert/GetOperation?shortName=", request);
+            string url = string.Format("{0}{1}{2}", Constant.IP.JSAlert, "api/alert/GetOperation?shortName=", request);
 
             var wsResponse = JS_HttpRequest.Get(url, contenType, headers);
 

@@ -29,12 +29,16 @@ namespace JS.Base.WS.API.Models.Authorization
         public string Code { get; set; }
         public bool IsVisitorUser { get; set; }
         public string PhoneNumber { get; set; }
+        public int UserTypeId { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual UserStatus UserStatus { get; set; }
 
         [ForeignKey("PersonId")]
         public virtual Person Person { get; set; }
-     
+
+        [ForeignKey("UserTypeId")]
+        public virtual UserType UserType { get; set; }
+
     }
 }

@@ -76,6 +76,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     Id = x.Id,
                     UserName = x.UserName,
                     EmailAddress = x.EmailAddress,
+                    PhoneNumber = x.PhoneNumber,
+                    Type = x.UserType.Description,
                     Name = x.Name,
                     Surname = x.Surname,
                     Status = x.UserStatus.Description,

@@ -286,10 +286,15 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202011151600079_update ompany.cs" />
-    <Compile Include="Migrations\202011151600079_update ompany.Designer.cs">
-      <DependentUpon>202011151600079_update ompany.cs</DependentUpon>
+    <Compile Include="Migrations\202011221551196_add User Type.cs" />
+    <Compile Include="Migrations\202011221551196_add User Type.Designer.cs">
+      <DependentUpon>202011221551196_add User Type.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011221554378_update User.cs" />
+    <Compile Include="Migrations\202011221554378_update User.Designer.cs">
+      <DependentUpon>202011221554378_update User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
@@ -432,8 +437,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011151600079_update ompany.resx">
-      <DependentUpon>202011151600079_update ompany.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011221551196_add User Type.resx">
+      <DependentUpon>202011221551196_add User Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011221554378_update User.resx">
+      <DependentUpon>202011221554378_update User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

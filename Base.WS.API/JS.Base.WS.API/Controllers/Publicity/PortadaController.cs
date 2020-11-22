@@ -75,6 +75,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                     ImgPath = y.ImgPath,
                     ContenTypeShort = y.ContenTypeShort,
                     ContenTypeLong = y.ContenTypeLong,
+                    StartDate = y.StartDate,
+                    EndDate = y.EndDate,
 
                 }).OrderByDescending(x => x.Id).ToList();
             }
@@ -88,6 +90,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                     ImgPath = y.ImgPath,
                     ContenTypeShort = y.ContenTypeShort,
                     ContenTypeLong = y.ContenTypeLong,
+                    StartDate = y.StartDate,
+                    EndDate = y.EndDate,
 
                 }).OrderByDescending(x => x.Id).ToList();
             }

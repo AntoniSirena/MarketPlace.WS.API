@@ -28,6 +28,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<LocatorType> LocatorTypes { get; set; }
         public virtual DbSet<Locator> Locators { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
         public virtual DbSet<UserStatus> UserStatus { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }

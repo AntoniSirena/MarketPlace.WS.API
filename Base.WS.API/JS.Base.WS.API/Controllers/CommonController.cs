@@ -81,26 +81,6 @@ namespace JS.Base.WS.API.Controllers
 
         #region Models
 
-        public class InfoCurrentUser
-        {
-            public string UserName { get; set; }
-            public string Password { get; set; }
-            public string Name { get; set; }
-            public string SurName { get; set; }
-            public string EmailAddress { get; set; }
-        }
-
-        public class InfoCurrentPerson
-        {
-            public string FirstName { get; set; }
-            public string SecondName { get; set; }
-            public string SurName { get; set; }
-            public string SecondSurname { get; set; }
-            public string BirthDate { get; set; }
-            public string FullName { get; set; }
-            public int GenderId { get; set; }
-        }
-
         #endregion
 
     }

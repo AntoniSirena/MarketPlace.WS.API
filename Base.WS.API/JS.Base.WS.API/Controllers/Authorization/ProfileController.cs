@@ -8,6 +8,7 @@ using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 
 namespace JS.Base.WS.API.Controllers.Authorization
@@ -66,6 +67,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 Name = x.Name,
                 SurName = x.Surname,
                 EmailAddress = x.EmailAddress,
+                PhoneNumber = x.PhoneNumber,
                 Image = x.Image
             }).FirstOrDefault();
 
@@ -145,11 +147,16 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     request.Password = Utilities.Security.Encrypt_OneWay(request.Password);
                 }
 
+                //Clear PhoneNumber
+                Regex re = new Regex("[;\\\\/:*?\"<>|&' ._-]");
+                request.PhoneNumber = re.Replace(request.PhoneNumber, "");
+
                 currentUser.UserName = request.UserName;
                 currentUser.Password = request.Password;
                 currentUser.Name = request.Name;
                 currentUser.Surname = request.SurName;
                 currentUser.EmailAddress = request.EmailAddress;
+                currentUser.PhoneNumber = request.PhoneNumber;
                 currentUser.LastModificationTime = DateTime.Now;
                 currentUser.LastModifierUserId = currentUserId;
                 db.SaveChanges();
@@ -280,6 +287,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             public string Name { get; set; }
             public string SurName { get; set; }
             public string EmailAddress { get; set; }
+            public string PhoneNumber { get; set; }
         }
 
         public class InfoCurrentPerson

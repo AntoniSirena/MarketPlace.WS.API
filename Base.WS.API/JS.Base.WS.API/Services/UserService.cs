@@ -44,6 +44,8 @@ namespace JS.Base.WS.API.Services
                     Name = x.Name,
                     Surname = x.Surname,
                     EmailAddress = x.EmailAddress,
+                    PhoneNumber = x.PhoneNumber,
+                    Type = x.UserType.Description,
                     Image = x.Image,
                     LastLoginTime = x.LastLoginTime,
                     LastLoginTimeEnd = x.LastLoginTimeEnd,
@@ -86,6 +88,8 @@ namespace JS.Base.WS.API.Services
                     Name = user.Name,
                     Surname = user.Surname,
                     EmailAddress = user.EmailAddress,
+                    PhoneNumber = x.PhoneNumber,
+                    Type = x.UserType.Description,
                     Image = user.Image,
                     LastLoginTime = user.LastLoginTime,
                     LastLoginTimeEnd = user.LastLoginTimeEnd,
@@ -119,9 +123,6 @@ namespace JS.Base.WS.API.Services
 
                 };
             }
-
-
-
 
             return result;
         }
