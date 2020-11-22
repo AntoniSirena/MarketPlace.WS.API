@@ -112,16 +112,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:35:09</publishTime>
     </File>
     <File Include="bin/JS.AlertService.dll">
-      <publishTime>11/21/2020 04:19:11</publishTime>
+      <publishTime>11/22/2020 13:23:36</publishTime>
     </File>
     <File Include="bin/JS.AlertService.pdb">
-      <publishTime>11/21/2020 04:19:11</publishTime>
+      <publishTime>11/22/2020 13:23:36</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>11/21/2020 04:19:15</publishTime>
+      <publishTime>11/22/2020 13:23:41</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>11/21/2020 04:19:15</publishTime>
+      <publishTime>11/22/2020 13:23:41</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
       <publishTime>11/17/2020 08:40:13</publishTime>
@@ -775,7 +775,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:23:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/17/2020 08:41:03</publishTime>
+      <publishTime>11/22/2020 13:23:41</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@ using JS.Base.WS.API.Services;
 using static JS.Base.WS.API.Global.Constants;
 using JS.Base.WS.API.DTO.Response.Publicity;
 using System.Text.RegularExpressions;
+using JS.Base.WS.API.DTO.Common;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -170,6 +171,20 @@ namespace JS.Base.WS.API.Controllers.External
             }
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetUserTypes")]
+        public IHttpActionResult GetUserTypes()
+        {
+            var result = db.UserTypes.Where(x => x.IsActive == true && x.ShowToCustomer == true).Select(y => new UserTypeDTO
+            {
+                Id = y.Id,
+                Description = y.Description,
+                ShortName = y.ShortName
+            }).ToList();
+
+            return Ok(result);
         }
 
     }

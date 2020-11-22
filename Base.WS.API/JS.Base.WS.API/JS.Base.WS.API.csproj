@@ -265,6 +265,7 @@
     <Compile Include="DTO\Common\GenderDto.cs" />
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
+    <Compile Include="DTO\Common\UserTypeDTO.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
@@ -286,14 +287,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202011221551196_add User Type.cs" />
-    <Compile Include="Migrations\202011221551196_add User Type.Designer.cs">
-      <DependentUpon>202011221551196_add User Type.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011221554378_update User.cs" />
-    <Compile Include="Migrations\202011221554378_update User.Designer.cs">
-      <DependentUpon>202011221554378_update User.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
@@ -435,14 +428,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011221551196_add User Type.resx">
-      <DependentUpon>202011221551196_add User Type.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011221554378_update User.resx">
-      <DependentUpon>202011221554378_update User.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

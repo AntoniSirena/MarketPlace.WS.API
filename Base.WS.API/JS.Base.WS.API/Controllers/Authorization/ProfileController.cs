@@ -64,10 +64,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 UserName = x.UserName,
                 Password = x.Password,
-                Name = x.Name,
-                SurName = x.Surname,
-                EmailAddress = x.EmailAddress,
-                PhoneNumber = x.PhoneNumber,
+                Name = !string.IsNullOrEmpty(x.Name) ? x.Name : string.Empty,
+                SurName = !string.IsNullOrEmpty(x.Surname) ? x.Surname : string.Empty,
+                EmailAddress = !string.IsNullOrEmpty(x.EmailAddress) ? x.EmailAddress : string.Empty,
+                PhoneNumber = !string.IsNullOrEmpty(x.PhoneNumber) ? x.PhoneNumber : string.Empty,
                 Image = x.Image
             }).FirstOrDefault();
 

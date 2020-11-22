@@ -35,6 +35,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         public override IHttpActionResult Create(dynamic entity)
         {
+            string currentPassword = entity["Password"];
+            entity["Password"] = Utilities.Security.Encrypt_OneWay(currentPassword);
+
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
 
             var ValidateUser = db.Database.SqlQuery<ValidateUserName>(
