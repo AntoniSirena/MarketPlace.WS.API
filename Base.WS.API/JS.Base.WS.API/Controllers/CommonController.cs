@@ -3,6 +3,8 @@ using JS.Base.WS.API.DTO.Common;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Helpers;
+using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Web.Http;
 
@@ -69,7 +71,7 @@ namespace JS.Base.WS.API.Controllers
                 Id = y.Id,
                 Description = y.Description,
                 ShortName = y.ShortName
-            }).ToList();
+            }).OrderBy(x => x.Description).ToList();
 
             return Ok(result);
         }
@@ -87,6 +89,18 @@ namespace JS.Base.WS.API.Controllers
             }).ToList();
 
             return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("GetConfigurationParameter")]
+        public IHttpActionResult GetConfigurationParameter(string name)
+        {
+            var result = db.ConfigurationParameters.Where(x => x.Name == name && x.Enabled == true).Select(y => y.Value).FirstOrDefault();
+
+            var response = JsonConvert.DeserializeObject<Object>(result);
+
+            return Ok(response);
         }
 
 

@@ -89,11 +89,11 @@ namespace JS.Base.WS.API.Migrations
                 x => x.ShortName,
                 new CompanyCategory { ShortName = "Food", Description = "Comida", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "ProvisionsMerchant", Description = "Comerciante y Detallista de Provisione", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "CellPhoneComputer", Description = "Celulares y Computadoras", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Technology", Description = "Tecnología: (Computadora, Sistema, Seguridad y Celular)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Pharmacy", Description = "Farmacia", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "HardwareStoreReplacement", Description = "Ferretería y Repuesto", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "BeautyStyle", Description = "Salones, Uñas y Barberías", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "Workshops", Description = "Taller: (Mecánica, Soldadura & Herrería, Puertas & Ventanas y Tapicería)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+                new CompanyCategory { ShortName = "BeautyStyle", Description = "Salon, Uña y Barberí", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Workshops", Description = "Taller: (Mecánica, Soldadura & Herrería, Puerta & Ventana y Tapicería)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
                 );
         }
     }

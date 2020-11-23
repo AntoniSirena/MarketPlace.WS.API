@@ -367,7 +367,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
                 if (menuTemplate != null)
                 {
-                    profile.User.MenuTemplate = JsonConvert.DeserializeObject<Object>(menuTemplate); ;
+                    profile.User.MenuTemplate = JsonConvert.DeserializeObject<Object>(menuTemplate);
                 }
 
                 userResponse.Profile = profile;
