@@ -120,17 +120,15 @@ namespace JS.Base.WS.API.Global
             public const string Code320 = "320";
             public const string Message320 = "";
 
-            public const string Code321 = "321";
-            public const string Message321 = "Los detalles no fuerón encontrados, favor contactar al centro de soporte";
-
-            public const string Code322 = "322";
-            public const string Message322 = "Debes insertar el resumen de la investigación para poder continuar";
-
             public const string Code323 = "323";
             public const string Message323 = "El tipo de documento que intenta subir es desconocido";
 
             public const string Code324 = "324";
             public const string Message324 = "El tipo de imagen que intenta subir es desconocido";
+
+            public const string Code325 = "311";
+            public const string Message325 = "Estimado usuario la empresa ya se encuentra registrada";
+
         }
 
         public static class ConfigurationParameter
