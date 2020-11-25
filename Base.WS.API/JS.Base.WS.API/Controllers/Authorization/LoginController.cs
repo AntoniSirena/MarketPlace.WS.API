@@ -361,11 +361,21 @@ namespace JS.Base.WS.API.Controllers.Authorization
                               .Where(x => x.UserId == currentUser.Id)
                               .FirstOrDefault();
 
-                string menuTemplate = db.Roles.Where(x => x.ShortName == _userRole.Role.Parent && x.Enabled == true)
-                               .Select(x => x.MenuTemplate)
-                               .FirstOrDefault();
+                var currentRole = db.Roles.Where(x => x.ShortName == _userRole.Role.Parent && x.Enabled == true).FirstOrDefault();
 
-                if (menuTemplate != null)
+                string menuTemplate = string.Empty;
+
+                if (currentUser.UserType.ShortName.Equals(Constants.UserTypes.Person))
+                {
+                    menuTemplate = currentRole.MenuTemplate;
+                }
+
+                if (currentUser.UserType.ShortName.Equals(Constants.UserTypes.Enterprise))
+                {
+                    menuTemplate = currentRole.EnterpriseMenuTemplate;
+                }
+
+                if (!string.IsNullOrEmpty(menuTemplate))
                 {
                     profile.User.MenuTemplate = JsonConvert.DeserializeObject<Object>(menuTemplate);
                 }

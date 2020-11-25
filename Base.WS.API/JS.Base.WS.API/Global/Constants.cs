@@ -28,45 +28,17 @@ namespace JS.Base.WS.API.Global
             public const string PendingToChangePassword = "PendingToChangePassword";
         }
 
-        public static class RequestStatus
-        {
-            public const string InProcess = "InProcess";
-            public const string Completed = "Completed";
-            public const string PendingToApprove = "PendingToApprove";
-            public const string Approved = "Approved";
-            public const string Cancelad = "Cancelad";
-            public const string InObservation = "InObservation";
-
-        }
-
-        public static class Areas
-        {
-            public const string Pending = "Pendiente";
-        }
-
-        public static class Indicators
-        {
-            public const string IndicadorInicial = "IndicadorInicial";
-            public const string IndicadorPendingLabel = "Pendiente";
-        }
-
-
-        public static class Varibels
-        {
-            public const string A = "A";
-            public const string B = "B";
-            public const string C = "C";
-            public const string D = "D";
-            public const string E = "E";
-            public const string F = "F";
-            public const string G = "G";
-            public const string H = "H";
-        }
 
         public static class Genders
         {
             public const string Maculino = "Maculino";
             public const string Femenino = "Femenino";
+        }
+
+        public static class UserTypes
+        {
+            public const string Person = "Person";
+            public const string Enterprise = "Enterprise";
         }
 
         public static class InternalResponseMessageGood
@@ -80,18 +52,6 @@ namespace JS.Base.WS.API.Global
             public const string Message203 = "Registros actualizados con éxito";
 
             public const string Message204 = "Registros eliminados con éxito";
-
-            public const string Message205 = "Formulario completado con éxito";
-
-            public const string Message206 = "Formulario aprobado con éxito";
-
-            public const string Message207 = "Formulario enviado a observación con éxito";
-
-            public const string Message208 = "Formulario cancelado con éxito";
-
-            public const string Message209 = "Formulario marcado en proceso con éxito";
-
-            public const string Message210 = "Resumen guardado con éxito";
 
         }
 

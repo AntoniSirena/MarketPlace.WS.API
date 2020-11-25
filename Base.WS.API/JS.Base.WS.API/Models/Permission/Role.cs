@@ -15,6 +15,7 @@ namespace JS.Base.WS.API.Models.Permission
         public string Description { get; set; }
         public string ShortName { get; set; }
         public string MenuTemplate { get; set; }
+        public string EnterpriseMenuTemplate { get; set; }
         public string Parent { get; set; }
         public bool Enabled { get; set; }
         public string Code { get; set; }
