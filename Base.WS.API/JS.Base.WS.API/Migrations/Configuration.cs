@@ -102,7 +102,8 @@ namespace JS.Base.WS.API.Migrations
                 new CompanyCategory { ShortName = "Lawyer", Description = "Abogado", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Store", Description = "Tienda", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Accounting", Description = "Contabilidad", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "GraphicDesign", Description = "Diseño: (Gráfico, de Moda y más)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+                new CompanyCategory { ShortName = "GraphicDesign", Description = "Diseño: (Gráfico, de Moda y más)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Nursery", Description = "Vivero", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
                 );
         }
     }

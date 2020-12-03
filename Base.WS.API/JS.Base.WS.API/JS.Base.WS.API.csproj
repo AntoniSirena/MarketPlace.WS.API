@@ -283,10 +283,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202011250536279_add model Enterprise.cs" />
-    <Compile Include="Migrations\202011250536279_add model Enterprise.Designer.cs">
-      <DependentUpon>202011250536279_add model Enterprise.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
@@ -429,11 +425,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011250536279_add model Enterprise.resx">
-      <DependentUpon>202011250536279_add model Enterprise.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

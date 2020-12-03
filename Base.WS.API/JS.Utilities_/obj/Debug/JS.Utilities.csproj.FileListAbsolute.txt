@@ -15,3 +15,4 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\o
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csprojAssemblyReference.cache

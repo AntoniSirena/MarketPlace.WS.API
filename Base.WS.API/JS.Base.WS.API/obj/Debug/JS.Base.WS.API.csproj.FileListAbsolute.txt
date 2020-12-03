@@ -495,8 +495,6 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\System.IO.Compression.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\roslyn\VBCSCompiler.exe
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.addmodelEnterprise.resources
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\ApplicationInsights.config
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\JS.Base.WS.API.dll.config
