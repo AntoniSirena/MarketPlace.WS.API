@@ -76,7 +76,7 @@ namespace JS.Base.WS.API.Migrations
                 new NoveltyType { ShortName = "Sporty", Description = "Deporte" },
                 new NoveltyType { ShortName = "Politics", Description = "Política" },
                 new NoveltyType { ShortName = "Show", Description = "Espectáculo" },
-                new NoveltyType { ShortName = "Unusual", Description = "Insólita" },
+                new NoveltyType { ShortName = "Social", Description = "Social" },
                 new NoveltyType { ShortName = "Economy", Description = "Economía" },
                 new NoveltyType { ShortName = "Art", Description = "Arte" },
                 new NoveltyType { ShortName = "Police", Description = "Policiale" },

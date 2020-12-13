@@ -1,4 +1,5 @@
-﻿using JS.Base.WS.API.Services;
+﻿using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.Services;
 using System.Configuration;
 
 namespace JS.Base.WS.API.Global
@@ -126,7 +127,7 @@ namespace JS.Base.WS.API.Global
             public const string Code324 = "324";
             public const string Message324 = "El tipo de imagen que intenta subir es desconocido";
 
-            public const string Code325 = "311";
+            public const string Code325 = "325";
             public const string Message325 = "Estimado usuario la empresa ya se encuentra registrada";
 
         }
@@ -137,7 +138,7 @@ namespace JS.Base.WS.API.Global
 
             public static string StatusExternalUser { get { return ConfigurationParameterService.GetParameter("StatusExternalUser") ?? UserStatuses.PendingToActive; } }
 
-            public static string LoginTime { get { return ConfigurationParameterService.GetParameter("LoginTime")?? "5"; } }
+            public static string LoginTime { get { return ConfigurationParameterService.GetParameter("LoginTime") ?? "5"; } }
 
             public static string RoleExternalUser { get { return ConfigurationParameterService.GetParameter("RoleExternalUser") ?? "Client"; } }
 
@@ -147,7 +148,7 @@ namespace JS.Base.WS.API.Global
 
             public static string ViewAllAccompanyingInstrumentRequests_ByRoles { get { return ConfigurationParameterService.GetParameter("ViewAllAccompanyingInstrumentRequests_ByRoles") ?? ","; } }
 
-            public static string FileDirectory  { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
+            public static string FileDirectory { get { return ConfigurationParameterService.GetParameter("FileDirectory") ?? @"C:\Shared\File"; } }
 
             public static string PublicityFileDirectory { get { return ConfigurationParameterService.GetParameter("PublicityFileDirectory") ?? @"C:\SharedGuerra\Publicity\Novelties"; } }
 
@@ -167,6 +168,9 @@ namespace JS.Base.WS.API.Global
 
             public static string SecurityCode_ExpirationTime_SecondFactorAuthentication { get { return ConfigurationParameterService.GetParameter("SecurityCode_ExpirationTime_SecondFactorAuthentication") ?? "2"; } }
 
+            public static string AllowViewAllEnterprisesByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllEnterprisesByRoles") ?? "SuperAdmin,Admin"; } }
+
+            public static string EnterpriseImgDirectory { get { return ConfigurationParameterService.GetParameter("EnterpriseImgDirectory") ?? @"C:\SharedGuerra\Enterprise\Images"; } }
 
         }
 

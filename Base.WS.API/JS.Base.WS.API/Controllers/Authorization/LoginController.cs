@@ -339,9 +339,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         IsVisitorUser = currentUser.IsVisitorUser,
 
                         //Permissions
+
+                        //Crud
                         CanEdit = userRole.Role.CanEdit,
                         CanDelete = userRole.Role.CanDelete,
                         CanCreate = userRole.Role.CanCreate,
+
+                        //Enterprise
+                        CanCreateEnterprise = userRole.Role.CanCreateEnterprise,
+                        CanEditEnterprise = userRole.Role.CanEditEnterprise,
+                        CanDeleteEnterprise = userRole.Role.CanDeleteEnterprise,
+
                     },
                     Person = currentUser.Person == null ? new Person() : new Person
                     {

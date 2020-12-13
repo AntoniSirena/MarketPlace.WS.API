@@ -59,9 +59,12 @@ namespace JS.Base.WS.API.Controllers
                 return Ok(response);
             }
 
-            if (isMain.Equals("True"))
+            if (!string.IsNullOrEmpty(isMain))
             {
-                updateLocatorIsMainFalse = LocatorService.updateLocatorIsMainFalse();
+                if (isMain.Equals("True"))
+                {
+                    updateLocatorIsMainFalse = LocatorService.updateLocatorIsMainFalse();
+                }
             }
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());

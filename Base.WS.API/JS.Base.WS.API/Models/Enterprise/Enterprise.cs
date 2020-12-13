@@ -24,9 +24,12 @@ namespace JS.Base.WS.API.Models.Enterprise
         public string Sigla { get; set; }
         public string Slogan { get; set; }
         public string WorkSchedule { get; set; }
+        public string Image { get; set; }
         public string ImagePath { get; set; }
         public string ImageContenTypeShort { get; set; }
         public string ImageContenTypeLong { get; set; }
+        public bool AvailableOnlineAppointment { get; set; }
+        public int ServiceTime { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

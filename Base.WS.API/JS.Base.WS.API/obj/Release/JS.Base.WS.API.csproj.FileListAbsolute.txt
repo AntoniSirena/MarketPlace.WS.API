@@ -248,4 +248,6 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.pdb
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.csproj.GenerateResource.cache
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.addmodelEnterprise.resources
+C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.updateenterprise.resources
+C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.updatemodelenterprise.resources
+C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Release\JS.Base.WS.API.Migrations.updatemodelrole.resources
