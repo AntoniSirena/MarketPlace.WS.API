@@ -283,18 +283,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202012060503331_update enterprise.cs" />
-    <Compile Include="Migrations\202012060503331_update enterprise.Designer.cs">
-      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012122018363_update model enterprise.cs" />
-    <Compile Include="Migrations\202012122018363_update model enterprise.Designer.cs">
-      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012122106285_update model role.cs" />
-    <Compile Include="Migrations\202012122106285_update model role.Designer.cs">
-      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
@@ -437,17 +425,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012060503331_update enterprise.resx">
-      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012122018363_update model enterprise.resx">
-      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012122106285_update model role.resx">
-      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

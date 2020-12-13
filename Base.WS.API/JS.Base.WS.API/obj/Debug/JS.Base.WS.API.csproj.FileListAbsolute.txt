@@ -610,11 +610,7 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Web.xml
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updateenterprise.resources
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.pdb
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updatemodelenterprise.resources
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updatemodelrole.resources

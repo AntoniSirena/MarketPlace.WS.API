@@ -36,6 +36,13 @@ namespace JS.Base.WS.API.Global
             public const string Femenino = "Femenino";
         }
 
+        public static class DocumentTypes
+        {
+            public const string Cédula = "Cédula";
+            public const string Pasaporte = "Pasaporte";
+            public const string RNC = "RNC";
+        }
+
         public static class UserTypes
         {
             public const string Person = "Person";
