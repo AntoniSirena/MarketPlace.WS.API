@@ -76,7 +76,7 @@ namespace JS.Base.WS.API.Migrations
                 new NoveltyType { ShortName = "Sporty", Description = "Deporte" },
                 new NoveltyType { ShortName = "Politics", Description = "Política" },
                 new NoveltyType { ShortName = "Show", Description = "Espectáculo" },
-                new NoveltyType { ShortName = "Unusual", Description = "Insólita" },
+                new NoveltyType { ShortName = "Social", Description = "Social" },
                 new NoveltyType { ShortName = "Economy", Description = "Economía" },
                 new NoveltyType { ShortName = "Art", Description = "Arte" },
                 new NoveltyType { ShortName = "Police", Description = "Policiale" },
@@ -100,7 +100,10 @@ namespace JS.Base.WS.API.Migrations
                 new CompanyCategory { ShortName = "HotelCottage", Description = "Hotel y Casa de campo", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Entertainment", Description = "Entretenimiento: (Club Night, Billar, Drink y Piscina)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Lawyer", Description = "Abogado", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "Store", Description = "Tienda", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+                new CompanyCategory { ShortName = "Store", Description = "Tienda", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Accounting", Description = "Contabilidad", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "GraphicDesign", Description = "Diseño: (Gráfico, de Moda y más)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Nursery", Description = "Vivero", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
                 );
         }
     }

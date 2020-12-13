@@ -85,7 +85,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:23:45</publishTime>
     </File>
     <File Include="bin/ca/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>11/10/2020 14:23:46</publishTime>
@@ -94,40 +94,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:23:45</publishTime>
     </File>
     <File Include="bin/es/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/fa/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/fr/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/Hangfire.Core.dll">
-      <publishTime>11/10/2020 14:35:08</publishTime>
+      <publishTime>11/20/2020 16:57:16</publishTime>
     </File>
     <File Include="bin/Hangfire.SqlServer.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:57:16</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>11/10/2020 14:35:09</publishTime>
     </File>
     <File Include="bin/JS.AlertService.dll">
-      <publishTime>11/23/2020 20:29:31</publishTime>
+      <publishTime>12/12/2020 21:25:56</publishTime>
     </File>
     <File Include="bin/JS.AlertService.pdb">
-      <publishTime>11/23/2020 20:29:31</publishTime>
+      <publishTime>12/12/2020 21:25:56</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.dll">
-      <publishTime>11/23/2020 20:29:34</publishTime>
+      <publishTime>12/12/2020 21:26:01</publishTime>
     </File>
     <File Include="bin/JS.Base.WS.API.pdb">
-      <publishTime>11/23/2020 20:29:34</publishTime>
+      <publishTime>12/12/2020 21:26:01</publishTime>
     </File>
     <File Include="bin/JS.Utilities.dll">
-      <publishTime>11/17/2020 08:40:13</publishTime>
+      <publishTime>12/06/2020 13:50:44</publishTime>
     </File>
     <File Include="bin/JS.Utilities.pdb">
-      <publishTime>11/17/2020 08:40:13</publishTime>
+      <publishTime>12/06/2020 13:50:44</publishTime>
     </File>
     <File Include="bin/JS.Utilities_.dll">
       <publishTime>10/03/2020 00:54:25</publishTime>
@@ -190,19 +190,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:35:09</publishTime>
     </File>
     <File Include="bin/nl/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>11/10/2020 14:35:09</publishTime>
     </File>
     <File Include="bin/pt-BR/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/pt-PT/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/pt/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>11/10/2020 14:23:47</publishTime>
@@ -679,10 +679,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:23:47</publishTime>
     </File>
     <File Include="bin/zh-TW/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="bin/zh/Hangfire.Core.resources.dll">
-      <publishTime>11/10/2020 14:35:09</publishTime>
+      <publishTime>11/20/2020 16:56:46</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>11/10/2020 14:23:45</publishTime>
@@ -775,7 +775,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2020 14:23:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/23/2020 20:29:35</publishTime>
+      <publishTime>12/12/2020 21:26:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -20,9 +20,16 @@ namespace JS.Base.WS.API.Models.Permission
         public bool Enabled { get; set; }
         public string Code { get; set; }
         public int? PersonTypeId { get; set; }
+
+        //Crud
         public bool CanCreate { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
+
+        //Enterprise
+        public bool CanCreateEnterprise { get; set; }
+        public bool CanEditEnterprise { get; set; }
+        public bool CanDeleteEnterprise { get; set; }
 
 
         [ForeignKey("PersonTypeId")]

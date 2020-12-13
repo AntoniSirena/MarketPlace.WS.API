@@ -2,6 +2,7 @@
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
+using JS.Base.WS.API.Models.Enterprise;
 using JS.Base.WS.API.Models.FileDocument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
@@ -40,6 +41,10 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<ConfigurationParameter> ConfigurationParameters { get; set; }
         public virtual DbSet<PersonType> PersonTypes { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+
+
+        //Enterprise
+        public virtual DbSet<Enterprise> Enterprises { get; set; }
 
 
         //Publicity

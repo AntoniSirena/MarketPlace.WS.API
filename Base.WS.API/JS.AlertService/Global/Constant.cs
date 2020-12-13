@@ -6,7 +6,9 @@ namespace JS.AlertService.Global
     {
         public static class IP
         {
-            public const string JSAlert = "http://localhost:3002/"; 
+            public const string JSAlert = "http://localhost:3002/";
+            //public const string JSAlert = "http://guerrainfo.jssoluctech.com/alert/";
+            
         }
     }
 }

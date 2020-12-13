@@ -26,11 +26,16 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string RoleShortName { get; set; }
         public string RoleParent { get; set; }
         public bool IsVisitorUser { get; set; }
+
+        //Crud
         public bool CanCreate { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
-        public bool CanCreateRequest { get; set; }
 
+        //Enterprise
+        public bool CanCreateEnterprise { get; set; }
+        public bool CanEditEnterprise { get; set; }
+        public bool CanDeleteEnterprise { get; set; }
     }
 
     public class Person

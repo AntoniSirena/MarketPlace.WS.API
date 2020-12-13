@@ -52,12 +52,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Hangfire.Core, Version=1.7.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.Core.1.7.17\lib\net46\Hangfire.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Hangfire.SqlServer, Version=1.7.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.SqlServer.1.7.17\lib\net45\Hangfire.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
     </Reference>
@@ -246,6 +240,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ConfigurationParameterController.cs" />
     <Compile Include="Controllers\Domain\CompanyRegisterController.cs" />
+    <Compile Include="Controllers\Enterprise\EnterpriseController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\Generic\GenericApiController.cs" />
@@ -268,6 +263,7 @@
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
+    <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
@@ -287,9 +283,22 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202012060503331_update enterprise.cs" />
+    <Compile Include="Migrations\202012060503331_update enterprise.Designer.cs">
+      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012122018363_update model enterprise.cs" />
+    <Compile Include="Migrations\202012122018363_update model enterprise.Designer.cs">
+      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012122106285_update model role.cs" />
+    <Compile Include="Migrations\202012122106285_update model role.Designer.cs">
+      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
+    <Compile Include="Models\Enterprise\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Novelty.cs" />
     <Compile Include="Models\Publicity\NoveltyType.cs" />
@@ -428,6 +437,17 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202012060503331_update enterprise.resx">
+      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012122018363_update model enterprise.resx">
+      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012122106285_update model role.resx">
+      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

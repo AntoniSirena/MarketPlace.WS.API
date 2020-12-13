@@ -9,7 +9,12 @@ namespace JS.Base.WS.API.Services
 {
     public class ConfigurationParameterService : IConfigurationParameterService
     {
-        MyDBcontext db = new MyDBcontext();
+        private  MyDBcontext db;
+
+        public ConfigurationParameterService()
+        {
+            db = new MyDBcontext();
+        }
 
         public string GetParameter(string Name)
         {
@@ -17,6 +22,7 @@ namespace JS.Base.WS.API.Services
                             .Where(x => x.Name == Name && x.Enabled == true && x.IsActive == true)
                             .Select(x => x.Value)
                             .FirstOrDefault();
+
             return result;
         }
     }
