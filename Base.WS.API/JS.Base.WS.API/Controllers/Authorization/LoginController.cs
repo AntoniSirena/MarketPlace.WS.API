@@ -149,7 +149,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             //Validate 2FA second factor authentication 
             #region 2FA
 
-            if (secondFactorAuthentication.Equals("TRUE") & !currentUser.IsVisitorUser)
+            if (secondFactorAuthentication.Equals("TRUE") & !currentUser.IsVisitorUser & !user.RefreshToken)
             {
                 if (string.IsNullOrEmpty(user.SecurityCode) & string.IsNullOrEmpty(user.Token2AF))
                 {
@@ -529,6 +529,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             public string EmailAddress { get; set; }
             public string SecurityCode { get; set; }
             public string Token2AF { get; set; }
+            public bool RefreshToken { get; set; }
         }
     }
 }
