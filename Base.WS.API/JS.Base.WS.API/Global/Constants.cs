@@ -36,6 +36,14 @@ namespace JS.Base.WS.API.Global
             public const string Femenino = "Femenino";
         }
 
+        public static class AppointmentStatus
+        {
+            public const string OnHold = "OnHold";
+            public const string InProcess = "InProcess";
+            public const string Finished = "Finished";
+            public const string Cancelled = "Cancelled";
+        }
+
         public static class DocumentTypes
         {
             public const string Cédula = "Cédula";

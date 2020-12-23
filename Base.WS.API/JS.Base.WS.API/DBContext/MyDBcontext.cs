@@ -2,7 +2,7 @@
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
-using JS.Base.WS.API.Models.Enterprise;
+using JS.Base.WS.API.Models.EnterpriseConf;
 using JS.Base.WS.API.Models.FileDocument;
 using JS.Base.WS.API.Models.Permission;
 using JS.Base.WS.API.Models.PersonProfile;
@@ -60,6 +60,8 @@ namespace JS.Base.WS.API.DBContext
         //Domin
         public virtual DbSet<CompanyCategory> CompanyCategories { get; set; }
         public virtual DbSet<CompanyRegister> CompanyRegisters { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
 
     }
 }
