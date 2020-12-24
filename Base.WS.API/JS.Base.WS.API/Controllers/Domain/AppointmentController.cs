@@ -39,6 +39,10 @@ namespace JS.Base.WS.API.Controllers.Domain
             {
                 request.StartDate = DateTime.Now.ToString("dd/MM/yyyy");
             }
+            if (request.ScheduledAppointment)
+            {
+                request.StartDate = Convert.ToDateTime(request.StartDate).ToString("dd/MM/yyyy");
+            }
 
             request.StatusId = db.AppointmentStatuses.Where(x => x.ShortName == Global.Constants.AppointmentStatus.InProcess).Select(y => y.Id).FirstOrDefault();
             request.CreationTime = DateTime.Now;
@@ -98,8 +102,8 @@ namespace JS.Base.WS.API.Controllers.Domain
             result.DocumentNomber = request.DocumentNomber;
             result.PhoneNomber = request.PhoneNomber;
             result.Comment = request.Comment;
-            request.StartDate = request.StartDate;
-            request.ScheduledAppointment = request.ScheduledAppointment;
+            result.StartDate = Convert.ToDateTime(request.StartDate).ToString("dd/MM/yyyy");
+            result.ScheduledAppointment = request.ScheduledAppointment;
 
             return result;
         }
