@@ -16,7 +16,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain
 
         public string UserName { get; set; }
         public string DocumentNomber { get; set; }
-        public string PhoneNomber { get; set; }
+        public long PhoneNumber { get; set; }
         public string Comment { get; set; }
         public string StartDate { get; set; }
         public bool ScheduledAppointment { get; set; }

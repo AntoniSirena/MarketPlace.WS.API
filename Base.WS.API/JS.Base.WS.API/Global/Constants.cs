@@ -38,6 +38,7 @@ namespace JS.Base.WS.API.Global
 
         public static class AppointmentStatus
         {
+            public const string Pending = "Pending";
             public const string OnHold = "OnHold";
             public const string InProcess = "InProcess";
             public const string Finished = "Finished";

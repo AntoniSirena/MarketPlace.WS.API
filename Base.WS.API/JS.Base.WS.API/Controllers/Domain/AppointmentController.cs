@@ -37,14 +37,14 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             if (!request.ScheduledAppointment)
             {
-                request.StartDate = DateTime.Now.ToString("dd/MM/yyyy");
+                request.StartDate = DateTime.Now;
             }
             if (request.ScheduledAppointment)
             {
-                request.StartDate = Convert.ToDateTime(request.StartDate).ToString("dd/MM/yyyy");
+                request.StartDate = request.StartDate;
             }
 
-            request.StatusId = db.AppointmentStatuses.Where(x => x.ShortName == Global.Constants.AppointmentStatus.InProcess).Select(y => y.Id).FirstOrDefault();
+            request.StatusId = db.AppointmentStatuses.Where(x => x.ShortName == Global.Constants.AppointmentStatus.Pending).Select(y => y.Id).FirstOrDefault();
             request.CreationTime = DateTime.Now;
             request.CreatorUserId = currentUserId;
             request.IsActive = true;
@@ -100,7 +100,7 @@ namespace JS.Base.WS.API.Controllers.Domain
             result.EnterpriseServiceTime = enterprise.ServiceTime;
             result.UserName = request.Name;
             result.DocumentNomber = request.DocumentNomber;
-            result.PhoneNomber = request.PhoneNomber;
+            result.PhoneNumber = request.PhoneNumber;
             result.Comment = request.Comment;
             result.StartDate = Convert.ToDateTime(request.StartDate).ToString("dd/MM/yyyy");
             result.ScheduledAppointment = request.ScheduledAppointment;
@@ -109,6 +109,125 @@ namespace JS.Base.WS.API.Controllers.Domain
         }
 
 
+        [HttpGet]
+        [Route("CheckAppointment")]
+        public CheckAppointmentDTO CheckAppointment(long number, string name, long phoneNumber)
+        {
+            var result = new CheckAppointmentDTO();
+
+            var appointments = db.Appointments.Where(x => x.AppointmentStatus.ShortName == Global.Constants.AppointmentStatus.Pending).ToList();
+
+            if (number > 0)
+            {
+                var _number = appointments.Where(x => x.Id == number).Select(y => new AppointmentId()
+                {
+                    Id = y.Id
+                }).ToList();
+
+                result.AppointmentId = _number;
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                var _name = appointments.Where(x => x.Name == name).Select(y => new AppointmentId()
+                {
+                    Id = y.Id
+                }).ToList();
+
+                if (result.AppointmentId == null)
+                {
+                    result.AppointmentId = _name;
+                }
+                else
+                {
+                    result.AppointmentId.AddRange(_name);
+                }
+            }
+
+            if (phoneNumber > 0)
+            {
+                var _phoneNumber = appointments.Where(x => x.PhoneNumber == phoneNumber).Select(y => new AppointmentId()
+                {
+                    Id = y.Id
+                }).ToList();
+
+                if (result.AppointmentId == null)
+                {
+                    result.AppointmentId = _phoneNumber;
+                }
+                else
+                {
+                    result.AppointmentId.AddRange(_phoneNumber);
+                }
+            }
+
+            result.AppointmentId = RemoveDuplicateElement(result.AppointmentId);
+
+            int quantity = 0;
+            if (result.AppointmentId != null)
+            {
+                quantity = result.AppointmentId.Count();
+                result.AppointmentId = result.AppointmentId.OrderBy(x => x.Id).ToList();
+            }
+            result.Message = string.Concat("Cantidad de registro encontrado ", quantity.ToString());
+
+            return result;
+        }
+
+
+        [HttpGet]
+        [Route("GetCheckAppointmentDetail")]
+        public CheckAppointmentDTO GetCheckAppointmentDetail(long number)
+        {
+            var result = new CheckAppointmentDTO();
+
+            var appointment = db.Appointments.Where(x => x.Id == number).FirstOrDefault();
+
+            var appointments = db.Appointments.Where(x => x.EnterpriseId == appointment.EnterpriseId
+                                                    & x.AppointmentStatus.ShortName == Global.Constants.AppointmentStatus.Pending
+                                                    & x.StartDate.Day == DateTime.Now.Day).ToList();
+
+            int quantityAppoint = appointments.Count() - 1;
+
+            result.Id = number;
+            result.EnterpriseImage = string.Concat(appointment.Enterprise.ImageContenTypeLong, ',', Utilities.JS_File.GetStrigBase64(appointment.Enterprise.ImagePath));
+            result.EnterpriseName = appointment.Enterprise.Name;
+            result.EnterpriseAddress = appointment.Enterprise.Address;
+            result.EnterprisePhoneNumber = appointment.Enterprise.PhoneNumber;
+            result.EnterpriseServiceTime = appointment.Enterprise.ServiceTime;
+            result.InFrontMe = quantityAppoint;
+            result.Message = string.Concat("Estimado cliente tiene ", quantityAppoint.ToString(), " turno ó cita pendiente delante de usted ");
+            result.UserName = appointment.Name;
+            result.DocumentNomber = appointment.DocumentNomber;
+            result.PhoneNumber = appointment.PhoneNumber;
+            result.Comment = appointment.Comment;
+            result.StartDate = Convert.ToDateTime(appointment.StartDate).ToString("dd/MM/yyyy");
+
+            return result;
+        }
+
+
+        private List<AppointmentId> RemoveDuplicateElement(List<AppointmentId> list)
+        {
+            if (list != null)
+            {
+               list = list.OrderBy(x => x.Id).ToList();
+                int index = 0;
+                while (index < list.Count - 1)
+                {
+                    if (list[index].Id == list[index + 1].Id)
+                    {
+                        list.RemoveAt(index);
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+            }
+
+            return list;
+        }
 
     }
 }

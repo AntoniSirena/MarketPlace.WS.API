@@ -80,7 +80,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             if (user == null)
             {
                 response.Code = "002";
-                response.Message = "La solictud no puede estar vacia";
+                response.Message = "La solictud debe contener datos válidos, para ser procesada";
 
                 return Ok(response);
             }
@@ -140,7 +140,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             if (currentUser?.StatusId == pendingToChangePassword.Id)
             {
                 response.Code = "005";
-                response.Message = "Usuario pendiente de cambiar contraseña. Favor confirme el correo que ha recibido en su bandeja de entrada";
+                response.Message = "Usuario pendiente de cambiar contraseña. Favor confirme el correo que ha recibido en su bandeja de entrada o SMS";
 
                 return Ok(response);
             }

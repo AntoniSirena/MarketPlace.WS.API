@@ -73,6 +73,7 @@ namespace JS.Base.WS.API.Migrations
             //Appointment Statuses
             context.AppointmentStatuses.AddOrUpdate(
                 x => x.ShortName,
+                new AppointmentStatus { ShortName = "Pending", Description = "Pendiente", ShowToCustomer = true, Colour = "" },
                 new AppointmentStatus { ShortName = "OnHold", Description = "En espera", ShowToCustomer = true, Colour = "" },
                 new AppointmentStatus { ShortName = "InProcess", Description = "En proceso", ShowToCustomer = true, Colour = "" },
                 new AppointmentStatus { ShortName = "Finished", Description = "Finalizada", ShowToCustomer = true, Colour = "" },

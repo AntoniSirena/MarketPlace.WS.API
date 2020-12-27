@@ -17,9 +17,9 @@ namespace JS.Base.WS.API.Models.Domain
         public int StatusId { get; set; }
         public string Name { get; set; }
         public string DocumentNomber { get; set; }
-        public string PhoneNomber { get; set; }
+        public long PhoneNumber { get; set; }
         public string Comment { get; set; }
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         public bool ScheduledAppointment { get; set; }
 
 

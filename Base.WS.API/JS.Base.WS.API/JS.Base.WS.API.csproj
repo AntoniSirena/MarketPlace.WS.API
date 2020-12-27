@@ -264,6 +264,7 @@
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDetailDTO.cs" />
+    <Compile Include="DTO\Response\Domain\CheckAppointmentDTO.cs" />
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\Domain\EnterpriseDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
@@ -286,10 +287,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202012220012128_add appointment.cs" />
-    <Compile Include="Migrations\202012220012128_add appointment.Designer.cs">
-      <DependentUpon>202012220012128_add appointment.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
     <Compile Include="Models\Domain\AppointmentStatus.cs" />
@@ -434,11 +431,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012220012128_add appointment.resx">
-      <DependentUpon>202012220012128_add appointment.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
