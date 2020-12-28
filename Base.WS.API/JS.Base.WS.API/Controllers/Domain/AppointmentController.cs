@@ -73,7 +73,7 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("GetEnterprises")]
         public IEnumerable<EnterpriseDTO> GetEnterprises()
         {
-            var result = db.Enterprises.Where(x => x.AvailableOnlineAppointment == true && x.User.UserStatus.ShortName == Global.Constants.UserStatuses.Active)
+            var result = db.Enterprises.Where(x => x.IsActive == true & x.AvailableOnlineAppointment == true && x.User.UserStatus.ShortName == Global.Constants.UserStatuses.Active)
                 .Select(y => new EnterpriseDTO()
                 {
                     Id = y.Id,
@@ -185,7 +185,7 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             var appointments = db.Appointments.Where(x => x.EnterpriseId == appointment.EnterpriseId
                                                     & x.AppointmentStatus.ShortName == Global.Constants.AppointmentStatus.Pending
-                                                    & x.StartDate.Day == DateTime.Now.Day).ToList();
+                                                    & x.StartDate.Day == appointment.StartDate.Day).ToList();
 
             int quantityAppoint = appointments.Count() - 1;
 
