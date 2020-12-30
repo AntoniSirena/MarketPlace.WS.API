@@ -20,6 +20,8 @@ namespace JS.Base.WS.API.Models.Domain
         public long PhoneNumber { get; set; }
         public string Comment { get; set; }
         public DateTime StartDate { get; set; }
+        public string ShortStartDate { get; set; }
+
         public bool ScheduledAppointment { get; set; }
 
 

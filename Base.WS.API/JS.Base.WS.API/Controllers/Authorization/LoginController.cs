@@ -270,9 +270,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser != null)
             {
-                int expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                int expireTime = 0;
+                if (currentUser.IsVisitorUser)
+                {
+                    expireTime = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"]);
+                }
+                else
+                {
+                    expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                }
                 string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
-                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate;
+                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate + "," + currentUser.IsVisitorUser.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(payLoad);
 
                 var userRole = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();

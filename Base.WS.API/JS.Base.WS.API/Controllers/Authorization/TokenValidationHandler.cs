@@ -4,6 +4,7 @@ using JS.Base.WS.API.Global;
 using JS.Base.WS.API.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,6 +24,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
         private long currentUserId = 0;
         private string currentUserName = string.Empty;
         private DateTime lifeToken;
+        private bool isVisitorUser = false;
 
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
         {
@@ -81,26 +83,58 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string userName = Thread.CurrentPrincipal.Identity.Name;
                 string[] userValue = userName.Split(',');
 
-                this.currentUserName = userValue[0];
-                this.currentUserId = Convert.ToInt64(userValue[1]);
-                this.lifeToken = Convert.ToDateTime(userValue[2]);
+                currentUserName = userValue[0];
+                currentUserId = Convert.ToInt64(userValue[1]);
+                lifeToken = Convert.ToDateTime(userValue[2]);
+                isVisitorUser = Convert.ToBoolean(userValue[3]);
 
-                //valita life token
-                var time = 0;
 
-                if (lifeToken.Hour == DateTime.Now.Hour)
-                {
-                    time = (lifeToken.Minute - DateTime.Now.Minute);
-                }
+                long time = 0;
 
-                if (time > 0 && time < refressTime)
-                {
-                    statusCode = HttpStatusCode.Conflict;
 
-                    var refressResult = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
 
-                    return refressResult;
-                }
+                //if (lifeToken == DateTime.Now)
+                //{
+                //    time = (lifeToken.Minute - DateTime.Now.Minute);
+                //}
+
+                //if (time > 0 && time < refressTime)
+                //{
+                //    statusCode = HttpStatusCode.Conflict;
+
+                //    var refressResult = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+
+                //    return refressResult;
+                //}
+
+
+                //Refresh token
+                //time = (lifeToken - DateTime.Now).Hours * 60;
+                //string currentToken = string.Empty;
+
+
+                //if (time <= refressTime & time > 0)
+                //{
+                //    int expireTime = 0;
+                //    if (isVisitorUser)
+                //    {
+                //        expireTime = Convert.ToInt32(ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"]);
+                //    }
+                //    else
+                //    {
+                //        expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                //    }
+
+                //    string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
+                //    string payLoad = userName + "," + currentUserId.ToString() + "," + lifeDate;
+                //    currentToken = string.Concat("Bearer ", TokenGenerator.GenerateTokenJwt(payLoad));
+
+                //    HttpContext.Current.Response.Headers.Add("TokenRefresh", currentToken);
+                //}
+                //else
+                //{
+                //    HttpContext.Current.Response.Headers.Add("TokenRefresh", "N/A");
+                //}               
 
 
                 //Cache estorage by 5 minutes
@@ -115,12 +149,13 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 statusCode = HttpStatusCode.Unauthorized;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 statusCode = HttpStatusCode.InternalServerError;
             }
 
             var result = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+
 
             return result;
         }

@@ -264,6 +264,8 @@
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDetailDTO.cs" />
+    <Compile Include="DTO\Response\Domain\AppointmentDTO.cs" />
+    <Compile Include="DTO\Response\Domain\AppointmentStatusDTO.cs" />
     <Compile Include="DTO\Response\Domain\CheckAppointmentDTO.cs" />
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\Domain\EnterpriseDTO.cs" />

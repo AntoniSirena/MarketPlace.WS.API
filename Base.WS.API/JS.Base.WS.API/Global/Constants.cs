@@ -187,7 +187,8 @@ namespace JS.Base.WS.API.Global
             public static string AllowViewAllEnterprisesByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllEnterprisesByRoles") ?? "SuperAdmin,Admin"; } }
 
             public static string EnterpriseImgDirectory { get { return ConfigurationParameterService.GetParameter("EnterpriseImgDirectory") ?? @"C:\SharedGuerra\Enterprise\Images"; } }
-
+            
+            public static string AllowViewAllAppointmentByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllAppointmentByRoles") ?? "SuperAdmin,Admin"; } }
         }
 
     }
