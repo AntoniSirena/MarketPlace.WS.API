@@ -184,6 +184,16 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
+                if (string.IsNullOrEmpty(request.DocumentNumber))
+                {
+                    request.DocumentNumber = "00000000000000";
+                }
+
+                if (request.DocumentTypeId < 1)
+                {
+                    request.DocumentTypeId = db.DocumentTypes.Where(x => x.ShortName == Global.Constants.DocumentTypes.Cédula).Select(y => y.Id).FirstOrDefault();
+                }
+
                 if (currentUser?.PersonId > 0)
                 {
                     var currentPerson = db.People.Where(x => x.Id == currentUser.PersonId).FirstOrDefault();
@@ -208,6 +218,16 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 else
                 {
                     Person person = new Person();
+
+                    if (string.IsNullOrEmpty(request.DocumentNumber))
+                    {
+                        request.DocumentNumber = "00000000000000";
+                    }
+
+                    if (request.DocumentTypeId < 1)
+                    {
+                        request.DocumentTypeId = db.DocumentTypes.Where(x => x.ShortName == Global.Constants.DocumentTypes.Cédula).Select(y => y.Id).FirstOrDefault();
+                    }
 
                     person.FirstName = request.FirstName;
                     person.SecondName = request.SecondName;

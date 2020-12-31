@@ -56,17 +56,28 @@ namespace JS.Base.WS.API.Migrations
                 );
 
             context.Genders.AddOrUpdate(
-                x => x.Description,
+                x => x.ShortName,
                 new Gender { ShortName = "M", Description = "Maculino", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new Gender { ShortName = "F", Description = "Femenino", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
             //Document Types
             context.DocumentTypes.AddOrUpdate(
-                x => x.Description,
+                x => x.ShortName,
                 new DocumentType { ShortName = "Cédula", Description = "Cédula", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new DocumentType { ShortName = "Pasaporte", Description = "Pasaporte", ShowToCustomer = false, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new DocumentType { ShortName = "RNC", Description = "RNC", ShowToCustomer = false, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
+
+            //Appointment Statuses
+            context.AppointmentStatuses.AddOrUpdate(
+                x => x.ShortName,
+                new AppointmentStatus { ShortName = "Pending", Description = "Pendiente", ShowToCustomer = true, Colour = "btn btn-info" },
+                new AppointmentStatus { ShortName = "OnHold", Description = "En espera", ShowToCustomer = true, Colour = "btn btn-warning" },
+                new AppointmentStatus { ShortName = "InProcess", Description = "En proceso", ShowToCustomer = true, Colour = "btn btn-success" },
+                new AppointmentStatus { ShortName = "Finished", Description = "Finalizada", ShowToCustomer = true, Colour = "btn btn-primary" },
+                new AppointmentStatus { ShortName = "Cancelled", Description = "Cancelada", ShowToCustomer = true, Colour = "btn btn-danger" }
                 );
 
 
@@ -103,7 +114,9 @@ namespace JS.Base.WS.API.Migrations
                 new CompanyCategory { ShortName = "Store", Description = "Tienda", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "Accounting", Description = "Contabilidad", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
                 new CompanyCategory { ShortName = "GraphicDesign", Description = "Diseño: (Gráfico, de Moda y más)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
-                new CompanyCategory { ShortName = "Nursery", Description = "Vivero", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+                new CompanyCategory { ShortName = "Nursery", Description = "Vivero", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId },
+                new CompanyCategory { ShortName = "Health", Description = "Salud: (Clinicas y Hospitales)", IsActive = true, CreationTime = DateTime.Now, CreatorUserId = userId }
+
                 );
         }
     }

@@ -9,19 +9,17 @@ namespace JS.Base.WS.API.Services
 {
     public class ConfigurationParameterService : IConfigurationParameterService
     {
-        private  MyDBcontext db;
-
-        public ConfigurationParameterService()
-        {
-            db = new MyDBcontext();
-        }
 
         public string GetParameter(string Name)
         {
-            string result = db.ConfigurationParameters
-                            .Where(x => x.Name == Name && x.Enabled == true && x.IsActive == true)
-                            .Select(x => x.Value)
-                            .FirstOrDefault();
+            string result = string.Empty;
+            using (MyDBcontext db = new MyDBcontext())
+            {
+                result = db.ConfigurationParameters
+                               .Where(x => x.Name == Name && x.Enabled == true && x.IsActive == true)
+                               .Select(x => x.Value)
+                               .FirstOrDefault();
+            }
 
             return result;
         }

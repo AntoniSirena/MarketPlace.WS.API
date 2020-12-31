@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace JS.Base.WS.API.Models.Enterprise
+namespace JS.Base.WS.API.Models.EnterpriseConf
 {
     public class Enterprise : Audit
     {

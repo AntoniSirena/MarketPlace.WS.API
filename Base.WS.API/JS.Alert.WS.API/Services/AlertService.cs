@@ -8,6 +8,7 @@ using System.Configuration;
 using Twilio.Exceptions;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using System.Text;
 
 namespace JS.Alert.WS.API.Services
 {
@@ -16,6 +17,7 @@ namespace JS.Alert.WS.API.Services
 
         public bool SendMail(Mail request)
         {
+
             bool response = false;
             string[] mails = request.MailAddresses.Split(',');
 

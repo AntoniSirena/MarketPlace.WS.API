@@ -36,6 +36,22 @@ namespace JS.Base.WS.API.Global
             public const string Femenino = "Femenino";
         }
 
+        public static class AppointmentStatus
+        {
+            public const string Pending = "Pending";
+            public const string OnHold = "OnHold";
+            public const string InProcess = "InProcess";
+            public const string Finished = "Finished";
+            public const string Cancelled = "Cancelled";
+        }
+
+        public static class DocumentTypes
+        {
+            public const string Cédula = "Cédula";
+            public const string Pasaporte = "Pasaporte";
+            public const string RNC = "RNC";
+        }
+
         public static class UserTypes
         {
             public const string Person = "Person";
@@ -171,7 +187,8 @@ namespace JS.Base.WS.API.Global
             public static string AllowViewAllEnterprisesByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllEnterprisesByRoles") ?? "SuperAdmin,Admin"; } }
 
             public static string EnterpriseImgDirectory { get { return ConfigurationParameterService.GetParameter("EnterpriseImgDirectory") ?? @"C:\SharedGuerra\Enterprise\Images"; } }
-
+            
+            public static string AllowViewAllAppointmentByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllAppointmentByRoles") ?? "SuperAdmin,Admin"; } }
         }
 
     }

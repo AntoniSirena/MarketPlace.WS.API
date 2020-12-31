@@ -80,7 +80,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             if (user == null)
             {
                 response.Code = "002";
-                response.Message = "La solictud no puede estar vacia";
+                response.Message = "La solictud debe contener datos válidos, para ser procesada";
 
                 return Ok(response);
             }
@@ -140,7 +140,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             if (currentUser?.StatusId == pendingToChangePassword.Id)
             {
                 response.Code = "005";
-                response.Message = "Usuario pendiente de cambiar contraseña. Favor confirme el correo que ha recibido en su bandeja de entrada";
+                response.Message = "Usuario pendiente de cambiar contraseña. Favor confirme el correo que ha recibido en su bandeja de entrada o SMS";
 
                 return Ok(response);
             }
@@ -149,7 +149,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             //Validate 2FA second factor authentication 
             #region 2FA
 
-            if (secondFactorAuthentication.Equals("TRUE") & !currentUser.IsVisitorUser)
+            if (secondFactorAuthentication.Equals("TRUE") & !currentUser.IsVisitorUser & !user.RefreshToken)
             {
                 if (string.IsNullOrEmpty(user.SecurityCode) & string.IsNullOrEmpty(user.Token2AF))
                 {
@@ -270,9 +270,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             if (currentUser != null)
             {
-                int expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                int expireTime = 0;
+                if (currentUser.IsVisitorUser)
+                {
+                    expireTime = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"]);
+                }
+                else
+                {
+                    expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+                }
                 string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
-                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate;
+                string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate + "," + currentUser.IsVisitorUser.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(payLoad);
 
                 var userRole = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
@@ -529,6 +537,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             public string EmailAddress { get; set; }
             public string SecurityCode { get; set; }
             public string Token2AF { get; set; }
+            public bool RefreshToken { get; set; }
         }
     }
 }

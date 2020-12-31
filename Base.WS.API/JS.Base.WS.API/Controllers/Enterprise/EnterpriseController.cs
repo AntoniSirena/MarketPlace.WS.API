@@ -4,7 +4,7 @@ using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Enterprise;
 using JS.Base.WS.API.Helpers;
-using JS.Base.WS.API.Models.Enterprise;
+using JS.Base.WS.API.Models.EnterpriseConf;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

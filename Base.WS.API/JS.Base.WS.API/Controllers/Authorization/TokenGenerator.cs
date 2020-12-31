@@ -18,7 +18,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
         /// </summary>
         /// 
 
-        private static MyDBcontext db = new MyDBcontext();
 
 
         public static string GenerateTokenJwt(string username)
@@ -35,10 +34,9 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             string[] payLoad = username.Split(',');
             long currentUserId = Convert.ToInt64(payLoad[1]);
+            bool isVisitorUser = Convert.ToBoolean(payLoad[3]);
 
-            var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
-
-            if (currentUser.IsVisitorUser)
+            if (isVisitorUser)
             {
                 expireTime = expireTimeUserVisitador;
             }

@@ -239,6 +239,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ConfigurationParameterController.cs" />
+    <Compile Include="Controllers\Domain\AppointmentController.cs" />
     <Compile Include="Controllers\Domain\CompanyRegisterController.cs" />
     <Compile Include="Controllers\Enterprise\EnterpriseController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
@@ -262,7 +263,12 @@
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Response\Domain\AppointmentDetailDTO.cs" />
+    <Compile Include="DTO\Response\Domain\AppointmentDTO.cs" />
+    <Compile Include="DTO\Response\Domain\AppointmentStatusDTO.cs" />
+    <Compile Include="DTO\Response\Domain\CheckAppointmentDTO.cs" />
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
+    <Compile Include="DTO\Response\Domain\EnterpriseDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
@@ -283,22 +289,12 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202012060503331_update enterprise.cs" />
-    <Compile Include="Migrations\202012060503331_update enterprise.Designer.cs">
-      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012122018363_update model enterprise.cs" />
-    <Compile Include="Migrations\202012122018363_update model enterprise.Designer.cs">
-      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012122106285_update model role.cs" />
-    <Compile Include="Migrations\202012122106285_update model role.Designer.cs">
-      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
+    <Compile Include="Models\Domain\Appointment.cs" />
+    <Compile Include="Models\Domain\AppointmentStatus.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
-    <Compile Include="Models\Enterprise\Enterprise.cs" />
+    <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Novelty.cs" />
     <Compile Include="Models\Publicity\NoveltyType.cs" />
@@ -437,17 +433,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012060503331_update enterprise.resx">
-      <DependentUpon>202012060503331_update enterprise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012122018363_update model enterprise.resx">
-      <DependentUpon>202012122018363_update model enterprise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012122106285_update model role.resx">
-      <DependentUpon>202012122106285_update model role.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
