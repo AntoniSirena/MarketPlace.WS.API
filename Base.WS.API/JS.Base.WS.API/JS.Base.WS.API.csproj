@@ -270,6 +270,7 @@
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\Domain\EnterpriseDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
+    <Compile Include="DTO\Response\Enterprise\ScheduleHourDTO.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
@@ -289,11 +290,16 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202101020730305_update model enterp.cs" />
+    <Compile Include="Migrations\202101020730305_update model enterp.Designer.cs">
+      <DependentUpon>202101020730305_update model enterp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
     <Compile Include="Models\Domain\AppointmentStatus.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
+    <Compile Include="Models\Domain\ScheduleHour.cs" />
     <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Novelty.cs" />
@@ -433,6 +439,11 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101020730305_update model enterp.resx">
+      <DependentUpon>202101020730305_update model enterp.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

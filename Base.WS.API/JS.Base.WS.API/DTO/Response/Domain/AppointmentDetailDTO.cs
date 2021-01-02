@@ -13,12 +13,16 @@ namespace JS.Base.WS.API.DTO.Response.Domain
         public string EnterprisePhoneNumber { get; set; }
         public string EnterpriseAddress { get; set; }
         public int EnterpriseServiceTime { get; set; }
+        public int NumberAppointmentsAttendedByDay { get; set; }
+        public string EnterpriseDescription { get; set; }
 
         public string UserName { get; set; }
         public string DocumentNomber { get; set; }
         public long PhoneNumber { get; set; }
         public string Comment { get; set; }
         public string StartDate { get; set; }
+        public int AppointmentPositionNumber { get; set; }
+        public DateTime EstimateDate { get; set; }
         public bool ScheduledAppointment { get; set; }
     }
 }

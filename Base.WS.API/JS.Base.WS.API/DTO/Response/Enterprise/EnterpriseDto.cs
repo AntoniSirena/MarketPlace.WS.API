@@ -26,5 +26,10 @@ namespace JS.Base.WS.API.DTO.Response.Enterprise
         public string ImageContenTypeShort { get; set; }
         public string ImageContenTypeLong { get; set; }
         public int ServiceTime { get; set; }
+        public int NumberAppointmentsAttendedByDay { get; set; }
+        public string EnterpriseDescription { get; set; }
+        public int? ScheduleHourId { get; set; }
+        public double ScheduleHourValue { get; set; }
+
     }
 }

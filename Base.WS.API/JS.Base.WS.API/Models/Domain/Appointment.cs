@@ -21,6 +21,10 @@ namespace JS.Base.WS.API.Models.Domain
         public string Comment { get; set; }
         public DateTime StartDate { get; set; }
         public string ShortStartDate { get; set; }
+        public int AppointmentPositionNumber { get; set; }
+        public DateTime EstimateDate { get; set; }
+        public string EstimateDateFormated { get; set; }
+
 
         public bool ScheduledAppointment { get; set; }
 

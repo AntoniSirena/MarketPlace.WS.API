@@ -1,5 +1,6 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.Models.Authorization;
+using JS.Base.WS.API.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,8 +31,15 @@ namespace JS.Base.WS.API.Models.EnterpriseConf
         public string ImageContenTypeLong { get; set; }
         public bool AvailableOnlineAppointment { get; set; }
         public int ServiceTime { get; set; }
+        public int NumberAppointmentsAttendedByDay { get; set; }
+        public string EnterpriseDescription { get; set; }
+        public int? ScheduleHourId { get; set; }
+
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
+
+        [ForeignKey("ScheduleHourId")]
+        public virtual ScheduleHour ScheduleHour { get; set; }
     }
 }

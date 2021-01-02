@@ -8,6 +8,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain
     public class AppointmentDTO
     {
         public long Id { get; set; }
+        public int AppointmentPositionNumber { get; set; }
         public string EnterpriseName { get; set; }
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }

@@ -62,6 +62,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<CompanyRegister> CompanyRegisters { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
+        public virtual DbSet<ScheduleHour> ScheduleHours { get; set; }
+        
 
     }
 }
