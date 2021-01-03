@@ -30,6 +30,8 @@ namespace JS.Base.WS.API.DTO.Response.Enterprise
         public string EnterpriseDescription { get; set; }
         public int? ScheduleHourId { get; set; }
         public double ScheduleHourValue { get; set; }
+        public int? ScheduleHourCloseId { get; set; }
+        public double ScheduleHourCloseValue { get; set; }
 
     }
 }

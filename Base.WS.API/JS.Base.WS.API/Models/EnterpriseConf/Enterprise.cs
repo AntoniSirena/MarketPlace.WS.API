@@ -34,6 +34,7 @@ namespace JS.Base.WS.API.Models.EnterpriseConf
         public int NumberAppointmentsAttendedByDay { get; set; }
         public string EnterpriseDescription { get; set; }
         public int? ScheduleHourId { get; set; }
+        public int? ScheduleHourCloseId { get; set; }
 
 
         [ForeignKey("UserId")]
@@ -41,5 +42,8 @@ namespace JS.Base.WS.API.Models.EnterpriseConf
 
         [ForeignKey("ScheduleHourId")]
         public virtual ScheduleHour ScheduleHour { get; set; }
+
+        [ForeignKey("ScheduleHourCloseId")]
+        public virtual ScheduleHour ScheduleHourClose { get; set; }
     }
 }

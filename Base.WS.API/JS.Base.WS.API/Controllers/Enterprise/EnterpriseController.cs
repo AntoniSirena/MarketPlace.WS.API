@@ -73,6 +73,8 @@ namespace JS.Base.WS.API.Controllers
                     EnterpriseDescription = x.EnterpriseDescription,
                     ScheduleHourId = x.ScheduleHourId,
                     ScheduleHourValue = x.ScheduleHour != null ? x.ScheduleHour.Value : 0,
+                    ScheduleHourCloseId = x.ScheduleHourCloseId,
+                    ScheduleHourCloseValue = x.ScheduleHourClose != null ? x.ScheduleHourClose.Value : 0,
                     CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
@@ -109,6 +111,8 @@ namespace JS.Base.WS.API.Controllers
                     EnterpriseDescription = x.EnterpriseDescription,
                     ScheduleHourId = x.ScheduleHourId,
                     ScheduleHourValue = x.ScheduleHour != null ? x.ScheduleHour.Value : 0,
+                    ScheduleHourCloseId = x.ScheduleHourCloseId,
+                    ScheduleHourCloseValue = x.ScheduleHourClose != null ? x.ScheduleHourClose.Value : 0,
                     CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
@@ -153,6 +157,7 @@ namespace JS.Base.WS.API.Controllers
                 NumberAppointmentsAttendedByDay = x.NumberAppointmentsAttendedByDay,
                 EnterpriseDescription = x.EnterpriseDescription,
                 ScheduleHourId = x.ScheduleHourId,
+                ScheduleHourCloseId = x.ScheduleHourCloseId,
                 CreationTime = x.CreationTime,
                 CreatorUserId = x.CreatorUserId,
                 LastModificationTime = x.LastModificationTime,
@@ -222,6 +227,16 @@ namespace JS.Base.WS.API.Controllers
             {
                 response.Code = "400";
                 response.Message = "Estimado usuario no fué posible cargar la foto de la empresa de forma correcta, favor intente desde otro dispositivo: computadora, table ó teléfono movil";
+
+                return Ok(response);
+            }
+
+            var hourOpen = db.ScheduleHours.Where(x => x.Id == request.ScheduleHourId).FirstOrDefault();
+            var hourClose = db.ScheduleHours.Where(x => x.Id == request.ScheduleHourCloseId).FirstOrDefault();
+            if (hourOpen.Value > hourClose.Value)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario la hora de apertura debe ser menor que la hora de cierre";
 
                 return Ok(response);
             }
@@ -330,6 +345,16 @@ namespace JS.Base.WS.API.Controllers
                 return Ok(response);
             }
 
+            var hourOpen = db.ScheduleHours.Where(x => x.Id == request.ScheduleHourId).FirstOrDefault();
+            var hourClose = db.ScheduleHours.Where(x => x.Id == request.ScheduleHourCloseId).FirstOrDefault();
+            if (hourOpen.Value > hourClose.Value)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario la hora de apertura debe ser menor que la hora de cierre";
+
+                return Ok(response);
+            }
+
 
             //Validate contentType
             if (!fileTypeAlloweds.Contains(contentType) & arrayImgBase64.Count() > 1)
@@ -360,6 +385,7 @@ namespace JS.Base.WS.API.Controllers
             enterpriseValidate.NumberAppointmentsAttendedByDay = request.NumberAppointmentsAttendedByDay;
             enterpriseValidate.EnterpriseDescription = request.EnterpriseDescription;
             enterpriseValidate.ScheduleHourId = request.ScheduleHourId;
+            enterpriseValidate.ScheduleHourCloseId = request.ScheduleHourCloseId;
 
             enterpriseValidate.CreationTime = request.CreationTime;
             enterpriseValidate.CreatorUserId = request.CreatorUserId;

@@ -35,7 +35,6 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("Create")]
         public IHttpActionResult Create([FromBody] Appointment request)
         {
-
             if (!request.ScheduledAppointment)
             {
                 string _startDate = DateTime.Now.ToString("yyyy-MM-dd");
@@ -129,8 +128,20 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             #endregion
 
-
             request.EstimateDateFormated = request.EstimateDate.ToString("dd/MM/yyyy hh:mm tt");
+
+            //Validate close hour
+            int _currentHour = request.EstimateDate.Hour;
+            double _currentMinutes = Convert.ToDouble(request.EstimateDate.Minute.ToString()) / 60;
+            double _currentTime = _currentHour + _currentMinutes;
+
+            if (_currentTime > currentEnterprise.ScheduleHourClose.Value)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario su cita no puede ser agendada para hoy, ya que la hora estimada de la cita es mayor que la hora de cierre del negocio, agende la misma para el día siguiente. Disculpe los inconvenientes causados.";
+
+                return Ok(response);
+            }
 
             request.CreationTime = DateTime.Now;
             request.CreatorUserId = currentUserId;
@@ -333,7 +344,7 @@ namespace JS.Base.WS.API.Controllers.Domain
             string[] allowViewAllAppointmentByRoles = ConfigurationParameter.AllowViewAllAppointmentByRoles.Split(',');
 
 
-            string currentDate = DateTime.Now.ToShortDateString();
+            string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
             string status = "Pendiente";
             if (statusId > 0)
