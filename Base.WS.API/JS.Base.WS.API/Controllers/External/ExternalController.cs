@@ -43,6 +43,15 @@ namespace JS.Base.WS.API.Controllers.External
         [Route("CreateUser")]
         public IHttpActionResult CreateUser(User user)
         {
+
+            if (user.UserName.Contains(" "))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario el nombre de usuario no puede tener espacios el blancos, favor corregir el mismo y vuelva a intentarlo";
+
+                return Ok(response);
+            }
+
             //Validate if required securityCodeExternaRegister
             string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
             if (securityCodeExternaRegister.Equals("1"))

@@ -270,6 +270,7 @@
     <Compile Include="DTO\Response\Domain\CompanyCategoryDTO.cs" />
     <Compile Include="DTO\Response\Domain\EnterpriseDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
+    <Compile Include="DTO\Response\Enterprise\ScheduleHourDTO.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
     <Compile Include="DTO\Response\Person\PersonType.cs" />
     <Compile Include="DTO\Response\Publicity\NoveltiesByTypeDto.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Models\Domain\AppointmentStatus.cs" />
     <Compile Include="Models\Domain\CompanyCategory.cs" />
     <Compile Include="Models\Domain\CompanyRegister.cs" />
+    <Compile Include="Models\Domain\ScheduleHour.cs" />
     <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
     <Compile Include="Models\Publicity\Novelty.cs" />

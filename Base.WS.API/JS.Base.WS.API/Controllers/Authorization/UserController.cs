@@ -35,6 +35,15 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         public override IHttpActionResult Create(dynamic entity)
         {
+            string userName = entity["UserName"];
+            if (userName.Contains(" "))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario el nombre de usuario no puede tener espacios el blancos, favor corregir el mismo y vuelva a intentarlo";
+
+                return Ok(response);
+            }
+
             string currentPassword = entity["Password"];
             entity["Password"] = Utilities.Security.Encrypt_OneWay(currentPassword);
 

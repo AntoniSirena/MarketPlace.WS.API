@@ -4,6 +4,7 @@ using JS.Base.WS.API.Controllers.Generic;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Enterprise;
 using JS.Base.WS.API.Helpers;
+using JS.Base.WS.API.Models.Domain;
 using JS.Base.WS.API.Models.EnterpriseConf;
 using Newtonsoft.Json;
 using System;
@@ -68,6 +69,10 @@ namespace JS.Base.WS.API.Controllers
                     ImageContenTypeShort = x.ImageContenTypeShort,
                     ImageContenTypeLong = x.ImageContenTypeLong,
                     ServiceTime = x.ServiceTime,
+                    NumberAppointmentsAttendedByDay = x.NumberAppointmentsAttendedByDay,
+                    EnterpriseDescription = x.EnterpriseDescription,
+                    ScheduleHourId = x.ScheduleHourId,
+                    ScheduleHourValue = x.ScheduleHour != null ? x.ScheduleHour.Value : 0,
                     CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
@@ -99,8 +104,12 @@ namespace JS.Base.WS.API.Controllers
                     ImagePath = x.ImagePath,
                     ImageContenTypeShort = x.ImageContenTypeShort,
                     ImageContenTypeLong = x.ImageContenTypeLong,
-                    CreationTime = x.CreationTime,
                     ServiceTime = x.ServiceTime,
+                    NumberAppointmentsAttendedByDay = x.NumberAppointmentsAttendedByDay,
+                    EnterpriseDescription = x.EnterpriseDescription,
+                    ScheduleHourId = x.ScheduleHourId,
+                    ScheduleHourValue = x.ScheduleHour != null ? x.ScheduleHour.Value : 0,
+                    CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
                     LastModifierUserId = x.LastModifierUserId,
@@ -141,6 +150,9 @@ namespace JS.Base.WS.API.Controllers
                 ImageContenTypeShort = x.ImageContenTypeShort,
                 ImageContenTypeLong = x.ImageContenTypeLong,
                 ServiceTime = x.ServiceTime,
+                NumberAppointmentsAttendedByDay = x.NumberAppointmentsAttendedByDay,
+                EnterpriseDescription = x.EnterpriseDescription,
+                ScheduleHourId = x.ScheduleHourId,
                 CreationTime = x.CreationTime,
                 CreatorUserId = x.CreatorUserId,
                 LastModificationTime = x.LastModificationTime,
@@ -158,6 +170,22 @@ namespace JS.Base.WS.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetScheduleHours")]
+        public IEnumerable<ScheduleHourDTO> GetScheduleHours()
+        {
+            var result = new List<ScheduleHourDTO>();
+
+            result = db.ScheduleHours.Where(x => x.ShowToCustomer == true).Select(y => new ScheduleHourDTO()
+            {
+                Id = y.Id,
+                Description = y.Description,
+                Value = y.Value,
+            }).OrderBy(x => x.Value).ToList();
+
+            return result;
+        }
+
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create([FromBody] Enterprise request)
@@ -168,6 +196,32 @@ namespace JS.Base.WS.API.Controllers
             {
                 response.Code = InternalResponseCodeError.Code325;
                 response.Message = InternalResponseCodeError.Message325;
+
+                return Ok(response);
+            }
+
+            var enterpriseValidate = db.Enterprises.Where(x => x.Name == request.Name & x.IsActive == true).FirstOrDefault();
+            if (enterpriseValidate != null)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario en nombre de la empresa que intenta registrar ya existe";
+
+                return Ok(response);
+            }
+
+            long enterpriseUserId = db.Enterprises.Where(x => x.UserId == currentUserId & x.IsActive == true).Select(y => y.Id).FirstOrDefault();
+            if (enterpriseUserId > 0)
+            {
+                response.Code = "400";
+                response.Message = "Este usuario ya tiene una empresa creada en el sistema";
+
+                return Ok(response);
+            }
+
+            if (string.IsNullOrEmpty(request.Image))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario no fué posible cargar la foto de la empresa de forma correcta, favor intente desde otro dispositivo: computadora, table ó teléfono movil";
 
                 return Ok(response);
             }
@@ -242,6 +296,41 @@ namespace JS.Base.WS.API.Controllers
             string fileName = string.Empty;
             string filePath = string.Empty;
 
+
+            var enterpriseValidate = db.Enterprises.Where(x => x.Id == request.Id).FirstOrDefault();
+
+            if (enterpriseValidate.Name != request.Name)
+            {
+                var _enterpriseValidate = db.Enterprises.Where(x => x.Name == request.Name).FirstOrDefault();
+
+                if (_enterpriseValidate != null)
+                {
+                    response.Code = "400";
+                    response.Message = "Estimado usuario en nombre de la empresa que intenta registrar ya existe";
+
+                    return Ok(response);
+                }
+            }
+
+
+            long enterpriseUserId = db.Enterprises.Where(x => x.UserId == currentUserId & x.IsActive == true).Select(y => y.Id).FirstOrDefault();
+            if (enterpriseUserId > 0)
+            {
+                response.Code = "400";
+                response.Message = "Este usuario ya tiene una empresa creada en el sistema";
+
+                return Ok(response);
+            }
+
+            if (string.IsNullOrEmpty(request.Image))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario no fué posible cargar la foto de la empresa de forma correcta, favor intente desde otro dispositivo: computadora, table ó teléfono movil";
+
+                return Ok(response);
+            }
+
+
             //Validate contentType
             if (!fileTypeAlloweds.Contains(contentType) & arrayImgBase64.Count() > 1)
             {
@@ -251,13 +340,34 @@ namespace JS.Base.WS.API.Controllers
                 return Ok(response);
             }
 
-            request.Image = string.Empty;
-            request.ImageContenTypeShort = contentType;
-            request.ImageContenTypeLong = arrayImgBase64[0];
-            request.LastModificationTime = DateTime.Now;
-            request.LastModifierUserId = currentUserId;
+            enterpriseValidate.UserId = request.UserId;
+            enterpriseValidate.PropetaryName = request.PropetaryName;
+            enterpriseValidate.Name = request.Name;
+            enterpriseValidate.RNC = request.RNC;
+            enterpriseValidate.CommercialRegister = request.CommercialRegister;
+            enterpriseValidate.PhoneNumber = request.PhoneNumber;
+            enterpriseValidate.Email = request.Email;
+            enterpriseValidate.Address = request.Address;
+            enterpriseValidate.Sigla = request.Sigla;
+            enterpriseValidate.Slogan = request.Slogan;
+            enterpriseValidate.WorkSchedule = request.WorkSchedule;
+            enterpriseValidate.Image = string.Empty;
+            enterpriseValidate.ImagePath = request.ImagePath;
+            enterpriseValidate.ImageContenTypeShort = contentType;
+            enterpriseValidate.ImageContenTypeLong = arrayImgBase64[0];
+            enterpriseValidate.AvailableOnlineAppointment = request.AvailableOnlineAppointment;
+            enterpriseValidate.ServiceTime = request.ServiceTime;
+            enterpriseValidate.NumberAppointmentsAttendedByDay = request.NumberAppointmentsAttendedByDay;
+            enterpriseValidate.EnterpriseDescription = request.EnterpriseDescription;
+            enterpriseValidate.ScheduleHourId = request.ScheduleHourId;
 
-            db.Entry(request).State = EntityState.Modified;
+            enterpriseValidate.CreationTime = request.CreationTime;
+            enterpriseValidate.CreatorUserId = request.CreatorUserId;
+            enterpriseValidate.LastModificationTime = DateTime.Now;
+            enterpriseValidate.LastModifierUserId = currentUserId;
+            enterpriseValidate.IsActive = request.IsActive;
+            enterpriseValidate.IsDeleted = request.IsDeleted;
+
             db.SaveChanges();
 
             //Validate path

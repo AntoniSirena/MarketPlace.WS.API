@@ -81,6 +81,53 @@ namespace JS.Base.WS.API.Migrations
                 );
 
 
+            //Schedule Hours
+            context.ScheduleHours.AddOrUpdate(
+                x => x.Description,
+                new ScheduleHour { Description = "1:00", Value = (double)1.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "1:30", Value = (double)1.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "2:00", Value = (double)2.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "2:30", Value = (double)2.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "3:00", Value = (double)3.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "3:30", Value = (double)3.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "4:00", Value = (double)4.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "4:30", Value = (double)4.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "5:00", Value = (double)5.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "5:30", Value = (double)5.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "6:00", Value = (double)6.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "6:30", Value = (double)6.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "7:00", Value = (double)7.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "7:30", Value = (double)7.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "8:00", Value = (double)8.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "8:30", Value = (double)8.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "9:00", Value = (double)9.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "9:30", Value = (double)9.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "10:00", Value = (double)10.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "10:30", Value = (double)10.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "11:00", Value = (double)11.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "11:30", Value = (double)11.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "12:00", Value = (double)12.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "12:30", Value = (double)12.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "13:00", Value = (double)13.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "13:30", Value = (double)13.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "14:00", Value = (double)14.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "14:30", Value = (double)14.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "15:00", Value = (double)15.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "15:30", Value = (double)15.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "16:00", Value = (double)16.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "16:30", Value = (double)16.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "17:00", Value = (double)17.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "17:30", Value = (double)17.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "18:00", Value = (double)18.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "18:30", Value = (double)18.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "19:00", Value = (double)19.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "19:30", Value = (double)19.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "20:00", Value = (double)20.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "20:30", Value = (double)20.50, ShowToCustomer = true }
+
+                );
+
+
             //NoveltyTypes
             context.NoveltyTypes.AddOrUpdate(
                 x => x.ShortName,

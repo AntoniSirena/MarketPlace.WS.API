@@ -46,8 +46,92 @@ namespace JS.Base.WS.API.Controllers.Domain
                 request.StartDate = request.StartDate;
             }
 
+            if (request.StartDate.Date < DateTime.Now.Date)
+            {
+                response.Code = "400";
+                response.Message = string.Concat("Estimado usuario la fecha para ser atendido debe ser igual ó mayor a la fecha actual ", DateTime.Now.Date.ToString("dd/MM/yyyy"));
+                return Ok(response);
+            }
+
+            string shortStartDate = request.StartDate.ToString("dd/MM/yyyy");
+
+            var totalAppointmentByday = db.Appointments.Where(x => x.EnterpriseId == request.EnterpriseId
+                                                                 & x.ShortStartDate == shortStartDate).ToList();
+
+            var currentEnterprise = db.Enterprises.Where(x => x.Id == request.EnterpriseId).FirstOrDefault();
+
+            if (currentEnterprise.NumberAppointmentsAttendedByDay == totalAppointmentByday.Count())
+            {
+                response.Code = "400";
+                response.Message = string.Concat("Estimado usuario la empresa alcanzó el límete de reservaciones, ya que solo permite agendar ", currentEnterprise.NumberAppointmentsAttendedByDay, " por día. Favor agende su reservación para el día siguiente");
+
+                return Ok(response);
+            }
+
             request.StatusId = db.AppointmentStatuses.Where(x => x.ShowToCustomer == true & x.ShortName == Global.Constants.AppointmentStatus.Pending).Select(y => y.Id).FirstOrDefault();
-            request.ShortStartDate = request.StartDate.ToShortDateString();
+            request.ShortStartDate = request.StartDate.ToString("dd/MM/yyyy");
+            request.AppointmentPositionNumber = totalAppointmentByday.Count() == 0 ? 1 : totalAppointmentByday.Count() + 1;
+
+
+            //Calculation of estimate date
+            #region CalculationEstimatedate
+
+            if (request.StartDate.Date > DateTime.Now.Date)
+            {
+                DateTime dtn = DateTime.Now;
+                int day = request.StartDate.Day - DateTime.Now.Day;
+                int totalMinutes = 0;
+                if (totalAppointmentByday.Count() > 0)
+                {
+                    totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                }
+                request.EstimateDate = dtn.Date.AddDays(day).AddHours(currentEnterprise.ScheduleHour.Value).AddMinutes(totalMinutes);
+            }
+
+            if (request.StartDate.Date == DateTime.Now.Date)
+            {
+                int currentHour = DateTime.Now.Hour;
+                double currentMinutes = Convert.ToDouble(DateTime.Now.Minute.ToString()) / 60;
+                double currentTime = currentHour + currentMinutes;
+
+                if (currentTime <= currentEnterprise.ScheduleHour.Value)
+                {
+                    DateTime dtn = DateTime.Now;
+                    int day = request.StartDate.Day - DateTime.Now.Day;
+                    int totalMinutes = 0;
+                    if (totalAppointmentByday.Count() > 0)
+                    {
+                        totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                    }
+                    request.EstimateDate = dtn.Date.AddDays(day).AddHours(currentEnterprise.ScheduleHour.Value).AddMinutes(totalMinutes);
+                }
+
+                if (currentTime > currentEnterprise.ScheduleHour.Value)
+                {
+                    int totalMinutes = 0;
+                    if (totalAppointmentByday.Count() > 0)
+                    {
+                        totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                    }
+
+                    if (totalMinutes == 0)
+                    {
+                        request.EstimateDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        DateTime firstDateTime = totalAppointmentByday.Select(y => y.EstimateDate).FirstOrDefault();
+                        request.EstimateDate = firstDateTime.AddMinutes(totalMinutes);
+                    }
+                }
+
+            }
+
+            #endregion
+
+
+            request.EstimateDateFormated = request.EstimateDate.ToString("dd/MM/yyyy hh:mm tt");
+
             request.CreationTime = DateTime.Now;
             request.CreatorUserId = currentUserId;
             request.IsActive = true;
@@ -55,15 +139,14 @@ namespace JS.Base.WS.API.Controllers.Domain
             var result = db.Appointments.Add(request);
             db.SaveChanges();
 
-            response.Code = "000";
 
             if (!request.ScheduledAppointment)
             {
-                response.Message = string.Concat("Estimado usuario su turno #", result.Id.ToString(), " se ha creado correctamente");
+                response.Message = string.Concat("Estimado usuario su turno #", result.Id.ToString(), " se ha creado correctamente. ", "Su # de posición en la fila es: ", request.AppointmentPositionNumber.ToString(), " para la fecha: ", request.EstimateDateFormated);
             }
             if (request.ScheduledAppointment)
             {
-                response.Message = string.Concat("Estimado usuario su cita #", result.Id.ToString(), " se ha creado correctamente");
+                response.Message = string.Concat("Estimado usuario su cita #", result.Id.ToString(), " se ha creado correctamente. ", "Su # de posición en la fila es: ", request.AppointmentPositionNumber.ToString(), " para la fecha: ", request.EstimateDateFormated);
             }
 
             response.Data = new { Id = result.Id };
@@ -118,6 +201,8 @@ namespace JS.Base.WS.API.Controllers.Domain
             result.EnterpriseAddress = enterprise.Address;
             result.EnterprisePhoneNumber = enterprise.PhoneNumber;
             result.EnterpriseServiceTime = enterprise.ServiceTime;
+            result.NumberAppointmentsAttendedByDay = enterprise.NumberAppointmentsAttendedByDay;
+            result.EnterpriseDescription = enterprise.EnterpriseDescription;
             result.UserName = request.Name;
             result.DocumentNomber = request.DocumentNomber;
             result.PhoneNumber = request.PhoneNumber;
@@ -204,24 +289,29 @@ namespace JS.Base.WS.API.Controllers.Domain
             var appointment = db.Appointments.Where(x => x.Id == number).FirstOrDefault();
 
             var appointments = db.Appointments.Where(x => x.EnterpriseId == appointment.EnterpriseId
-                                                    & x.AppointmentStatus.ShortName == Global.Constants.AppointmentStatus.Pending
                                                     & x.StartDate.Day == appointment.StartDate.Day).ToList();
-
-            int quantityAppoint = appointments.Count() - 1;
+            int quantityAppoint = 0;
+            if (appointment.AppointmentPositionNumber > 1)
+            {
+                quantityAppoint = appointment.AppointmentPositionNumber - 1;
+            }
 
             result.Id = number;
+            result.AppointmentPositionNumber = appointment.AppointmentPositionNumber;
             result.EnterpriseImage = string.Concat(appointment.Enterprise.ImageContenTypeLong, ',', Utilities.JS_File.GetStrigBase64(appointment.Enterprise.ImagePath));
             result.EnterpriseName = appointment.Enterprise.Name;
             result.EnterpriseAddress = appointment.Enterprise.Address;
             result.EnterprisePhoneNumber = appointment.Enterprise.PhoneNumber;
             result.EnterpriseServiceTime = appointment.Enterprise.ServiceTime;
+            result.NumberAppointmentsAttendedByDay = appointment.Enterprise.NumberAppointmentsAttendedByDay;
+            result.EnterpriseDescription = appointment.Enterprise.EnterpriseDescription;
             result.InFrontMe = quantityAppoint;
-            result.Message = string.Concat("Estimado cliente tiene ", quantityAppoint.ToString(), " turno ó cita pendiente delante de usted ");
+            result.Message = quantityAppoint == 0 ? string.Concat("Estimado cliente no tiene turno pendiente delante de usted") : string.Concat("Estimado cliente tiene ", quantityAppoint.ToString(), " turno pendiente delante de usted");
             result.UserName = appointment.Name;
             result.DocumentNomber = appointment.DocumentNomber;
             result.PhoneNumber = appointment.PhoneNumber;
             result.Comment = appointment.Comment;
-            result.StartDate = Convert.ToDateTime(appointment.StartDate).ToString("dd/MM/yyyy");
+            result.StartDate = appointment.EstimateDateFormated;
 
             return result;
         }
@@ -229,7 +319,7 @@ namespace JS.Base.WS.API.Controllers.Domain
 
         [HttpGet]
         [Route("GetAppointments")]
-        public IEnumerable<AppointmentDTO> GetAppointments(string startDate, string endDate, int statusId)
+        public IHttpActionResult GetAppointments(string startDate, string endDate, int statusId)
         {
             var result = new List<AppointmentDTO>();
 
@@ -242,82 +332,179 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             string[] allowViewAllAppointmentByRoles = ConfigurationParameter.AllowViewAllAppointmentByRoles.Split(',');
 
-            if (statusId < 1)
-            {
-                statusId = db.AppointmentStatuses.Where(x => x.ShowToCustomer == true & x.ShortName == Global.Constants.AppointmentStatus.Pending).Select(y => y.Id).FirstOrDefault();
-            }
 
             string currentDate = DateTime.Now.ToShortDateString();
 
-            if (startDate == null && endDate == null)
+            string status = "Pendiente";
+            if (statusId > 0)
+            {
+                status = db.AppointmentStatuses.Where(x => x.Id == statusId).Select(y => y.Description).FirstOrDefault();
+            }
+
+
+            if (string.IsNullOrEmpty(startDate) && string.IsNullOrEmpty(endDate))
             {
                 if (allowViewAllAppointmentByRoles.Contains(userRole.Role.ShortName))
                 {
-                    result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.ShortStartDate == currentDate).Select(y => new AppointmentDTO()
+                    if (statusId > 0)
                     {
-                        Id = y.Id,
-                        EnterpriseName = y.Enterprise.Name,
-                        UserName = y.Name,
-                        PhoneNumber = y.PhoneNumber.ToString(),
-                        StartDate = y.ShortStartDate,
-                        Status = y.AppointmentStatus.Description,
-                        StatusColour = y.AppointmentStatus.Colour,
+                        result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.ShortStartDate == currentDate).Select(y => new AppointmentDTO()
+                        {
+                            Id = y.Id,
+                            AppointmentPositionNumber = y.AppointmentPositionNumber,
+                            EnterpriseName = y.Enterprise.Name,
+                            UserName = y.Name,
+                            PhoneNumber = y.PhoneNumber.ToString(),
+                            StartDate = y.EstimateDateFormated,
+                            Status = y.AppointmentStatus.Description,
+                            StatusColour = y.AppointmentStatus.Colour,
 
-                    }).OrderBy(x => x.Id).ToList();
+                        }).OrderBy(x => x.Id).ToList();
+                    }
+
+                    if (statusId == 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true & x.ShortStartDate == currentDate).Select(y => new AppointmentDTO()
+                        {
+                            Id = y.Id,
+                            AppointmentPositionNumber = y.AppointmentPositionNumber,
+                            EnterpriseName = y.Enterprise.Name,
+                            UserName = y.Name,
+                            PhoneNumber = y.PhoneNumber.ToString(),
+                            StartDate = y.EstimateDateFormated,
+                            Status = y.AppointmentStatus.Description,
+                            StatusColour = y.AppointmentStatus.Colour,
+
+                        }).OrderBy(x => x.Id).ToList();
+                    }
                 }
                 else
                 {
-                    result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.ShortStartDate == currentDate & x.EnterpriseId == enterprise.Id).Select(y => new AppointmentDTO()
+                    if (statusId > 0)
                     {
-                        Id = y.Id,
-                        EnterpriseName = y.Enterprise.Name,
-                        UserName = y.Name,
-                        PhoneNumber = y.PhoneNumber.ToString(),
-                        StartDate = y.ShortStartDate,
-                        Status = y.AppointmentStatus.Description,
-                        StatusColour = y.AppointmentStatus.Colour,
+                        result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.ShortStartDate == currentDate & x.EnterpriseId == enterprise.Id).Select(y => new AppointmentDTO()
+                        {
+                            Id = y.Id,
+                            AppointmentPositionNumber = y.AppointmentPositionNumber,
+                            EnterpriseName = y.Enterprise.Name,
+                            UserName = y.Name,
+                            PhoneNumber = y.PhoneNumber.ToString(),
+                            StartDate = y.EstimateDateFormated,
+                            Status = y.AppointmentStatus.Description,
+                            StatusColour = y.AppointmentStatus.Colour,
 
-                    }).OrderBy(x => x.Id).ToList();
+                        }).OrderBy(x => x.Id).ToList();
+                    }
+
+                    if (statusId == 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true & x.ShortStartDate == currentDate & x.EnterpriseId == enterprise.Id).Select(y => new AppointmentDTO()
+                        {
+                            Id = y.Id,
+                            AppointmentPositionNumber = y.AppointmentPositionNumber,
+                            EnterpriseName = y.Enterprise.Name,
+                            UserName = y.Name,
+                            PhoneNumber = y.PhoneNumber.ToString(),
+                            StartDate = y.EstimateDateFormated,
+                            Status = y.AppointmentStatus.Description,
+                            StatusColour = y.AppointmentStatus.Colour,
+
+                        }).OrderBy(x => x.Id).ToList();
+                    }
                 }
             }
 
 
-            if (startDate != null && endDate != null)
+            if (!string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
             {
                 if (allowViewAllAppointmentByRoles.Contains(userRole.Role.ShortName))
                 {
-                    result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId
-                                                  & x.StartDate >= _startDate & x.StartDate <= _endDate).Select(y => new AppointmentDTO()
-                                                   {
-                                                       Id = y.Id,
-                                                       EnterpriseName = y.Enterprise.Name,
-                                                       UserName = y.Name,
-                                                       PhoneNumber = y.PhoneNumber.ToString(),
-                                                       StartDate = y.ShortStartDate,
-                                                       Status = y.AppointmentStatus.Description,
-                                                       StatusColour = y.AppointmentStatus.Colour,
 
-                                                   }).OrderBy(x => x.Id).ToList();
+                    if (statusId > 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId
+                                                  & x.StartDate >= _startDate & x.StartDate <= _endDate).Select(y => new AppointmentDTO()
+                                                  {
+                                                      Id = y.Id,
+                                                      AppointmentPositionNumber = y.AppointmentPositionNumber,
+                                                      EnterpriseName = y.Enterprise.Name,
+                                                      UserName = y.Name,
+                                                      PhoneNumber = y.PhoneNumber.ToString(),
+                                                      StartDate = y.EstimateDateFormated,
+                                                      Status = y.AppointmentStatus.Description,
+                                                      StatusColour = y.AppointmentStatus.Colour,
+
+                                                  }).OrderBy(x => x.Id).ToList();
+                    }
+
+                    if (statusId == 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true
+                                                  & x.StartDate >= _startDate & x.StartDate <= _endDate).Select(y => new AppointmentDTO()
+                                                  {
+                                                      Id = y.Id,
+                                                      AppointmentPositionNumber = y.AppointmentPositionNumber,
+                                                      EnterpriseName = y.Enterprise.Name,
+                                                      UserName = y.Name,
+                                                      PhoneNumber = y.PhoneNumber.ToString(),
+                                                      StartDate = y.EstimateDateFormated,
+                                                      Status = y.AppointmentStatus.Description,
+                                                      StatusColour = y.AppointmentStatus.Colour,
+
+                                                  }).OrderBy(x => x.Id).ToList();
+                    }
                 }
                 else
                 {
-                    result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.EnterpriseId == enterprise.Id
+                    if (statusId > 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true & x.StatusId == statusId & x.EnterpriseId == enterprise.Id
                                                     & x.StartDate >= _startDate & x.StartDate <= _endDate).Select(y => new AppointmentDTO()
                                                     {
                                                         Id = y.Id,
+                                                        AppointmentPositionNumber = y.AppointmentPositionNumber,
                                                         EnterpriseName = y.Enterprise.Name,
                                                         UserName = y.Name,
                                                         PhoneNumber = y.PhoneNumber.ToString(),
-                                                        StartDate = y.ShortStartDate,
+                                                        StartDate = y.EstimateDateFormated,
                                                         Status = y.AppointmentStatus.Description,
                                                         StatusColour = y.AppointmentStatus.Colour,
 
                                                     }).OrderBy(x => x.Id).ToList();
+                    }
+
+                    if (statusId == 0)
+                    {
+                        result = db.Appointments.Where(x => x.IsActive == true & x.EnterpriseId == enterprise.Id
+                                                    & x.StartDate >= _startDate & x.StartDate <= _endDate).Select(y => new AppointmentDTO()
+                                                    {
+                                                        Id = y.Id,
+                                                        AppointmentPositionNumber = y.AppointmentPositionNumber,
+                                                        EnterpriseName = y.Enterprise.Name,
+                                                        UserName = y.Name,
+                                                        PhoneNumber = y.PhoneNumber.ToString(),
+                                                        StartDate = y.EstimateDateFormated,
+                                                        Status = y.AppointmentStatus.Description,
+                                                        StatusColour = y.AppointmentStatus.Colour,
+
+                                                    }).OrderBy(x => x.Id).ToList();
+                    }
                 }
             }
 
 
-            return result;
+            if (result.Count() == 0)
+            {
+                response.Code = "404";
+                response.Message = string.Concat("Estimado usuario en estos momentos no tiene turnos ó citas ", status, "s");
+
+                return Ok(response);
+            }
+
+            response.Data = result;
+            response.Message = string.Concat("Cantidad de registros encontrados ", result.Count().ToString());
+
+            return Ok(response);
         }
 
 
@@ -325,11 +512,41 @@ namespace JS.Base.WS.API.Controllers.Domain
         [Route("UpdateStatus")]
         public IHttpActionResult UpdateStatus(string status, long id)
         {
-            int statusId = db.AppointmentStatuses.Where(x => x.ShortName == status).Select(y => y.Id).FirstOrDefault();
+            var _status = db.AppointmentStatuses.Where(x => x.ShortName == status).FirstOrDefault();
 
             var appointment = db.Appointments.Where(x => x.Id == id).FirstOrDefault();
 
-            appointment.StatusId = statusId;
+            if (status == Global.Constants.AppointmentStatus.InProcess)
+            {
+                if (appointment.AppointmentStatus.ShortName != Global.Constants.AppointmentStatus.Pending)
+                {
+                    response.Code = "400";
+                    response.Message = "El estado de la reservación debe estar pendiente, para poder empezar";
+                    return Ok(response);
+                }
+            }
+
+            if (status == Global.Constants.AppointmentStatus.Finished)
+            {
+                if (appointment.AppointmentStatus.ShortName != Global.Constants.AppointmentStatus.InProcess)
+                {
+                    response.Code = "400";
+                    response.Message = "El estado de la reservación debe estar en proceso, para poder finalizar";
+                    return Ok(response);
+                }
+            }
+
+            if (status == Global.Constants.AppointmentStatus.Cancelled)
+            {
+                if (appointment.AppointmentStatus.ShortName == Global.Constants.AppointmentStatus.Cancelled)
+                {
+                    response.Code = "400";
+                    response.Message = "El estado de la reservación debe estar en un estado diferente de cancelado, para poder cancelarse";
+                    return Ok(response);
+                }
+            }
+
+            appointment.StatusId = _status.Id;
             appointment.LastModificationTime = DateTime.Now;
             appointment.LastModifierUserId = currentUserId;
             db.SaveChanges();
