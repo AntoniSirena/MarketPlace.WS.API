@@ -49,7 +49,7 @@ namespace JS.Base.WS.API.Controllers.Domain
             if (request.StartDate.Date < DateTime.Now.Date)
             {
                 response.Code = "400";
-                response.Message = string.Concat("Estimado usuario la fecha para ser atendido debe ser mayor ó igual a la fecha actual ", DateTime.Now.Date.ToString("dd/MM/yyyy"));
+                response.Message = string.Concat("Estimado usuario la fecha para ser atendido debe ser igual ó mayor a la fecha actual ", DateTime.Now.Date.ToString("dd/MM/yyyy"));
                 return Ok(response);
             }
 
@@ -73,15 +73,63 @@ namespace JS.Base.WS.API.Controllers.Domain
             request.AppointmentPositionNumber = totalAppointmentByday.Count() == 0 ? 1 : totalAppointmentByday.Count() + 1;
 
 
-            //Calculation of estimate day
-            DateTime dtn = DateTime.Now;
-            int day = request.StartDate.Day - DateTime.Now.Day;
-            int totalMinutes = 0;
-            if (totalAppointmentByday.Count() > 0)
+            //Calculation of estimate date
+            #region CalculationEstimatedate
+
+            if (request.StartDate.Date > DateTime.Now.Date)
             {
-                totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                DateTime dtn = DateTime.Now;
+                int day = request.StartDate.Day - DateTime.Now.Day;
+                int totalMinutes = 0;
+                if (totalAppointmentByday.Count() > 0)
+                {
+                    totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                }
+                request.EstimateDate = dtn.Date.AddDays(day).AddHours(currentEnterprise.ScheduleHour.Value).AddMinutes(totalMinutes);
             }
-            request.EstimateDate = dtn.Date.AddDays(day).AddHours(currentEnterprise.ScheduleHour.Value).AddMinutes(totalMinutes);
+
+            if (request.StartDate.Date == DateTime.Now.Date)
+            {
+                int currentHour = DateTime.Now.Hour;
+                double currentMinutes = Convert.ToDouble(DateTime.Now.Minute.ToString()) / 60;
+                double currentTime = currentHour + currentMinutes;
+
+                if (currentTime <= currentEnterprise.ScheduleHour.Value)
+                {
+                    DateTime dtn = DateTime.Now;
+                    int day = request.StartDate.Day - DateTime.Now.Day;
+                    int totalMinutes = 0;
+                    if (totalAppointmentByday.Count() > 0)
+                    {
+                        totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                    }
+                    request.EstimateDate = dtn.Date.AddDays(day).AddHours(currentEnterprise.ScheduleHour.Value).AddMinutes(totalMinutes);
+                }
+
+                if (currentTime > currentEnterprise.ScheduleHour.Value)
+                {
+                    int totalMinutes = 0;
+                    if (totalAppointmentByday.Count() > 0)
+                    {
+                        totalMinutes = totalAppointmentByday.Count() * currentEnterprise.ServiceTime;
+                    }
+
+                    if (totalMinutes == 0)
+                    {
+                        request.EstimateDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        DateTime firstDateTime = totalAppointmentByday.Select(y => y.EstimateDate).FirstOrDefault();
+                        request.EstimateDate = firstDateTime.AddMinutes(totalMinutes);
+                    }
+                }
+
+            }
+
+            #endregion
+
+
             request.EstimateDateFormated = request.EstimateDate.ToString("dd/MM/yyyy hh:mm tt");
 
             request.CreationTime = DateTime.Now;
