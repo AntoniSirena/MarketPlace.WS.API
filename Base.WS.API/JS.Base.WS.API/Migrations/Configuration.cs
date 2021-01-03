@@ -123,7 +123,15 @@ namespace JS.Base.WS.API.Migrations
                 new ScheduleHour { Description = "19:00", Value = (double)19.00, ShowToCustomer = true },
                 new ScheduleHour { Description = "19:30", Value = (double)19.50, ShowToCustomer = true },
                 new ScheduleHour { Description = "20:00", Value = (double)20.00, ShowToCustomer = true },
-                new ScheduleHour { Description = "20:30", Value = (double)20.50, ShowToCustomer = true }
+                new ScheduleHour { Description = "20:30", Value = (double)20.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "21:00", Value = (double)21.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "21:30", Value = (double)21.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "22:00", Value = (double)22.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "22:30", Value = (double)22.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "23:00", Value = (double)23.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "23:30", Value = (double)23.50, ShowToCustomer = true },
+                new ScheduleHour { Description = "24:00", Value = (double)24.00, ShowToCustomer = true },
+                new ScheduleHour { Description = "24:30", Value = (double)24.50, ShowToCustomer = true }
 
                 );
 

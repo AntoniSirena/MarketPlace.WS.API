@@ -344,7 +344,7 @@ namespace JS.Base.WS.API.Controllers.Domain
             string[] allowViewAllAppointmentByRoles = ConfigurationParameter.AllowViewAllAppointmentByRoles.Split(',');
 
 
-            string currentDate = DateTime.Now.ToShortDateString();
+            string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
 
             string status = "Pendiente";
             if (statusId > 0)
