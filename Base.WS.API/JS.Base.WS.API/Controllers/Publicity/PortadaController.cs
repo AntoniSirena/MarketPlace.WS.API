@@ -3,12 +3,12 @@ using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Response.Publicity;
 using JS.Base.WS.API.Helpers;
 using JS.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
@@ -79,6 +79,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
                         Title = y.Title,
                         Description = y.Description,
                         ImgPath = y.ImgPath,
+                        ImgBase64 = string.Empty,
                         ContenTypeShort = y.ContenTypeShort,
                         ContenTypeLong = y.ContenTypeLong,
                         StartDate = y.StartDate,
@@ -94,6 +95,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
                         Title = y.Title,
                         Description = y.Description,
                         ImgPath = y.ImgPath,
+                        ImgBase64 = string.Empty,
                         ContenTypeShort = y.ContenTypeShort,
                         ContenTypeLong = y.ContenTypeLong,
                         StartDate = y.StartDate,
@@ -102,14 +104,36 @@ namespace JS.Base.WS.API.Controllers.Publicity
                     }).OrderByDescending(x => x.Id).ToList();
                 }
 
-                foreach (var item in novelties)
-                {
-                    item.ImgBase64 = string.Concat(item.ContenTypeLong, ',', JS_File.GetStrigBase64(item.ImgPath));
-                    result.Add(item);
-                }
             }
 
-            return Ok(result);
+            return Ok(novelties);
+        }
+
+
+        [HttpGet]
+        [Route("GetImageByNoveltyId")]
+        [AllowAnonymous]
+        public IHttpActionResult GetImageByNoveltyId(long id, int width, int height)
+        {
+            var novelty = db.Novelties.Where(x => x.Id == id).FirstOrDefault();
+
+            byte[] file = JS_File.GetImgBytes(novelty.ImgPath);
+
+            if (width > 0 || height > 0)
+            {
+                MemoryStream memstr = new MemoryStream(file);
+                Image img = Image.FromStream(memstr);
+
+                file = JS_File.ResizeImage(img, width, height);
+
+                JS_File.DownloadFileImg(file);
+            }
+            else
+            {
+                JS_File.DownloadFileImg(file);
+            }
+            
+            return Ok();
         }
 
     }
