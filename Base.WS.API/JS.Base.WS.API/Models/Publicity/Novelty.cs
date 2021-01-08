@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.Base;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,8 +16,10 @@ namespace JS.Base.WS.API.Models.Publicity
         public int NoveltyTypeId { get; set; }
         public string Img { get; set; }
         public string ImgPath { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string FormattedStartDate { get; set; }
+        public string FormattedEndDate { get; set; }
         public bool IsPublic { get; set; }
         public string ContenTypeShort { get; set; }
         public string ContenTypeLong { get; set; }

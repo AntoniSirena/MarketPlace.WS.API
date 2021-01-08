@@ -48,8 +48,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 NoveltyType = y.NoveltyType.Description,
                 Img = y.Img,
                 ImgPath = y.ImgPath,
-                StartDate = y.StartDate,
-                EndDate = y.EndDate,
+                StartDate = y.FormattedStartDate,
+                EndDate = y.FormattedEndDate,
                 IsPublic = y.IsPublic,
                 CreationTime = y.CreationTime,
                 CreatorUserId = y.CreatorUserId,
@@ -67,7 +67,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
         [Route("GetNoveltyById")]
         public NoveltyDto GetNoveltyById(long Id)
         {
-            var result = db.Novelties.Where(x => x.IsActive == true & x.Id == Id).Select(y => new NoveltyDto() {
+            var result = db.Novelties.Where(x => x.IsActive == true & x.Id == Id).Select(y => new NoveltyDto()
+            {
                 Id = y.Id,
                 Title = y.Title,
                 Description = y.Description,
@@ -78,8 +79,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 ImgPath = y.ImgPath,
                 ContenTypeShort = y.ContenTypeShort,
                 ContenTypeLong = y.ContenTypeLong,
-                StartDate = y.StartDate,
-                EndDate = y.EndDate,
+                StartDate = y.FormattedStartDate,
+                EndDate = y.FormattedEndDate,
                 IsPublic = y.IsPublic,
                 IsActive = y.IsActive,
                 IsDeleted = y.IsDeleted,
@@ -100,6 +101,23 @@ namespace JS.Base.WS.API.Controllers.Publicity
         [Route("Create")]
         public IHttpActionResult Create([FromBody] Novelty request)
         {
+
+            if (string.IsNullOrEmpty(request.Img))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario es necesario cargar una fota relacionada a la noticia que desea crear";
+
+                return Ok(response);
+            }
+
+            if (request.StartDate > request.EndDate)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario la fecha de inicio debe ser menor o igual que la fecha de cierre";
+
+                return Ok(response);
+            }
+
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
             string root = ConfigurationParameter.PublicityFileDirectory;
@@ -119,10 +137,17 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 return Ok(response);
             }
 
+            var guid = Guid.NewGuid();
+            var fileName = string.Concat("Novelty_image_", guid);
+            var filePath = Path.Combine(root, fileName);
+
             request.Img = string.Empty;
             request.ImgPath = string.Empty;
+            request.ImgPath = filePath;
             request.ContenTypeShort = contentType;
             request.ContenTypeLong = arrayImgBase64[0];
+            request.FormattedStartDate = request.StartDate.ToString("dd/MM/yyyy");
+            request.FormattedEndDate = request.EndDate.ToString("dd/MM/yyyy");
             request.CreationTime = DateTime.Now;
             request.CreatorUserId = currentUserId;
             request.IsActive = true;
@@ -131,19 +156,11 @@ namespace JS.Base.WS.API.Controllers.Publicity
             db.SaveChanges();
 
             //Save img
-            var fileName = string.Concat("Novelty_img_", resp.Id.ToString());
-            var filePath = Path.Combine(root, fileName);
-
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
-
             File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
-
-            //update Novelty
-            resp.ImgPath = filePath;
-            db.SaveChanges();
 
             response.Data = new { Id = resp.Id };
             response.Message = InternalResponseMessageGood.Message200;
@@ -156,6 +173,23 @@ namespace JS.Base.WS.API.Controllers.Publicity
         [Route("Update")]
         public IHttpActionResult Update([FromBody] Novelty request)
         {
+
+            if (string.IsNullOrEmpty(request.Img))
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario es necesario cargar una fota relacionada a la noticia que desea crear";
+
+                return Ok(response);
+            }
+
+            if (request.StartDate > request.EndDate)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario la fecha de inicio debe ser menor o igual que la fecha de cierre";
+
+                return Ok(response);
+            }
+
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
             string[] arrayImgBase64 = request.Img.Split(',');
@@ -181,6 +215,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
             request.Img = string.Empty;
             request.ContenTypeShort = contentType;
             request.ContenTypeLong = arrayImgBase64[0];
+            request.FormattedStartDate = request.StartDate.ToString("dd/MM/yyyy");
+            request.FormattedEndDate = request.EndDate.ToString("dd/MM/yyyy");
             request.LastModificationTime = DateTime.Now;
             request.LastModifierUserId = currentUserId;
 
@@ -191,8 +227,11 @@ namespace JS.Base.WS.API.Controllers.Publicity
             if (string.IsNullOrEmpty(request.ImgPath))
             {
                 root = ConfigurationParameter.PublicityFileDirectory;
-                fileName = string.Concat("Novelty_img_", request.Id.ToString());
+
+                var guid = Guid.NewGuid();
+                fileName = string.Concat("Novelty_image_", guid);
                 filePath = Path.Combine(root, fileName);
+
                 request.ImgPath = filePath;
 
                 var novelty = db.Novelties.Where(x => x.Id == request.Id).FirstOrDefault();
@@ -241,7 +280,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
         [Route("GetNoveltyTypes")]
         public IEnumerable<NoveltyTypeDto> GetNoveltyTypes()
         {
-            var result = db.NoveltyTypes.Select(y => new NoveltyTypeDto(){
+            var result = db.NoveltyTypes.Select(y => new NoveltyTypeDto()
+            {
                 Id = y.Id,
                 ShortName = y.ShortName,
                 Description = y.Description,
