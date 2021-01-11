@@ -82,8 +82,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                         ImgBase64 = string.Empty,
                         ContenTypeShort = y.ContenTypeShort,
                         ContenTypeLong = y.ContenTypeLong,
-                        StartDate = y.StartDate,
-                        EndDate = y.EndDate,
+                        StartDate = y.FormattedStartDate,
+                        EndDate = y.FormattedEndDate,
 
                     }).OrderByDescending(x => x.Id).ToList();
                 }
@@ -98,8 +98,8 @@ namespace JS.Base.WS.API.Controllers.Publicity
                         ImgBase64 = string.Empty,
                         ContenTypeShort = y.ContenTypeShort,
                         ContenTypeLong = y.ContenTypeLong,
-                        StartDate = y.StartDate,
-                        EndDate = y.EndDate,
+                        StartDate = y.FormattedStartDate,
+                        EndDate = y.FormattedEndDate,
 
                     }).OrderByDescending(x => x.Id).ToList();
                 }
@@ -125,14 +125,10 @@ namespace JS.Base.WS.API.Controllers.Publicity
                 Image img = Image.FromStream(memstr);
 
                 file = JS_File.ResizeImage(img, width, height);
+            }
 
-                JS_File.DownloadFileImg(file);
-            }
-            else
-            {
-                JS_File.DownloadFileImg(file);
-            }
-            
+            JS_File.DownloadFileImg(file);
+
             return Ok();
         }
 
