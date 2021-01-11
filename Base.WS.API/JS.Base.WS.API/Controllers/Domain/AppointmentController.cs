@@ -115,13 +115,26 @@ namespace JS.Base.WS.API.Controllers.Domain
 
                     if (totalMinutes == 0)
                     {
-                        request.EstimateDate = DateTime.Now;
+                        request.EstimateDate = DateTime.Now.AddMinutes(10);
                     }
                     else
                     {
                         DateTime firstDateTime = totalAppointmentByday.Select(y => y.EstimateDate).FirstOrDefault();
                         request.EstimateDate = firstDateTime.AddMinutes(totalMinutes);
                     }
+                }
+
+
+                if (request.EstimateDate < DateTime.Now)
+                {
+                    request.EstimateDate = DateTime.Now.AddMinutes(10);
+                    request.EstimateDateIsRecalculable = true;
+                }
+
+                if (request.EstimateDateIsRecalculable & request.EstimateDate > DateTime.Now)
+                {
+                    var lastDate = totalAppointmentByday.LastOrDefault();
+                    request.EstimateDate = lastDate.EstimateDate.AddMinutes(currentEnterprise.ServiceTime);
                 }
 
             }
