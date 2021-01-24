@@ -43,6 +43,8 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
 
+        public virtual DbSet<Currency> Currencies { get; set; }
+
         //Enterprise
         public virtual DbSet<Enterprise> Enterprises { get; set; }
 
@@ -54,6 +56,14 @@ namespace JS.Base.WS.API.DBContext
 
         //File
         public virtual DbSet<FileDocument> FileDocuments  { get; set; }
+
+
+        //Market
+        public virtual DbSet<Market> Markets { get; set; }
+        public virtual DbSet<MarketType> MarketTypes { get; set; }
+        public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
+        public virtual DbSet<ArticleSubCategory> ArticleSubCategories { get; set; }
+        public virtual DbSet<ArticleCondition> ArticleConditions { get; set; }
 
 
 

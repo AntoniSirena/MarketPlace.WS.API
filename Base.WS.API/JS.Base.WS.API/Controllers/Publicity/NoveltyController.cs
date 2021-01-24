@@ -139,7 +139,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
 
             var guid = Guid.NewGuid();
             var fileName = string.Concat("Novelty_image_", guid);
-            var filePath = Path.Combine(root, fileName);
+            var filePath = Path.Combine(root, fileName) + "." + contentType;
 
             request.Img = string.Empty;
             request.ImgPath = string.Empty;
@@ -230,7 +230,7 @@ namespace JS.Base.WS.API.Controllers.Publicity
 
                 var guid = Guid.NewGuid();
                 fileName = string.Concat("Novelty_image_", guid);
-                filePath = Path.Combine(root, fileName);
+                filePath = Path.Combine(root, fileName) + "." + contentType;
 
                 request.ImgPath = filePath;
 

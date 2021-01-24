@@ -7,7 +7,7 @@ using System.Web;
 
 namespace JS.Base.WS.API.Models.Domain
 {
-    public class CompanyCategory: Audit
+    public class CompanyCategory : Audit
     {
         [Key]
         public int Id { get; set; }

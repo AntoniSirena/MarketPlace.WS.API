@@ -274,7 +274,7 @@ namespace JS.Base.WS.API.Controllers
 
             //Save img
             var fileName = string.Concat("Enterprise_img_", resp.Id.ToString());
-            var filePath = Path.Combine(root, fileName);
+            var filePath = Path.Combine(root, fileName) + "." + contentType;
 
             if (File.Exists(filePath))
             {
@@ -401,7 +401,7 @@ namespace JS.Base.WS.API.Controllers
             {
                 root = ConfigurationParameter.EnterpriseImgDirectory;
                 fileName = string.Concat("Enterprise_img_", request.Id.ToString());
-                filePath = Path.Combine(root, fileName);
+                filePath = Path.Combine(root, fileName) + "." + contentType;
                 request.ImagePath = filePath;
 
                 var enterprise = db.Enterprises.Where(x => x.Id == request.Id).FirstOrDefault();

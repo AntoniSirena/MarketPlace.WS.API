@@ -189,6 +189,11 @@ namespace JS.Base.WS.API.Global
             public static string EnterpriseImgDirectory { get { return ConfigurationParameterService.GetParameter("EnterpriseImgDirectory") ?? @"C:\SharedGuerra\Enterprise\Images"; } }
             
             public static string AllowViewAllAppointmentByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllAppointmentByRoles") ?? "SuperAdmin,Admin"; } }
+
+            public static string MarketImgDirectory { get { return ConfigurationParameterService.GetParameter("MarketImgDirectory") ?? @"C:\SharedGuerra\Market\Images"; } }
+
+            public static string AllowViewAllMarketsByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllMarketsByRoles") ?? "SuperAdmin,Admin"; } }
+
         }
 
     }

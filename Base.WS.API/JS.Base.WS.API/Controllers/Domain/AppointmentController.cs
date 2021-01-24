@@ -540,6 +540,13 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             var appointment = db.Appointments.Where(x => x.Id == id).FirstOrDefault();
 
+            if (appointment.StartDate.Date > DateTime.Now.Date)
+            {
+                response.Code = "400";
+                response.Message = string.Concat("Estimado usuario esta reservación no puede empezarse hoy porque corresponde a la fecha ", appointment.EstimateDateFormated);
+                return Ok(response);
+            }
+
             if (status == Global.Constants.AppointmentStatus.InProcess)
             {
                 if (appointment.AppointmentStatus.ShortName != Global.Constants.AppointmentStatus.Pending)
