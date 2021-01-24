@@ -330,29 +330,91 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        public IEnumerable<Article> GetArticles(string marketTypeShortName, int subCategoryId)
+        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId, int subCategoryId)
         {
             var result = new List<Article>();
 
             var marketType = db.MarketTypes.Where(x => x.ShortName == marketTypeShortName).FirstOrDefault();
 
-            result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
-                                    .Select(y => new Article()
-                                    {
-                                        Id = y.Id,
-                                        Title = y.Title,
-                                        Price = y.Price,
-                                        CurrencyCode = y.Currency.ISO_Code,
-                                        Condition = y.ArticleCondition.Description,
-                                        Ubication = y.Ubication,
-                                        PhoneNumber = y.PhoneNumber.ToString(),
-                                        CreationDate = y.CreationDate,
-                                    })
-                                    .OrderByDescending(x => x.Id)
-                                    .Take(200)
-                                    .ToList();
-
-
+            if (categoryId > 0 || subCategoryId > 0)
+            {
+                if (categoryId > 0 && subCategoryId == 0)
+                {
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                        && x.CategoryId == categoryId
+                        && x.IsActive == true)
+                                .Select(y => new Article()
+                                {
+                                    Id = y.Id,
+                                    Title = y.Title,
+                                    Price = y.Price,
+                                    CurrencyCode = y.Currency.ISO_Code,
+                                    Condition = y.ArticleCondition.Description,
+                                    Ubication = y.Ubication,
+                                    PhoneNumber = y.PhoneNumber.ToString(),
+                                    CreationDate = y.CreationDate,
+                                })
+                                .OrderByDescending(x => x.Id)
+                                .ToList();
+                }
+                if (subCategoryId > 0 && categoryId == 0)
+                {
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                        && x.SubCategoryId == subCategoryId
+                        && x.IsActive == true)
+                                .Select(y => new Article()
+                                {
+                                    Id = y.Id,
+                                    Title = y.Title,
+                                    Price = y.Price,
+                                    CurrencyCode = y.Currency.ISO_Code,
+                                    Condition = y.ArticleCondition.Description,
+                                    Ubication = y.Ubication,
+                                    PhoneNumber = y.PhoneNumber.ToString(),
+                                    CreationDate = y.CreationDate,
+                                })
+                                .OrderByDescending(x => x.Id)
+                                .ToList();
+                }
+                if(categoryId > 0 && subCategoryId > 0)
+                {
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    && x.CategoryId == categoryId
+                    && x.SubCategoryId == subCategoryId
+                    && x.IsActive == true)
+                            .Select(y => new Article()
+                            {
+                                Id = y.Id,
+                                Title = y.Title,
+                                Price = y.Price,
+                                CurrencyCode = y.Currency.ISO_Code,
+                                Condition = y.ArticleCondition.Description,
+                                Ubication = y.Ubication,
+                                PhoneNumber = y.PhoneNumber.ToString(),
+                                CreationDate = y.CreationDate,
+                            })
+                            .OrderByDescending(x => x.Id)
+                            .ToList();
+                }
+            }
+            else
+            {
+                result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
+                        .Select(y => new Article()
+                        {
+                            Id = y.Id,
+                            Title = y.Title,
+                            Price = y.Price,
+                            CurrencyCode = y.Currency.ISO_Code,
+                            Condition = y.ArticleCondition.Description,
+                            Ubication = y.Ubication,
+                            PhoneNumber = y.PhoneNumber.ToString(),
+                            CreationDate = y.CreationDate,
+                        })
+                        .OrderByDescending(x => x.Id)
+                        .Take(200)
+                        .ToList();
+            }
 
             return result;
         }
