@@ -16,4 +16,9 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public string PhoneNumber { get; set; }
         public string CreationDate { get; set; }
     }
+
+    public class ImgDetail
+    {
+        public long Id { get; set; }
+    }
 }

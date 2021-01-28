@@ -263,6 +263,8 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
+    <Compile Include="DTO\Request\Domain\RequestMarketDTO.cs" />
+    <Compile Include="DTO\Request\UploadFile.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDetailDTO.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDTO.cs" />
@@ -307,6 +309,7 @@
     <Compile Include="Models\Domain\CompanyRegister.cs" />
     <Compile Include="Models\Domain\FreeMarket\ArticleCondition.cs" />
     <Compile Include="Models\Domain\FreeMarket\ArticleSubCategory.cs" />
+    <Compile Include="Models\Domain\FreeMarket\MarketImgDetail.cs" />
     <Compile Include="Models\Domain\FreeMarket\MarketType.cs" />
     <Compile Include="Models\Domain\FreeMarket\Market.cs" />
     <Compile Include="Models\Domain\ScheduleHour.cs" />
@@ -406,7 +409,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DTO\Request\Domain\" />
     <Folder Include="obj\" />
     <Folder Include="Services\Domain\" />
     <Folder Include="Services\IServices\IDomain\" />

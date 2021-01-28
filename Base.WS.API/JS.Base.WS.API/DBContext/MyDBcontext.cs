@@ -64,6 +64,7 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
         public virtual DbSet<ArticleSubCategory> ArticleSubCategories { get; set; }
         public virtual DbSet<ArticleCondition> ArticleConditions { get; set; }
+        public virtual DbSet<MarketImgDetail> MarketImgDetails { get; set; }
 
 
 

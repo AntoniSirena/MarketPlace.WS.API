@@ -1,5 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
+using JS.Base.WS.API.DTO.Request;
+using JS.Base.WS.API.DTO.Request.Domain;
 using JS.Base.WS.API.DTO.Response.Domain.FreeMarket;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain;
@@ -167,10 +169,10 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create([FromBody] Market request)
+        public IHttpActionResult Create([FromBody] RequestMarketDTO request)
         {
 
-            if (string.IsNullOrEmpty(request.Img))
+            if (string.IsNullOrEmpty(request.Market.Img))
             {
                 response.Code = "400";
                 response.Message = "Estimado usuario es necesario subir una imagen para la portada de la publicación";
@@ -182,7 +184,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
             string root = ConfigurationParameter.MarketImgDirectory;
-            string[] arrayImgBase64 = request.Img.Split(',');
+            string[] arrayImgBase64 = request.Market.Img.Split(',');
             string imgBase64 = arrayImgBase64[arrayImgBase64.Length - 1];
 
             string[] splitName1 = arrayImgBase64[0].Split('/');
@@ -192,28 +194,46 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             //Validate contentType
             if (!fileTypeAlloweds.Contains(contentType))
             {
-                response.Code = InternalResponseCodeError.Code324;
-                response.Message = InternalResponseCodeError.Message324;
+                response.Code = "400";
+                response.Message = "El tipo de imagen de la portada que intenta subir es desconocido, favor reemplacé la misma";
 
                 return Ok(response);
             }
 
-            request.Img = string.Empty;
-            request.ImgPath = string.Empty;
-            request.ContenTypeShort = contentType;
-            request.ContenTypeLong = arrayImgBase64[0];
-            request.CreationDate = DateTime.Now.ToString("dd/MM/yyyy");
-            request.CreationTime = DateTime.Now;
-            request.CreatorUserId = currentUserId;
-            request.IsActive = true;
+            if (request.ImgDetails.Count > 0)
+            {
+                int count = 0;
+                foreach (var item in request.ImgDetails)
+                {
+                    count = count + 1;
+                    string[] imgType = item.type.Split('/');
+                    if (!fileTypeAlloweds.Contains(imgType[imgType.Length - 1]))
+                    {
+                        response.Code = "400";
+                        response.Message = string.Concat("La imagen número ", count.ToString(), " de la lista que intenta subir es desconocida, favor reemplacé la misma");
 
-            var resp = db.Markets.Add(request);
+                        return Ok(response);
+                    }
+                }
+            }
+
+
+            request.Market.Img = string.Empty;
+            request.Market.ImgPath = string.Empty;
+            request.Market.ContenTypeShort = contentType;
+            request.Market.ContenTypeLong = arrayImgBase64[0];
+            request.Market.CreationDate = DateTime.Now.ToString("dd/MM/yyyy");
+            request.Market.CreationTime = DateTime.Now;
+            request.Market.CreatorUserId = currentUserId;
+            request.Market.IsActive = true;
+
+            var marketResponse = db.Markets.Add(request.Market);
             db.SaveChanges();
 
 
             //Save img
             var guid = Guid.NewGuid();
-            var fileName = string.Concat("Market_img_", guid);
+            var fileName = string.Concat("Market_img_portada_", guid);
             var filePath = Path.Combine(root, fileName) + "." + contentType;
 
             if (File.Exists(filePath))
@@ -224,10 +244,61 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
 
             //update Novelty
-            resp.ImgPath = filePath;
+            marketResponse.ImgPath = filePath;
             db.SaveChanges();
 
-            response.Data = new { Id = resp.Id };
+
+            //Save img details
+            #region Save img details
+
+            if (request.ImgDetails.Count > 0)
+            {
+                int maximumImgQuantityMarketDetail = Convert.ToInt32(ConfigurationParameter.MaximumImgQuantityMarketDetail);
+                if (request.ImgDetails.Count() > maximumImgQuantityMarketDetail)
+                {
+                    response.Code = "400";
+                    response.Message = string.Concat("Estimado usuarion no puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos, favor ajuste la cantidad de las mismas");
+
+                    return Ok(response);
+                }
+
+                foreach (var item in request.ImgDetails)
+                {
+                    string[] imgShortType = item.type.Split('/');
+                    string[] imgLongType = item.base64.Split(',');
+                    string _imgBase64 = imgLongType[imgLongType.Length - 1];
+
+                    var _guid = Guid.NewGuid();
+                    var _fileName = string.Concat("Market_img_detail_", _guid);
+                    var _filePath = Path.Combine(root, _fileName) + "." + imgShortType[imgShortType.Length - 1];
+
+                    if (File.Exists(_filePath))
+                    {
+                        File.Delete(_filePath);
+                    }
+
+                    File.WriteAllBytes(_filePath, Convert.FromBase64String(_imgBase64));
+
+                    var marketDetailRequest = new MarketImgDetail()
+                    {
+                        MarketId = marketResponse.Id,
+                        ImgPath = _filePath,
+                        ContenTypeShort = imgShortType[imgShortType.Length - 1],
+                        ContenTypeLong = imgLongType[0],
+                        CreatorUserId = currentUserId,
+                        CreationTime = DateTime.Now,
+                        IsActive = true,
+                    };
+
+                    db.MarketImgDetails.Add(marketDetailRequest);
+                    db.SaveChanges();
+                }
+            }
+
+            #endregion
+
+
+            response.Data = new { Id = marketResponse.Id };
             response.Message = "Artículo creado con éxito";
 
             return Ok(response);
@@ -269,6 +340,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 return Ok(response);
             }
 
+            request.Img = string.Empty;
             request.LastModifierUserId = currentUserId;
             request.LastModificationTime = DateTime.Now;
             request.IsActive = true;
@@ -282,7 +354,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             {
                 var guid = Guid.NewGuid();
                 root = ConfigurationParameter.MarketImgDirectory;
-                fileName = string.Concat("Market_img_", guid);
+                fileName = string.Concat("Market_img_portada_", guid);
                 filePath = Path.Combine(root, fileName) + "." + contentType;
                 request.ImgPath = filePath;
 
@@ -420,6 +492,25 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
         }
 
 
+        [HttpGet]
+        [Route("GetImgDetailByArticleId")]
+        public IEnumerable<ImgDetail> GetImgDetailByArticleId(long articleId)
+        {
+            var result = new List<ImgDetail>();
+
+            var articles = db.MarketImgDetails.Where(x => x.MarketId == articleId && x.IsActive == true).ToList();
+
+            if (articles.Count > 0)
+            {
+                result = articles.Select(x => new ImgDetail()
+                {
+                    Id = x.Id,
+                }).ToList();
+            }
+
+            return result;
+        }
+
 
         [HttpGet]
         [Route("GetImageByArticleId")]
@@ -428,17 +519,46 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
         {
             var article = db.Markets.Where(x => x.Id == id).FirstOrDefault();
 
-            byte[] file = JS_File.GetImgBytes(article.ImgPath);
-
-            if (width > 0 || height > 0)
+            if (File.Exists(article.ImgPath))
             {
-                MemoryStream memstr = new MemoryStream(file);
-                Image img = Image.FromStream(memstr);
+                byte[] file = JS_File.GetImgBytes(article.ImgPath);
 
-                file = JS_File.ResizeImage(img, width, height);
+                if (width > 0 || height > 0)
+                {
+                    MemoryStream memstr = new MemoryStream(file);
+                    Image img = Image.FromStream(memstr);
+
+                    file = JS_File.ResizeImage(img, width, height);
+                }
+
+                JS_File.DownloadFileImg(file);
             }
 
-            JS_File.DownloadFileImg(file);
+            return Ok();
+        }
+        
+
+        [HttpGet]
+        [Route("GetImageDetailByArticleId")]
+        [AllowAnonymous]
+        public IHttpActionResult GetImageDetailByArticleId(long id, int width, int height)
+        {
+            var articleDetail = db.MarketImgDetails.Where(x => x.Id == id).FirstOrDefault();
+
+            if (File.Exists(articleDetail.ImgPath))
+            {
+                byte[] file = JS_File.GetImgBytes(articleDetail.ImgPath);
+
+                if (width > 0 || height > 0)
+                {
+                    MemoryStream memstr = new MemoryStream(file);
+                    Image img = Image.FromStream(memstr);
+
+                    file = JS_File.ResizeImage(img, width, height);
+                }
+
+                JS_File.DownloadFileImg(file);
+            }
 
             return Ok();
         }

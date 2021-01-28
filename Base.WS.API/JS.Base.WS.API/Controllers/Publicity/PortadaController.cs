@@ -117,17 +117,20 @@ namespace JS.Base.WS.API.Controllers.Publicity
         {
             var novelty = db.Novelties.Where(x => x.Id == id).FirstOrDefault();
 
-            byte[] file = JS_File.GetImgBytes(novelty.ImgPath);
-
-            if (width > 0 || height > 0)
+            if (File.Exists(novelty.ImgPath))
             {
-                MemoryStream memstr = new MemoryStream(file);
-                Image img = Image.FromStream(memstr);
+                byte[] file = JS_File.GetImgBytes(novelty.ImgPath);
 
-                file = JS_File.ResizeImage(img, width, height);
+                if (width > 0 || height > 0)
+                {
+                    MemoryStream memstr = new MemoryStream(file);
+                    Image img = Image.FromStream(memstr);
+
+                    file = JS_File.ResizeImage(img, width, height);
+                }
+
+                JS_File.DownloadFileImg(file);
             }
-
-            JS_File.DownloadFileImg(file);
 
             return Ok();
         }

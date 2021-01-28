@@ -46,5 +46,6 @@ namespace JS.Base.WS.API.Models.Domain
 
         [ForeignKey("SubCategoryId")]
         public virtual ArticleSubCategory SubCategory { get; set; }
+
     }
 }

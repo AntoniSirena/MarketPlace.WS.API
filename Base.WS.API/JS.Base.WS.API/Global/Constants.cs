@@ -194,6 +194,9 @@ namespace JS.Base.WS.API.Global
 
             public static string AllowViewAllMarketsByRoles { get { return ConfigurationParameterService.GetParameter("AllowViewAllMarketsByRoles") ?? "SuperAdmin,Admin"; } }
 
+            public static string MaximumImgQuantityMarketDetail { get { return ConfigurationParameterService.GetParameter("MaximumImgQuantityMarketDetail") ?? "5"; } }
+
+            
         }
 
     }

@@ -352,6 +352,14 @@ namespace JS.Base.WS.API.Controllers.Domain
 
             var enterprise = db.Enterprises.Where(x => x.UserId == currentUserId).FirstOrDefault();
 
+            if (enterprise == null)
+            {
+                response.Code = "400";
+                response.Message = "No existe una empresa configurada para el usuario actual. Favor hacer click en Menú --> Empresas --> Configuración --> Nuevo";
+
+                return Ok(response);
+            }
+
             var userRole = db.UserRoles.Where(x => x.UserId == currentUserId).FirstOrDefault();
 
             string[] allowViewAllAppointmentByRoles = ConfigurationParameter.AllowViewAllAppointmentByRoles.Split(',');
