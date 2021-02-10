@@ -327,16 +327,6 @@ namespace JS.Base.WS.API.Controllers
                 }
             }
 
-
-            long enterpriseUserId = db.Enterprises.Where(x => x.UserId == currentUserId & x.IsActive == true).Select(y => y.Id).FirstOrDefault();
-            if (enterpriseUserId > 0)
-            {
-                response.Code = "400";
-                response.Message = "Este usuario ya tiene una empresa creada en el sistema";
-
-                return Ok(response);
-            }
-
             if (string.IsNullOrEmpty(request.Image))
             {
                 response.Code = "400";

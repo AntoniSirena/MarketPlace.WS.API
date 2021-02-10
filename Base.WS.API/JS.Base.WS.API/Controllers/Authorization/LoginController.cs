@@ -480,7 +480,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
             var responseAlert = AlertService.Alert.SendMail(requestAlert);
             #endregion
 
-            response.Message = "Favor revisar su correo y confirmar contraseña";
+            response.Message = "Favor revise su correo y confirme el mensaje recibido";
 
             return Ok(response);
         }
