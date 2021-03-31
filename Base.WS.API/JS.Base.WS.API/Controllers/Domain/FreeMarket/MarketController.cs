@@ -10,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using static JS.Base.WS.API.Global.Constants;
 
@@ -226,6 +228,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             request.Market.CreationTime = DateTime.Now;
             request.Market.CreatorUserId = currentUserId;
             request.Market.IsActive = true;
+            request.Market.TitleFormatted = RemoveAccents(request.Market.Title);
 
             var marketResponse = db.Markets.Add(request.Market);
             db.SaveChanges();
@@ -344,6 +347,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             request.LastModifierUserId = currentUserId;
             request.LastModificationTime = DateTime.Now;
             request.IsActive = true;
+            request.TitleFormatted = RemoveAccents(request.Title);
 
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
@@ -402,11 +406,17 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId, int subCategoryId)
+        [AllowAnonymous]
+        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "")
         {
             var result = new List<Article>();
 
             var marketType = db.MarketTypes.Where(x => x.ShortName == marketTypeShortName).FirstOrDefault();
+
+            if (categoryId > 0 || subCategoryId > 0)
+            {
+                inputStr = string.Empty;
+            }
 
             if (categoryId > 0 || subCategoryId > 0)
             {
@@ -448,7 +458,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                 .OrderByDescending(x => x.Id)
                                 .ToList();
                 }
-                if(categoryId > 0 && subCategoryId > 0)
+                if (categoryId > 0 && subCategoryId > 0)
                 {
                     result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                     && x.CategoryId == categoryId
@@ -471,21 +481,50 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             }
             else
             {
-                result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
-                        .Select(y => new Article()
-                        {
-                            Id = y.Id,
-                            Title = y.Title,
-                            Price = y.Price,
-                            CurrencyCode = y.Currency.ISO_Code,
-                            Condition = y.ArticleCondition.Description,
-                            Ubication = y.Ubication,
-                            PhoneNumber = y.PhoneNumber.ToString(),
-                            CreationDate = y.CreationDate,
-                        })
-                        .OrderByDescending(x => x.Id)
-                        .Take(200)
-                        .ToList();
+                if (!string.IsNullOrEmpty(inputStr))
+                {
+                    inputStr = RemoveAccents(inputStr);
+
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true 
+                    && ( x.TitleFormatted.ToLower().Contains(inputStr.ToLower()) ||
+                    x.Category.DescriptionFormatted.ToLower().Contains(inputStr) ||
+                    x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr)  ||
+                    x.Ubication.ToLower().Contains(inputStr) ||
+                    x.Price.ToString().ToLower().Contains(inputStr) ||
+                    x.CreationDate.ToLower().Contains(inputStr) ))
+
+                   .Select(y => new Article()
+                   {
+                       Id = y.Id,
+                       Title = y.Title,
+                       Price = y.Price,
+                       CurrencyCode = y.Currency.ISO_Code,
+                       Condition = y.ArticleCondition.Description,
+                       Ubication = y.Ubication,
+                       PhoneNumber = y.PhoneNumber.ToString(),
+                       CreationDate = y.CreationDate,
+                   })
+                   .OrderByDescending(x => x.Id)
+                   .ToList();
+                }
+                else
+                {
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
+                    .Select(y => new Article()
+                    {
+                        Id = y.Id,
+                        Title = y.Title,
+                        Price = y.Price,
+                        CurrencyCode = y.Currency.ISO_Code,
+                        Condition = y.ArticleCondition.Description,
+                        Ubication = y.Ubication,
+                        PhoneNumber = y.PhoneNumber.ToString(),
+                        CreationDate = y.CreationDate,
+                    })
+                    .OrderByDescending(x => x.Id)
+                    .Take(200)
+                    .ToList();
+                }
             }
 
             return result;
@@ -536,7 +575,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             return Ok();
         }
-        
+
 
         [HttpGet]
         [Route("GetImageDetailByArticleId")]
@@ -641,5 +680,24 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
         }
 
         #endregion
+
+
+
+        private string RemoveAccents(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
     }
 }
