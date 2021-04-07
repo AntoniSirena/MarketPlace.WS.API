@@ -406,7 +406,6 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        [AllowAnonymous]
         public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "")
         {
             var result = new List<Article>();
@@ -482,7 +481,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             else
             {
                 if (!string.IsNullOrEmpty(inputStr))
-                {
+               {
                     inputStr = RemoveAccents(inputStr);
 
                     result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true 
@@ -491,7 +490,10 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr)  ||
                     x.Ubication.ToLower().Contains(inputStr) ||
                     x.Price.ToString().ToLower().Contains(inputStr) ||
-                    x.CreationDate.ToLower().Contains(inputStr) ))
+                    x.CreationDate.ToLower().Contains(inputStr) ||
+                    x.ArticleCondition.Description.ToLower().Contains(inputStr)
+
+                    ))
 
                    .Select(y => new Article()
                    {
