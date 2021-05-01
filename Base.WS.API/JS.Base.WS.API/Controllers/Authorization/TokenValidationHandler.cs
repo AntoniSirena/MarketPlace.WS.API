@@ -88,55 +88,6 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 lifeToken = Convert.ToDateTime(userValue[2]);
                 isVisitorUser = Convert.ToBoolean(userValue[3]);
 
-
-                long time = 0;
-
-
-
-                //if (lifeToken == DateTime.Now)
-                //{
-                //    time = (lifeToken.Minute - DateTime.Now.Minute);
-                //}
-
-                //if (time > 0 && time < refressTime)
-                //{
-                //    statusCode = HttpStatusCode.Conflict;
-
-                //    var refressResult = Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
-
-                //    return refressResult;
-                //}
-
-
-                //Refresh token
-                //time = (lifeToken - DateTime.Now).Hours * 60;
-                //string currentToken = string.Empty;
-
-
-                //if (time <= refressTime & time > 0)
-                //{
-                //    int expireTime = 0;
-                //    if (isVisitorUser)
-                //    {
-                //        expireTime = Convert.ToInt32(ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"]);
-                //    }
-                //    else
-                //    {
-                //        expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
-                //    }
-
-                //    string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
-                //    string payLoad = userName + "," + currentUserId.ToString() + "," + lifeDate;
-                //    currentToken = string.Concat("Bearer ", TokenGenerator.GenerateTokenJwt(payLoad));
-
-                //    HttpContext.Current.Response.Headers.Add("TokenRefresh", currentToken);
-                //}
-                //else
-                //{
-                //    HttpContext.Current.Response.Headers.Add("TokenRefresh", "N/A");
-                //}               
-
-
                 //Cache estorage by 5 minutes
                 CacheStorage.Add("currentUserName", currentUserName, DateTimeOffset.UtcNow.AddMinutes(5));
                 CacheStorage.Add("currentUserId", currentUserId, DateTimeOffset.UtcNow.AddMinutes(5));

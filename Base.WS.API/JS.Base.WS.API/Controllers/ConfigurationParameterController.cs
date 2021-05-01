@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace JS.Base.WS.API.Controllers
 {
     [Authorize]
-    [RoutePrefix("Api/ConfigurationParameter")]
+    [RoutePrefix("api/ConfigurationParameter")]
     public class ConfigurationParameterController : GenericApiController<ConfigurationParameter>
     {
     }

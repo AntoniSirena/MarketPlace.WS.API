@@ -283,6 +283,11 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate + "," + currentUser.IsVisitorUser.ToString();
                 var token = TokenGenerator.GenerateTokenJwt(payLoad);
 
+                // refreshToken
+                string _lifeDate = DateTime.Now.AddMinutes(expireTime + 2).ToString();
+                string refreshToken = string.Concat(currentUser.UserName, ',', currentUser.Password, ',', _lifeDate);
+                refreshToken = Utilities.Security.Encrypt_TwoWay(refreshToken);
+
                 var userRole = db.UserRoles.Where(x => x.UserId == currentUser.Id && x.IsActive == true).FirstOrDefault();
 
                 //Permissions
@@ -339,6 +344,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         EmailAddress = currentUser.EmailAddress,
                         Image = currentUser.Image,
                         Token = "Bearer " + token,
+                        RefreshToken = refreshToken,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
                         MenuTemplate = string.Empty,
                         RoleDescription = userRole.Role.Description,
@@ -429,6 +435,74 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
 
         [HttpPost]
+        [Route("refreshToken")]
+        public IHttpActionResult RefreshToken([FromBody] string refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                response.Code = "400";
+                response.Message = "Token inválido";
+
+                return Ok(response);
+            }
+
+            refreshToken = Utilities.Security.Decrypt_TwoWay(refreshToken);
+
+            string[] data = refreshToken.Split(',');
+            string userName = data[0];
+            string password = data[1];
+            DateTime sessionDate = Convert.ToDateTime(data[2]);
+
+            if (DateTime.Now >= sessionDate)
+            {
+                response.Code = "400";
+                response.Message = "Estimado usuario su sesión ha expirada";
+
+                return Ok(response);
+            }
+
+            var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
+
+            var currentUser = db.Users.Where(x => x.IsActive == true
+                              && x.StatusId == statusAcitve.Id
+                              && (x.UserName == userName || x.EmailAddress == userName)
+                              && x.Password == password).FirstOrDefault();
+
+            if (currentUser == null)
+            {
+                response.Code = "400";
+                response.Message = "Usuario no encontrado";
+
+                return Ok(response);
+            }
+
+            int expireTime = 0;
+            if (currentUser.IsVisitorUser)
+            {
+                expireTime = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES_USER_VISITADOR"]);
+            }
+            else
+            {
+                expireTime = Convert.ToInt32(Constants.ConfigurationParameter.LoginTime);
+            }
+            string lifeDate = DateTime.Now.AddMinutes(expireTime).ToString();
+            string payLoad = currentUser.UserName + "," + currentUser.Id.ToString() + "," + lifeDate + "," + currentUser.IsVisitorUser.ToString();
+            var token = TokenGenerator.GenerateTokenJwt(payLoad);
+
+
+            // refreshToken
+            string _lifeDate = DateTime.Now.AddMinutes(expireTime + 2).ToString();
+            string _refreshToken = string.Concat(currentUser.UserName, ',', currentUser.Password, ',', _lifeDate);
+            _refreshToken = Utilities.Security.Encrypt_TwoWay(_refreshToken);
+
+            response.Data = new { token = token, refreshToken = _refreshToken };
+            response.Message = "Token actualizado satisfactoriamente";
+
+            return Ok(response);
+        }
+
+    
+        [HttpPost]
         [Route("logOut")]
         public IHttpActionResult logOut([FromBody] long userId)
         {
@@ -500,30 +574,37 @@ namespace JS.Base.WS.API.Controllers.Authorization
         [Route("updatePassword")]
         public IHttpActionResult UpdatePassword(UserRequest request)
         {
-            request.UserName = HttpUtility.UrlDecode(request.UserName);
-            request.UserName = Utilities.Security.Decrypt_TwoWay(request.UserName);
-
-            var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
-            var pendingToChangePassword = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToChangePassword).FirstOrDefault();
-
-            string[] userNameArray = request.UserName.Split(',');
-            long userId = Convert.ToInt64(userNameArray[0]);
-            string userName = userNameArray[1];
-
-            var user = db.Users.Where(x => x.Id == userId & x.UserName == userName).FirstOrDefault();
-
-            if (user.StatusId != pendingToChangePassword.Id)
+            try
             {
-                response.Code = "005";
-                response.Message = "Su usuario se encuentra en un estado que no permite cambiar la contraseña";
-                return Ok(response);
+                request.UserName = HttpUtility.UrlDecode(request.UserName);
+                request.UserName = Utilities.Security.Decrypt_TwoWay(request.UserName);
+
+                var statusAcitve = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.Active).FirstOrDefault();
+                var pendingToChangePassword = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToChangePassword).FirstOrDefault();
+
+                string[] userNameArray = request.UserName.Split(',');
+                long userId = Convert.ToInt64(userNameArray[0]);
+                string userName = userNameArray[1];
+
+                var user = db.Users.Where(x => x.Id == userId & x.UserName == userName).FirstOrDefault();
+
+                if (user.StatusId != pendingToChangePassword.Id)
+                {
+                    response.Code = "005";
+                    response.Message = "Su usuario se encuentra en un estado que no permite cambiar la contraseña";
+                    return Ok(response);
+                }
+
+                user.Password = Utilities.Security.Encrypt_OneWay(request.Password);
+                user.StatusId = statusAcitve.Id;
+                db.SaveChanges();
+
+                response.Message = "Su contraseña fué actualizada de forma correcta";
             }
-
-            user.Password = Utilities.Security.Encrypt_OneWay(request.Password);
-            user.StatusId = statusAcitve.Id;
-            db.SaveChanges();
-
-            response.Message = "Su contraseña fué actualizada de forma correcta";
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
 
             return Ok(response);
         }
