@@ -109,6 +109,7 @@ namespace JS.Base.WS.API.Controllers.External
 
             var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();
 
+            user.Image = ConfigurationParameter.UserAvataDefault;
             user.Password = Utilities.Security.Encrypt_OneWay(user.Password);
             user.StatusId = CurrentStatus.Id;
             user.CreationTime = DateTime.Now;

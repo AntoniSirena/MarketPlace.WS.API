@@ -59,6 +59,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 SubCategoryId = x.SubCategoryId,
                 SubCategory = x.SubCategory.Description,
                 Ubication = x.Ubication,
+                Description = x.Description,
                 PhoneNumber = x.PhoneNumber,
                 Img = x.Img,
                 ImgPath = x.ImgPath,
@@ -110,6 +111,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     SubCategoryId = x.SubCategoryId,
                     SubCategory = x.SubCategory.Description,
                     Ubication = x.Ubication,
+                    Description = x.Description,
                     PhoneNumber = x.PhoneNumber,
                     Img = x.Img,
                     ImgPath = x.ImgPath,
@@ -146,6 +148,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     SubCategoryId = x.SubCategoryId,
                     SubCategory = x.SubCategory.Description,
                     Ubication = x.Ubication,
+                    Description = x.Description,
                     PhoneNumber = x.PhoneNumber,
                     Img = x.Img,
                     ImgPath = x.ImgPath,
@@ -406,9 +409,11 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "")
+        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "", int page = 1)
         {
             var result = new List<Article>();
+
+            int pagination = page * Convert.ToInt32(ConfigurationParameter.ItemsByPageMarkeetPlace);
 
             var marketType = db.MarketTypes.Where(x => x.ShortName == marketTypeShortName).FirstOrDefault();
 
@@ -432,10 +437,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     CurrencyCode = y.Currency.ISO_Code,
                                     Condition = y.ArticleCondition.Description,
                                     Ubication = y.Ubication,
+                                    Description = y.Description,
                                     PhoneNumber = y.PhoneNumber.ToString(),
                                     CreationDate = y.CreationDate,
+                                    ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
+                                    {
+                                        Id = z.Id,
+                                    }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
+                                .Take(pagination)
                                 .ToList();
                 }
                 if (subCategoryId > 0 && categoryId == 0)
@@ -451,10 +462,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     CurrencyCode = y.Currency.ISO_Code,
                                     Condition = y.ArticleCondition.Description,
                                     Ubication = y.Ubication,
+                                    Description = y.Description,
                                     PhoneNumber = y.PhoneNumber.ToString(),
                                     CreationDate = y.CreationDate,
+                                    ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
+                                    {
+                                        Id = z.Id,
+                                    }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
+                                .Take(pagination)
                                 .ToList();
                 }
                 if (categoryId > 0 && subCategoryId > 0)
@@ -471,27 +488,34 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                 CurrencyCode = y.Currency.ISO_Code,
                                 Condition = y.ArticleCondition.Description,
                                 Ubication = y.Ubication,
+                                Description = y.Description,
                                 PhoneNumber = y.PhoneNumber.ToString(),
                                 CreationDate = y.CreationDate,
+                                ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
+                                {
+                                    Id = z.Id,
+                                }).ToList(),
                             })
                             .OrderByDescending(x => x.Id)
+                            .Take(pagination)
                             .ToList();
                 }
             }
             else
             {
                 if (!string.IsNullOrEmpty(inputStr))
-               {
+                {
                     inputStr = RemoveAccents(inputStr);
 
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true 
-                    && ( x.TitleFormatted.ToLower().Contains(inputStr.ToLower()) ||
+                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true
+                    && (x.TitleFormatted.ToLower().Contains(inputStr.ToLower()) ||
                     x.Category.DescriptionFormatted.ToLower().Contains(inputStr) ||
-                    x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr)  ||
+                    x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr) ||
                     x.Ubication.ToLower().Contains(inputStr) ||
                     x.Price.ToString().ToLower().Contains(inputStr) ||
                     x.CreationDate.ToLower().Contains(inputStr) ||
-                    x.ArticleCondition.Description.ToLower().Contains(inputStr)
+                    x.ArticleCondition.Description.ToLower().Contains(inputStr) ||
+                    x.Description.ToLower().Contains(inputStr)
 
                     ))
 
@@ -503,10 +527,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                        CurrencyCode = y.Currency.ISO_Code,
                        Condition = y.ArticleCondition.Description,
                        Ubication = y.Ubication,
+                       Description = y.Description,
                        PhoneNumber = y.PhoneNumber.ToString(),
                        CreationDate = y.CreationDate,
+                       ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
+                       {
+                           Id = z.Id,
+                       }).ToList(),
                    })
                    .OrderByDescending(x => x.Id)
+                   .Take(pagination)
                    .ToList();
                 }
                 else
@@ -520,11 +550,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                         CurrencyCode = y.Currency.ISO_Code,
                         Condition = y.ArticleCondition.Description,
                         Ubication = y.Ubication,
+                        Description = y.Description,
                         PhoneNumber = y.PhoneNumber.ToString(),
                         CreationDate = y.CreationDate,
+                        ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
+                        {
+                            Id = z.Id,
+                        }).ToList(),
                     })
                     .OrderByDescending(x => x.Id)
-                    .Take(200)
+                    .Take(pagination)
                     .ToList();
                 }
             }
@@ -534,20 +569,36 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
 
         [HttpGet]
-        [Route("GetImgDetailByArticleId")]
-        public IEnumerable<ImgDetail> GetImgDetailByArticleId(long articleId)
+        [Route("GetArticleFullData")]
+        public ArticleFullData GetArticleFullData(long articleId)
         {
-            var result = new List<ImgDetail>();
 
-            var articles = db.MarketImgDetails.Where(x => x.MarketId == articleId && x.IsActive == true).ToList();
+            var result = new ArticleFullData();
 
-            if (articles.Count > 0)
+            var article = db.Markets.Where(x => x.Id == articleId && x.IsActive == true).FirstOrDefault();
+
+            var user = db.Users.Where(x => x.Id == article.CreatorUserId).FirstOrDefault();
+
+            result.Article = new Article()
             {
-                result = articles.Select(x => new ImgDetail()
-                {
-                    Id = x.Id,
-                }).ToList();
-            }
+                Id = article.Id,
+                Title = article.Title,
+                Price = article.Price,
+                CurrencyCode = article.Currency.ISO_Code,
+                Condition = article.ArticleCondition.Description,
+                Ubication = article.Ubication,
+                Description = article.Description,
+                PhoneNumber = article.PhoneNumber.ToString(),
+                CreationDate = article.CreationDate,
+            };
+
+            result.Seller = new Seller()
+            {
+                Name = string.IsNullOrEmpty(user.Person?.FullName) ? string.Concat(user.Name, ' ', user.Surname) : user.Person.FullName,
+                PhoneNumber = user.PhoneNumber,
+                Image = string.Concat("data:image/png;base64,", user.Image),
+                Mail = user.EmailAddress,
+            };
 
             return result;
         }
