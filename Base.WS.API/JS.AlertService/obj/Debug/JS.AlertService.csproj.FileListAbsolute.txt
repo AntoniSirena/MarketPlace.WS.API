@@ -20,3 +20,14 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.AlertService
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.pdb
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\JS.AlertService.dll
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\JS.AlertService.pdb
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\JS.Utilities.dll
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\Newtonsoft.Json.dll
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\bin\Debug\Newtonsoft.Json.xml
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.csprojAssemblyReference.cache
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.csproj.CoreCompileInputs.cache
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.csproj.CopyComplete
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.dll
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.AlertService\obj\Debug\JS.AlertService.pdb
