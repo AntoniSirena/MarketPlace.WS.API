@@ -194,7 +194,8 @@ namespace JS.Base.WS.API.Migrations
             context.MarketTypes.AddOrUpdate(
                 x => x.ShortName,
                 new MarketType { ShortName = "Sell", Description = "Vender", IsActive = true },
-                new MarketType { ShortName = "Rent", Description = "Rentar", IsActive = true }
+                new MarketType { ShortName = "Rent", Description = "Rentar", IsActive = true },
+                new MarketType { ShortName = "Donate", Description = "Donar", IsActive = true }
                 );
 
 

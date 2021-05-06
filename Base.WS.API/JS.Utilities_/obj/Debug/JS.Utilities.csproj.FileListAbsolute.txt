@@ -11,8 +11,8 @@ C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\b
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\bin\Debug\JS.Utilities.pdb
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\bin\Debug\Newtonsoft.Json.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\bin\Debug\Newtonsoft.Json.xml
-C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csprojAssemblyReference.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csproj.CoreCompileInputs.cache
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.dll
 C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\Guerra\Guerra.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csprojAssemblyReference.cache

@@ -23,6 +23,7 @@ namespace JS.Base.WS.API.Models.Domain
         public int SubCategoryId { get; set; }
 
         public string Ubication { get; set; }
+        public string Description { get; set; }
         public long? PhoneNumber { get; set; }
 
         public string Img { get; set; }

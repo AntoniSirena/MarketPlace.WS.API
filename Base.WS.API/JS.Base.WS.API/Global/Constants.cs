@@ -196,7 +196,10 @@ namespace JS.Base.WS.API.Global
 
             public static string MaximumImgQuantityMarketDetail { get { return ConfigurationParameterService.GetParameter("MaximumImgQuantityMarketDetail") ?? "5"; } }
 
-            
+            public static string ItemsByPageMarkeetPlace { get { return ConfigurationParameterService.GetParameter("ItemsByPageMarkeetPlace") ?? "6"; } }
+
+            public static string UserAvataDefault { get { return ConfigurationParameterService.GetParameter("UserAvataDefault") ?? ""; } }
+
         }
 
     }

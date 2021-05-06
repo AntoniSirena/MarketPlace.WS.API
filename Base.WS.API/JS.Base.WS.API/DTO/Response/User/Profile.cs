@@ -20,6 +20,7 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string EmailAddress { get; set; }
         public string Image { get; set; }
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
         public string WelcomeMessage { get; set; }
         public Object MenuTemplate { get; set; }
         public string RoleDescription { get; set; }

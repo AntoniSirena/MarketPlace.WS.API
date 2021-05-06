@@ -28,6 +28,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public string SubCategory { get; set; }
 
         public string Ubication { get; set; }
+        public string Description { get; set; }
         public long? PhoneNumber { get; set; }
 
         public string Img { get; set; }

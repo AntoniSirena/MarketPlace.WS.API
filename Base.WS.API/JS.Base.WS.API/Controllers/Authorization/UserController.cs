@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.Authorization
 {
@@ -46,6 +47,8 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
             string currentPassword = entity["Password"];
             entity["Password"] = Utilities.Security.Encrypt_OneWay(currentPassword);
+
+            entity["Image"] = ConfigurationParameter.UserAvataDefault;
 
             object input = JsonConvert.DeserializeObject<object>(entity.ToString());
 
