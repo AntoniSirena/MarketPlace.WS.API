@@ -185,6 +185,15 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 return Ok(response);
             }
 
+            int maximumImgQuantityMarketDetail = Convert.ToInt32(ConfigurationParameter.MaximumImgQuantityMarketDetail);
+            if (request.ImgDetails.Count() > maximumImgQuantityMarketDetail)
+            {
+                response.Code = "400";
+                response.Message = string.Concat("Estimado usuarion no puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos, favor ajuste la cantidad de las mismas");
+
+                return Ok(response);
+            }
+
 
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
@@ -259,15 +268,6 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             if (request.ImgDetails.Count > 0)
             {
-                int maximumImgQuantityMarketDetail = Convert.ToInt32(ConfigurationParameter.MaximumImgQuantityMarketDetail);
-                if (request.ImgDetails.Count() > maximumImgQuantityMarketDetail)
-                {
-                    response.Code = "400";
-                    response.Message = string.Concat("Estimado usuarion no puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos, favor ajuste la cantidad de las mismas");
-
-                    return Ok(response);
-                }
-
                 foreach (var item in request.ImgDetails)
                 {
                     string[] imgShortType = item.type.Split('/');
