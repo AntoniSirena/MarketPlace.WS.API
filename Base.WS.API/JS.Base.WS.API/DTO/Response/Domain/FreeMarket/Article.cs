@@ -21,7 +21,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
 
     public class Seller
     {
-        public string Image { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Mail { get; set; }

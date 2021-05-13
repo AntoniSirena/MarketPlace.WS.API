@@ -1,15 +1,18 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Common;
+using JS.Base.WS.API.DTO.Request;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.PersonProfile;
 using JS.Base.WS.API.Services;
 using JS.Base.WS.API.Services.IServices;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Http;
+using static JS.Base.WS.API.Global.Constants;
 
 namespace JS.Base.WS.API.Controllers.Authorization
 {
@@ -269,19 +272,55 @@ namespace JS.Base.WS.API.Controllers.Authorization
 
         [HttpPut]
         [Route("UpdateProfileImagen")]
-        public IHttpActionResult UpdateProfileImagen([FromBody]string request)
+        public IHttpActionResult UpdateProfileImagen([FromBody] UploadFile request)
         {
             var response = new Response(); 
 
             try
             {
-                if (!string.IsNullOrEmpty(request))
+                if (request != null)
                 {
-                    string[] arrayImgBase64 = request.Split(',');
-                    request = arrayImgBase64[arrayImgBase64.Length - 1];
+                    var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
+
+                    string root = ConfigurationParameter.UserAvatarFileDirectory;
+                    string[] arrayImgBase64 = request.base64.Split(',');
+                    string imgBase64 = arrayImgBase64[arrayImgBase64.Length - 1];
+
+                    string[] splitName1 = arrayImgBase64[0].Split('/');
+                    string[] splitName2 = splitName1[1].Split(';');
+                    string contentType = splitName2[0];
+
+                    //Validate contentType
+                    if (!fileTypeAlloweds.Contains(contentType))
+                    {
+                        response.Code = "400";
+                        response.Message = "El tipo de imagen intenta subir es desconocido, favor reemplacé la misma por otra";
+
+                        return Ok(response);
+                    }
 
                     var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
-                    currentUser.Image = request;
+
+                    string defaultAvatar = ConfigurationParameter.UserAvataDefault;
+
+
+                    //Save img
+                    var guid = Guid.NewGuid();
+                    var fileName = string.Concat("User_Avatar_Profile_", guid);
+                    var filePath = Path.Combine(root, fileName) + "." + contentType;
+
+
+                    if (currentUser.Image != defaultAvatar)
+                    {
+                        if (File.Exists(currentUser.Image))
+                        {
+                            File.Delete(currentUser.Image);
+                        }
+                    }
+
+                    File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
+
+                    currentUser.Image = filePath;
                     db.SaveChanges();
 
                     response.Message = "Imagen actualizada con exito";

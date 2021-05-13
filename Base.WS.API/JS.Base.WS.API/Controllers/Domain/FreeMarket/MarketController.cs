@@ -594,9 +594,9 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             result.Seller = new Seller()
             {
+                Id = Convert.ToInt64(article.CreatorUserId),
                 Name = string.IsNullOrEmpty(user.Person?.FullName) ? string.Concat(user.Name, ' ', user.Surname) : user.Person.FullName,
                 PhoneNumber = user.PhoneNumber,
-                Image = string.Concat("data:image/png;base64,", user.Image),
                 Mail = user.EmailAddress,
             };
 
@@ -705,6 +705,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetCategories")]
+        [AllowAnonymous]
         public IEnumerable<CategoryDTO> GetCategories()
         {
             var result = db.ArticleCategories.Where(y => y.IsActive == true).Select(x => new CategoryDTO()
@@ -720,6 +721,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetSubCategories")]
+        [AllowAnonymous]
         public IEnumerable<SubCategoryDTO> GetSubCategories(int categoryId)
         {
             var result = db.ArticleSubCategories.Where(y => y.CategoryId == categoryId && y.IsActive == true).Select(x => new SubCategoryDTO()

@@ -200,6 +200,8 @@ namespace JS.Base.WS.API.Global
 
             public static string UserAvataDefault { get { return ConfigurationParameterService.GetParameter("UserAvataDefault") ?? ""; } }
 
+            public static string UserAvatarFileDirectory { get { return ConfigurationParameterService.GetParameter("UserAvatarFileDirectory") ?? ""; } }
+
         }
 
     }

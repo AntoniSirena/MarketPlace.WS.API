@@ -342,7 +342,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         Name = currentUser.Name,
                         Surname = currentUser.Surname,
                         EmailAddress = currentUser.EmailAddress,
-                        Image = currentUser.Image,
+                        Image = string.Empty,
                         Token = "Bearer " + token,
                         RefreshToken = refreshToken,
                         WelcomeMessage = currentUser.Name + " " + currentUser.Surname + ", " + "sea bienvenido al sistema",
