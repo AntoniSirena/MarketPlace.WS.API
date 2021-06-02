@@ -12,6 +12,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public decimal Price { get; set; }
         public string CurrencyCode { get; set; }
         public string Condition { get; set; }
+        public string ConditionShortName { get; set; }
         public string Ubication { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }

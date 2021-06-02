@@ -77,7 +77,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             }).FirstOrDefault();
 
-            result.Img = string.Concat(result.ContenTypeLong, ',', Utilities.JS_File.GetStrigBase64(result.ImgPath));
+            result.Img = string.Empty;
 
             return result;
         }
@@ -189,7 +189,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             if (request.ImgDetails.Count() > maximumImgQuantityMarketDetail)
             {
                 response.Code = "400";
-                response.Message = string.Concat("Estimado usuarion no puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos, favor ajuste la cantidad de las mismas");
+                response.Message = string.Concat("No puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos para el detalle, favor ajuste la cantidad");
 
                 return Ok(response);
             }
@@ -318,10 +318,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             if (string.IsNullOrEmpty(request.Img))
             {
-                response.Code = "400";
-                response.Message = "Estimado usuario es necesario subir una imagen para la portada de la publicación";
+                if (!File.Exists(request.ImgPath))
+                {
+                    response.Code = "400";
+                    response.Message = "Estimado usuario es necesario subir una imagen para la portada de la publicación";
 
-                return Ok(response);
+                    return Ok(response);
+                }
+
+                request.Img = string.Concat( request.ContenTypeLong, ",", JS_File.GetStrigBase64(request.ImgPath) );
+
             }
 
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
@@ -355,9 +361,14 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
 
+            //Delete old image
+            if (File.Exists(request.ImgPath))
+            {
+                File.Delete(request.ImgPath);
+            }
 
-            //Validate path
-            if (string.IsNullOrEmpty(request.ImgPath))
+            //Create new path
+            if (!string.IsNullOrEmpty(request.ImgPath))
             {
                 var guid = Guid.NewGuid();
                 root = ConfigurationParameter.MarketImgDirectory;
@@ -368,15 +379,9 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 var market = db.Markets.Where(x => x.Id == request.Id).FirstOrDefault();
                 market.ImgPath = filePath;
                 db.SaveChanges();
-            }
 
-            //Save img
-            if (File.Exists(request.ImgPath))
-            {
-                File.Delete(request.ImgPath);
+                File.WriteAllBytes(request.ImgPath, Convert.FromBase64String(imgBase64));
             }
-
-            File.WriteAllBytes(request.ImgPath, Convert.FromBase64String(imgBase64));
 
             response.Message = "Artículo actualizado con éxito";
 
@@ -586,6 +591,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 Price = article.Price,
                 CurrencyCode = article.Currency.ISO_Code,
                 Condition = article.ArticleCondition.Description,
+                ConditionShortName = article.ArticleCondition.ShortName,
                 Ubication = article.Ubication,
                 Description = article.Description,
                 PhoneNumber = article.PhoneNumber.ToString(),
