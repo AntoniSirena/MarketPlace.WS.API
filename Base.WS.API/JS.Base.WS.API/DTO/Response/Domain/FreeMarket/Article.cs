@@ -20,6 +20,14 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public List<ImgDetail> ImgDetail { get; set; }
     }
 
+    public class ArticleData
+    {
+        public List<Article> Article { get; set; }
+        public long TotalRecord { get; set; }
+        public long TotalRecordByPage { get; set; }
+        public int PageNumber { get; set; }
+    }
+
     public class Seller
     {
         public long Id { get; set; }

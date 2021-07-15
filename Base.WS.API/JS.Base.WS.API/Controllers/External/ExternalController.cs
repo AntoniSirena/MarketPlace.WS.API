@@ -19,6 +19,7 @@ using static JS.Base.WS.API.Global.Constants;
 using JS.Base.WS.API.DTO.Response.Publicity;
 using System.Text.RegularExpressions;
 using JS.Base.WS.API.DTO.Common;
+using System.IO;
 
 namespace JS.Base.WS.API.Controllers.External
 {
@@ -41,10 +42,10 @@ namespace JS.Base.WS.API.Controllers.External
 
         [HttpPost]
         [Route("CreateUser")]
-        public IHttpActionResult CreateUser(User user)
+        public IHttpActionResult CreateUser(UserRequestExternal request)
         {
 
-            if (user.UserName.Contains(" "))
+            if (request.user.UserName.Contains(" "))
             {
                 response.Code = "400";
                 response.Message = "Estimado usuario el nombre de usuario no puede tener espacios el blancos, favor corregir el mismo y vuelva a intentarlo";
@@ -56,7 +57,7 @@ namespace JS.Base.WS.API.Controllers.External
             string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
             if (securityCodeExternaRegister.Equals("1"))
             {
-                if (string.IsNullOrEmpty(user.Code))
+                if (string.IsNullOrEmpty(request.user.Code))
                 {
                     response.Code = InternalResponseCodeError.Code308;
                     response.Message = InternalResponseCodeError.Message308;
@@ -66,7 +67,7 @@ namespace JS.Base.WS.API.Controllers.External
             }
 
             //Validate security code
-            bool resultValidateSecCode = UserRoleService.ValidateSecurityCode(user.Code);
+            bool resultValidateSecCode = UserRoleService.ValidateSecurityCode(request.user.Code);
             if (!resultValidateSecCode)
             {
                 if (securityCodeExternaRegister.Equals("0"))
@@ -84,14 +85,14 @@ namespace JS.Base.WS.API.Controllers.External
             }
 
 
-            if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.EmailAddress) || 
-               string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Surname) )
+            if (string.IsNullOrEmpty(request.user.UserName) || string.IsNullOrEmpty(request.user.EmailAddress) || 
+               string.IsNullOrEmpty(request.user.Password) || string.IsNullOrEmpty(request.user.Name) || string.IsNullOrEmpty(request.user.Surname) )
             {
                 response.Message = "Los Datos ingresados no son validos";
                 response.Code = "007";
             }
 
-            var validateUserName = userService.ValidateUserName(user.UserName);
+            var validateUserName = userService.ValidateUserName(request.user.UserName);
             if (validateUserName.UserNameExist)
             {
                 response.Message = "El nombre de usuario que desea registrar ya existe";
@@ -102,28 +103,63 @@ namespace JS.Base.WS.API.Controllers.External
 
             //Clear PhoneNumber
             Regex re = new Regex("[;\\\\/:*?\"<>|&' ._-]");
-            user.PhoneNumber = re.Replace(user.PhoneNumber, "");
+            request.user.PhoneNumber = re.Replace(request.user.PhoneNumber, "");
 
             string StatusExternalUser = ConfigurationParameter.StatusExternalUser;
             var CurrentStatus = db.UserStatus.Where(x => x.ShortName == StatusExternalUser).FirstOrDefault();
 
             var systemUser = db.Users.Where(x => x.UserName == "system").FirstOrDefault();
 
-            user.Image = ConfigurationParameter.UserAvataDefault;
-            user.Password = Utilities.Security.Encrypt_OneWay(user.Password);
-            user.StatusId = CurrentStatus.Id;
-            user.CreationTime = DateTime.Now;
-            user.CreatorUserId = systemUser.Id;
-            user.IsActive = true;
 
-           var UserResult = db.Users.Add(user);
+            //Save img
+            if(!string.IsNullOrEmpty(request.imagenBase64)){
+
+                var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
+
+                string root = ConfigurationParameter.UserAvatarFileDirectory;
+                string[] arrayImgBase64 = request.imagenBase64.Split(',');
+                string imgBase64 = arrayImgBase64[arrayImgBase64.Length - 1];
+
+                string[] splitName1 = arrayImgBase64[0].Split('/');
+                string[] splitName2 = splitName1[1].Split(';');
+                string contentType = splitName2[0];
+
+                //Validate contentType
+                if (!fileTypeAlloweds.Contains(contentType))
+                {
+                    response.Code = "400";
+                    response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
+
+                    return Ok(response);
+                }
+
+                var guid = Guid.NewGuid();
+                var fileName = string.Concat("User_Avatar_Profile_", guid);
+                var filePath = Path.Combine(root, fileName) + "." + contentType;
+
+                File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
+
+                request.user.Image = filePath;
+            }
+            else
+            {
+                request.user.Image = ConfigurationParameter.UserAvataDefault;
+            }
+
+            request.user.Password = Utilities.Security.Encrypt_OneWay(request.user.Password);
+            request.user.StatusId = CurrentStatus.Id;
+            request.user.CreationTime = DateTime.Now;
+            request.user.CreatorUserId = systemUser.Id;
+            request.user.IsActive = true;
+
+           var UserResult = db.Users.Add(request.user);
             db.SaveChanges();
 
 
             //Create rol
             #region Create rol
 
-            bool UserRol = UserRoleService.CreateUserRol(UserResult.Id, user.Code);
+            bool UserRol = UserRoleService.CreateUserRol(UserResult.Id, request.user.Code);
 
             #endregion
 

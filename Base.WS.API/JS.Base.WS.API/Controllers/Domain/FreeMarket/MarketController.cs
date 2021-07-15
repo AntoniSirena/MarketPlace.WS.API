@@ -326,7 +326,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     return Ok(response);
                 }
 
-                request.Img = string.Concat( request.ContenTypeLong, ",", JS_File.GetStrigBase64(request.ImgPath) );
+                request.Img = string.Concat(request.ContenTypeLong, ",", JS_File.GetStrigBase64(request.ImgPath));
 
             }
 
@@ -414,9 +414,10 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "", int page = 1)
+        public ArticleData GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "", int page = 1)
         {
-            var result = new List<Article>();
+            var result = new ArticleData();
+            var articles = new List<Article>();
 
             int pagination = page * Convert.ToInt32(ConfigurationParameter.ItemsByPageMarkeetPlace);
 
@@ -431,7 +432,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             {
                 if (categoryId > 0 && subCategoryId == 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                         && x.CategoryId == categoryId
                         && x.IsActive == true)
                                 .Select(y => new Article()
@@ -451,12 +452,17 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
-                                .Take(pagination)
                                 .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
+
                 }
                 if (subCategoryId > 0 && categoryId == 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                         && x.SubCategoryId == subCategoryId
                         && x.IsActive == true)
                                 .Select(y => new Article()
@@ -476,12 +482,17 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
-                                .Take(pagination)
                                 .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
+
                 }
                 if (categoryId > 0 && subCategoryId > 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                     && x.CategoryId == categoryId
                     && x.SubCategoryId == subCategoryId
                     && x.IsActive == true)
@@ -502,8 +513,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                 }).ToList(),
                             })
                             .OrderByDescending(x => x.Id)
-                            .Take(pagination)
                             .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
             }
             else
@@ -512,7 +527,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 {
                     inputStr = RemoveAccents(inputStr);
 
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true
                     && (x.TitleFormatted.ToLower().Contains(inputStr.ToLower()) ||
                     x.Category.DescriptionFormatted.ToLower().Contains(inputStr) ||
                     x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr) ||
@@ -541,12 +556,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                        }).ToList(),
                    })
                    .OrderByDescending(x => x.Id)
-                   .Take(pagination)
                    .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
                 else
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
                     .Select(y => new Article()
                     {
                         Id = y.Id,
@@ -564,8 +583,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                         }).ToList(),
                     })
                     .OrderByDescending(x => x.Id)
-                    .Take(pagination)
                     .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
             }
 

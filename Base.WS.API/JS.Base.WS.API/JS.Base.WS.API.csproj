@@ -266,6 +266,7 @@
     <Compile Include="DTO\Request\Domain\RequestMarketDTO.cs" />
     <Compile Include="DTO\Request\UploadFile.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
+    <Compile Include="DTO\Request\UserRequestExternal.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDetailDTO.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentDTO.cs" />
     <Compile Include="DTO\Response\Domain\AppointmentStatusDTO.cs" />
@@ -472,8 +473,6 @@
           <DevelopmentServerPort>61048</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:61060/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:61060/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

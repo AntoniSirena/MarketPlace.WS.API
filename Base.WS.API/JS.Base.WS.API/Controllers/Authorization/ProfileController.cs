@@ -145,10 +145,32 @@ namespace JS.Base.WS.API.Controllers.Authorization
             {
                 var currentUser = db.Users.Where(x => x.Id == currentUserId).FirstOrDefault();
 
+                if (currentUser.UserName != request.UserName)
+                {
+                    long id = db.Users.Where(x => x.UserName == request.UserName).Select(x => x.Id).FirstOrDefault();
+
+                    if (id > 0)
+                    {
+                        response.Code = "400";
+                        response.Message = string.Concat("El nombre de usuario ", request.UserName, " no esta disponible, favor eliga otro");
+
+                        return Ok(response);
+                    }
+                }
+
                 if (request.Password != currentUser.Password)
                 {
+                    if(request.Password.Length < 8)
+                    {
+                        response.Code = "400";
+                        response.Message = "La contraseña debes tener minimo 8 caracteres";
+
+                        return Ok(response);
+                    }
+
                     request.Password = Utilities.Security.Encrypt_OneWay(request.Password);
                 }
+
 
                 //Clear PhoneNumber
                 Regex re = new Regex("[;\\\\/:*?\"<>|&' ._-]");
@@ -294,7 +316,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                     if (!fileTypeAlloweds.Contains(contentType))
                     {
                         response.Code = "400";
-                        response.Message = "El tipo de imagen intenta subir es desconocido, favor reemplacé la misma por otra";
+                        response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
 
                         return Ok(response);
                     }
