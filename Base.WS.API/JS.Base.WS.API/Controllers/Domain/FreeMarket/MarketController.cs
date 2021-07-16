@@ -77,7 +77,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             }).FirstOrDefault();
 
-            result.Img = string.Concat(result.ContenTypeLong, ',', Utilities.JS_File.GetStrigBase64(result.ImgPath));
+            result.Img = string.Empty;
 
             return result;
         }
@@ -189,7 +189,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             if (request.ImgDetails.Count() > maximumImgQuantityMarketDetail)
             {
                 response.Code = "400";
-                response.Message = string.Concat("Estimado usuarion no puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos, favor ajuste la cantidad de las mismas");
+                response.Message = string.Concat("No puedes cargar más de ", maximumImgQuantityMarketDetail.ToString(), " fotos para el detalle, favor ajuste la cantidad");
 
                 return Ok(response);
             }
@@ -318,10 +318,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             if (string.IsNullOrEmpty(request.Img))
             {
-                response.Code = "400";
-                response.Message = "Estimado usuario es necesario subir una imagen para la portada de la publicación";
+                if (!File.Exists(request.ImgPath))
+                {
+                    response.Code = "400";
+                    response.Message = "Estimado usuario es necesario subir una imagen para la portada de la publicación";
 
-                return Ok(response);
+                    return Ok(response);
+                }
+
+                request.Img = string.Concat(request.ContenTypeLong, ",", JS_File.GetStrigBase64(request.ImgPath));
+
             }
 
             var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
@@ -355,9 +361,14 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             db.Entry(request).State = EntityState.Modified;
             db.SaveChanges();
 
+            //Delete old image
+            if (File.Exists(request.ImgPath))
+            {
+                File.Delete(request.ImgPath);
+            }
 
-            //Validate path
-            if (string.IsNullOrEmpty(request.ImgPath))
+            //Create new path
+            if (!string.IsNullOrEmpty(request.ImgPath))
             {
                 var guid = Guid.NewGuid();
                 root = ConfigurationParameter.MarketImgDirectory;
@@ -368,15 +379,9 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 var market = db.Markets.Where(x => x.Id == request.Id).FirstOrDefault();
                 market.ImgPath = filePath;
                 db.SaveChanges();
-            }
 
-            //Save img
-            if (File.Exists(request.ImgPath))
-            {
-                File.Delete(request.ImgPath);
+                File.WriteAllBytes(request.ImgPath, Convert.FromBase64String(imgBase64));
             }
-
-            File.WriteAllBytes(request.ImgPath, Convert.FromBase64String(imgBase64));
 
             response.Message = "Artículo actualizado con éxito";
 
@@ -409,9 +414,10 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetArticles")]
-        public IEnumerable<Article> GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "", int page = 1)
+        public ArticleData GetArticles(string marketTypeShortName, int categoryId = 0, int subCategoryId = 0, string inputStr = "", int page = 1)
         {
-            var result = new List<Article>();
+            var result = new ArticleData();
+            var articles = new List<Article>();
 
             int pagination = page * Convert.ToInt32(ConfigurationParameter.ItemsByPageMarkeetPlace);
 
@@ -426,7 +432,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             {
                 if (categoryId > 0 && subCategoryId == 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                         && x.CategoryId == categoryId
                         && x.IsActive == true)
                                 .Select(y => new Article()
@@ -446,12 +452,17 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
-                                .Take(pagination)
                                 .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
+
                 }
                 if (subCategoryId > 0 && categoryId == 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                         && x.SubCategoryId == subCategoryId
                         && x.IsActive == true)
                                 .Select(y => new Article()
@@ -471,12 +482,17 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     }).ToList(),
                                 })
                                 .OrderByDescending(x => x.Id)
-                                .Take(pagination)
                                 .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
+
                 }
                 if (categoryId > 0 && subCategoryId > 0)
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id
                     && x.CategoryId == categoryId
                     && x.SubCategoryId == subCategoryId
                     && x.IsActive == true)
@@ -497,8 +513,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                 }).ToList(),
                             })
                             .OrderByDescending(x => x.Id)
-                            .Take(pagination)
                             .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
             }
             else
@@ -507,7 +527,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 {
                     inputStr = RemoveAccents(inputStr);
 
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true
                     && (x.TitleFormatted.ToLower().Contains(inputStr.ToLower()) ||
                     x.Category.DescriptionFormatted.ToLower().Contains(inputStr) ||
                     x.SubCategory.DescriptionFormatted.ToLower().Contains(inputStr) ||
@@ -536,12 +556,16 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                        }).ToList(),
                    })
                    .OrderByDescending(x => x.Id)
-                   .Take(pagination)
                    .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
                 else
                 {
-                    result = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
+                    articles = db.Markets.Where(x => x.MarketTypeId == marketType.Id && x.IsActive == true)
                     .Select(y => new Article()
                     {
                         Id = y.Id,
@@ -559,8 +583,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                         }).ToList(),
                     })
                     .OrderByDescending(x => x.Id)
-                    .Take(pagination)
                     .ToList();
+
+                    result.Article = articles.Take(pagination).ToList();
+                    result.TotalRecord = articles.Count();
+                    result.TotalRecordByPage = result.Article.Count();
+                    result.PageNumber = page;
                 }
             }
 
@@ -586,6 +614,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 Price = article.Price,
                 CurrencyCode = article.Currency.ISO_Code,
                 Condition = article.ArticleCondition.Description,
+                ConditionShortName = article.ArticleCondition.ShortName,
                 Ubication = article.Ubication,
                 Description = article.Description,
                 PhoneNumber = article.PhoneNumber.ToString(),
@@ -594,9 +623,9 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
             result.Seller = new Seller()
             {
+                Id = Convert.ToInt64(article.CreatorUserId),
                 Name = string.IsNullOrEmpty(user.Person?.FullName) ? string.Concat(user.Name, ' ', user.Surname) : user.Person.FullName,
                 PhoneNumber = user.PhoneNumber,
-                Image = string.Concat("data:image/png;base64,", user.Image),
                 Mail = user.EmailAddress,
             };
 
@@ -705,6 +734,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetCategories")]
+        [AllowAnonymous]
         public IEnumerable<CategoryDTO> GetCategories()
         {
             var result = db.ArticleCategories.Where(y => y.IsActive == true).Select(x => new CategoryDTO()
@@ -720,6 +750,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
         [HttpGet]
         [Route("GetSubCategories")]
+        [AllowAnonymous]
         public IEnumerable<SubCategoryDTO> GetSubCategories(int categoryId)
         {
             var result = db.ArticleSubCategories.Where(y => y.CategoryId == categoryId && y.IsActive == true).Select(x => new SubCategoryDTO()

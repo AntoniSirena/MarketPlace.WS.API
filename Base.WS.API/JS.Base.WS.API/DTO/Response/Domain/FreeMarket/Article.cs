@@ -12,6 +12,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public decimal Price { get; set; }
         public string CurrencyCode { get; set; }
         public string Condition { get; set; }
+        public string ConditionShortName { get; set; }
         public string Ubication { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
@@ -19,9 +20,17 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public List<ImgDetail> ImgDetail { get; set; }
     }
 
+    public class ArticleData
+    {
+        public List<Article> Article { get; set; }
+        public long TotalRecord { get; set; }
+        public long TotalRecordByPage { get; set; }
+        public int PageNumber { get; set; }
+    }
+
     public class Seller
     {
-        public string Image { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Mail { get; set; }

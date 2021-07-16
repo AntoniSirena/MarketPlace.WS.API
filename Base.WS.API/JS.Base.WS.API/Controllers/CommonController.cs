@@ -3,8 +3,11 @@ using JS.Base.WS.API.DTO.Common;
 using JS.Base.WS.API.DTO.Response.Domain;
 using JS.Base.WS.API.DTO.Response.Person;
 using JS.Base.WS.API.Helpers;
+using JS.Utilities;
 using Newtonsoft.Json;
 using System;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web.Http;
 
@@ -102,6 +105,33 @@ namespace JS.Base.WS.API.Controllers
 
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("GetImageProfileByUserId")]
+        [AllowAnonymous]
+        public IHttpActionResult GetImageProfileByUserId(long id, int width, int height)
+        {
+            var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
+
+            if (File.Exists(user.Image))
+            {
+                byte[] file = JS_File.GetImgBytes(user.Image);
+
+                if (width > 0 || height > 0)
+                {
+                    MemoryStream memstr = new MemoryStream(file);
+                    Image img = Image.FromStream(memstr);
+
+                    file = JS_File.ResizeImage(img, width, height);
+                }
+
+                JS_File.DownloadFileImg(file);
+            }
+
+            return Ok();
+        }
+
 
 
         #region Models
