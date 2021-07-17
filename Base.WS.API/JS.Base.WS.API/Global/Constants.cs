@@ -202,6 +202,8 @@ namespace JS.Base.WS.API.Global
 
             public static string UserAvatarFileDirectory { get { return ConfigurationParameterService.GetParameter("UserAvatarFileDirectory") ?? ""; } }
 
+            public static string EnableShoppingCart { get { return ConfigurationParameterService.GetParameter("EnableShoppingCart") ?? "false"; } }
+
         }
 
     }
