@@ -17,6 +17,13 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
         public string CreationDate { get; set; }
+
+        public string ProductType { get; set; }
+        public bool UseStock { get; set; }
+        public decimal Stock { get; set; }
+        public decimal MinQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
+
         public List<ImgDetail> ImgDetail { get; set; }
     }
 

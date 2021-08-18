@@ -31,6 +31,14 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public string Description { get; set; }
         public long? PhoneNumber { get; set; }
 
+        public int ProductTypeId { get; set; }
+        public string ProductType { get; set; }
+
+        public bool UseStock { get; set; }
+        public decimal Stock { get; set; }
+        public decimal MinQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
+
         public string Img { get; set; }
         public string ImgPath { get; set; }
         public string ContenTypeShort { get; set; }

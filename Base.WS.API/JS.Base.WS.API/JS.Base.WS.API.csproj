@@ -242,6 +242,7 @@
     <Compile Include="Controllers\Domain\AppointmentController.cs" />
     <Compile Include="Controllers\Domain\CompanyRegisterController.cs" />
     <Compile Include="Controllers\Domain\FreeMarket\MarketController.cs" />
+    <Compile Include="Controllers\Domain\Order\OrderController.cs" />
     <Compile Include="Controllers\Enterprise\EnterpriseController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
+    <Compile Include="DTO\Request\Domain\CreateOrderDTO.cs" />
     <Compile Include="DTO\Request\Domain\RequestMarketDTO.cs" />
     <Compile Include="DTO\Request\UploadFile.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
@@ -279,6 +281,7 @@
     <Compile Include="DTO\Response\Domain\FreeMarket\CurrencyDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\MarketDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\MarketTypeDTO.cs" />
+    <Compile Include="DTO\Response\Domain\FreeMarket\ProductTypeDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\SubCategoryDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
     <Compile Include="DTO\Response\Enterprise\ScheduleHourDTO.cs" />
@@ -301,6 +304,18 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202108170309034_add PurchaseTransactions 01.cs" />
+    <Compile Include="Migrations\202108170309034_add PurchaseTransactions 01.Designer.cs">
+      <DependentUpon>202108170309034_add PurchaseTransactions 01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108170313219_add PurchaseTransactions 02.cs" />
+    <Compile Include="Migrations\202108170313219_add PurchaseTransactions 02.Designer.cs">
+      <DependentUpon>202108170313219_add PurchaseTransactions 02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108180718577_update PurchaseTransactionDetail.cs" />
+    <Compile Include="Migrations\202108180718577_update PurchaseTransactionDetail.Designer.cs">
+      <DependentUpon>202108180718577_update PurchaseTransactionDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
@@ -313,6 +328,11 @@
     <Compile Include="Models\Domain\FreeMarket\MarketImgDetail.cs" />
     <Compile Include="Models\Domain\FreeMarket\MarketType.cs" />
     <Compile Include="Models\Domain\FreeMarket\Market.cs" />
+    <Compile Include="Models\Domain\FreeMarket\ProductType.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransaction.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionDetail.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionStatus.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionType.cs" />
     <Compile Include="Models\Domain\ScheduleHour.cs" />
     <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
@@ -453,6 +473,17 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202108170309034_add PurchaseTransactions 01.resx">
+      <DependentUpon>202108170309034_add PurchaseTransactions 01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108170313219_add PurchaseTransactions 02.resx">
+      <DependentUpon>202108170313219_add PurchaseTransactions 02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108180718577_update PurchaseTransactionDetail.resx">
+      <DependentUpon>202108180718577_update PurchaseTransactionDetail.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

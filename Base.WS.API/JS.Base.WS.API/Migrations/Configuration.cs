@@ -3,6 +3,7 @@ namespace JS.Base.WS.API.Migrations
     using JS.Base.WS.API.Models;
     using JS.Base.WS.API.Models.Authorization;
     using JS.Base.WS.API.Models.Domain;
+    using JS.Base.WS.API.Models.Domain.PurchaseTransaction;
     using JS.Base.WS.API.Models.PersonProfile;
     using JS.Base.WS.API.Models.Publicity;
     using System;
@@ -88,12 +89,38 @@ namespace JS.Base.WS.API.Migrations
                 );
 
 
+            //Purchase Transaction Statuses
+            context.PurchaseTransactionStatus.AddOrUpdate(
+                x => x.ShortName,
+                new PurchaseTransactionStatus { ShortName = "PendingToDelivery", Description = "Pendiente de entraga", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "Delivered", Description = "En espera", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "InProcess", Description = "En proceso", ShowToCustomer = true, Colour = "btn btn-success", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "PendingToPay", Description = "Pendiente de pago", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "Payed", Description = "Pagada", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "Cancelled", Description = "Cancelada", ShowToCustomer = true, Colour = "btn btn-danger", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
+            //Purchase Transaction Types
+            context.PurchaseTransactionTypes.AddOrUpdate(
+                x => x.ShortName,
+                new PurchaseTransactionType { ShortName = "Request", Description = "Solicitud", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionType { ShortName = "Order", Description = "Orden", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
             //Article conditions
             context.ArticleConditions.AddOrUpdate(
                 x => x.ShortName,
                 new ArticleCondition { ShortName = "New", Description = "Nuevo", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new ArticleCondition { ShortName = "Used", Description = "Usado", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new ArticleCondition { ShortName = "NA", Description = "No aplica", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
+
+            //Product Types
+            context.ProductTypes.AddOrUpdate(
+                x => x.ShortName,
+                new ProductType { ShortName = "Product", Description = "Producto", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new ProductType { ShortName = "Service", Description = "Servicio", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
 

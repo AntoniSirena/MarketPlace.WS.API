@@ -2,6 +2,7 @@
 using JS.Base.WS.API.Models.Authorization;
 using JS.Base.WS.API.Models.Configuration;
 using JS.Base.WS.API.Models.Domain;
+using JS.Base.WS.API.Models.Domain.PurchaseTransaction;
 using JS.Base.WS.API.Models.EnterpriseConf;
 using JS.Base.WS.API.Models.FileDocument;
 using JS.Base.WS.API.Models.Permission;
@@ -58,23 +59,27 @@ namespace JS.Base.WS.API.DBContext
         public virtual DbSet<FileDocument> FileDocuments  { get; set; }
 
 
-        //Market
+
+        //Domain
+        public virtual DbSet<CompanyCategory> CompanyCategories { get; set; }
+        public virtual DbSet<CompanyRegister> CompanyRegisters { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
+        public virtual DbSet<ScheduleHour> ScheduleHours { get; set; }
+
         public virtual DbSet<Market> Markets { get; set; }
         public virtual DbSet<MarketType> MarketTypes { get; set; }
         public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
         public virtual DbSet<ArticleSubCategory> ArticleSubCategories { get; set; }
         public virtual DbSet<ArticleCondition> ArticleConditions { get; set; }
         public virtual DbSet<MarketImgDetail> MarketImgDetails { get; set; }
+        public virtual DbSet<ProductType> ProductTypes { get; set; }
 
 
-
-        //Domin
-        public virtual DbSet<CompanyCategory> CompanyCategories { get; set; }
-        public virtual DbSet<CompanyRegister> CompanyRegisters { get; set; }
-        public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<AppointmentStatus> AppointmentStatuses { get; set; }
-        public virtual DbSet<ScheduleHour> ScheduleHours { get; set; }
-        
+        public virtual DbSet<PurchaseTransactionStatus> PurchaseTransactionStatus { get; set; }
+        public virtual DbSet<PurchaseTransactionType> PurchaseTransactionTypes { get; set; }
+        public virtual DbSet<PurchaseTransaction> PurchaseTransactions { get; set; }
+        public virtual DbSet<PurchaseTransactionDetail> PurchaseTransactionDetails { get; set; }
 
     }
 }
