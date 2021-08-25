@@ -16,6 +16,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.FreeMarket
         public string Ubication { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
+        public int QuantitySold { get; set; }
         public string CreationDate { get; set; }
 
         public string ProductType { get; set; }

@@ -16,9 +16,12 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public long ArticleId { get; set; }
         public decimal Quantity { get; set; }
         public decimal Price { get; set; }
+        public decimal Amount { get; set; }
         public decimal Tax { get; set; }
         public decimal TotalAmount { get; set; }
+        public long ProviderId { get; set; }
 
+        public string Comment { get; set; }
 
         [ForeignKey("TransactionId")]
         public virtual PurchaseTransaction Transaction { get; set; }

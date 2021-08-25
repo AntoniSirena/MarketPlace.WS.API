@@ -1,6 +1,7 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.DBContext;
 using JS.Base.WS.API.DTO.Request.Domain;
+using JS.Base.WS.API.DTO.Response.Domain.Order;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain.PurchaseTransaction;
 using System;
@@ -45,14 +46,14 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 return Ok(response);
             }
 
-            if (request.Quantity < article.MinQuantity)
+            if (request.Quantity < article.MinQuantity && article.MinQuantity > 0)
             {
                 response.Code = "400";
                 response.Message = string.Concat("La cantidad a comprar debe ser igual ó mayor a ", article.MinQuantity.ToString());
                 return Ok(response);
             }
 
-            if (request.Quantity > article.MaxQuantity)
+            if (request.Quantity > article.MaxQuantity && article.MaxQuantity > 0)
             {
                 response.Code = "400";
                 response.Message = string.Concat("La cantidad a comprar debe ser menor ó igual a ", article.MaxQuantity.ToString());
@@ -110,8 +111,11 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 detail.ArticleId = request.ArticleId;
                 detail.Quantity = request.Quantity;
                 detail.Tax = taxDetail;
-                detail.Price = ((article.Price * request.Quantity) - taxDetail);
-                detail.TotalAmount = (detail.Price + taxDetail);
+                detail.Price = article.Price;
+                detail.Amount = ((article.Price * request.Quantity) - taxDetail);
+                detail.TotalAmount = (detail.Amount + taxDetail);
+                detail.ProviderId = Convert.ToInt64(article.CreatorUserId);
+                detail.Comment = request.ItemNote;
                 detail.CreationTime = DateTime.Now;
                 detail.CreatorUserId = currentUserId;
                 detail.IsActive = true;
@@ -146,8 +150,11 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     detail.ArticleId = request.ArticleId;
                     detail.Quantity = request.Quantity;
                     detail.Tax = taxDetail;
-                    detail.Price = ((article.Price * request.Quantity) - taxDetail);
-                    detail.TotalAmount = (detail.Price + taxDetail);
+                    detail.Price = article.Price;
+                    detail.Amount = ((article.Price * request.Quantity) - taxDetail);
+                    detail.TotalAmount = (detail.Amount + taxDetail);
+                    detail.ProviderId = Convert.ToInt64(article.CreatorUserId);
+                    detail.Comment = request.ItemNote;
                     detail.CreationTime = DateTime.Now;
                     detail.CreatorUserId = currentUserId;
                     detail.IsActive = true;
@@ -158,8 +165,11 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     response.Message = "Artículo agregado con éxito";
                 }
                 else
-                { 
+                {
                     request.Quantity = (request.Quantity - detail.Quantity);
+
+                    detail.Comment = request.ItemNote;
+                    db.SaveChanges();
 
                     if (request.Quantity >= 1)
                     {
@@ -177,12 +187,12 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
                         detail.Quantity += request.Quantity;
                         detail.Tax += taxDetail;
-                        detail.Price += ((article.Price * request.Quantity) - taxDetail);
-                        detail.TotalAmount = (detail.Price + detail.Tax);
+                        detail.Amount += ((article.Price * request.Quantity) - taxDetail);
+                        detail.TotalAmount = (detail.Amount + detail.Tax);
                         db.SaveChanges();
                     }
-                    
-                    if(request.Quantity < 0)
+
+                    if (request.Quantity < 0)
                     {
                         request.Quantity = Math.Abs(request.Quantity);
 
@@ -200,8 +210,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
                         detail.Quantity -= request.Quantity;
                         detail.Tax -= taxDetail;
-                        detail.Price -= ((article.Price * request.Quantity) - taxDetail);
-                        detail.TotalAmount = (detail.Price + detail.Tax);
+                        detail.Amount -= ((article.Price * request.Quantity) - taxDetail);
+                        detail.TotalAmount = (detail.Amount + detail.Tax);                       
                         db.SaveChanges();
                     }
 
@@ -210,6 +220,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
             }
 
+
+            response.Data = new { ShowButtonDeleteItem = true };
 
             return Ok(response);
         }
@@ -221,6 +233,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
         {
             decimal Quantity = 0;
             bool ShowButtonDeleteItem = false;
+            string itemNote = string.Empty;
 
             var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
                                                  && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
@@ -235,11 +248,135 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 {
                     Quantity = article.Quantity;
                     ShowButtonDeleteItem = true;
+                    itemNote = article.Comment;
                 }
             }
 
-            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem });
+            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem, ItemNote = itemNote});
         }
+
+
+        [HttpDelete]
+        [Route("DeleteArticle")]
+        public IHttpActionResult DeleteArticle(long articleId)
+        {
+            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+                                                 && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
+                                                 && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
+                                                 ).OrderByDescending(x => x.Id).FirstOrDefault();
+
+            if (currentOrder != null)
+            {
+                var currentOrderArticle = currentOrder.ArticlesDetails.Where(x => x.ArticleId == articleId).FirstOrDefault();
+
+                if (currentOrderArticle != null)
+                {
+                    currentOrder.Discount = currentOrder.Discount + 0;
+                    decimal amount = (currentOrderArticle.Quantity * currentOrderArticle.Price) - currentOrder.Discount;
+                    decimal tax = (amount * (decimal)0.18);
+
+                    currentOrder.Tax -= tax;
+                    currentOrder.Amount -= (amount - tax);
+                    currentOrder.TotalAmount = (currentOrder.Amount + currentOrder.Tax);
+                    currentOrder.TotalAmountPending -= 0;
+                    db.SaveChanges();
+
+                    //Remove article
+                    db.PurchaseTransactionDetails.Remove(currentOrderArticle);
+                    db.SaveChanges();
+
+
+                    if (currentOrder.ArticlesDetails.Count() == 0)
+                    {
+                        currentOrder.CreationTime = DateTime.Now;
+                        db.SaveChanges();
+                    }
+
+                    response.Message = "Artículo eliminado con éxito";
+                }
+                else
+                {
+                    response.Code = "400";
+                    response.Message = "Este artículo no éxiste dentro del carrito";
+                }
+
+            }
+
+            response.Data = new { ShowButtonDeleteItem = false };
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetShoppingCart")]
+        public IHttpActionResult GetShoppingCart()
+        {
+
+            var orderDetail = new OrderDetailDTO();
+
+            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+                                                 && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
+                                                 && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
+                                                 ).OrderByDescending(x => x.Id).FirstOrDefault();
+
+            if (currentOrder != null)
+            {
+                orderDetail.Id = currentOrder.Id;
+                orderDetail.Date = Convert.ToDateTime(currentOrder.CreationTime).ToString("dd/MM/yyyy");
+                orderDetail.Status = currentOrder.Status.Description;
+                orderDetail.Subtotal = currentOrder.Amount;
+                orderDetail.Discount = currentOrder.Discount;
+                orderDetail.ITBIS = currentOrder.Tax;
+                orderDetail.TotalAmount = currentOrder.TotalAmount;
+
+                orderDetail.Items = currentOrder.ArticlesDetails.Select(x => new OrderDetailItemDTO()
+                {
+                    Id = x.Id,
+                    ArticleId = x.ArticleId,
+                    Title = x.Article.Title,
+                    Quantity = x.Quantity,
+                    Price = x.Price,
+                    CurrencyCode = x.Article.Currency.ISO_Code,
+                    Subtotal = x.Amount,
+                    ITBIS = x.Tax,
+                    TotalAmount = x.TotalAmount,
+                    UseStock = x.Article.UseStock,
+                    Stock = x.Article.Stock,
+                    MinQuantity = x.Article.MinQuantity,
+                    MaxQuantity = x.Article.MaxQuantity,
+
+                }).OrderByDescending(x => x.Id).ToList();
+
+                if (orderDetail.Items.Count() == 0)
+                {
+                    response.Code = "404";
+                    response.Message = "Su carrito esta vacío";
+                    response.Data = orderDetail;
+
+                    return Ok(response);
+                }
+
+                var client = db.Users.Where(x => x.Id == currentOrder.UserId).FirstOrDefault();
+                orderDetail.Client = string.Concat(client.Name, " ", client.Surname);
+                orderDetail.Client = client.PhoneNumber;
+
+                response.Data = orderDetail;
+            }
+            else
+            {
+                response.Code = "404";
+                response.Message = "Su carrito esta vacío";
+                response.Data = orderDetail;
+
+                return Ok(response);
+            }
+
+            
+
+            return Ok(response);
+        }
+
 
     }
 

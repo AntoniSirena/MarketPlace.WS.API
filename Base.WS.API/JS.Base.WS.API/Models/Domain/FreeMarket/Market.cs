@@ -27,6 +27,7 @@ namespace JS.Base.WS.API.Models.Domain
         public decimal Stock { get; set; }
         public decimal MinQuantity { get; set; }
         public decimal MaxQuantity { get; set; }
+        public int QuantitySold { get; set; } 
 
         public string Ubication { get; set; }
         public string Description { get; set; }

@@ -9,5 +9,6 @@ namespace JS.Base.WS.API.DTO.Request.Domain
     {
         public long ArticleId { get; set; }
         public decimal Quantity { get; set; }
+        public string ItemNote { get; set; }
     }
 }

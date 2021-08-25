@@ -42,6 +42,13 @@ namespace JS.Base.WS.API.Global
             public const int ISONumberUSA = 840;
         }
 
+        public static class PaymentMethods
+        {
+            public const string Effective = "Effective";
+            public const string Transference = "Transference";
+            public const string Card = "Card";
+        }
+
         public static class AppointmentStatus
         {
             public const string Pending = "Pending";

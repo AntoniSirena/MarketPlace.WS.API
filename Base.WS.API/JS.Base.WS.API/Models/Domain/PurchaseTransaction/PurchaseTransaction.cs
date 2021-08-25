@@ -20,6 +20,7 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public decimal TotalAmount { get; set; }
         public decimal TotalAmountPending { get; set; }
         public string Comment { get; set; }
+        public string Address { get; set; }
 
 
         [ForeignKey("StatusId")]

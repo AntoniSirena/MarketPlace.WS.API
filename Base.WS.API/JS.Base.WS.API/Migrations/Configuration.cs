@@ -59,8 +59,8 @@ namespace JS.Base.WS.API.Migrations
 
             context.UserTypes.AddOrUpdate(
                 x => x.ShortName,
-                new UserType { ShortName = "Person", Description = "Persona", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new UserType { ShortName = "Enterprise", Description = "Empresa", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                new UserType { ShortName = "Person", Description = "Cliente", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new UserType { ShortName = "Enterprise", Description = "Proveedor", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
             context.Genders.AddOrUpdate(
@@ -121,6 +121,15 @@ namespace JS.Base.WS.API.Migrations
                 x => x.ShortName,
                 new ProductType { ShortName = "Product", Description = "Producto", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new ProductType { ShortName = "Service", Description = "Servicio", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
+
+            //Payment Methods
+            context.PaymentMethods.AddOrUpdate(
+                x => x.ShortName,
+                new PaymentMethod { ShortName = "Effective", Description = "Efectivo", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PaymentMethod { ShortName = "Transference", Description = "Transferencia", ShowToCustomer = true, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PaymentMethod { ShortName = "Card", Description = "Tarjeta", ShowToCustomer = false, IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
 
