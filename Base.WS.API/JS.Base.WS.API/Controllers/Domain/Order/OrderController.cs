@@ -90,7 +90,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 decimal amount = (request.Quantity * article.Price) - order.Discount;
 
                 order.StatusId = inProcessId;
-                order.TransactionId = transactionTypeId;
+                order.TransactionTypeId = transactionTypeId;
                 order.UserId = currentUserId;
                 order.CurrencyISONumber = Global.Constants.Currencies.ISONumberRD;
                 order.Tax = amount * (decimal)0.18;
@@ -98,6 +98,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 order.TotalAmount = order.Amount + order.Tax;
                 order.TotalAmountPending = 0;
                 order.Comment = null;
+                order.FormattedDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
                 order.CreationTime = DateTime.Now;
                 order.CreatorUserId = currentUserId;
                 order.IsActive = true;
@@ -211,7 +212,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                         detail.Quantity -= request.Quantity;
                         detail.Tax -= taxDetail;
                         detail.Amount -= ((article.Price * request.Quantity) - taxDetail);
-                        detail.TotalAmount = (detail.Amount + detail.Tax);                       
+                        detail.TotalAmount = (detail.Amount + detail.Tax);
                         db.SaveChanges();
                     }
 
@@ -252,7 +253,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 }
             }
 
-            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem, ItemNote = itemNote});
+            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem, ItemNote = itemNote });
         }
 
 
@@ -310,25 +311,37 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
         [HttpGet]
         [Route("GetShoppingCart")]
-        public IHttpActionResult GetShoppingCart()
+        public IHttpActionResult GetShoppingCart(long orderId = 0)
         {
 
             var orderDetail = new OrderDetailDTO();
 
-            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+            var currentOrder = new PurchaseTransaction();
+
+            if (orderId > 0)
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.Id == orderId).FirstOrDefault();
+            }
+            else
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
                                                  && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
                                                  && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
                                                  ).OrderByDescending(x => x.Id).FirstOrDefault();
+            }
 
             if (currentOrder != null)
             {
                 orderDetail.Id = currentOrder.Id;
-                orderDetail.Date = Convert.ToDateTime(currentOrder.CreationTime).ToString("dd/MM/yyyy");
+                orderDetail.Date = currentOrder.FormattedDate;
                 orderDetail.Status = currentOrder.Status.Description;
                 orderDetail.Subtotal = currentOrder.Amount;
                 orderDetail.Discount = currentOrder.Discount;
                 orderDetail.ITBIS = currentOrder.Tax;
                 orderDetail.TotalAmount = currentOrder.TotalAmount;
+                orderDetail.Comment = currentOrder.Comment == null ? string.Empty : currentOrder.Comment;
+                orderDetail.Address = currentOrder.Address;
+                orderDetail.PaymentMethod = currentOrder.PaymentMethod == null ? string.Empty : currentOrder.PaymentMethod.Description;
 
                 orderDetail.Items = currentOrder.ArticlesDetails.Select(x => new OrderDetailItemDTO()
                 {
@@ -358,8 +371,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 }
 
                 var client = db.Users.Where(x => x.Id == currentOrder.UserId).FirstOrDefault();
-                orderDetail.Client = string.Concat(client.Name, " ", client.Surname);
-                orderDetail.Client = client.PhoneNumber;
+                orderDetail.Client = string.Concat(client.Name, " ", client.Surname, " # ", client.Id.ToString());
+                orderDetail.ClientPhoneNumber = client.PhoneNumber;
 
                 response.Data = orderDetail;
             }
@@ -372,12 +385,93 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 return Ok(response);
             }
 
-            
+
 
             return Ok(response);
         }
 
 
+        [HttpPost]
+        [Route("Checkout")]
+        public IHttpActionResult Checkout(CheckoutDTO request)
+        {
+
+            var paymentMethod = db.PaymentMethods.Where(x => x.ShortName == request.PaymentMethod).FirstOrDefault();
+            if (paymentMethod == null)
+            {
+                response.Code = "400";
+                response.Message = "Método de pago no encontrado";
+
+                return Ok(response);
+            }
+
+            var currentOrder = db.PurchaseTransactions.Where(x => x.Id == request.OrderId).FirstOrDefault();
+            if (currentOrder == null)
+            {
+                response.Code = "400";
+                response.Message = "La orden que intenta procesar no fué encontrada";
+
+                return Ok(response);
+            }
+
+            var status = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm).FirstOrDefault();
+            if (status == null)
+            {
+                response.Code = "400";
+                response.Message = "Estado no encontrado";
+
+                return Ok(response);
+            }
+
+            currentOrder.StatusId = status.Id;
+            currentOrder.Address = request.Address;
+            currentOrder.PaymentMethodId = paymentMethod.Id;
+            db.SaveChanges();
+
+            response.Message = "Orden procesada con éxito";
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("Inbox")]
+        public IHttpActionResult Inbox(int statusId = 0)
+        {
+
+            var result = new List<OrderInboxDTO>();
+
+            if (statusId > 0)
+            {
+                result = db.PurchaseTransactions.Where(x => x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                {
+                    Id = y.Id,
+                    TotalAmount = y.TotalAmount,
+                    Date = y.FormattedDate,
+                    Status = y.Status.Description,
+                    Address = y.Address,
+                    PaymentMethod = y.PaymentMethod.Description,
+
+                }).ToList();
+            }
+            else
+            {
+                result = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm).Select(y => new OrderInboxDTO()
+                {
+                    Id = y.Id,
+                    TotalAmount = y.TotalAmount,
+                    Date =y.FormattedDate,
+                    Status = y.Status.Description,
+                    Address = y.Address,
+                    PaymentMethod = y.PaymentMethod.Description,
+
+                }).ToList();
+            }
+
+            response.Data = result;
+
+            return Ok(response);
+        }
     }
 
 }

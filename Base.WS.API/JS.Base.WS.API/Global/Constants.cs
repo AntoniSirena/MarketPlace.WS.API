@@ -73,6 +73,7 @@ namespace JS.Base.WS.API.Global
             public const string PendingToPay = "PendingToPay";
             public const string Payed = "Payed";
             public const string Cancelled = "Cancelled";
+            public const string PendingToConfirm = "PendingToConfirm";
         }
 
 

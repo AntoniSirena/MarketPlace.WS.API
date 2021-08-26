@@ -17,6 +17,9 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public List<OrderDetailItemDTO> Items { get; set; }
         public string Client { get; set; }
         public string ClientPhoneNumber { get; set; }
+        public string Comment { get; set; }
+        public string Address { get; set; }
+        public string PaymentMethod { get; set; }
     }
 
     public class OrderDetailItemDTO
@@ -35,6 +38,17 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public decimal Stock { get; set; }
         public decimal MinQuantity { get; set; }
         public decimal MaxQuantity { get; set; }
+    }
+
+    
+    public class OrderInboxDTO
+    {
+        public long Id { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string Date { get; set; }
+        public string Status { get; set; }
+        public string Address { get; set; }
+        public string PaymentMethod { get; set; }
     }
 
 }

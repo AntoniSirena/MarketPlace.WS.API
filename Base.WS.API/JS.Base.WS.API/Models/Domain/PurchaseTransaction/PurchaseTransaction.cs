@@ -11,7 +11,8 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         [Key]
         public long Id { get; set; }
         public int StatusId { get; set; }
-        public int TransactionId { get; set; }
+        public int TransactionTypeId { get; set; }
+        public int? PaymentMethodId { get; set; }
         public long UserId { get; set; }
         public int CurrencyISONumber { get; set; }
         public decimal Amount { get; set; }
@@ -21,13 +22,17 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public decimal TotalAmountPending { get; set; }
         public string Comment { get; set; }
         public string Address { get; set; }
+        public string FormattedDate { get; set; }
 
 
         [ForeignKey("StatusId")]
         public virtual PurchaseTransactionStatus Status { get; set; }
 
-        [ForeignKey("TransactionId")]
+        [ForeignKey("TransactionTypeId")]
         public virtual PurchaseTransactionType TransactionType { get; set; }
+
+         [ForeignKey("PaymentMethodId")]
+        public virtual PaymentMethod PaymentMethod { get; set; }
 
         public virtual ICollection<PurchaseTransactionDetail> ArticlesDetails { get; set; }
 

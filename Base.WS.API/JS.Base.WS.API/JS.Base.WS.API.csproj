@@ -305,21 +305,17 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202108191447391_Add Amount PurchatDetail.cs" />
-    <Compile Include="Migrations\202108191447391_Add Amount PurchatDetail.Designer.cs">
-      <DependentUpon>202108191447391_Add Amount PurchatDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108230549061_update market.cs" />
-    <Compile Include="Migrations\202108230549061_update market.Designer.cs">
-      <DependentUpon>202108230549061_update market.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202108250041022_add address in transaction.cs" />
-    <Compile Include="Migrations\202108250041022_add address in transaction.Designer.cs">
-      <DependentUpon>202108250041022_add address in transaction.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202108251535202_add entity paymentMethod.cs" />
     <Compile Include="Migrations\202108251535202_add entity paymentMethod.Designer.cs">
       <DependentUpon>202108251535202_add entity paymentMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108260645370_update purchaseTra.cs" />
+    <Compile Include="Migrations\202108260645370_update purchaseTra.Designer.cs">
+      <DependentUpon>202108260645370_update purchaseTra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108260714482_add property purchaseTra.cs" />
+    <Compile Include="Migrations\202108260714482_add property purchaseTra.Designer.cs">
+      <DependentUpon>202108260714482_add property purchaseTra.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Currency.cs" />
@@ -481,17 +477,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202108191447391_Add Amount PurchatDetail.resx">
-      <DependentUpon>202108191447391_Add Amount PurchatDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108230549061_update market.resx">
-      <DependentUpon>202108230549061_update market.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108250041022_add address in transaction.resx">
-      <DependentUpon>202108250041022_add address in transaction.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108251535202_add entity paymentMethod.resx">
       <DependentUpon>202108251535202_add entity paymentMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108260645370_update purchaseTra.resx">
+      <DependentUpon>202108260645370_update purchaseTra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108260714482_add property purchaseTra.resx">
+      <DependentUpon>202108260714482_add property purchaseTra.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
