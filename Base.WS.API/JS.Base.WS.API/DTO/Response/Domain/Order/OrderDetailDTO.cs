@@ -9,6 +9,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
     {
         public long Id { get; set; }
         public string Date { get; set; }
+        public string StatusShortName { get; set; }
         public string Status { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Discount { get; set; }
@@ -38,6 +39,8 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public decimal Stock { get; set; }
         public decimal MinQuantity { get; set; }
         public decimal MaxQuantity { get; set; }
+        public string Comment { get; set; }
+        public long? ClientId { get; set; }
     }
 
     
@@ -49,6 +52,14 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public string Status { get; set; }
         public string Address { get; set; }
         public string PaymentMethod { get; set; }
+        public long? ClientId { get; set; }
+    }
+
+    public class OrderStatusDTO
+    {
+        public int Id { get; set; }
+        public string ShortName { get; set; }
+        public string Description { get; set; }
     }
 
 }

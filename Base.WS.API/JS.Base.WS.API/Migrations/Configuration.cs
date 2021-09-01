@@ -92,13 +92,14 @@ namespace JS.Base.WS.API.Migrations
             //Purchase Transaction Statuses
             context.PurchaseTransactionStatus.AddOrUpdate(
                 x => x.ShortName,
-                new PurchaseTransactionStatus { ShortName = "PendingToDelivery", Description = "Pendiente de entraga", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new PurchaseTransactionStatus { ShortName = "Delivered", Description = "En espera", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "PendingToDelivery", Description = "Pendiente de entragar", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "Delivered", Description = "Entregada", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new PurchaseTransactionStatus { ShortName = "InProcess", Description = "En proceso", ShowToCustomer = true, Colour = "btn btn-success", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new PurchaseTransactionStatus { ShortName = "PendingToPay", Description = "Pendiente de pago", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new PurchaseTransactionStatus { ShortName = "Payed", Description = "Pagada", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new PurchaseTransactionStatus { ShortName = "Cancelled", Description = "Cancelada", ShowToCustomer = true, Colour = "btn btn-danger", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new PurchaseTransactionStatus { ShortName = "PendingToConfirm", Description = "Pendiente de confirmar", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                new PurchaseTransactionStatus { ShortName = "PendingToConfirm", Description = "Pendiente de confirmar", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatus { ShortName = "Reception", Description = "Reception de mercancía", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
             //Purchase Transaction Types

@@ -73,10 +73,21 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             #endregion
 
 
-            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+            var currentOrder = new PurchaseTransaction();
+
+            if (request.OrderId > 0)
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.Id == request.OrderId).FirstOrDefault();
+            }
+            else
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
                                                              && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
                                                              && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
                                                              ).OrderByDescending(x => x.Id).FirstOrDefault();
+            }
+
+
             var order = new PurchaseTransaction();
             var detail = new PurchaseTransactionDetail();
 
@@ -230,16 +241,25 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
         [HttpGet]
         [Route("GetCurrentArticleQuantity")]
-        public IHttpActionResult GetCurrentArticleQuantity(long articleId)
+        public IHttpActionResult GetCurrentArticleQuantity(long articleId, long orderId = 0)
         {
             decimal Quantity = 0;
             bool ShowButtonDeleteItem = false;
             string itemNote = string.Empty;
 
-            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
-                                                 && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
-                                                 && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
-                                                 ).OrderByDescending(x => x.Id).FirstOrDefault();
+            var currentOrder = new PurchaseTransaction();
+
+            if (orderId > 0)
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.Id == orderId).FirstOrDefault();
+            }
+            else
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+                                                     && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
+                                                     && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
+                                                     ).OrderByDescending(x => x.Id).FirstOrDefault();
+            }
 
             if (currentOrder != null)
             {
@@ -259,12 +279,21 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
         [HttpDelete]
         [Route("DeleteArticle")]
-        public IHttpActionResult DeleteArticle(long articleId)
+        public IHttpActionResult DeleteArticle(long articleId, long orderId = 0)
         {
-            var currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
+            var currentOrder = new PurchaseTransaction();
+
+            if (orderId > 0)
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.Id == orderId).FirstOrDefault();
+            }
+            else
+            {
+                currentOrder = db.PurchaseTransactions.Where(x => x.UserId == currentUserId
                                                  && x.TransactionType.ShortName == Global.Constants.PurchaseTransactionTypes.Order
                                                  && x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess
                                                  ).OrderByDescending(x => x.Id).FirstOrDefault();
+            }
 
             if (currentOrder != null)
             {
@@ -335,6 +364,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 orderDetail.Id = currentOrder.Id;
                 orderDetail.Date = currentOrder.FormattedDate;
                 orderDetail.Status = currentOrder.Status.Description;
+                orderDetail.StatusShortName = currentOrder.Status.ShortName;
                 orderDetail.Subtotal = currentOrder.Amount;
                 orderDetail.Discount = currentOrder.Discount;
                 orderDetail.ITBIS = currentOrder.Tax;
@@ -358,6 +388,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     Stock = x.Article.Stock,
                     MinQuantity = x.Article.MinQuantity,
                     MaxQuantity = x.Article.MaxQuantity,
+                    Comment = x.Comment,
+                    ClientId = x.CreatorUserId,
 
                 }).OrderByDescending(x => x.Id).ToList();
 
@@ -436,14 +468,50 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
         [HttpGet]
         [Route("Inbox")]
-        public IHttpActionResult Inbox(int statusId = 0)
+        public IHttpActionResult Inbox(int statusId = 0, long clientId = 0)
         {
-
-            var result = new List<OrderInboxDTO>();
 
             if (statusId > 0)
             {
-                result = db.PurchaseTransactions.Where(x => x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                if (clientId > 0)
+                {
+                    response.Data = db.PurchaseTransactions.Where(x => x.UserId == clientId && x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                    {
+                        Id = y.Id,
+                        TotalAmount = y.TotalAmount,
+                        Date = y.FormattedDate,
+                        Status = y.Status.Description,
+                        Address = y.Address,
+                        PaymentMethod = y.PaymentMethod.Description,
+                        ClientId = y.UserId,
+
+                    }).ToList();
+
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Data = db.PurchaseTransactions.Where(x => x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                    {
+                        Id = y.Id,
+                        TotalAmount = y.TotalAmount,
+                        Date = y.FormattedDate,
+                        Status = y.Status.Description,
+                        Address = y.Address,
+                        PaymentMethod = y.PaymentMethod.Description,
+                        ClientId = y.UserId,
+
+                    }).ToList();
+
+                    return Ok(response);
+                }
+
+            }
+
+
+            if (clientId > 0)
+            {
+                response.Data = db.PurchaseTransactions.Where(x => x.UserId == clientId).Select(y => new OrderInboxDTO()
                 {
                     Id = y.Id,
                     TotalAmount = y.TotalAmount,
@@ -451,27 +519,86 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     Status = y.Status.Description,
                     Address = y.Address,
                     PaymentMethod = y.PaymentMethod.Description,
+                    ClientId = y.UserId,
 
                 }).ToList();
+
+                return Ok(response);
             }
-            else
+
+
+            response.Data = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm).Select(y => new OrderInboxDTO()
             {
-                result = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm).Select(y => new OrderInboxDTO()
-                {
-                    Id = y.Id,
-                    TotalAmount = y.TotalAmount,
-                    Date =y.FormattedDate,
-                    Status = y.Status.Description,
-                    Address = y.Address,
-                    PaymentMethod = y.PaymentMethod.Description,
+                Id = y.Id,
+                TotalAmount = y.TotalAmount,
+                Date = y.FormattedDate,
+                Status = y.Status.Description,
+                Address = y.Address,
+                PaymentMethod = y.PaymentMethod.Description,
+                ClientId = y.UserId,
 
-                }).ToList();
-            }
+            }).ToList();
+
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetOrderStatuses")]
+        public IHttpActionResult GetOrderStatuses()
+        {
+
+            var result = db.PurchaseTransactionStatus.Where(x => x.IsActive == true && x.ShowToCustomer == true).Select(y => new OrderStatusDTO()
+            {
+                Id = y.Id,
+                ShortName = y.ShortName,
+                Description = y.Description,
+
+            }).OrderBy(x => x.Description).ToList();
 
             response.Data = result;
 
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("UpdateOrderStatus")]
+        public IHttpActionResult UpdateOrderStatus(string statusShortName, long orderId)
+        {
+            var currentStatus = db.PurchaseTransactionStatus.Where(x => x.ShortName == statusShortName).FirstOrDefault();
+
+            if (currentStatus == null)
+            {
+                response.Code = "404";
+                response.Message = "El estado recibido no es válido";
+
+                return Ok(response);
+            }
+
+            var currentOrder = db.PurchaseTransactions.Where(x => x.Id == orderId).FirstOrDefault();
+
+            if (statusShortName == Global.Constants.PurchaseTransactionStatus.Reception)
+            {
+                currentOrder.StatusId = currentStatus.Id;
+                db.SaveChanges();
+
+                response.Message = "Orden confirmada con éxito";
+            }
+
+            if (statusShortName == Global.Constants.PurchaseTransactionStatus.Cancelled)
+            {
+                currentOrder.StatusId = currentStatus.Id;
+                db.SaveChanges();
+
+                response.Message = "Orden cancelada con éxito";
+            }
+
+
+            return Ok(response);
+        }
+
     }
 
 }
