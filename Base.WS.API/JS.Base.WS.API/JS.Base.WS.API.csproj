@@ -309,6 +309,14 @@
     <Compile Include="Migrations\202108261429212_update mark.Designer.cs">
       <DependentUpon>202108261429212_update mark.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109011912082_update Purt.cs" />
+    <Compile Include="Migrations\202109011912082_update Purt.Designer.cs">
+      <DependentUpon>202109011912082_update Purt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109011912430_update Purt add.cs" />
+    <Compile Include="Migrations\202109011912430_update Purt add.Designer.cs">
+      <DependentUpon>202109011912430_update Purt add.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
@@ -326,6 +334,7 @@
     <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransaction.cs" />
     <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionDetail.cs" />
     <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionStatus.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionStatusDetail.cs" />
     <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionType.cs" />
     <Compile Include="Models\Domain\ScheduleHour.cs" />
     <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
@@ -471,6 +480,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202108261429212_update mark.resx">
       <DependentUpon>202108261429212_update mark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109011912082_update Purt.resx">
+      <DependentUpon>202109011912082_update Purt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109011912430_update Purt add.resx">
+      <DependentUpon>202109011912430_update Purt add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

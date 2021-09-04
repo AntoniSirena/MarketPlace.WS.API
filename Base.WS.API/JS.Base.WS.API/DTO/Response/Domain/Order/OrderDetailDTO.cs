@@ -34,6 +34,8 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public decimal Subtotal { get; set; }
         public decimal ITBIS { get; set; }
         public decimal TotalAmount { get; set; }
+        public string StatusShortName { get; set; }
+        public string Status { get; set; }
 
         public bool UseStock { get; set; }
         public decimal Stock { get; set; }

@@ -14,6 +14,7 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public long Id { get; set; }
         public long TransactionId { get; set; }
         public long ArticleId { get; set; }
+        public int StatusId { get; set; }
         public decimal Quantity { get; set; }
         public decimal Price { get; set; }
         public decimal Amount { get; set; }
@@ -28,5 +29,8 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
 
         [ForeignKey("ArticleId")]
         public virtual Market Article { get; set; }
+
+        [ForeignKey("StatusId")]
+        public virtual PurchaseTransactionStatusDetail Status { get; set; }
     }
 }

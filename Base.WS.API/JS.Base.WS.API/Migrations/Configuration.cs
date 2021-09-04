@@ -102,6 +102,14 @@ namespace JS.Base.WS.API.Migrations
                 new PurchaseTransactionStatus { ShortName = "Reception", Description = "Reception de mercancía", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
+            //Purchase Transaction Statuses Details
+            context.PurchaseTransactionStatusDetails.AddOrUpdate(
+                x => x.ShortName,
+                new PurchaseTransactionStatusDetail { ShortName = "PendingToReceive", Description = "Pendiente de recibir", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatusDetail { ShortName = "Received", Description = "Recibido", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatusDetail { ShortName = "InProcess", Description = "En proceso", ShowToCustomer = true, Colour = "btn btn-success", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                );
+
             //Purchase Transaction Types
             context.PurchaseTransactionTypes.AddOrUpdate(
                 x => x.ShortName,

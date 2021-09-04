@@ -77,6 +77,7 @@ namespace JS.Base.WS.API.DBContext
 
 
         public virtual DbSet<PurchaseTransactionStatus> PurchaseTransactionStatus { get; set; }
+        public virtual DbSet<PurchaseTransactionStatusDetail> PurchaseTransactionStatusDetails { get; set; }
         public virtual DbSet<PurchaseTransactionType> PurchaseTransactionTypes { get; set; }
         public virtual DbSet<PurchaseTransaction> PurchaseTransactions { get; set; }
         public virtual DbSet<PurchaseTransactionDetail> PurchaseTransactionDetails { get; set; }

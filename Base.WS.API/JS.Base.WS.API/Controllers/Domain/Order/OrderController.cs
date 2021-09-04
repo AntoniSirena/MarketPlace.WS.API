@@ -91,12 +91,13 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             var order = new PurchaseTransaction();
             var detail = new PurchaseTransactionDetail();
 
+            int inProcessId = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess).Select(x => x.Id).FirstOrDefault();
+            int inProcessId_Detail = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess).Select(x => x.Id).FirstOrDefault();
+            int transactionTypeId = db.PurchaseTransactionTypes.Where(x => x.ShortName == Global.Constants.PurchaseTransactionTypes.Order).Select(x => x.Id).FirstOrDefault();
+
+
             if (currentOrder == null)
             {
-
-                int inProcessId = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.InProcess).Select(x => x.Id).FirstOrDefault();
-                int transactionTypeId = db.PurchaseTransactionTypes.Where(x => x.ShortName == Global.Constants.PurchaseTransactionTypes.Order).Select(x => x.Id).FirstOrDefault();
-
                 order.Discount = 0;
                 decimal amount = (request.Quantity * article.Price) - order.Discount;
 
@@ -119,6 +120,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
                 decimal taxDetail = (article.Price * request.Quantity) * (decimal)0.18;
 
+                detail.StatusId = inProcessId_Detail;
                 detail.TransactionId = order.Id;
                 detail.ArticleId = request.ArticleId;
                 detail.Quantity = request.Quantity;
@@ -158,6 +160,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     currentOrder.TotalAmountPending += 0;
                     db.SaveChanges();
 
+                    detail.StatusId = inProcessId_Detail;
                     detail.TransactionId = currentOrder.Id;
                     detail.ArticleId = request.ArticleId;
                     detail.Quantity = request.Quantity;
@@ -227,7 +230,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                         db.SaveChanges();
                     }
 
-                    response.Message = "Cantidad actualizada con éxito";
+                    response.Message = "Artículo actualizado con éxito";
                 }
 
             }
@@ -390,6 +393,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     MaxQuantity = x.Article.MaxQuantity,
                     Comment = x.Comment,
                     ClientId = x.CreatorUserId,
+                    Status = x.Status.Description,
+                    StatusShortName = x.Status.ShortName,
 
                 }).OrderByDescending(x => x.Id).ToList();
 
@@ -584,6 +589,14 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 currentOrder.StatusId = currentStatus.Id;
                 db.SaveChanges();
 
+                int pendingToReceiveId = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).Select(x => x.Id).FirstOrDefault();
+
+                foreach (var item in currentOrder.ArticlesDetails)
+                {
+                    item.StatusId = pendingToReceiveId;
+                    db.SaveChanges();
+                }
+
                 response.Message = "Orden confirmada con éxito";
             }
 
@@ -595,9 +608,62 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 response.Message = "Orden cancelada con éxito";
             }
 
+            if (statusShortName == Global.Constants.PurchaseTransactionStatus.Delivered)
+            {
+                currentOrder.StatusId = currentStatus.Id;
+                db.SaveChanges();
+
+                response.Message = "Orden entregada con éxito";
+            }
+
 
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("UpdateOrderDetailStatus")]
+        public IHttpActionResult UpdateOrderDetailStatus(string statusShortName, long itemId)
+        {
+            var currentStatus = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == statusShortName).FirstOrDefault();
+
+            if (currentStatus == null)
+            {
+                response.Code = "404";
+                response.Message = "El estado recibido no es válido";
+
+                return Ok(response);
+            }
+
+            var currentItem = db.PurchaseTransactionDetails.Where(x => x.Id == itemId).FirstOrDefault();
+
+            currentItem.StatusId = currentStatus.Id;
+            db.SaveChanges();
+
+            if (statusShortName == Global.Constants.PurchaseTransactionStatusDetails.Received)
+            {
+                var details = db.PurchaseTransactionDetails.Where(x => x.TransactionId == currentItem.TransactionId && x.Status.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).ToList();
+
+                if (details.Count() == 0)
+                {
+                    var orderStatus = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).FirstOrDefault();
+                    var currentOrden = db.PurchaseTransactions.Where(x => x.Id == currentItem.TransactionId).FirstOrDefault();
+
+                    currentOrden.StatusId = orderStatus.Id;
+                    db.SaveChanges();
+
+                    response.Message = "Orden lista para ser entregada al cliente";
+                }
+                else
+                {
+                    response.Message = "Artículo marcado como recibido con éxito";
+                }
+            }
+
+
+            return Ok(response);
+        }
+
 
     }
 
