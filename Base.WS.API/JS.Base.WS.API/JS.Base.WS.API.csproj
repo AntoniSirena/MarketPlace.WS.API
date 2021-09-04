@@ -305,18 +305,6 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
-    <Compile Include="Migrations\202108261429212_update mark.cs" />
-    <Compile Include="Migrations\202108261429212_update mark.Designer.cs">
-      <DependentUpon>202108261429212_update mark.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109011912082_update Purt.cs" />
-    <Compile Include="Migrations\202109011912082_update Purt.Designer.cs">
-      <DependentUpon>202109011912082_update Purt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109011912430_update Purt add.cs" />
-    <Compile Include="Migrations\202109011912430_update Purt add.Designer.cs">
-      <DependentUpon>202109011912430_update Purt add.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
@@ -476,17 +464,6 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202108261429212_update mark.resx">
-      <DependentUpon>202108261429212_update mark.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109011912082_update Purt.resx">
-      <DependentUpon>202109011912082_update Purt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109011912430_update Purt add.resx">
-      <DependentUpon>202109011912430_update Purt add.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

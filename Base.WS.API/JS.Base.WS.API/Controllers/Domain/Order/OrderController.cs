@@ -335,6 +335,19 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
             }
 
+
+            var details = db.PurchaseTransactionDetails.Where(x => x.TransactionId == orderId && x.Status.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).ToList();
+
+            if (details.Count() == 0)
+            {
+                var orderStatus = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).FirstOrDefault();
+
+                currentOrder.StatusId = orderStatus.Id;
+                db.SaveChanges();
+
+                response.Message = "Orden lista para ser entregada al cliente";
+            }
+
             response.Data = new { ShowButtonDeleteItem = false };
 
             return Ok(response);
