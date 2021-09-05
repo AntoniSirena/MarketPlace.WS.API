@@ -249,6 +249,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             decimal Quantity = 0;
             bool ShowButtonDeleteItem = false;
             string itemNote = string.Empty;
+            string provider = string.Empty;
+            string phoneNumber = string.Empty;
 
             var currentOrder = new PurchaseTransaction();
 
@@ -270,13 +272,28 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
                 if (article != null)
                 {
+                    var _provider = db.Users.Where(x => x.Id == article.ProviderId).FirstOrDefault();
+
                     Quantity = article.Quantity;
                     ShowButtonDeleteItem = true;
                     itemNote = article.Comment;
+                    provider = string.Concat(_provider.Name, " ", _provider.Surname);
+                    phoneNumber = _provider.PhoneNumber;
                 }
             }
 
-            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem, ItemNote = itemNote });
+            if(string.IsNullOrEmpty(provider))
+            {
+                var article = db.Markets.Where(x => x.Id == articleId).FirstOrDefault();
+
+                var _provider = db.Users.Where(x => x.Id == article.CreatorUserId).FirstOrDefault();
+
+                provider = string.Concat(_provider.Name, " ", _provider.Surname);
+                phoneNumber = _provider.PhoneNumber;
+            }
+
+
+            return Ok(new { Quantity = Quantity, ShowButtonDeleteItem = ShowButtonDeleteItem, ItemNote = itemNote, Provider = provider, PhoneNumber = phoneNumber });
         }
 
 
@@ -478,7 +495,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             currentOrder.PaymentMethodId = paymentMethod.Id;
             db.SaveChanges();
 
-            response.Message = "Orden procesada con éxito";
+            response.Message = "Orden procesada con éxito. En o antes de 24 horas usted sera contactado para confirmar dicha orden";
 
             return Ok(response);
         }
@@ -673,6 +690,35 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 }
             }
 
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetOrderHistory")]
+        public IHttpActionResult GetOrderHistory()
+        {
+            var result = new List<OrderDetailDTO>();
+
+            result = db.PurchaseTransactions.Where(x => x.UserId == currentUserId).Select(y => new OrderDetailDTO()
+            {
+                Id = y.Id,
+                Date = y.FormattedDate,
+                Status = y.Status.Description,
+                StatusShortName = y.Status.ShortName,
+                StatusColour = y.Status.Colour,
+                Subtotal = y.Amount,
+                Discount = y.Discount,
+                ITBIS = y.Tax,
+                TotalAmount = y.TotalAmount,
+                Comment = y.Comment,
+                Address = y.Address,
+                PaymentMethod = y.PaymentMethod.Description,
+
+            }).OrderByDescending(x => x.Id).ToList();
+
+            response.Data = result;
 
             return Ok(response);
         }

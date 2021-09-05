@@ -677,7 +677,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             result.Seller = new Seller()
             {
                 Id = Convert.ToInt64(article.CreatorUserId),
-                Name = string.IsNullOrEmpty(user.Person?.FullName) ? string.Concat(user.Name, ' ', user.Surname) : user.Person.FullName,
+                Name = string.Concat(user.Name, " ", user.Surname),
                 PhoneNumber = user.PhoneNumber,
                 Mail = user.EmailAddress,
             };
