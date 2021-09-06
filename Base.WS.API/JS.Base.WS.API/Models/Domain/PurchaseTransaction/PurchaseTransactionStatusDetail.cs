@@ -13,6 +13,7 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public int Id { get; set; }
         public string ShortName { get; set; }
         public string Description { get; set; }
+        public string ClientStatusDescription { get; set; }
         public string Colour { get; set; }
         public bool ShowToCustomer { get; set; }
     }

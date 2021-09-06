@@ -398,6 +398,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 orderDetail.Date = currentOrder.FormattedDate;
                 orderDetail.Status = currentOrder.Status.Description;
                 orderDetail.StatusShortName = currentOrder.Status.ShortName;
+                orderDetail.ClientStatusDescription = currentOrder.Status.ClientStatusDescription;
                 orderDetail.Subtotal = currentOrder.Amount;
                 orderDetail.Discount = currentOrder.Discount;
                 orderDetail.ITBIS = currentOrder.Tax;
@@ -425,6 +426,8 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     ClientId = x.CreatorUserId,
                     Status = x.Status.Description,
                     StatusShortName = x.Status.ShortName,
+                    ClientStatusDescription = x.Status.ClientStatusDescription,
+                    StatusColour = x.Status.Colour,
 
                 }).OrderByDescending(x => x.Id).ToList();
 
@@ -643,6 +646,14 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 currentOrder.StatusId = currentStatus.Id;
                 db.SaveChanges();
 
+                var currentStatusDetail = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatusDetails.Delivered).FirstOrDefault();
+
+                foreach (var item in currentOrder.ArticlesDetails)
+                {
+                    item.StatusId = currentStatusDetail.Id;
+                    db.SaveChanges();
+                }
+
                 response.Message = "Orden entregada con éxito";
             }
 
@@ -706,6 +717,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 Id = y.Id,
                 Date = y.FormattedDate,
                 Status = y.Status.Description,
+                ClientStatusDescription = y.Status.ClientStatusDescription,
                 StatusShortName = y.Status.ShortName,
                 StatusColour = y.Status.Colour,
                 Subtotal = y.Amount,

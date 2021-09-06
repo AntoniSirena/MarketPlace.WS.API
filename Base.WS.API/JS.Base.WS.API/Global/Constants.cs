@@ -82,6 +82,7 @@ namespace JS.Base.WS.API.Global
             public const string PendingToReceive = "PendingToReceive";
             public const string Received = "Received";
             public const string InProcess = "InProcess";
+            public const string Delivered = "Delivered";
         }
 
 

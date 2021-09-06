@@ -12,6 +12,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public string StatusShortName { get; set; }
         public string Status { get; set; }
         public string StatusColour { get; set; }
+        public string ClientStatusDescription { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Discount { get; set; }
         public decimal ITBIS { get; set; }
@@ -37,6 +38,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public decimal TotalAmount { get; set; }
         public string StatusShortName { get; set; }
         public string Status { get; set; }
+        public string ClientStatusDescription { get; set; }
         public string StatusColour { get; set; }
 
         public bool UseStock { get; set; }
