@@ -772,7 +772,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 ClientName = string.Concat(y.Transaction.Client.Name, " ", y.Transaction.Client.Surname),
                 ClientPhoneNumber = y.Transaction.Client.PhoneNumber.Insert(3, "-").Insert(7, "-"),
 
-            }).ToList();
+            }).OrderBy(x => x.OrderId).ToList();
 
             response.Data = result;
 
