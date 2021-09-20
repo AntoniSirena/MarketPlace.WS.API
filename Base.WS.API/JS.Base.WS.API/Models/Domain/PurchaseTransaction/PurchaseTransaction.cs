@@ -1,4 +1,5 @@
 ﻿using JS.Base.WS.API.Base;
+using JS.Base.WS.API.Models.Authorization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +28,9 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
 
         [ForeignKey("StatusId")]
         public virtual PurchaseTransactionStatus Status { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User Client { get; set; }
 
         [ForeignKey("TransactionTypeId")]
         public virtual PurchaseTransactionType TransactionType { get; set; }

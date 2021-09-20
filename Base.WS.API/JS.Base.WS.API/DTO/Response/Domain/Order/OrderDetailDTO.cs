@@ -28,18 +28,22 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
     public class OrderDetailItemDTO
     {
         public long Id { get; set; }
+        public long OrderId { get; set; }
         public long ArticleId { get; set; }
         public string Title { get; set; }
         public decimal Quantity { get; set; }
         public decimal Price { get; set; }
         public string CurrencyCode { get; set; }
+        public int CurrencyISONumber { get; set; }
         public decimal Subtotal { get; set; }
         public decimal ITBIS { get; set; }
         public decimal TotalAmount { get; set; }
         public string StatusShortName { get; set; }
         public string Status { get; set; }
         public string ClientStatusDescription { get; set; }
+        public string ProviderStatusDescription { get; set; }
         public string StatusColour { get; set; }
+        public string Date { get; set; }
 
         public bool UseStock { get; set; }
         public decimal Stock { get; set; }
@@ -47,6 +51,8 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public decimal MaxQuantity { get; set; }
         public string Comment { get; set; }
         public long? ClientId { get; set; }
+        public string ClientName { get; set; }
+        public string ClientPhoneNumber { get; set; }
     }
 
     

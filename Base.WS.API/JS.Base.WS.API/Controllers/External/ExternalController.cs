@@ -125,21 +125,24 @@ namespace JS.Base.WS.API.Controllers.External
                 string contentType = splitName2[0];
 
                 //Validate contentType
-                if (!fileTypeAlloweds.Contains(contentType))
+                if (!string.IsNullOrEmpty(contentType))
                 {
-                    response.Code = "400";
-                    response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
+                    if (!fileTypeAlloweds.Contains(contentType))
+                    {
+                        response.Code = "400";
+                        response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
+
+                    var guid = Guid.NewGuid();
+                    var fileName = string.Concat("User_Avatar_Profile_", guid);
+                    var filePath = Path.Combine(root, fileName) + "." + contentType;
+
+                    File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
+
+                    request.user.Image = filePath;
                 }
-
-                var guid = Guid.NewGuid();
-                var fileName = string.Concat("User_Avatar_Profile_", guid);
-                var filePath = Path.Combine(root, fileName) + "." + contentType;
-
-                File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
-
-                request.user.Image = filePath;
             }
             else
             {

@@ -105,10 +105,10 @@ namespace JS.Base.WS.API.Migrations
             //Purchase Transaction Statuses Details
             context.PurchaseTransactionStatusDetails.AddOrUpdate(
                 x => x.ShortName,
-                new PurchaseTransactionStatusDetail { ShortName = "PendingToReceive", Description = "Pendiente de recibir", ClientStatusDescription = "Pendiente de recibir en almacén", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new PurchaseTransactionStatusDetail { ShortName = "Received", Description = "Recibido", ClientStatusDescription = "Recibido en almacén", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new PurchaseTransactionStatusDetail { ShortName = "InProcess", Description = "En proceso", ClientStatusDescription = "En proceso", ShowToCustomer = true, Colour = "btn btn-success", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
-                new PurchaseTransactionStatusDetail { ShortName = "Delivered", Description = "Entregado", ClientStatusDescription = "Recibido", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
+                new PurchaseTransactionStatusDetail { ShortName = "PendingToReceive", Description = "Pendiente de recibir", ClientStatusDescription = "Pendiente de recibir en almacén", ProviderStatusDescription = "Pendiente de enviar a almacén", ShowToCustomer = true, Colour = "btn btn-info", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatusDetail { ShortName = "Received", Description = "Recibido", ClientStatusDescription = "Recibido en almacén", ProviderStatusDescription = "Entregado en almacén", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatusDetail { ShortName = "InProcess", Description = "En proceso", ClientStatusDescription = "En proceso", ProviderStatusDescription = "En proceso", ShowToCustomer = true, Colour = "btn btn-success", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new PurchaseTransactionStatusDetail { ShortName = "Delivered", Description = "Entregado", ClientStatusDescription = "Recibido  por el cliente", ProviderStatusDescription = "Recibido por el cliente", ShowToCustomer = true, Colour = "btn btn-primary", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );
 
             //Purchase Transaction Types
@@ -121,7 +121,7 @@ namespace JS.Base.WS.API.Migrations
             //Article conditions
             context.ArticleConditions.AddOrUpdate(
                 x => x.ShortName,
-                new ArticleCondition { ShortName = "New", Description = "Nuevo", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
+                new ArticleCondition { ShortName = "New", Description = "Nuevo", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }, 
                 new ArticleCondition { ShortName = "Used", Description = "Usado", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now },
                 new ArticleCondition { ShortName = "NA", Description = "No aplica", IsActive = true, CreatorUserId = userId, CreationTime = DateTime.Now }
                 );

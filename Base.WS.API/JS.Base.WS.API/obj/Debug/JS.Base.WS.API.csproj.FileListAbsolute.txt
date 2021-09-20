@@ -738,6 +738,9 @@ C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Ba
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.AI.Web.xml
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csprojAssemblyReference.cache
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updatepurtdet.resources
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.Migrations.updatepurTranc.resources
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.GenerateResource.cache
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CoreCompileInputs.cache
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Base.WS.API\obj\Debug\JS.Base.WS.API.dll

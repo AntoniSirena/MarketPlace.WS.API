@@ -278,7 +278,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     ShowButtonDeleteItem = true;
                     itemNote = article.Comment;
                     provider = string.Concat(_provider.Name, " ", _provider.Surname);
-                    phoneNumber = _provider.PhoneNumber;
+                    phoneNumber = _provider.PhoneNumber.Insert(3, "-").Insert(7, "-");
                 }
             }
 
@@ -289,7 +289,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 var _provider = db.Users.Where(x => x.Id == article.CreatorUserId).FirstOrDefault();
 
                 provider = string.Concat(_provider.Name, " ", _provider.Surname);
-                phoneNumber = _provider.PhoneNumber;
+                phoneNumber = _provider.PhoneNumber.Insert(3, "-").Insert(7, "-");
             }
 
 
@@ -352,17 +352,20 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
             }
 
-
-            var details = db.PurchaseTransactionDetails.Where(x => x.TransactionId == orderId && x.Status.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).ToList();
-
-            if (details.Count() == 0)
+            if (currentOrder.Status.ShortName == Global.Constants.PurchaseTransactionStatus.Reception)
             {
-                var orderStatus = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).FirstOrDefault();
 
-                currentOrder.StatusId = orderStatus.Id;
-                db.SaveChanges();
+                var details = db.PurchaseTransactionDetails.Where(x => x.TransactionId == orderId && x.Status.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).ToList();
 
-                response.Message = "Orden lista para ser entregada al cliente";
+                if (details.Count() == 0 && currentOrder.ArticlesDetails.Count() > 0)
+                {
+                    var orderStatus = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).FirstOrDefault();
+
+                    currentOrder.StatusId = orderStatus.Id;
+                    db.SaveChanges();
+
+                    response.Message = "Orden lista para ser entregada al cliente";
+                }
             }
 
             response.Data = new { ShowButtonDeleteItem = false };
@@ -442,7 +445,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
                 var client = db.Users.Where(x => x.Id == currentOrder.UserId).FirstOrDefault();
                 orderDetail.Client = string.Concat(client.Name, " ", client.Surname, " # ", client.Id.ToString());
-                orderDetail.ClientPhoneNumber = client.PhoneNumber;
+                orderDetail.ClientPhoneNumber = client.PhoneNumber.Insert(3, "-").Insert(7, "-");
 
                 response.Data = orderDetail;
             }
@@ -729,6 +732,47 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 PaymentMethod = y.PaymentMethod.Description,
 
             }).OrderByDescending(x => x.Id).ToList();
+
+            response.Data = result;
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetProviderOrder")]
+        public IHttpActionResult GetProviderOrder()
+        {
+            var result = new List<OrderDetailItemDTO>();
+
+            result = db.PurchaseTransactionDetails.Where(x => x.ProviderId == currentUserId && x.Status.ShortName == Global.Constants.PurchaseTransactionStatusDetails.PendingToReceive).Select(y => new OrderDetailItemDTO()
+            {
+                Id = y.Id,
+                OrderId = y.TransactionId,
+                Date = y.Transaction.FormattedDate,
+                ArticleId = y.ArticleId,
+                Title = y.Article.Title,
+                Quantity = y.Quantity,
+                Price = y.Price,
+                CurrencyISONumber = y.Transaction.CurrencyISONumber,
+                Subtotal = y.Amount,
+                ITBIS = y.Tax,
+                TotalAmount = y.TotalAmount,
+                StatusShortName = y.Status.ShortName,
+                Status = y.Status.Description,
+                ClientStatusDescription = y.Status.ClientStatusDescription,
+                ProviderStatusDescription = y.Status.ProviderStatusDescription,
+                StatusColour = y.Status.Colour,
+                UseStock = y.Article.UseStock,
+                Stock = y.Article.Stock,
+                MinQuantity = y.Article.MinQuantity,
+                MaxQuantity = y.Article.MaxQuantity,
+                Comment = y.Comment,
+                ClientId = y.Transaction.UserId,
+                ClientName = string.Concat(y.Transaction.Client.Name, " ", y.Transaction.Client.Surname),
+                ClientPhoneNumber = y.Transaction.Client.PhoneNumber.Insert(3, "-").Insert(7, "-"),
+
+            }).ToList();
 
             response.Data = result;
 

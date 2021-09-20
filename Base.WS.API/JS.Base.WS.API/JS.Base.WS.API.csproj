@@ -305,6 +305,14 @@
     <Compile Include="Global\Constants.cs" />
     <Compile Include="Helpers\CacheStorage.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
+    <Compile Include="Migrations\202109171946031_update purtdet.cs" />
+    <Compile Include="Migrations\202109171946031_update purtdet.Designer.cs">
+      <DependentUpon>202109171946031_update purtdet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109201840463_update purTranc.cs" />
+    <Compile Include="Migrations\202109201840463_update purTranc.Designer.cs">
+      <DependentUpon>202109201840463_update purTranc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authorization\UserType.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Domain\Appointment.cs" />
@@ -464,6 +472,14 @@
       <Project>{29b76c64-bae1-498a-b4e4-23b0676e1beb}</Project>
       <Name>JS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202109171946031_update purtdet.resx">
+      <DependentUpon>202109171946031_update purtdet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109201840463_update purTranc.resx">
+      <DependentUpon>202109201840463_update purTranc.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
