@@ -83,6 +83,7 @@ namespace JS.Base.WS.API.Global
             public const string Received = "Received";
             public const string InProcess = "InProcess";
             public const string Delivered = "Delivered";
+            public const string Cancelled = "Cancelled";
         }
 
 

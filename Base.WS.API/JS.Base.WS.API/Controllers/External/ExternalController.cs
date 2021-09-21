@@ -112,7 +112,7 @@ namespace JS.Base.WS.API.Controllers.External
 
 
             //Save img
-            if(!string.IsNullOrEmpty(request.imagenBase64)){
+            if(!request.imagenBase64.Contains("UserEmpty")){
 
                 var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 

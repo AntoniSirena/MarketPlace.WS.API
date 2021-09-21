@@ -1,5 +1,6 @@
 ﻿using JS.Base.WS.API.Base;
 using JS.Base.WS.API.Models.Authorization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,7 +25,10 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public string Comment { get; set; }
         public string Address { get; set; }
         public string FormattedDate { get; set; }
+        public string Key { get; set; }
 
+        public DateTime? DeliverDate { get; set; }
+        public long? DeliveredByUser { get; set; }
 
         [ForeignKey("StatusId")]
         public virtual PurchaseTransactionStatus Status { get; set; }

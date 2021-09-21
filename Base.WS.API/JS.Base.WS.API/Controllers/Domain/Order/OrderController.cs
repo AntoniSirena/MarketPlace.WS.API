@@ -114,6 +114,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 order.CreationTime = DateTime.Now;
                 order.CreatorUserId = currentUserId;
                 order.IsActive = true;
+                order.Key = JS.Utilities.Security.GenerateSecurityCode(6);
 
                 db.PurchaseTransactions.Add(order);
                 db.SaveChanges();
@@ -409,6 +410,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 orderDetail.Comment = currentOrder.Comment == null ? string.Empty : currentOrder.Comment;
                 orderDetail.Address = currentOrder.Address;
                 orderDetail.PaymentMethod = currentOrder.PaymentMethod == null ? string.Empty : currentOrder.PaymentMethod.Description;
+                orderDetail.Key = currentOrder.Key;
 
                 orderDetail.Items = currentOrder.ArticlesDetails.Select(x => new OrderDetailItemDTO()
                 {
@@ -509,14 +511,36 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
         [HttpGet]
         [Route("Inbox")]
-        public IHttpActionResult Inbox(int statusId = 0, long clientId = 0)
+        public IHttpActionResult Inbox(int statusId = 0, long clientId = 0, long orderId = 0)
         {
+
+            var pendingToDelivery = db.PurchaseTransactionStatus.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).FirstOrDefault();
+
+            if (orderId > 0)
+            {
+
+                response.Data = db.PurchaseTransactions.Where(x => x.Id == orderId && x.StatusId != pendingToDelivery.Id).Select(y => new OrderInboxDTO()
+                {
+                    Id = y.Id,
+                    TotalAmount = y.TotalAmount,
+                    Date = y.FormattedDate,
+                    Status = y.Status.Description,
+                    Address = y.Address,
+                    PaymentMethod = y.PaymentMethod.Description,
+                    ClientId = y.UserId,
+                    ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
+
+                }).ToList();
+
+                return Ok(response);
+            }
+
 
             if (statusId > 0)
             {
                 if (clientId > 0)
                 {
-                    response.Data = db.PurchaseTransactions.Where(x => x.UserId == clientId && x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                    response.Data = db.PurchaseTransactions.Where(x => x.UserId == clientId && x.StatusId == statusId && x.StatusId != pendingToDelivery.Id).Select(y => new OrderInboxDTO()
                     {
                         Id = y.Id,
                         TotalAmount = y.TotalAmount,
@@ -525,6 +549,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                         Address = y.Address,
                         PaymentMethod = y.PaymentMethod.Description,
                         ClientId = y.UserId,
+                        ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
 
                     }).ToList();
 
@@ -532,7 +557,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 }
                 else
                 {
-                    response.Data = db.PurchaseTransactions.Where(x => x.StatusId == statusId).Select(y => new OrderInboxDTO()
+                    response.Data = db.PurchaseTransactions.Where(x => x.StatusId == statusId && x.StatusId != pendingToDelivery.Id).Select(y => new OrderInboxDTO()
                     {
                         Id = y.Id,
                         TotalAmount = y.TotalAmount,
@@ -541,6 +566,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                         Address = y.Address,
                         PaymentMethod = y.PaymentMethod.Description,
                         ClientId = y.UserId,
+                        ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
 
                     }).ToList();
 
@@ -561,6 +587,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                     Address = y.Address,
                     PaymentMethod = y.PaymentMethod.Description,
                     ClientId = y.UserId,
+                    ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
 
                 }).ToList();
 
@@ -568,7 +595,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             }
 
 
-            response.Data = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm).Select(y => new OrderInboxDTO()
+            response.Data = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToConfirm && x.StatusId != pendingToDelivery.Id).Select(y => new OrderInboxDTO()
             {
                 Id = y.Id,
                 TotalAmount = y.TotalAmount,
@@ -577,6 +604,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 Address = y.Address,
                 PaymentMethod = y.PaymentMethod.Description,
                 ClientId = y.UserId,
+                ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
 
             }).ToList();
 
@@ -590,7 +618,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
         public IHttpActionResult GetOrderStatuses()
         {
 
-            var result = db.PurchaseTransactionStatus.Where(x => x.IsActive == true && x.ShowToCustomer == true).Select(y => new OrderStatusDTO()
+            var result = db.PurchaseTransactionStatus.Where(x => x.IsActive == true && x.ShowToCustomer == true && x.ShowToImboxPage == true).Select(y => new OrderStatusDTO()
             {
                 Id = y.Id,
                 ShortName = y.ShortName,
@@ -641,12 +669,23 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 currentOrder.StatusId = currentStatus.Id;
                 db.SaveChanges();
 
+                var currentStatusDetail = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatusDetails.Cancelled).FirstOrDefault();
+
+                foreach (var item in currentOrder.ArticlesDetails)
+                {
+                    item.StatusId = currentStatusDetail.Id;
+                    db.SaveChanges();
+                }
+
                 response.Message = "Orden cancelada con éxito";
             }
 
             if (statusShortName == Global.Constants.PurchaseTransactionStatus.Delivered)
             {
                 currentOrder.StatusId = currentStatus.Id;
+                currentOrder.DeliverDate = DateTime.Now;
+                currentOrder.DeliveredByUser = currentUserId;
+
                 db.SaveChanges();
 
                 var currentStatusDetail = db.PurchaseTransactionStatusDetails.Where(x => x.ShortName == Global.Constants.PurchaseTransactionStatusDetails.Delivered).FirstOrDefault();
@@ -730,6 +769,9 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 Comment = y.Comment,
                 Address = y.Address,
                 PaymentMethod = y.PaymentMethod.Description,
+                Client = string.Concat(y.Client.Name, " ", y.Client.Surname),
+                ClientPhoneNumber = y.Client.PhoneNumber,
+                Key = y.Key,
 
             }).OrderByDescending(x => x.Id).ToList();
 
@@ -779,6 +821,92 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             return Ok(response);
         }
 
+
+        [HttpGet]
+        [Route("GetProviderOrderHistory")]
+        public IHttpActionResult GetProviderOrderHistory()
+        {
+            var result = new List<OrderDetailItemDTO>();
+
+            result = db.PurchaseTransactionDetails.Where(x => x.ProviderId == currentUserId).Select(y => new OrderDetailItemDTO()
+            {
+                Id = y.Id,
+                OrderId = y.TransactionId,
+                Date = y.Transaction.FormattedDate,
+                ArticleId = y.ArticleId,
+                Title = y.Article.Title,
+                Quantity = y.Quantity,
+                Price = y.Price,
+                CurrencyISONumber = y.Transaction.CurrencyISONumber,
+                Subtotal = y.Amount,
+                ITBIS = y.Tax,
+                TotalAmount = y.TotalAmount,
+                StatusShortName = y.Status.ShortName,
+                Status = y.Status.Description,
+                ClientStatusDescription = y.Status.ClientStatusDescription,
+                ProviderStatusDescription = y.Status.ProviderStatusDescription,
+                StatusColour = y.Status.Colour,
+                UseStock = y.Article.UseStock,
+                Stock = y.Article.Stock,
+                MinQuantity = y.Article.MinQuantity,
+                MaxQuantity = y.Article.MaxQuantity,
+                Comment = y.Comment,
+                ClientId = y.Transaction.UserId,
+                ClientName = string.Concat(y.Transaction.Client.Name, " ", y.Transaction.Client.Surname),
+                ClientPhoneNumber = y.Transaction.Client.PhoneNumber.Insert(3, "-").Insert(7, "-"),
+
+            }).OrderByDescending(x => x.OrderId).ToList();
+
+            response.Data = result;
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("GetOrderToDeliver")]
+        public IHttpActionResult GetOrderToDeliver()
+        {
+            var result = new List<OrderInboxDTO>();
+
+            response.Data = db.PurchaseTransactions.Where(x => x.Status.ShortName == Global.Constants.PurchaseTransactionStatus.PendingToDelivery).Select(y => new OrderInboxDTO()
+            {
+                Id = y.Id,
+                TotalAmount = y.TotalAmount,
+                Date = y.FormattedDate,
+                Status = y.Status.Description,
+                Address = y.Address,
+                PaymentMethod = y.PaymentMethod.Description,
+                ClientId = y.UserId,
+                ClientName = string.Concat(y.Client.Name, " ", y.Client.Surname),
+                ClientPhoneNumber = y.Client.PhoneNumber.Insert(3, "-").Insert(7, "-"),
+
+            }).ToList();
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("ValidateOrder")]
+        public IHttpActionResult ValidateOrder(long orderId, string key)
+        {
+            var result = db.PurchaseTransactions.Where(x => x.Id == orderId && x.Key == key).FirstOrDefault();
+
+            if (result == null)
+            {
+                response.Code = "400";
+                response.Message = "Clave inválida, favor intente de nuevo";
+
+                return Ok(response);
+            }
+            else
+            {
+                response.Data = true;
+            }
+
+            return Ok(response);
+        }
 
     }
 

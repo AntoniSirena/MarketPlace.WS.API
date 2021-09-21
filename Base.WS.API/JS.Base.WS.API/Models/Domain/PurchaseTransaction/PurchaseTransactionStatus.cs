@@ -16,5 +16,6 @@ namespace JS.Base.WS.API.Models.Domain.PurchaseTransaction
         public string ClientStatusDescription { get; set; }
         public string Colour { get; set; }
         public bool ShowToCustomer { get; set; }
+        public bool ShowToImboxPage { get; set; }
     }
 }

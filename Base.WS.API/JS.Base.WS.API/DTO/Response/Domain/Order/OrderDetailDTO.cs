@@ -23,6 +23,7 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public string Comment { get; set; }
         public string Address { get; set; }
         public string PaymentMethod { get; set; }
+        public string Key { get; set; }
     }
 
     public class OrderDetailItemDTO
@@ -65,6 +66,9 @@ namespace JS.Base.WS.API.DTO.Response.Domain.Order
         public string Address { get; set; }
         public string PaymentMethod { get; set; }
         public long? ClientId { get; set; }
+        public string ClientName { get; set; }
+        public string ClientPhoneNumber { get; set; }
+        public string Key { get; set; }
     }
 
     public class OrderStatusDTO
