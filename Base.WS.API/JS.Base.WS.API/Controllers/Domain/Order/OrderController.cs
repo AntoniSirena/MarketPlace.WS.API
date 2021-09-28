@@ -682,6 +682,14 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
 
             if (statusShortName == Global.Constants.PurchaseTransactionStatus.Delivered)
             {
+                if (currentOrder.Status.ShortName != Global.Constants.PurchaseTransactionStatus.PendingToDelivery)
+                {
+                    response.Code = "400";
+                    response.Message = "La orden se encuentra en un estado que no puede ser entregada";
+
+                    return Ok(response);
+                }
+
                 currentOrder.StatusId = currentStatus.Id;
                 currentOrder.DeliverDate = DateTime.Now;
                 currentOrder.DeliveredByUser = currentUserId;
@@ -770,7 +778,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
                 Address = y.Address,
                 PaymentMethod = y.PaymentMethod.Description,
                 Client = string.Concat(y.Client.Name, " ", y.Client.Surname),
-                ClientPhoneNumber = y.Client.PhoneNumber,
+                ClientPhoneNumber = y.Client.PhoneNumber.Insert(3, "-").Insert(7, "-"),
                 Key = y.Key,
 
             }).OrderByDescending(x => x.Id).ToList();

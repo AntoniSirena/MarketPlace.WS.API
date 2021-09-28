@@ -24,3 +24,4 @@ C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Ut
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csproj.CopyComplete
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.dll
 C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.pdb
+C:\Users\TEMP\Documents\Clients\MarketPlace\MarketPlace.WS.API\Base.WS.API\JS.Utilities_\obj\Debug\JS.Utilities.csprojAssemblyReference.cache

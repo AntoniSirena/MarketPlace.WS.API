@@ -678,7 +678,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             {
                 Id = Convert.ToInt64(article.CreatorUserId),
                 Name = string.Concat(user.Name, " ", user.Surname),
-                PhoneNumber = user.PhoneNumber,
+                PhoneNumber = Utilities.JS_Format.PhoneNumber(user.PhoneNumber),
                 Mail = user.EmailAddress,
             };
 
