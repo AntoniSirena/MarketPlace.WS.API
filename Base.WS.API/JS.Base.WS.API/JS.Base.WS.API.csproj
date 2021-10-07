@@ -349,9 +349,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
+    <Compile Include="Services\Domain\OrderService.cs" />
     <Compile Include="Services\FileDocument.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
+    <Compile Include="Services\IServices\IDomain\IOrderService.cs" />
     <Compile Include="Services\IServices\IFileDocument.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
@@ -423,8 +425,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\" />
-    <Folder Include="Services\Domain\" />
-    <Folder Include="Services\IServices\IDomain\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

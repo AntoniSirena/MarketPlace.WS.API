@@ -4,6 +4,7 @@ using JS.Base.WS.API.DTO.Request.Domain;
 using JS.Base.WS.API.DTO.Response.Domain.Order;
 using JS.Base.WS.API.Helpers;
 using JS.Base.WS.API.Models.Domain.PurchaseTransaction;
+using JS.Base.WS.API.Services.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -912,6 +913,21 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             {
                 response.Data = true;
             }
+
+            return Ok(response);
+        }
+
+
+
+        [HttpGet]
+        [Route("GeneratePDF")]
+        public IHttpActionResult GeneratePDF(long orderId)
+        {
+            var orderService = new OrderService();
+
+            var result = orderService.GeneratePDF(orderId);
+
+            response.Data = result;
 
             return Ok(response);
         }

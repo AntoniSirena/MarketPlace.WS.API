@@ -47,15 +47,38 @@ namespace JS.Alert.WS.API.Services
                             Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
 
                         };
-                        using (var message = new MailMessage(fromAddress, toAddress)
+
+                        if (request.SendFileAttach)
                         {
-                            Subject = subject,
-                            Body = body,
-                            IsBodyHtml = true,
-                        })
-                        {
-                            smtp.Send(message);
+                            using (var message = new MailMessage(fromAddress, toAddress)
+                            {
+                                Subject = subject,
+                                Body = body,
+                                IsBodyHtml = true,
+                            })
+                            {
+                                var files = request.PathFileAttach.Split(',');
+                                foreach (var file in files)
+                                {
+                                    message.Attachments.Add(new Attachment(file));
+                                }
+                                
+                                smtp.Send(message);
+                            }
                         }
+                        else
+                        {
+                            using (var message = new MailMessage(fromAddress, toAddress)
+                            {
+                                Subject = subject,
+                                Body = body,
+                                IsBodyHtml = true,
+                            })
+                            {
+                                smtp.Send(message);
+                            }
+                        }
+
                     }
                 }
 

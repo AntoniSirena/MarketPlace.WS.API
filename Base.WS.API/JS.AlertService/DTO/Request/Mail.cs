@@ -11,5 +11,7 @@ namespace JS.AlertService.DTO.Request
         public string MailAddresses { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public string PathFileAttach { get; set; }
+        public bool SendFileAttach { get; set; }
     }
 }

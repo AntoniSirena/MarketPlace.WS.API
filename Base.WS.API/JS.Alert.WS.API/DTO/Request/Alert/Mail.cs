@@ -10,5 +10,7 @@ namespace JS.Alert.WS.API.DTO.Request.Alert
         public string MailAddresses { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public string PathFileAttach { get; set; }
+        public bool SendFileAttach { get; set; }
     }
 }

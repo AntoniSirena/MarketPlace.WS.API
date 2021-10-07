@@ -246,6 +246,8 @@ namespace JS.Base.WS.API.Global
 
             public static string EnableShoppingCart { get { return ConfigurationParameterService.GetParameter("EnableShoppingCart") ?? "false"; } }
 
+            public static string PathReportOrder { get { return ConfigurationParameterService.GetParameter("PathReportOrder") ?? ""; } }           
+
         }
 
     }
