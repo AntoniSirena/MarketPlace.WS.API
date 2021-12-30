@@ -352,7 +352,7 @@ namespace JS.Base.WS.API.Controllers.Authorization
                         RoleParent = userRole.Role.Parent,
                         IsVisitorUser = currentUser.IsVisitorUser,
 
-                        //Permissions
+                        EnableShoppingCart = Convert.ToBoolean(Constants.ConfigurationParameter.EnableShoppingCart),
 
                         //Crud
                         CanEdit = userRole.Role.CanEdit,
@@ -521,12 +521,12 @@ namespace JS.Base.WS.API.Controllers.Authorization
             var pendingToChangePassword = db.UserStatus.Where(x => x.ShortName == Constants.UserStatuses.PendingToChangePassword).FirstOrDefault();
 
 
-            var user = db.Users.Where(x => x.UserName == request.UserName & x.EmailAddress == request.EmailAddress).FirstOrDefault();
+            var user = db.Users.Where(x => x.EmailAddress == request.EmailAddress).FirstOrDefault();
 
             if (user == null)
             {
                 response.Code = "003";
-                response.Message = "El nombre de usuario o el correo estan incorrecto, favor verificar los mismo";
+                response.Message = "Correo inválido, favor verifique el mismo";
 
                 return Ok(response);
             }
@@ -541,7 +541,10 @@ namespace JS.Base.WS.API.Controllers.Authorization
             #region Send alert
 
             string operationBody = AlertService.Alert.GetOperation("ResetPassword");
+
+            operationBody = operationBody.Replace("@Name", user.Name + " "+ user.Surname);
             operationBody = operationBody.Replace("@UserName", user.UserName);
+            operationBody = operationBody.Replace("@Mail", user.EmailAddress);
             operationBody = operationBody.Replace("@Link", url);
 
             var requestAlert = new Mail

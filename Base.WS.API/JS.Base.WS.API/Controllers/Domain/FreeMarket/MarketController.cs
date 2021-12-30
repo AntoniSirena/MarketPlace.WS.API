@@ -66,6 +66,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 ContenTypeShort = x.ContenTypeShort,
                 ContenTypeLong = x.ContenTypeLong,
                 CreationDate = x.CreationDate,
+                ProductTypeId = x.ProductTypeId,
+                ProductType = x.ProductType.Description,
+                UseStock = x.UseStock,
+                Stock = x.Stock,
+                MinQuantity = x.MinQuantity,
+                MaxQuantity = x.MaxQuantity,
                 CreationTime = x.CreationTime,
                 CreatorUserId = x.CreatorUserId,
                 LastModificationTime = x.LastModificationTime,
@@ -118,6 +124,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     ContenTypeShort = x.ContenTypeShort,
                     ContenTypeLong = x.ContenTypeLong,
                     CreationDate = x.CreationDate,
+                    ProductTypeId = x.ProductTypeId,
+                    ProductType = x.ProductType.Description,
+                    UseStock = x.UseStock,
+                    Stock = x.Stock,
+                    MinQuantity = x.MinQuantity,
+                    MaxQuantity = x.MaxQuantity,
                     CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
@@ -155,6 +167,12 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                     ContenTypeShort = x.ContenTypeShort,
                     ContenTypeLong = x.ContenTypeLong,
                     CreationDate = x.CreationDate,
+                    ProductTypeId = x.ProductTypeId,
+                    ProductType = x.ProductType.Description,
+                    UseStock = x.UseStock,
+                    Stock = x.Stock,
+                    MinQuantity = x.MinQuantity,
+                    MaxQuantity = x.MaxQuantity,
                     CreationTime = x.CreationTime,
                     CreatorUserId = x.CreatorUserId,
                     LastModificationTime = x.LastModificationTime,
@@ -445,7 +463,13 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     Ubication = y.Ubication,
                                     Description = y.Description,
                                     PhoneNumber = y.PhoneNumber.ToString(),
+                                    QuantitySold = y.QuantitySold,
                                     CreationDate = y.CreationDate,
+                                    ProductType = y.ProductType.Description,
+                                    UseStock = y.UseStock,
+                                    Stock = y.Stock,
+                                    MinQuantity = y.MinQuantity,
+                                    MaxQuantity = y.MaxQuantity,
                                     ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
                                     {
                                         Id = z.Id,
@@ -475,7 +499,13 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                     Ubication = y.Ubication,
                                     Description = y.Description,
                                     PhoneNumber = y.PhoneNumber.ToString(),
+                                    QuantitySold = y.QuantitySold,
                                     CreationDate = y.CreationDate,
+                                    ProductType = y.ProductType.Description,
+                                    UseStock = y.UseStock,
+                                    Stock = y.Stock,
+                                    MinQuantity = y.MinQuantity,
+                                    MaxQuantity = y.MaxQuantity,
                                     ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
                                     {
                                         Id = z.Id,
@@ -506,7 +536,13 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                                 Ubication = y.Ubication,
                                 Description = y.Description,
                                 PhoneNumber = y.PhoneNumber.ToString(),
+                                QuantitySold = y.QuantitySold,
                                 CreationDate = y.CreationDate,
+                                ProductType = y.ProductType.Description,
+                                UseStock = y.UseStock,
+                                Stock = y.Stock,
+                                MinQuantity = y.MinQuantity,
+                                MaxQuantity = y.MaxQuantity,
                                 ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
                                 {
                                     Id = z.Id,
@@ -549,7 +585,13 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                        Ubication = y.Ubication,
                        Description = y.Description,
                        PhoneNumber = y.PhoneNumber.ToString(),
+                       QuantitySold = y.QuantitySold,
                        CreationDate = y.CreationDate,
+                       ProductType = y.ProductType.Description,
+                       UseStock = y.UseStock,
+                       Stock = y.Stock,
+                       MinQuantity = y.MinQuantity,
+                       MaxQuantity = y.MaxQuantity,
                        ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
                        {
                            Id = z.Id,
@@ -576,7 +618,13 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                         Ubication = y.Ubication,
                         Description = y.Description,
                         PhoneNumber = y.PhoneNumber.ToString(),
+                        QuantitySold = y.QuantitySold,
                         CreationDate = y.CreationDate,
+                        ProductType = y.ProductType.Description,
+                        UseStock = y.UseStock,
+                        Stock = y.Stock,
+                        MinQuantity = y.MinQuantity,
+                        MaxQuantity = y.MaxQuantity,
                         ImgDetail = db.MarketImgDetails.Where(x => x.MarketId == y.Id).Select(z => new ImgDetail()
                         {
                             Id = z.Id,
@@ -619,13 +667,18 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
                 Description = article.Description,
                 PhoneNumber = article.PhoneNumber.ToString(),
                 CreationDate = article.CreationDate,
+                ProductType = article.ProductType.Description,
+                UseStock = article.UseStock,
+                Stock = article.Stock,
+                MinQuantity = article.MinQuantity,
+                MaxQuantity = article.MaxQuantity,
             };
 
             result.Seller = new Seller()
             {
                 Id = Convert.ToInt64(article.CreatorUserId),
-                Name = string.IsNullOrEmpty(user.Person?.FullName) ? string.Concat(user.Name, ' ', user.Surname) : user.Person.FullName,
-                PhoneNumber = user.PhoneNumber,
+                Name = string.Concat(user.Name, " ", user.Surname),
+                PhoneNumber = Utilities.JS_Format.PhoneNumber(user.PhoneNumber),
                 Mail = user.EmailAddress,
             };
 
@@ -651,7 +704,7 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
 
                     file = JS_File.ResizeImage(img, width, height);
                 }
-
+               
                 JS_File.DownloadFileImg(file);
             }
 
@@ -731,6 +784,19 @@ namespace JS.Base.WS.API.Controllers.Domain.FreeMarket
             return result;
         }
 
+        [HttpGet]
+        [Route("GetProductTypes")]
+        public IEnumerable<ProductTypeDTO> GetProductTypes()
+        {
+            var result = db.ProductTypes.Where(y => y.IsActive == true).Select(x => new ProductTypeDTO()
+            {
+                Id = x.Id,
+                ShortName = x.ShortName,
+                Description = x.Description,
+            }).OrderBy(x => x.Description).ToList();
+
+            return result;
+        }
 
         [HttpGet]
         [Route("GetCategories")]

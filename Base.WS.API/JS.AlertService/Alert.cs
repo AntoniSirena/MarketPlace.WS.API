@@ -21,6 +21,8 @@ namespace JS.AlertService
                 MailAddresses = request.MailAddresses,
                 Subject = request.Subject,
                 Body = request.Body,
+                PathFileAttach = request.PathFileAttach,
+                SendFileAttach = request.SendFileAttach,
             };
 
             string dataRequest = JsonConvert.SerializeObject(requestAlert);

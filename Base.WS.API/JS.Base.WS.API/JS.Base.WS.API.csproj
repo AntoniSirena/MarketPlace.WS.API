@@ -242,6 +242,7 @@
     <Compile Include="Controllers\Domain\AppointmentController.cs" />
     <Compile Include="Controllers\Domain\CompanyRegisterController.cs" />
     <Compile Include="Controllers\Domain\FreeMarket\MarketController.cs" />
+    <Compile Include="Controllers\Domain\Order\OrderController.cs" />
     <Compile Include="Controllers\Enterprise\EnterpriseController.cs" />
     <Compile Include="Controllers\External\ExternalController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="DTO\Common\RoleDto.cs" />
     <Compile Include="DTO\Common\UserDto.cs" />
     <Compile Include="DTO\Common\UserTypeDTO.cs" />
+    <Compile Include="DTO\Request\Domain\CreateOrderDTO.cs" />
     <Compile Include="DTO\Request\Domain\RequestMarketDTO.cs" />
     <Compile Include="DTO\Request\UploadFile.cs" />
     <Compile Include="DTO\Request\UserRequest.cs" />
@@ -279,7 +281,9 @@
     <Compile Include="DTO\Response\Domain\FreeMarket\CurrencyDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\MarketDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\MarketTypeDTO.cs" />
+    <Compile Include="DTO\Response\Domain\FreeMarket\ProductTypeDTO.cs" />
     <Compile Include="DTO\Response\Domain\FreeMarket\SubCategoryDTO.cs" />
+    <Compile Include="DTO\Response\Domain\Order\OrderDetailDTO.cs" />
     <Compile Include="DTO\Response\Enterprise\EnterpriseDto.cs" />
     <Compile Include="DTO\Response\Enterprise\ScheduleHourDTO.cs" />
     <Compile Include="DTO\Response\FileDocument\FileDocumentDto.cs" />
@@ -313,6 +317,13 @@
     <Compile Include="Models\Domain\FreeMarket\MarketImgDetail.cs" />
     <Compile Include="Models\Domain\FreeMarket\MarketType.cs" />
     <Compile Include="Models\Domain\FreeMarket\Market.cs" />
+    <Compile Include="Models\Domain\FreeMarket\ProductType.cs" />
+    <Compile Include="Models\Domain\PaymentMethod.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransaction.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionDetail.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionStatus.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionStatusDetail.cs" />
+    <Compile Include="Models\Domain\PurchaseTransaction\PurchaseTransactionType.cs" />
     <Compile Include="Models\Domain\ScheduleHour.cs" />
     <Compile Include="Models\EnterpriseConf\Enterprise.cs" />
     <Compile Include="Models\FileDocument\FileDocument.cs" />
@@ -338,9 +349,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ConfigurationParameterService.cs" />
+    <Compile Include="Services\Domain\OrderService.cs" />
     <Compile Include="Services\FileDocument.cs" />
     <Compile Include="Services\IServices\ICommonService.cs" />
     <Compile Include="Services\IServices\IConfigurationParameterService.cs" />
+    <Compile Include="Services\IServices\IDomain\IOrderService.cs" />
     <Compile Include="Services\IServices\IFileDocument.cs" />
     <Compile Include="Services\IServices\ILocatorService.cs" />
     <Compile Include="Services\IServices\IProfileService.cs" />
@@ -412,8 +425,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\" />
-    <Folder Include="Services\Domain\" />
-    <Folder Include="Services\IServices\IDomain\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

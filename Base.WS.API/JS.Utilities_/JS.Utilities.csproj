@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ExecuteSP.cs" />
     <Compile Include="JS_File.cs" />
+    <Compile Include="JS_Format.cs" />
     <Compile Include="JS_HttpRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />

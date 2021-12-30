@@ -36,6 +36,19 @@ namespace JS.Base.WS.API.Global
             public const string Femenino = "Femenino";
         }
 
+        public static class Currencies
+        {
+            public const int ISONumberRD = 214;
+            public const int ISONumberUSA = 840;
+        }
+
+        public static class PaymentMethods
+        {
+            public const string Effective = "Effective";
+            public const string Transference = "Transference";
+            public const string Card = "Card";
+        }
+
         public static class AppointmentStatus
         {
             public const string Pending = "Pending";
@@ -44,6 +57,35 @@ namespace JS.Base.WS.API.Global
             public const string Finished = "Finished";
             public const string Cancelled = "Cancelled";
         }
+
+
+        public static class PurchaseTransactionTypes
+        {
+            public const string Request = "Request";
+            public const string Order = "Order";
+        }
+
+        public static class PurchaseTransactionStatus
+        {
+            public const string PendingToDelivery = "PendingToDelivery";
+            public const string Delivered = "Delivered";
+            public const string InProcess = "InProcess";
+            public const string PendingToPay = "PendingToPay";
+            public const string Payed = "Payed";
+            public const string Cancelled = "Cancelled";
+            public const string PendingToConfirm = "PendingToConfirm";
+            public const string Reception = "Reception";
+        }
+
+        public static class PurchaseTransactionStatusDetails
+        {
+            public const string PendingToReceive = "PendingToReceive";
+            public const string Received = "Received";
+            public const string InProcess = "InProcess";
+            public const string Delivered = "Delivered";
+            public const string Cancelled = "Cancelled";
+        }
+
 
         public static class DocumentTypes
         {
@@ -201,6 +243,10 @@ namespace JS.Base.WS.API.Global
             public static string UserAvataDefault { get { return ConfigurationParameterService.GetParameter("UserAvataDefault") ?? ""; } }
 
             public static string UserAvatarFileDirectory { get { return ConfigurationParameterService.GetParameter("UserAvatarFileDirectory") ?? ""; } }
+
+            public static string EnableShoppingCart { get { return ConfigurationParameterService.GetParameter("EnableShoppingCart") ?? "false"; } }
+
+            public static string PathReportOrder { get { return ConfigurationParameterService.GetParameter("PathReportOrder") ?? ""; } }           
 
         }
 

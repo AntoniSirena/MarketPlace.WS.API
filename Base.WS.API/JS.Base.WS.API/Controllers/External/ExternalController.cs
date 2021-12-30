@@ -53,6 +53,17 @@ namespace JS.Base.WS.API.Controllers.External
                 return Ok(response);
             }
 
+            var userMail = db.Users.Where(x => x.EmailAddress == request.user.EmailAddress).FirstOrDefault();
+
+            if (userMail != null)
+            {
+                response.Code = "400";
+                response.Message = "El correo que intenta registrar ya esta asociado a una cuenta existente. Debes cambiar el mismo";
+
+                return Ok(response);
+            }
+
+
             //Validate if required securityCodeExternaRegister
             string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
             if (securityCodeExternaRegister.Equals("1"))
@@ -112,7 +123,7 @@ namespace JS.Base.WS.API.Controllers.External
 
 
             //Save img
-            if(!string.IsNullOrEmpty(request.imagenBase64)){
+            if(!request.imagenBase64.Contains("UserEmpty")){
 
                 var fileTypeAlloweds = ConfigurationParameter.ImgTypeAllowed.Split(',');
 
@@ -125,21 +136,24 @@ namespace JS.Base.WS.API.Controllers.External
                 string contentType = splitName2[0];
 
                 //Validate contentType
-                if (!fileTypeAlloweds.Contains(contentType))
+                if (!string.IsNullOrEmpty(contentType))
                 {
-                    response.Code = "400";
-                    response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
+                    if (!fileTypeAlloweds.Contains(contentType))
+                    {
+                        response.Code = "400";
+                        response.Message = "El tipo de imagen que intenta subir es desconocido, favor reemplacé la misma por otra";
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
+
+                    var guid = Guid.NewGuid();
+                    var fileName = string.Concat("User_Avatar_Profile_", guid);
+                    var filePath = Path.Combine(root, fileName) + "." + contentType;
+
+                    File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
+
+                    request.user.Image = filePath;
                 }
-
-                var guid = Guid.NewGuid();
-                var fileName = string.Concat("User_Avatar_Profile_", guid);
-                var filePath = Path.Combine(root, fileName) + "." + contentType;
-
-                File.WriteAllBytes(filePath, Convert.FromBase64String(imgBase64));
-
-                request.user.Image = filePath;
             }
             else
             {

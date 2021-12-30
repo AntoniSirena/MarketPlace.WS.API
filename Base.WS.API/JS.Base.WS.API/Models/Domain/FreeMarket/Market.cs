@@ -21,6 +21,13 @@ namespace JS.Base.WS.API.Models.Domain
         public int ConditionId { get; set; }
         public int CategoryId { get; set; }
         public int SubCategoryId { get; set; }
+        public int ProductTypeId { get; set; }
+
+        public bool UseStock { get; set; }
+        public decimal Stock { get; set; }
+        public decimal MinQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
+        public int QuantitySold { get; set; } 
 
         public string Ubication { get; set; }
         public string Description { get; set; }
@@ -48,6 +55,9 @@ namespace JS.Base.WS.API.Models.Domain
 
         [ForeignKey("SubCategoryId")]
         public virtual ArticleSubCategory SubCategory { get; set; }
+
+        [ForeignKey("ProductTypeId")]
+        public virtual ProductType ProductType { get; set; }
 
     }
 }

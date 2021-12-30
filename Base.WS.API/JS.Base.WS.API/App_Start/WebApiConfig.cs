@@ -19,7 +19,7 @@ namespace JS.Base.WS.API
 
             config.MessageHandlers.Add(new TokenValidationHandler());
 
-            var cors = new EnableCorsAttribute("*", "*", "*");
+            var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(

@@ -28,6 +28,8 @@ namespace JS.Base.WS.API.DTO.Response.User
         public string RoleParent { get; set; }
         public bool IsVisitorUser { get; set; }
 
+        public bool EnableShoppingCart { get; set; }
+
         //Crud
         public bool CanCreate { get; set; }
         public bool CanEdit { get; set; }
