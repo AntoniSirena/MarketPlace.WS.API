@@ -129,17 +129,6 @@ namespace JS.Base.WS.API.Services.Domain
             tbHeader.AddCell(clDescription);
             tbHeader.AddCell(clValue);
 
-            clDescription = new PdfPCell(new Phrase("Comentario", labelFont));
-            clDescription.HorizontalAlignment = Element.ALIGN_LEFT;
-            clDescription.BorderWidth = 0;
-
-            clValue = new PdfPCell(new Phrase(currentOrder.Comment, labelFontValue));
-            clValue.HorizontalAlignment = Element.ALIGN_LEFT;
-            clValue.BorderWidth = 0;
-
-            tbHeader.AddCell(clDescription);
-            tbHeader.AddCell(clValue);
-
             clDescription = new PdfPCell(new Phrase("Cliente", labelFont));
             clDescription.HorizontalAlignment = Element.ALIGN_LEFT;
             clDescription.BorderWidth = 0;
@@ -162,6 +151,17 @@ namespace JS.Base.WS.API.Services.Domain
             tbHeader.AddCell(clDescription);
             tbHeader.AddCell(clValue);
 
+            clDescription = new PdfPCell(new Phrase("Comentario", labelFont));
+            clDescription.HorizontalAlignment = Element.ALIGN_LEFT;
+            clDescription.BorderWidth = 0;
+
+            clValue = new PdfPCell(new Phrase(currentOrder.Comment, labelFontValue));
+            clValue.HorizontalAlignment = Element.ALIGN_LEFT;
+            clValue.BorderWidth = 0;
+
+            tbHeader.AddCell(clDescription);
+            tbHeader.AddCell(clValue);
+
 
             document.Add(tbHeader);
             document.Add(new Paragraph("\n"));
@@ -169,7 +169,7 @@ namespace JS.Base.WS.API.Services.Domain
 
             //Details
 
-            Paragraph titleDetail = new Paragraph("Detalle de los astículos", labelFont);
+            Paragraph titleDetail = new Paragraph("Detalles de artículos", labelFont);
             titleDetail.Alignment = Element.ALIGN_CENTER;
             document.Add(titleDetail);
             document.Add(new Paragraph("\n"));
@@ -332,17 +332,36 @@ namespace JS.Base.WS.API.Services.Domain
             ms.Write(bytesSt, 0, bytesSt.Length);
             ms.Position = 0;
 
-            var result = Convert.ToBase64String(bytesSt);
-
             //Save document
             var fileName = string.Concat("Orden_", Guid.NewGuid());
             var filePath = Path.Combine(Global.Constants.ConfigurationParameter.PathReportOrder, fileName) + ".pdf";
 
             File.WriteAllBytes(filePath, bytesSt);
 
-            return result;
+            return filePath;
         }
 
+
+        public void SendOrderDetail(long orderId, string subject)
+        {
+            var currentOrder = db.PurchaseTransactions.Where(x => x.Id == orderId).FirstOrDefault();
+
+            string documentPath = GeneratePDF(orderId);
+
+            string template = AlertService.Alert.GetOperation("OrderDetail");
+
+
+            var requestAlert = new AlertService.DTO.Request.Mail
+            {
+                MailAddresses = currentOrder.Client.EmailAddress,
+                Subject = subject,
+                Body = template,
+                SendFileAttach = true,
+                PathFileAttach = documentPath,
+            };
+
+            var responseAlert = AlertService.Alert.SendMail(requestAlert);
+        }
 
     }
 

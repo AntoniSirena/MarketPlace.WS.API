@@ -45,6 +45,17 @@ namespace JS.Base.WS.API.Controllers.Authorization
                 return Ok(response);
             }
 
+            string mail = entity["EmailAddress"];
+            var userMail = db.Users.Where(x => x.EmailAddress == mail).FirstOrDefault();
+
+            if (userMail != null)
+            {
+                response.Code = "400";
+                response.Message = "El correo que intenta registrar ya esta asociado a una cuenta existente. Debes cambiar el mismo";
+
+                return Ok(response);
+            }
+
             string currentPassword = entity["Password"];
             entity["Password"] = Utilities.Security.Encrypt_OneWay(currentPassword);
 

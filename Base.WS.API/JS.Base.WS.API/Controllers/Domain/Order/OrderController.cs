@@ -471,6 +471,7 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
         [Route("Checkout")]
         public IHttpActionResult Checkout(CheckoutDTO request)
         {
+            var orderService = new OrderService();
 
             var paymentMethod = db.PaymentMethods.Where(x => x.ShortName == request.PaymentMethod).FirstOrDefault();
             if (paymentMethod == null)
@@ -503,6 +504,10 @@ namespace JS.Base.WS.API.Controllers.Domain.Order
             currentOrder.Address = request.Address;
             currentOrder.PaymentMethodId = paymentMethod.Id;
             db.SaveChanges();
+
+
+            //Send order detail
+            orderService.SendOrderDetail(currentOrder.Id, "Detalles de factura");
 
             response.Message = "Orden procesada con éxito. En o antes de 24 horas usted sera contactado para confirmar dicha orden";
 

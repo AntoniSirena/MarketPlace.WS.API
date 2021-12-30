@@ -53,6 +53,17 @@ namespace JS.Base.WS.API.Controllers.External
                 return Ok(response);
             }
 
+            var userMail = db.Users.Where(x => x.EmailAddress == request.user.EmailAddress).FirstOrDefault();
+
+            if (userMail != null)
+            {
+                response.Code = "400";
+                response.Message = "El correo que intenta registrar ya esta asociado a una cuenta existente. Debes cambiar el mismo";
+
+                return Ok(response);
+            }
+
+
             //Validate if required securityCodeExternaRegister
             string securityCodeExternaRegister = ConfigurationParameter.Required_SecurityCodeExternaRegister;
             if (securityCodeExternaRegister.Equals("1"))
